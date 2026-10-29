@@ -1,0 +1,17 @@
+area,set,era_start,era_end,bites,open_coast_bites
+Australia,all,1900,1959,84,3
+Australia,all,1960,1999,27,6
+Australia,all,2000,2014,21,12
+Australia,all,2015,2026,38,26
+NSW south of Port Macquarie,all,1900,1959,39,0
+NSW south of Port Macquarie,all,1960,1999,6,0
+NSW south of Port Macquarie,all,2000,2014,10,6
+NSW south of Port Macquarie,all,2015,2026,12,8
+Australia,confirmed,1900,1959,71,3
+Australia,confirmed,1960,1999,23,6
+Australia,confirmed,2000,2014,20,11
+Australia,confirmed,2015,2026,14,10
+NSW south of Port Macquarie,confirmed,1900,1959,33,0
+NSW south of Port Macquarie,confirmed,1960,1999,4,0
+NSW south of Port Macquarie,confirmed,2000,2014,10,6
+NSW south of Port Macquarie,confirmed,2015,2026,9,6

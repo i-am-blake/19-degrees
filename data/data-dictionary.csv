@@ -1,0 +1,26 @@
+file,column,meaning
+bite-temperatures.csv,species,"Shark species: bull, tiger or white"
+bite-temperatures.csv,sea_temp_c,"HadISST monthly sea surface temperature (°C) in the bite month for the 1° square nearest the bite; an open-sea monthly average, not the water at the beach that day"
+bite-temperature-summary.csv,species,Shark species
+bite-temperature-summary.csv,set,"all = every bite with a known month and place; confirmed = species identified by physical evidence (bite analysis, tooth, DNA, photo or video)"
+bite-temperature-summary.csv,bites,Number of bites in the set
+bite-temperature-summary.csv,below_19c,Bites in months when sea_temp_c was below 19.0
+bite-temperature-summary.csv,min_c / median_c / max_c,"Coolest, median and warmest sea temperature at those bites (°C)"
+beach-seasons-by-decade.csv,beach / coast,Reference beach and coast (east or west)
+beach-seasons-by-decade.csv,decade,First year of the decade
+beach-seasons-by-decade.csv,years,Years of data in that decade
+beach-seasons-by-decade.csv,months_at_or_above_19c,Average number of months a year the sea averaged 19°C or more
+beach-seasons-by-decade.csv,share_jan ... share_dec,Share of years in the decade that month averaged 19°C or more (0 to 1)
+beach-outlook-2050.csv,trend_c_per_decade_1980_2025,"Linear warming trend of the beach's sea temperature, 1980 to 2025 (°C a decade)"
+beach-outlook-2050.csv,months_at_or_above_19c_now,"Average months a year at 19°C or more, last 10 years"
+beach-outlook-2050.csv,months_2050_at_recent_pace,"Same, if the 1980–2025 trend continues to about 2050; an extrapolation, not a climate model"
+bull-bites-by-decade.csv,area,nsw_south = NSW coast south of Port Macquarie; wa = Western Australia
+bull-bites-by-decade.csv,bites / inshore_bites,"Bull shark bites, and those in a river, estuary, harbour or lake"
+bull-bites-by-decade.csv,population_millions_mid_decade,"Australia's population in millions, middle of the decade (ABS)"
+bull-bites-open-coast.csv,area / set,"Region, and all or confirmed-evidence bites (see bite-temperature-summary.csv)"
+bull-bites-open-coast.csv,era_start / era_end,Years covered (inclusive)
+bull-bites-open-coast.csv,bites / open_coast_bites,"Bull shark bites, and those in coastal waters (mostly surf beaches) rather than estuaries, harbors, rivers or lakes"
+bull-bites-enso.csv,coast / phase,"East or west coast; El Niño, La Niña or neutral month (Niño 3.4 index from HadISST, 3-month mean, ±0.5°C)"
+bull-bites-enso.csv,months_since_1950 / bites / bites_per_10_years_of_months,"Months in that phase since 1950, bull shark bites in them, and bites per 120 such months"
+zones-by-era.csv,north_lat_p90 / center_lat / south_lat_p10,"Latitude (negative = south) of the northern edge, middle and southern edge of where bites happened in that era"
+zones-by-era.csv,line_19c_half_year_lat,"Latitude where the sea is 19°C or more for at least half the year, averaged over the era"
