@@ -819,7 +819,7 @@ table.dt thead th{color:var(--muted);font-weight:600}
   <section aria-labelledby="h-help-test" class="helptest">
     <div class="kicker">For researchers</div>
     <h2 id="h-help-test">Help test this.</h2>
-    <p class="sub">19 Degrees is open: every number here can be checked, and every claim can be challenged. The aim is a shared, growing evidence base on sharks and a warming ocean. Here's how to take part.</p>
+    <p class="sub">19 Degrees is open: every number here can be checked, and every claim can be challenged. The aim is a shared, growing evidence base on two questions: how a warming ocean is changing where sharks and people meet, and which shark-safety measures actually work. Every deterrent, wetsuit, beach program and first-aid step is held to the same standard: a published, independent test, whatever it found. Here's how to take part.</p>
     <div class="ways">
       <article class="way"><span class="wn">1</span><h3>Test a claim</h3><p>Fifteen specific claims, each with what would support it and what would rule it out. Pick one that fits your skills.</p><a class="ctabtn" href="#h-agenda">See the fifteen claims →</a></article>
       <article class="way"><span class="wn">2</span><h3>Bring data</h3><p>Catch records, tracking data, rainfall, coroner reviews, local sightings: data this page can't reach could settle a claim.</p><a class="ctabtn" href="#h-data">See the data we need →</a></article>
@@ -1611,7 +1611,7 @@ try{const VENMO="Send-It-Blake"; if(VENMO){const a=document.getElementById("venm
   const pop=document.getElementById("supportPop"); document.getElementById("supportGo").href=a.href;
   let shown=false; const show=()=>{ if(shown) return; let gone=false; try{gone=sessionStorage.getItem("n19-support")==="x";}catch(e){} if(gone) return; shown=true; pop.hidden=false; };
   addEventListener("scroll",()=>{ const max=document.documentElement.scrollHeight-innerHeight; if(max>0&&scrollY/max>.35) show(); },{passive:true});
-  const sb=document.getElementById("sharePage"); sb.addEventListener("click",async()=>{const url=window.N19_URL, t="19 Degrees: advancing shark and climate research worldwide";
+  const sb=document.getElementById("sharePage"); sb.addEventListener("click",async()=>{const url=window.N19_URL, t="19 Degrees: advancing shark and climate research worldwide, and testing what actually keeps people safe";
     try{ if(navigator.share){await navigator.share({title:"19 Degrees",text:t,url});return;} }catch(e){if(e&&e.name==="AbortError")return;}
     try{await navigator.clipboard.writeText(url);sb.textContent="Link copied";}
     catch(e){const x=document.createElement("textarea");x.value=url;document.body.appendChild(x);x.select();try{document.execCommand("copy");sb.textContent="Link copied";}catch(_){sb.textContent="Copy failed";}x.remove();}
