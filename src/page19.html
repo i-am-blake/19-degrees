@@ -518,6 +518,17 @@ table.dt thead th{color:var(--muted);font-weight:600}
 .sharegrid .sgcopy{grid-column:1/-1}
 
 @media (max-width:600px){.supportpop.sharing>p{display:none}}
+
+/* share: top bar */
+.sharetop{position:relative;margin-left:8px;flex:none}
+.bar{gap:8px}
+.bar .tabs{margin-left:auto}
+.sharetopbtn{display:flex;align-items:center;gap:6px;min-height:44px;padding:8px 14px;font:inherit;font-size:15px;font-weight:600;color:#FFFFFF;background:transparent;border:1.5px solid transparent;border-radius:999px;cursor:pointer}
+.sharetopbtn:hover,.sharetopbtn[aria-expanded="true"]{border-color:rgba(255,255,255,.85)}
+.sharegrid.drop{position:absolute;right:0;top:calc(100% + 10px);width:260px;padding:10px;background:#0F5677;border:1.5px solid #FFFFFF;border-radius:12px;z-index:8}
+.sharegrid.drop a,.sharegrid.drop button{border-color:rgba(255,255,255,.35);background:rgba(255,255,255,.06);color:#FFFFFF;border-radius:8px}
+.sharegrid.drop .sgh{grid-column:1/-1;margin:0 0 2px;font-size:13px;font-weight:600;color:#FFFFFF}
+@media (max-width:720px){.sharetopbtn{padding:8px 11px;border-color:#FFFFFF;border-radius:12px}.sharetopbtn .stl{display:none}.sharetop{margin-left:6px}}
 </style>
 
 <a class="skip" href="#top">Skip to the story</a>
@@ -530,7 +541,7 @@ table.dt thead th{color:var(--muted);font-weight:600}
     <button type="button" role="tab" id="tab-students" aria-controls="panel-students" aria-selected="false" tabindex="-1">Students and schools</button>
     <button type="button" role="tab" id="tab-research" aria-controls="panel-research" aria-selected="false" tabindex="-1">Researchers</button>
     <button type="button" role="tab" id="tab-media" aria-controls="panel-media" aria-selected="false" tabindex="-1">News and media</button>
-  </div></nav>
+  </div></nav><div class="sharetop"><button type="button" class="sharetopbtn" aria-expanded="false" aria-controls="shareTopGrid" aria-label="Share this page"><svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="18" cy="5" r="2.6"/><circle cx="6" cy="12" r="2.6"/><circle cx="18" cy="19" r="2.6"/><path d="M8.3 10.8l7.4-4.4M8.3 13.2l7.4 4.4"/></svg><span class="stl">Share</span></button><div class="sharegrid drop" id="shareTopGrid" hidden role="group" aria-label="Share on"><p class="sgh">Share 19 Degrees</p><a data-net="linkedin">LinkedIn</a><a data-net="x">X</a><a data-net="facebook">Facebook</a><a data-net="whatsapp">WhatsApp</a><button type="button" class="sgcopy">Copy link</button></div></div>
     <div class="barwave" aria-hidden="true"><svg viewBox="0 0 1200 12" preserveAspectRatio="none"><path d="M0,6 Q75,0.5 150,6 T300,6 T450,6 T600,6 T750,6 T900,6 T1050,6 T1200,6 L1200,0 L0,0 Z" fill="#2A86AE"/><path d="M0,6 Q75,0.5 150,6 T300,6 T450,6 T600,6 T750,6 T900,6 T1050,6 T1200,6" fill="none" stroke="#FFFFFF" stroke-width="1.5" vector-effect="non-scaling-stroke"/></svg></div>
   </div>
 
@@ -1168,7 +1179,7 @@ table.dt thead th{color:var(--muted);font-weight:600}
     <p class="legal"><b>Privacy.</b> This site sets no cookies. It counts visits and clicks with <a href="https://www.goatcounter.com/" target="_blank" rel="noopener">GoatCounter</a>, which stores no personal data. The contact form sends your name, email and message to Blake through <a href="https://web3forms.com/" target="_blank" rel="noopener">Web3Forms</a>; they are used only to reply.</p>
     <p class="copy">© 2026 Blake Erickson · <a href="#contact">Contact</a></p>
   </footer>
-<aside class="supportpop" id="supportPop" hidden aria-label="Support this project"><div class="sphead"><b>Support the future of this project</b><button type="button" class="spx" id="supportX" aria-label="Close"><svg viewBox="0 0 14 14" width="14" height="14" aria-hidden="true"><path d="M1 1L13 13M13 1L1 13" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></button></div><p>19 Degrees is independent, free and open source. If it's useful to you, your class or your research, you can help keep it updated and growing.</p><div class="spbtns"><a class="supportbtn" id="supportGo" href="#" target="_blank" rel="noopener">Support on Venmo</a><button type="button" class="sharepage" id="sharePage" aria-expanded="false" aria-controls="shareGrid">Share this page</button></div><div class="sharegrid" id="shareGrid" hidden role="group" aria-label="Share on"><a data-net="linkedin">LinkedIn</a><a data-net="x">X</a><a data-net="facebook">Facebook</a><a data-net="whatsapp">WhatsApp</a><button type="button" class="sgcopy" id="shareCopy">Copy link</button></div></aside>
+<aside class="supportpop" id="supportPop" hidden aria-label="Support this project"><div class="sphead"><b>Support the future of this project</b><button type="button" class="spx" id="supportX" aria-label="Close"><svg viewBox="0 0 14 14" width="14" height="14" aria-hidden="true"><path d="M1 1L13 13M13 1L1 13" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></button></div><p>19 Degrees is independent, free and open source. If it's useful to you, your class or your research, you can help keep it updated and growing.</p><div class="spbtns"><a class="supportbtn" id="supportGo" href="#" target="_blank" rel="noopener">Support on Venmo</a><button type="button" class="sharepage" id="sharePage" aria-expanded="false" aria-controls="shareGrid">Share this page</button></div><div class="sharegrid" id="shareGrid" hidden role="group" aria-label="Share on"><a data-net="linkedin">LinkedIn</a><a data-net="x">X</a><a data-net="facebook">Facebook</a><a data-net="whatsapp">WhatsApp</a><button type="button" class="sgcopy">Copy link</button></div></aside>
 </div>
 
 <script type="application/json" id="n19-data">{}</script>
@@ -1630,13 +1641,19 @@ try{const VENMO="Send-It-Blake"; if(VENMO){const a=document.getElementById("venm
     x:()=>"https://x.com/intent/post?text="+encodeURIComponent(TXT+(HANDLE?" via "+HANDLE:""))+"&url="+encodeURIComponent(link("x")),
     facebook:()=>"https://www.facebook.com/sharer/sharer.php?u="+encodeURIComponent(link("facebook")),
     whatsapp:()=>"https://wa.me/?text="+encodeURIComponent(msg("whatsapp"))};
-  sg.querySelectorAll("a[data-net]").forEach(a=>{const n=a.dataset.net;a.href=href[n]();a.target="_blank";a.rel="noopener";
-    a.addEventListener("click",()=>{try{window.N19_EV&&window.N19_EV("Share",{to:n});}catch(_){}});});
+  document.querySelectorAll(".sharegrid a[data-net]").forEach(a=>{const n=a.dataset.net;a.href=href[n]();a.target="_blank";a.rel="noopener";
+    a.addEventListener("click",()=>{try{window.N19_EV&&window.N19_EV("Share",{to:n,from:a.closest(".sharetop")?"top":"popup"});}catch(_){}});});
   sb.addEventListener("click",()=>{const o=sg.hidden;sg.hidden=!o;sb.setAttribute("aria-expanded",o?"true":"false");pop.classList.toggle("sharing",o);});
-  const sc=document.getElementById("shareCopy"); sc.addEventListener("click",async()=>{const url=link("copy");
+  document.querySelectorAll(".sharegrid .sgcopy").forEach(sc=>sc.addEventListener("click",async()=>{const url=link("copy");
     try{await navigator.clipboard.writeText(url);sc.textContent="Link copied";}
     catch(e){const x=document.createElement("textarea");x.value=url;document.body.appendChild(x);x.select();try{document.execCommand("copy");sc.textContent="Link copied";}catch(_){sc.textContent="Copy failed";}x.remove();}
-    setTimeout(()=>sc.textContent="Copy link",2200);});
+    setTimeout(()=>sc.textContent="Copy link",2200);}));
+  /* top-bar share drop-down */
+  const stb=document.querySelector(".sharetopbtn"), stg=document.getElementById("shareTopGrid");
+  const stClose=()=>{stg.hidden=true;stb.setAttribute("aria-expanded","false");};
+  stb.addEventListener("click",e=>{e.stopPropagation();const o=stg.hidden;stg.hidden=!o;stb.setAttribute("aria-expanded",o?"true":"false");if(o){const n=document.querySelector(".tabs.open");if(n){n.classList.remove("open");document.querySelector(".menubtn").setAttribute("aria-expanded","false");}stg.querySelector("a").focus();}});
+  document.addEventListener("click",e=>{if(!stg.hidden&&!e.target.closest(".sharetop"))stClose();});
+  document.addEventListener("keydown",e=>{if(e.key==="Escape"&&!stg.hidden){stClose();stb.focus();}});
   document.getElementById("supportX").addEventListener("click",()=>{ pop.hidden=true; try{sessionStorage.setItem("n19-support","x");}catch(e){} });
   const f=document.getElementById("credits"); if(f){const p=document.createElement("p"); p.innerHTML=`<b>Support the future of this project:</b> <a href="${a.href}" target="_blank" rel="noopener">Venmo @${VENMO}</a>`; f.after(p);}}}catch(e){console.error(e)}
 </script>
