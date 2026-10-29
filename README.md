@@ -14,7 +14,7 @@ The ocean is warming, and the animals in it are moving. Marine species worldwide
 
 The problem isn't a lack of shark research. It's that the research is scattered. Bite records sit in one database, tracking data in another, sea temperatures somewhere else. Deterrent tests are buried in journals few people read, and every state and country judges its own safety programs on its own terms. No one has put it all in one place, measured the same way, open to everyone.
 
-19 Degrees brings it together: one open home where bite records, ocean data, tracking studies and safety evidence meet, so scientists, agencies, lifesavers, educators and swimmers can all work from the same facts.
+19 Degrees brings it together: one open harbor where bite records, ocean data, tracking studies and safety evidence come in, so scientists, agencies, lifesavers, educators and swimmers can all work from the same facts.
 
 ## It starts with one line in the water
 
