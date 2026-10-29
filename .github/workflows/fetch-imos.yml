@@ -1,39 +1,36 @@
 name: Fetch IMOS shark tracking data
-# Downloads the open IMOS Animal Tracking summary (CC BY 4.0) and keeps bull, tiger and white shark detections.
-# Runs on demand; results go to the separate 'imos-data' branch (the live site only builds from main).
+# Downloads open IMOS Animal Tracking data (acoustic detections, QC summary; CC BY 4.0) for the species 19 Degrees uses,
+# and saves it to the separate 'imos-data' branch (the live site only builds from main).
+# IMOS publishes new data about every six months; this checks monthly and only saves when something changed.
+# The weekly update reads the branch, reruns src/imos19.py and rebuilds the page with the new numbers.
 on:
+  schedule:
+    - cron: "17 9 2 * *"   # 2nd of each month, 09:17 UTC
   workflow_dispatch:
-    inputs:
-      mode:
-        description: "list = show the files only; fetch = download and filter"
-        default: list
 permissions:
   contents: write
 jobs:
   imos:
     runs-on: ubuntu-latest
     steps:
-      - name: List the IMOS summary files
+      - name: Download bull, tiger and white shark and green turtle files
         run: |
           mkdir -p out
-          aws s3 ls --no-sign-request --recursive s3://imos-data/IMOS/AATAMS/acoustic_detections_QC_summary/ | tee out/listing.txt | tail -n 40
-          echo "files: $(wc -l < out/listing.txt)"
-      - name: Download bull, tiger and white shark files (fetch mode)
-        if: ${{ inputs.mode == 'fetch' }}
-        run: |
-          B=s3://imos-data/IMOS/AATAMS/acoustic_detections_QC_summary/IMOS_ATF-ACOUSTIC_summarised-detections_
-          for f in BullShark_Carcharhinusleucas TigerShark_Galeocerdocuvier WhiteShark_Carcharodoncarcharias; do
-            aws s3 cp --no-sign-request --quiet "${B}${f}.csv" "out/${f}.csv"
-            head -3 "out/${f}.csv" > "out/${f}.head.txt"
-            gzip -9 "out/${f}.csv"
+          B=s3://imos-data/IMOS/AATAMS/acoustic_detections_QC_summary/
+          aws s3 ls --no-sign-request --recursive "$B" > out/listing.txt
+          for f in BullShark_Carcharhinusleucas TigerShark_Galeocerdocuvier WhiteShark_Carcharodoncarcharias greenturtle_Cheloniamydas; do
+            aws s3 cp --no-sign-request --quiet "${B}IMOS_ATF-ACOUSTIC_summarised-detections_${f}.csv" "out/${f}.csv"
+            gzip -9n "out/${f}.csv"
           done
+          printf "IMOS Animal Tracking, acoustic detections QC summary (CC BY 4.0).\nCite: IMOS Animal Tracking Facility, Integrated Marine Observing System (IMOS). IMOS is enabled by the National Collaborative Research Infrastructure Strategy (NCRIS).\nSource: s3://imos-data/IMOS/AATAMS/acoustic_detections_QC_summary/ (https://researchdata.edu.au/imos-animal-tracking-2007-ongoing/3961802)\n" > out/README.txt
           ls -la out
-      - name: Save results to the imos-data branch
+      - name: Save to the imos-data branch if anything changed
         run: |
-          cd out
-          git init -q -b imos-data
-          git config user.name "github-actions[bot]"
-          git config user.email "41898900+github-actions[bot]@users.noreply.github.com"
-          printf "IMOS Animal Tracking, acoustic detections QC summary (CC BY 4.0).\nCite: IMOS Animal Tracking Facility, Integrated Marine Observing System (IMOS). Fetched by .github/workflows/fetch-imos.yml\n" > README.txt
-          git add -A && git commit -qm "IMOS fetch (${{ inputs.mode }}), $(date -u +%Y-%m-%d)"
-          git push -f "https://x-access-token:${{ github.token }}@github.com/${{ github.repository }}.git" imos-data
+          git clone -q --depth 1 --branch imos-data "https://x-access-token:${{ github.token }}@github.com/${{ github.repository }}.git" br || { mkdir br; cd br; git init -q -b imos-data; cd ..; }
+          cd br
+          git rm -q -r --ignore-unmatch . >/dev/null
+          cp ../out/*.csv.gz ../out/README.txt ../out/listing.txt .
+          git add -A
+          if git diff --cached --quiet -- '*.csv.gz'; then echo "IMOS data unchanged; nothing to save"; exit 0; fi
+          git -c user.name="github-actions[bot]" -c user.email="41898900+github-actions[bot]@users.noreply.github.com" commit -qm "IMOS data update, $(date -u +%Y-%m-%d)"
+          git push -q "https://x-access-token:${{ github.token }}@github.com/${{ github.repository }}.git" HEAD:imos-data
