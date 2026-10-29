@@ -21,6 +21,11 @@ SEC_STATIC = ('<meta http-equiv="Content-Security-Policy" content="default-src \
               'object-src \'none\'; base-uri \'self\'; form-action \'none\'; frame-src \'none\'">\n')
 head = open(os.path.join(pub, "launch", "head.html")).read().replace("https://YOUR-SITE/", SITE)
 head = re.sub(r'<!-- 19 Degrees: paste inside.*?-->\n', '', head, count=1)
+# link-card version: social sites cache preview images by URL, so a new image needs a new URL
+import hashlib
+_lc = os.path.join(pub, "share", "link-card.png")
+if os.path.exists(_lc):
+    head = head.replace("share/link-card.png", "share/link-card.png?v=" + hashlib.sha1(open(_lc, "rb").read()).hexdigest()[:8])
 doc = ('<!doctype html>\n<html lang="en">\n<head>\n<meta charset="utf-8">\n'
        '<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">\n' + SEC + head + '\n' + body + '\n</html>\n')
 if os.path.exists(out): shutil.rmtree(out)
