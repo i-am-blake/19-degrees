@@ -561,6 +561,8 @@ table.dt thead th{color:var(--muted);font-weight:600}
 .sharegrid a:hover,.sharegrid button:hover{border-color:#3395BE;background:rgba(51,149,190,.14)}
 .sharegrid a:focus-visible,.sharegrid button:focus-visible{outline:2px solid #3395BE;outline-offset:2px}
 .sharegrid .sgcopy{grid-column:1/-1}
+
+@media (max-width:600px){.supportpop.sharing>p{display:none}}
 </style>
 
 <a class="skip" href="#top">Skip to the story</a>
@@ -1225,7 +1227,9 @@ window.N19_CFG={
 };
 window.N19_URL=window.N19_CFG.SITE_URL||location.href.split("#")[0];
 /* GoatCounter: cookie-free, no personal data; only loads when a code is set */
-if(window.N19_CFG.GOATCOUNTER){try{const g=document.createElement("script");g.async=true;g.src="https://gc.zgo.at/count.js";g.dataset.goatcounter="https://"+window.N19_CFG.GOATCOUNTER+".goatcounter.com/count";document.head.appendChild(g);}catch(_){}}
+/* share tags (?ref=...) are dropped from the address bar once the visit is counted, so a copied address isn't credited to the wrong source */
+(()=>{let done=false;const strip=()=>{if(done)return;done=true;try{const u=new URL(location.href);if(u.searchParams.has("ref")){u.searchParams.delete("ref");history.replaceState(history.state,"",u.pathname+u.search+u.hash);}}catch(_){}};
+if(window.N19_CFG.GOATCOUNTER){try{const g=document.createElement("script");g.async=true;g.src="https://gc.zgo.at/count.js";g.dataset.goatcounter="https://"+window.N19_CFG.GOATCOUNTER+".goatcounter.com/count";g.onload=()=>setTimeout(strip,1500);g.onerror=strip;document.head.appendChild(g);}catch(_){}setTimeout(strip,8000);}else strip();})();
 </script>
 
 <script>
@@ -1673,7 +1677,7 @@ try{const VENMO="Send-It-Blake"; if(VENMO){const a=document.getElementById("venm
     whatsapp:()=>"https://wa.me/?text="+encodeURIComponent(msg("whatsapp"))};
   sg.querySelectorAll("a[data-net]").forEach(a=>{const n=a.dataset.net;a.href=href[n]();a.target="_blank";a.rel="noopener";
     a.addEventListener("click",()=>{try{window.N19_EV&&window.N19_EV("Share",{to:n});}catch(_){}});});
-  sb.addEventListener("click",()=>{const o=sg.hidden;sg.hidden=!o;sb.setAttribute("aria-expanded",o?"true":"false");});
+  sb.addEventListener("click",()=>{const o=sg.hidden;sg.hidden=!o;sb.setAttribute("aria-expanded",o?"true":"false");pop.classList.toggle("sharing",o);});
   const sc=document.getElementById("shareCopy"); sc.addEventListener("click",async()=>{const url=link("copy");
     try{await navigator.clipboard.writeText(url);sc.textContent="Link copied";}
     catch(e){const x=document.createElement("textarea");x.value=url;document.body.appendChild(x);x.select();try{document.execCommand("copy");sc.textContent="Link copied";}catch(_){sc.textContent="Copy failed";}x.remove();}
