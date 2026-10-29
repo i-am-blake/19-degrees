@@ -122,7 +122,7 @@ The analysis scripts are in `src/`. See [`src/README.md`](src/README.md) to rebu
 - **Today's sea temperature:** Open-Meteo Marine
 - **Shark-control catches (claim C1):** Queensland Shark Control Program open data
 - **Coastal drownings:** Surf Life Saving Australia, National Coastal Safety Report 2025
-- **Shark tracking:** [IMOS Animal Tracking](https://researchdata.edu.au/imos-animal-tracking-2007-ongoing/3961802) acoustic detections (Integrated Marine Observing System), CC BY 4.0. Fetched by `.github/workflows/fetch-imos.yml`; analysed by `src/imos19.py`
+- **Shark tracking:** [IMOS Animal Tracking](https://researchdata.edu.au/imos-animal-tracking-2007-ongoing/3961802) acoustic detections of bull, tiger and white sharks and green turtles (Integrated Marine Observing System), CC BY 4.0, checked monthly. Fetched by `.github/workflows/fetch-imos.yml`; analysed by `src/imos19.py`
 - **Population:** Australian Bureau of Statistics
 - **Safety evidence and other figures:** published studies, each linked on the site
 
