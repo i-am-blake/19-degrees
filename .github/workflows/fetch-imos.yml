@@ -1,0 +1,52 @@
+name: Fetch IMOS shark tracking data
+# Downloads the open IMOS Animal Tracking summary (CC BY 4.0) and keeps bull, tiger and white shark detections.
+# Runs on demand; the result is saved as a workflow artifact, not committed.
+on:
+  workflow_dispatch:
+    inputs:
+      mode:
+        description: "list = show the files only; fetch = download and filter"
+        default: list
+permissions:
+  contents: read
+jobs:
+  imos:
+    runs-on: ubuntu-latest
+    steps:
+      - name: List the IMOS summary files
+        run: |
+          mkdir -p out
+          aws s3 ls --no-sign-request --recursive s3://imos-data/IMOS/AATAMS/acoustic_detections_QC_summary/ | tee out/listing.txt | tail -n 40
+          echo "files: $(wc -l < out/listing.txt)"
+      - name: Download and filter (fetch mode)
+        if: ${{ inputs.mode == 'fetch' }}
+        run: |
+          pip install --quiet pandas pyarrow
+          aws s3 sync --no-sign-request s3://imos-data/IMOS/AATAMS/acoustic_detections_QC_summary/ raw/ --quiet
+          du -sh raw
+          python3 - <<'PY'
+          import glob, os, pandas as pd
+          files=[f for f in glob.glob('raw/**/*', recursive=True) if os.path.isfile(f)]
+          print(len(files), 'files'); keep=[]
+          WANT=('leucas','cuvier','carcharias','bull shark','tiger shark','white shark')
+          for f in files:
+              try:
+                  df=pd.read_parquet(f) if f.endswith('.parquet') else pd.read_csv(f, low_memory=False)
+              except Exception as e:
+                  print('skip', f, e); continue
+              if not keep: print('columns:', list(df.columns))
+              txt=df.select_dtypes('object').apply(lambda c: c.str.lower())
+              m=pd.Series(False,index=df.index)
+              for c in txt.columns:
+                  if any(k in c.lower() for k in ('species','name','common')):
+                      m|=txt[c].fillna('').str.contains('|'.join(WANT))
+              if m.any(): keep.append(df[m])
+          out=pd.concat(keep) if keep else pd.DataFrame()
+          print('kept rows', len(out))
+          out.to_csv('out/imos_sharks.csv.gz', index=False, compression='gzip')
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: imos
+          path: out/
+          retention-days: 7
