@@ -1,6 +1,6 @@
 name: Fetch IMOS shark tracking data
 # Downloads the open IMOS Animal Tracking summary (CC BY 4.0) and keeps bull, tiger and white shark detections.
-# Runs on demand; the result is saved as a workflow artifact, not committed.
+# Runs on demand; results go to the separate 'imos-data' branch (the live site only builds from main).
 on:
   workflow_dispatch:
     inputs:
@@ -8,7 +8,7 @@ on:
         description: "list = show the files only; fetch = download and filter"
         default: list
 permissions:
-  contents: read
+  contents: write
 jobs:
   imos:
     runs-on: ubuntu-latest
@@ -45,8 +45,12 @@ jobs:
           print('kept rows', len(out))
           out.to_csv('out/imos_sharks.csv.gz', index=False, compression='gzip')
           PY
-      - uses: actions/upload-artifact@v4
-        with:
-          name: imos
-          path: out/
-          retention-days: 7
+      - name: Save results to the imos-data branch
+        run: |
+          cd out
+          git init -q -b imos-data
+          git config user.name "github-actions[bot]"
+          git config user.email "41898900+github-actions[bot]@users.noreply.github.com"
+          printf "IMOS Animal Tracking, acoustic detections QC summary (CC BY 4.0).\nCite: IMOS Animal Tracking Facility, Integrated Marine Observing System (IMOS). Fetched by .github/workflows/fetch-imos.yml\n" > README.txt
+          git add -A && git commit -qm "IMOS fetch (${{ inputs.mode }}), $(date -u +%Y-%m-%d)"
+          git push -f "https://x-access-token:${{ github.token }}@github.com/${{ github.repository }}.git" imos-data
