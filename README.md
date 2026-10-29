@@ -114,8 +114,14 @@ The analysis scripts are in `src/`. See [`src/README.md`](src/README.md) to rebu
 
 ## Data sources
 
-- Bites: [Australian Shark-Incident Database](https://zenodo.org/records/18752301) (Taronga Conservation Society Australia and Flinders University), CC BY 4.0
-- Sea temperature: [HadISST](https://www.metoffice.gov.uk/hadobs/hadisst/) (UK Met Office), Open Government Licence
+- **Shark bites:** [Australian Shark-Incident Database](https://zenodo.org/records/18752301) (Taronga Conservation Society Australia and Flinders University), CC BY 4.0
+- **Sea temperature, 1900 to now:** [HadISST](https://www.metoffice.gov.uk/hadobs/hadisst/) (UK Met Office), Open Government Licence, accessed through NOAA ERDDAP
+- **El Niño and La Niña:** Niño 3.4 index, calculated from HadISST
+- **Today's sea temperature:** Open-Meteo Marine
+- **Shark-control catches (claim C1):** Queensland Shark Control Program open data
+- **Coastal drownings:** Surf Life Saving Australia, National Coastal Safety Report 2025
+- **Population:** Australian Bureau of Statistics
+- **Safety evidence and other figures:** published studies, each linked on the site
 
 ## Contributing
 
