@@ -1,0 +1,5 @@
+openpyxl
+scipy
+Pillow
+# share19.py and carousel19.py also need Node.js with Playwright (npm install playwright && npx playwright install chromium)
+# and the fonts Bricolage Grotesque, Figtree and Martian Mono installed on the system.

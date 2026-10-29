@@ -1,0 +1,11 @@
+[
+ {"year": 2026, "month": 7, "state": "TAS", "place": "adventure bay, bruny island", "lat": -43.35, "lon": 147.35,
+  "fatal": false, "unprovoked": false, "activity": "Diving, snorkelling or spearfishing", "species": "broadnose sevengill shark",
+  "ref": "https://divernet.com/scuba-news/health-safety/accidents/sevengill-shark-bites-scuba-diver-off-tasmania/"},
+ {"year": 2026, "month": 9, "state": "WA", "place": "geraldton, glenfield beach", "lat": -28.68, "lon": 114.61,
+  "fatal": false, "unprovoked": true, "activity": "Surfing or on a board", "species": "",
+  "ref": "https://www.cbsnews.com/news/shark-attacks-surfer-western-australia-glenfield-beach/"},
+ {"year": 2026, "month": 9, "state": "WA", "place": "perth, sorrento beach", "lat": -31.83, "lon": 115.75,
+  "fatal": true, "unprovoked": true, "activity": "Swimming or wading", "species": "",
+  "ref": "https://www.foxweather.com/earth-space/swimmer-killed-shark-attack-off-popular-western-australia-beach-september-2026"}
+]

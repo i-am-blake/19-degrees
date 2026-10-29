@@ -1,0 +1,23 @@
+"""Write the 19 Degrees starter notebook (Python) that reproduces the core results from the downloadable CSVs.
+Usage: python3 -I notebook19.py <out_dir>   -> <out_dir>/data/19-degrees-starter.ipynb
+The notebook reads bite-temperatures.csv and bull-bites-open-coast.csv from the same folder (download them next to it)."""
+import json, os, sys
+out = os.path.join(sys.argv[1], "data"); os.makedirs(out, exist_ok=True)
+md = lambda t: {"cell_type": "markdown", "metadata": {}, "source": t}
+code = lambda t: {"cell_type": "code", "metadata": {}, "execution_count": None, "outputs": [], "source": t}
+cells = [
+ md("# 19 Degrees: reproduce the core results\n\nThis notebook reproduces the two headline findings of the 19 Degrees page from its downloadable data, in a few minutes:\n\n1. **The 19°C line:** no bull shark bite in Australia since 1900 happened in a month when the open sea was below 19°C.\n2. **The move into coastal waters:** bull shark bites have moved out of estuaries, harbors and rivers into coastal waters.\n\nDownload `bite-temperatures.csv` and `bull-bites-open-coast.csv` from the page (Researchers → Download the data) into the same folder as this notebook. You need Python 3 with pandas, scipy and matplotlib.\n\nData: Australian Shark-Incident Database (Taronga Conservation Society Australia and Flinders University) and HadISST sea surface temperature (UK Met Office). Please cite both, and the page, if you reuse them."),
+ code("import pandas as pd\nfrom scipy.stats import fisher_exact\nimport matplotlib.pyplot as plt\n\nbites = pd.read_csv('bite-temperatures.csv')   # one row per bite: species, sea_temp_c\nbites.head()"),
+ md("## 1. Bites below 19°C, by species\n\n`sea_temp_c` is that month's average sea surface temperature for the 1° square of open sea nearest the bite (about 110 km across). It describes the season, not the exact water the person was in."),
+ code("summary = (bites.assign(below_19=bites.sea_temp_c < 19)\n           .groupby('species').below_19.agg(bites='size', below_19='sum'))\nsummary['share_below_%'] = (summary.below_19 / summary.bites * 100).round(1)\nsummary"),
+ code("fig, ax = plt.subplots(figsize=(8, 4))\nfor sp, colour in [('bull', '#F0A04B'), ('tiger', '#F5C46B'), ('white', '#5AB4E5')]:\n    ax.hist(bites.loc[bites.species == sp, 'sea_temp_c'], bins=range(12, 31), alpha=.6, label=sp, color=colour)\nax.axvline(19, color='k', ls='--', lw=1)\nax.set_xlabel('Sea temperature that month (°C)'); ax.set_ylabel('Bites'); ax.legend(); plt.show()"),
+ md("**Try next:** how sensitive is the rule to the threshold? Count bull shark bites below 18.5, 19.5 and 20°C. What is the coolest month any bull shark bite happened in?"),
+ code("bites.loc[bites.species == 'bull', 'sea_temp_c'].describe()"),
+ md("## 2. The move into coastal waters\n\nEach row is one era. `open_coast_bites` are bites in coastal waters (the shark-incident database's \"coastal\" sites, mostly surf beaches), not in an estuary, harbor, river or lake. `set` is `all` bites or only those where the species was `confirmed` by physical evidence."),
+ code("oc = pd.read_csv('bull-bites-open-coast.csv')\naus = oc[(oc.area == 'Australia') & (oc.set == 'all')].copy()\naus['share_open_%'] = (aus.open_coast_bites / aus.bites * 100).round(0)\naus"),
+ code("first, last = aus.iloc[0], aus.iloc[-1]\ntable = [[last.open_coast_bites, last.bites - last.open_coast_bites],\n         [first.open_coast_bites, first.bites - first.open_coast_bites]]\nodds, p = fisher_exact(table, alternative='greater')\nprint(f'{int(first.era_start)}-{int(first.era_end)}: {first.open_coast_bites}/{first.bites} coastal')\nprint(f'{int(last.era_start)}-{int(last.era_end)}: {last.open_coast_bites}/{last.bites} coastal')\nprint(f'One-sided Fisher exact test: p = {p:.2g}')"),
+ md("## Your turn\n\nPick one of the page's fifteen testable claims (Researchers → Ten testable claims), state in advance what result would support it and what would rule it out, and test it. Send your claim ID, data source, method, result and code through the page's contact form (topic: Research or collaboration). Accepted results are credited by name on the claim and in the page's changelog."),
+]
+nb = {"cells": cells, "metadata": {"kernelspec": {"display_name": "Python 3", "language": "python", "name": "python3"}, "language_info": {"name": "python"}}, "nbformat": 4, "nbformat_minor": 5}
+json.dump(nb, open(os.path.join(out, "19-degrees-starter.ipynb"), "w"), indent=1)
+print("wrote", os.path.join(out, "19-degrees-starter.ipynb"))
