@@ -626,7 +626,13 @@ table.dt thead th{color:var(--muted);font-weight:600}
 .cfilter{display:flex;flex-wrap:wrap;gap:8px;margin:14px 0 4px}
 .cfilter button{font:inherit;font-size:14px;font-weight:600;color:var(--ink);background:transparent;border:1px solid var(--rule);border-radius:999px;padding:7px 12px;cursor:pointer}
 .cfilter button b{font-weight:500;color:var(--muted);margin-left:4px}
-.cfilter button[aria-pressed="true"]{border-color:#3395BE;background:rgba(51,149,190,.18)}
+.cfilter button[aria-pressed="true"]{border-color:#3395BE;background:rgba(51,149,190,.24)}
+.cfilter button{transition:border-color .15s,background-color .15s}
+.cfilter button:hover{border-color:#3395BE}
+.cfilter button[aria-pressed="true"]:hover{background:rgba(51,149,190,.26)}
+.cfilter button:focus-visible,.jumpbar a:focus-visible{outline:2px solid #3395BE;outline-offset:2px}
+.jumpbar a{transition:border-color .15s,background-color .15s}
+@media (prefers-reduced-motion:reduce){.cfilter button,.jumpbar a{transition:none}}
 </style>
 
 <a class="skip" href="#top">Skip to the story</a>
