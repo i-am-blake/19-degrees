@@ -517,7 +517,6 @@ table.dt thead th{color:var(--muted);font-weight:600}
 .sharegrid a:focus-visible,.sharegrid button:focus-visible{outline:2px solid #3395BE;outline-offset:2px}
 .sharegrid .sgcopy{grid-column:1/-1}
 
-@media (max-width:600px){.supportpop.sharing>p{display:none}}
 
 /* share: top bar */
 .sharetop{position:relative;margin-left:8px;flex:none}
@@ -529,6 +528,11 @@ table.dt thead th{color:var(--muted);font-weight:600}
 .sharegrid.drop a,.sharegrid.drop button{border-color:rgba(255,255,255,.35);background:rgba(255,255,255,.06);color:#FFFFFF;border-radius:8px}
 .sharegrid.drop .sgh{grid-column:1/-1;margin:0 0 2px;font-size:13px;font-weight:600;color:#FFFFFF}
 @media (max-width:720px){.sharetopbtn{padding:8px 11px;border-color:#FFFFFF;border-radius:12px}.sharetopbtn .stl{display:none}.sharetop{margin-left:6px}}
+
+.supportpop .spalt{margin:0;font-size:14px;color:var(--muted);text-align:center}
+.supportpop .spalt+.spalt{margin-top:-6px}
+.linkbtn{background:none;border:0;padding:0;font:inherit;color:var(--ink);text-decoration:underline;cursor:pointer}
+.supportpop .spcontact{color:var(--ink)}
 </style>
 
 <a class="skip" href="#top">Skip to the story</a>
@@ -797,7 +801,7 @@ table.dt thead th{color:var(--muted);font-weight:600}
       <article class="card"><h3>Teach it</h3><p>Use the one-page classroom sheet, or the share images, to start a conversation about how a warming ocean changes the animals in it.</p><p class="src"><a href="classroom.html" target="_blank" rel="noopener">Classroom sheet</a> · <a href="share/card-1-line.png" target="_blank" rel="noopener">share images</a></p></article>
       <article class="card"><h3>Share data</h3><p>Hold tracking, catch, rescue or first-aid records, or evidence of which shark was involved in a past bite? It could settle an open question.</p><p class="src"><a href="#h-data" data-tab="research">See the data we need</a></p></article>
       <article class="card"><h3>Read the code</h3><p>Every number here is rebuilt from public data by open scripts. Check the method, reuse it, or suggest a fix.</p><p class="src"><a href="https://github.com/i-am-blake/19-degrees" target="_blank" rel="noopener">Source on GitHub</a></p></article>
-      <article class="card support" id="supportCard"><h3>Support the future of this project</h3><p>19 Degrees is independent, free and open source. If it's useful to you, your class or your research, you can help keep it updated and growing.</p><p><a class="supportbtn" id="venmoLink" href="https://venmo.com/u/Send-It-Blake" target="_blank" rel="noopener">Support on Venmo</a></p></article>
+      <article class="card support" id="supportCard"><h3>Support the future of this project</h3><p>19 Degrees is independent and free. Your support funds more coastlines, better safety evidence and weekly updates.</p><p><a class="supportbtn" id="venmoLink" href="https://venmo.com/u/Send-It-Blake" target="_blank" rel="noopener">Support on Venmo</a></p></article>
     </div>
   </section>
 
@@ -1161,7 +1165,7 @@ table.dt thead th{color:var(--muted);font-weight:600}
         <label>Your name<input name="name" autocomplete="name" required aria-describedby="err-name"><span class="ferr" id="err-name" aria-live="polite"></span></label>
         <label>Your email<input name="email" type="email" inputmode="email" autocomplete="email" required aria-describedby="err-email"><span class="ferr" id="err-email" aria-live="polite"></span></label>
       </div>
-      <label>What is it about?<select name="topic"><option>A question</option><option>A correction or data issue</option><option>Using it in a class</option><option>Research or collaboration</option><option>Sharing data</option><option>Media or interview</option><option>Something else</option></select></label>
+      <label>What is it about?<select name="topic"><option>A question</option><option>A correction or data issue</option><option>Using it in a class</option><option>Research or collaboration</option><option>Sharing data</option><option>Funding or partnership</option><option>Media or interview</option><option>Something else</option></select></label>
       <label>Message<textarea name="msg" rows="5" required aria-describedby="err-msg"></textarea><span class="ferr" id="err-msg" aria-live="polite"></span></label>
       <div class="crow"><button type="submit" class="cbtn">Send message</button><span class="cnote" id="cnote" role="status"></span></div>
       <div class="csent" id="csent" hidden tabindex="-1"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="11"/><path d="M7 12.5l3.2 3.2L17 9"/></svg><div><p class="csent-h">Message sent</p><p id="csentTxt">Thanks. Blake will reply by email.</p><button type="button" class="csent-again" id="csentAgain">Send another message</button></div></div>
@@ -1179,7 +1183,7 @@ table.dt thead th{color:var(--muted);font-weight:600}
     <p class="legal"><b>Privacy.</b> This site sets no cookies. It counts visits and clicks with <a href="https://www.goatcounter.com/" target="_blank" rel="noopener">GoatCounter</a>, which stores no personal data. The contact form sends your name, email and message to Blake through <a href="https://web3forms.com/" target="_blank" rel="noopener">Web3Forms</a>; they are used only to reply.</p>
     <p class="copy">© 2026 Blake Erickson · <a href="#contact">Contact</a></p>
   </footer>
-<aside class="supportpop" id="supportPop" hidden aria-label="Support this project"><div class="sphead"><b>Support the future of this project</b><button type="button" class="spx" id="supportX" aria-label="Close"><svg viewBox="0 0 14 14" width="14" height="14" aria-hidden="true"><path d="M1 1L13 13M13 1L1 13" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></button></div><p>19 Degrees is independent, free and open source. If it's useful to you, your class or your research, you can help keep it updated and growing.</p><div class="spbtns"><a class="supportbtn" id="supportGo" href="#" target="_blank" rel="noopener">Support on Venmo</a><button type="button" class="sharepage" id="sharePage" aria-expanded="false" aria-controls="shareGrid">Share this page</button></div><div class="sharegrid" id="shareGrid" hidden role="group" aria-label="Share on"><a data-net="linkedin">LinkedIn</a><a data-net="x">X</a><a data-net="facebook">Facebook</a><a data-net="whatsapp">WhatsApp</a><button type="button" class="sgcopy">Copy link</button></div></aside>
+<aside class="supportpop" id="supportPop" hidden aria-label="Support this project"><div class="sphead"><b>Support the future of this project</b><button type="button" class="spx" id="supportX" aria-label="Close"><svg viewBox="0 0 14 14" width="14" height="14" aria-hidden="true"><path d="M1 1L13 13M13 1L1 13" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></button></div><p>19 Degrees is independent and free. Your support funds more coastlines, better safety evidence and weekly updates.</p><div class="spbtns"><a class="supportbtn" id="supportGo" href="#" target="_blank" rel="noopener">Support on Venmo</a></div><p class="spalt">Can't give right now? <button type="button" class="linkbtn" id="shareInstead">Share it instead.</button></p><p class="spalt">Foundations and partners: <a href="#contact" class="spcontact" data-contact="Funding or partnership" data-msg="">get in touch</a>.</p></aside>
 </div>
 
 <script type="application/json" id="n19-data">{}</script>
@@ -1633,7 +1637,7 @@ try{const VENMO="Send-It-Blake"; if(VENMO){const a=document.getElementById("venm
   const pop=document.getElementById("supportPop"); document.getElementById("supportGo").href=a.href;
   let shown=false; const show=()=>{ if(shown) return; let gone=false; try{gone=sessionStorage.getItem("n19-support")==="x";}catch(e){} if(gone) return; shown=true; pop.hidden=false; };
   addEventListener("scroll",()=>{ const max=document.documentElement.scrollHeight-innerHeight; if(max>0&&scrollY/max>.35) show(); },{passive:true});
-  const sb=document.getElementById("sharePage"), sg=document.getElementById("shareGrid");
+  
   const TXT="The ocean is warming. Here's what it means for your next swim.", HANDLE="";
   const link=src=>{const u=new URL(window.N19_URL);u.searchParams.set("ref",src);return u.toString();};
   const msg=src=>TXT+" "+link(src)+(HANDLE?" via "+HANDLE:"");
@@ -1643,11 +1647,13 @@ try{const VENMO="Send-It-Blake"; if(VENMO){const a=document.getElementById("venm
     whatsapp:()=>"https://wa.me/?text="+encodeURIComponent(msg("whatsapp"))};
   document.querySelectorAll(".sharegrid a[data-net]").forEach(a=>{const n=a.dataset.net;a.href=href[n]();a.target="_blank";a.rel="noopener";
     a.addEventListener("click",()=>{try{window.N19_EV&&window.N19_EV("Share",{to:n,from:a.closest(".sharetop")?"top":"popup"});}catch(_){}});});
-  sb.addEventListener("click",()=>{const o=sg.hidden;sg.hidden=!o;sb.setAttribute("aria-expanded",o?"true":"false");pop.classList.toggle("sharing",o);});
+  
   document.querySelectorAll(".sharegrid .sgcopy").forEach(sc=>sc.addEventListener("click",async()=>{const url=link("copy");
     try{await navigator.clipboard.writeText(url);sc.textContent="Link copied";}
     catch(e){const x=document.createElement("textarea");x.value=url;document.body.appendChild(x);x.select();try{document.execCommand("copy");sc.textContent="Link copied";}catch(_){sc.textContent="Copy failed";}x.remove();}
     setTimeout(()=>sc.textContent="Copy link",2200);}));
+  /* "share it instead" in the support pop-up opens the top-bar share menu */
+  document.getElementById("shareInstead").addEventListener("click",e=>{e.stopPropagation();const g=document.getElementById("shareTopGrid");if(g.hidden)document.querySelector(".sharetopbtn").click();try{window.N19_EV&&window.N19_EV("Share instead");}catch(_){}});
   /* top-bar share drop-down */
   const stb=document.querySelector(".sharetopbtn"), stg=document.getElementById("shareTopGrid");
   const stClose=()=>{stg.hidden=true;stb.setAttribute("aria-expanded","false");};
