@@ -1,0 +1,46 @@
+name: Offer data
+description: Tell us about data that could test one of the 19 Degrees claims. A description is enough; don't attach the data.
+title: "Data offer: "
+labels: ["data offer"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for offering data. **Please don't post the data itself here, and never include names, contact details, photos of people or medical details that could identify anyone.** Describe what you have and we'll agree privately how it can be shared.
+  - type: textarea
+    id: what
+    attributes:
+      label: What is the data?
+      description: Type of records, species, places, years, and roughly how many records.
+    validations:
+      required: true
+  - type: input
+    id: claims
+    attributes:
+      label: Which claim could it test?
+      description: C1–C15 from the Researchers tab, or "not sure".
+  - type: dropdown
+    id: sharing
+    attributes:
+      label: How could it be shared?
+      options:
+        - Openly, under CC BY or similar
+        - Summarised only (results published, raw data stays private)
+        - Under my organisation's data agreement
+        - Not sure yet
+    validations:
+      required: true
+  - type: input
+    id: who
+    attributes:
+      label: Who holds it?
+      description: You, your organisation, or another source you know of.
+  - type: checkboxes
+    id: rights
+    attributes:
+      label: Confirmations
+      options:
+        - label: I have the right to share this data, or I'm pointing to someone who does.
+          required: true
+        - label: Anything shared will be de-identified (no names, contact details or identifying medical information).
+          required: true

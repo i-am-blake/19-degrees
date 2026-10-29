@@ -15,6 +15,11 @@
 | `data/` | Every dataset behind the charts (CSV and JSON), a data dictionary and a starter Jupyter notebook |
 | `share/` | Share images and a LinkedIn carousel (PDF) |
 | `fonts/` | Self-hosted fonts (SIL Open Font License) |
+| `src/` | The scripts and template that build everything above |
+
+## Rebuild it yourself
+
+The analysis scripts are in `src/`. See [`src/README.md`](src/README.md) to rebuild every number, chart and download from the raw shark database and sea temperature records.
 
 ## Data sources
 
@@ -23,7 +28,9 @@
 
 ## Contributing
 
-The Researchers tab lists fifteen testable claims. Pick one, say in advance what would support it and what would rule it out, test it, and send your result through the contact form on the site. Corrections are welcome too.
+The most useful thing right now is **data**: tracking, catch, rescue and first-aid records, or evidence of which shark was involved in a past bite. See [CONTRIBUTING.md](CONTRIBUTING.md) for the data we need and how sharing works, or [open a data offer](../../issues/new?template=offer-data.yml).
+
+You can also test one of the fifteen claims on the Researchers tab, or fix an error with an issue or pull request.
 
 ## Licence
 
