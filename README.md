@@ -4,7 +4,7 @@
 
 The ocean is warming, and the animals in it are moving. Marine species worldwide are shifting toward the poles by about **72 km a decade, roughly 12 times faster than life on land** ([Poloczanska et al. 2013](https://www.nature.com/articles/nclimate1958)). Sharks are part of that move. So are the millions of people who swim, surf and fish on the coasts where those sharks are arriving.
 
-**Our mission is to advance shark and climate research worldwide, and to find out which shark-safety measures actually work. We're building an open, global evidence base on where and when sharks and people will meet as the sea warms, and on what really protects people when they do, so coasts can prepare before the first bite, not after it.**
+**Our mission is to protect sharks and people as the ocean warms: advancing shark and climate research worldwide, finding out which safety measures actually work, and building an open evidence base so coasts can prepare before the first bite, not after it.**
 
 **[See the live site →](https://19-degrees.org/)**
 

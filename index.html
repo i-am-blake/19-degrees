@@ -6,7 +6,7 @@
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://gc.zgo.at; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self' data: blob: https://19-degrees.goatcounter.com; connect-src 'self' https://api.web3forms.com https://19-degrees.goatcounter.com; object-src 'none'; base-uri 'self'; form-action 'self'; frame-src 'none'">
 <meta name="referrer" content="strict-origin-when-cross-origin">
 <title>19 Degrees: The ocean is moving. So are the sharks.</title>
-<meta name="description" content="Warmer water is changing where sharks and people meet. 19 Degrees maps it, puts safety claims to the test, and shares it all. Free, open data and code.">
+<meta name="description" content="Warmer water is changing where sharks and people meet. 19 Degrees maps it, puts safety claims to the test, and stands up for both. Free, open data and code.">
 <link rel="canonical" href="https://19-degrees.org/">
 <meta name="theme-color" content="#2A86AE">
 <meta name="author" content="Blake Erickson">
@@ -15,7 +15,7 @@
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="19 Degrees">
 <meta property="og:title" content="170 bull shark bites. Not one below 19°C.">
-<meta property="og:description" content="Warmer water is changing where sharks and people meet. 19 Degrees maps it, puts safety claims to the test, and shares it all.">
+<meta property="og:description" content="Warmer water is changing where sharks and people meet. 19 Degrees maps it, puts safety claims to the test, and stands up for both.">
 <meta property="og:url" content="https://19-degrees.org/">
 <meta property="og:image" content="https://19-degrees.org/share/link-card.png?v=445f122e">
 <meta property="og:image:width" content="1200">
@@ -26,7 +26,7 @@
 <!-- X / Twitter, Bluesky -->
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="170 bull shark bites. Not one below 19°C.">
-<meta name="twitter:description" content="Warmer water is changing where sharks and people meet. 19 Degrees maps it, puts safety claims to the test, and shares it all.">
+<meta name="twitter:description" content="Warmer water is changing where sharks and people meet. 19 Degrees maps it, puts safety claims to the test, and stands up for both.">
 <meta name="twitter:image" content="https://19-degrees.org/share/link-card.png?v=445f122e">
 
 <!-- Icons -->
@@ -1674,7 +1674,7 @@ try{
   const inc=Math.round((SYD.recent/SYD.base-1)*100), pO=e=>Math.round(e[1]/e[0]*100);
   const items=[
     `<b>Global warming isn’t making more sharks. It’s giving them more time, and more coastline, to feed.</b> Warm water now reaches about ${km} km further down the NSW coast, and the bites have followed: further south, later in the year, closer to shore. Off Sydney, the warm season is ${inc}% longer than a century ago.`,
-    `<b>Fewer sharks, closer encounters.</b> Oceanic sharks and rays are down 71% worldwide since 1970. Yet Western Australia has had more bull shark bites since 2020 (${D.wa_spike.post}) than in the 120 years preceding (${D.wa_spike.pre}), and ${pO(O[O.length-1])}% of Australia's bull shark bites since 2015 were in coastal waters, mostly off surf beaches, up from ${pO(O[0])}% before 1960.`,
+    `<b>Fewer sharks, closer encounters.</b> Oceanic sharks and rays are down 71% worldwide since 1970. Yet Western Australia has had more bull shark bites since 2020 (${D.wa_spike.post}) than in the 120 years preceding (${D.wa_spike.pre}), and ${pO(O[O.length-1])}% of Australia's bull shark bites since 2015 were in coastal waters, mostly off surf beaches, up from ${pO(O[0])}% before 1960. Keeping people safe shouldn't cost the sharks, and protecting sharks shouldn't cost lives. The evidence can do both.`,
     `<b>The impact is global.</b> The ocean has set a new heat record nine years running, and the sea off southeast Australia is warming twice as fast as the global average. Marine life is moving toward the poles about 72 km a decade, 12 times faster than life on land, and sharks are part of it: tiger sharks travel about 400 km further north for every 1°C of warming.`];
   document.getElementById("tldr").innerHTML=items.map(t=>`<li>${t}</li>`).join("");
   document.getElementById("tldrNote").innerHTML=`Keep it in perspective: about ${Math.round(R.drown/R.shark)} people drown on Australia's coast for every shark death. Stay out of murky water after heavy rain, and swim between the flags. For classrooms: <a href="classroom.html" target="_blank" rel="noopener">a printable one-page sheet</a>.`;
