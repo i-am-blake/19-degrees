@@ -5,8 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://gc.zgo.at; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self' data: blob: https://19-degrees.goatcounter.com; connect-src 'self' https://api.web3forms.com https://19-degrees.goatcounter.com; object-src 'none'; base-uri 'self'; form-action 'self'; frame-src 'none'">
 <meta name="referrer" content="strict-origin-when-cross-origin">
-<title>19 Degrees: shark and climate research, and what actually keeps people safe</title>
-<meta name="description" content="Advancing shark and climate research worldwide, and testing which shark-safety measures actually work. Free, open data and code on how a warming ocean is changing where sharks and people meet.">
+<title>19 Degrees: The ocean is moving. So are the sharks.</title>
+<meta name="description" content="Warmer water is changing where sharks and people meet. 19 Degrees maps it, puts safety claims to the test, and shares it all. Free, open data and code.">
 <link rel="canonical" href="https://19-degrees.org/">
 <meta name="theme-color" content="#2A86AE">
 <meta name="author" content="Blake Erickson">
@@ -15,9 +15,9 @@
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="19 Degrees">
 <meta property="og:title" content="170 bull shark bites. Not one below 19°C.">
-<meta property="og:description" content="Advancing shark and climate research worldwide, and testing which shark-safety measures actually work. Free, open data and code, starting with every Australian shark bite since 1900.">
+<meta property="og:description" content="Warmer water is changing where sharks and people meet. 19 Degrees maps it, puts safety claims to the test, and shares it all.">
 <meta property="og:url" content="https://19-degrees.org/">
-<meta property="og:image" content="https://19-degrees.org/share/link-card.png?v=6d109e16">
+<meta property="og:image" content="https://19-degrees.org/share/link-card.png?v=445f122e">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta property="og:image:alt" content="19 Degrees: 170 bull shark bites. Not one below 19°C.">
@@ -26,8 +26,8 @@
 <!-- X / Twitter, Bluesky -->
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="170 bull shark bites. Not one below 19°C.">
-<meta name="twitter:description" content="Advancing shark and climate research worldwide, and testing which shark-safety measures actually work. Free and open.">
-<meta name="twitter:image" content="https://19-degrees.org/share/link-card.png?v=6d109e16">
+<meta name="twitter:description" content="Warmer water is changing where sharks and people meet. 19 Degrees maps it, puts safety claims to the test, and shares it all.">
+<meta name="twitter:image" content="https://19-degrees.org/share/link-card.png?v=445f122e">
 
 <!-- Icons -->
 <link rel="icon" href="favicon.ico" sizes="any">
@@ -1656,7 +1656,7 @@ try{const VENMO="Send-It-Blake"; if(VENMO){const a=document.getElementById("venm
   const pop=document.getElementById("supportPop"); document.getElementById("supportGo").href=a.href;
   let shown=false; const show=()=>{ if(shown) return; let gone=false; try{gone=sessionStorage.getItem("n19-support")==="x";}catch(e){} if(gone) return; shown=true; pop.hidden=false; };
   addEventListener("scroll",()=>{ const max=document.documentElement.scrollHeight-innerHeight; if(max>0&&scrollY/max>.35) show(); },{passive:true});
-  const sb=document.getElementById("sharePage"); sb.addEventListener("click",async()=>{const url=window.N19_URL, t="19 Degrees: advancing shark and climate research worldwide, and testing what actually keeps people safe";
+  const sb=document.getElementById("sharePage"); sb.addEventListener("click",async()=>{const url=window.N19_URL, t="The ocean is warming. Here's what it means for your next swim.";
     try{ if(navigator.share){await navigator.share({title:"19 Degrees",text:t,url});return;} }catch(e){if(e&&e.name==="AbortError")return;}
     try{await navigator.clipboard.writeText(url);sb.textContent="Link copied";}
     catch(e){const x=document.createElement("textarea");x.value=url;document.body.appendChild(x);x.select();try{document.execCommand("copy");sb.textContent="Link copied";}catch(_){sb.textContent="Copy failed";}x.remove();}
