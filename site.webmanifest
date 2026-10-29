@@ -1,2 +1,2 @@
-{"name":"19 Degrees","short_name":"19 Degrees","description":"Sea temperature and shark bites in Australia","start_url":"./","display":"standalone","background_color":"#041A2C","theme_color":"#2A86AE",
+{"name":"19 Degrees","short_name":"19 Degrees","description":"Free, open research on sea temperature and sharks, to advance climate and shark science worldwide","start_url":"./","display":"standalone","background_color":"#041A2C","theme_color":"#2A86AE",
  "icons":[{"src":"icon-192.png","sizes":"192x192","type":"image/png"},{"src":"icon-512.png","sizes":"512x512","type":"image/png"},{"src":"icon-512.png","sizes":"512x512","type":"image/png","purpose":"maskable"}]}
