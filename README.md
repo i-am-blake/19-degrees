@@ -1,10 +1,43 @@
 # 19 Degrees
 
-**170 bull shark bites in Australia since 1900. Not one in water below 19°C.**
+### Know where the sharks are going before the bites get there.
 
-19 Degrees is a free, open-source look at how warming water is changing where and when sharks and people meet in Australia. Every Australian bull, tiger and white shark bite since 1900 is matched to that month's sea surface temperature.
+The ocean is warming, and the animals in it are moving. Marine species worldwide are shifting toward the poles by about **72 km a decade, roughly 12 times faster than life on land** ([Poloczanska et al. 2013](https://www.nature.com/articles/nclimate1958)). Sharks are part of that move. So are the millions of people who swim, surf and fish on the coasts where those sharks are arriving.
 
-**Live site:** https://i-am-blake.github.io/19-degrees/
+**Our goal is an open, global evidence base on where and when sharks and people will meet as the sea warms, so coasts can prepare before the first bite, not after it.**
+
+**[See the live site →](https://i-am-blake.github.io/19-degrees/)**
+
+---
+
+## It starts with one line in the water
+
+Australia has one of the longest shark-bite records on Earth, so we started there. Every bull, tiger and white shark bite since 1900 is matched to that month's sea temperature. One number stood out:
+
+> **170 bull shark bites. Not one in water below 19°C.**
+
+That line is moving. Off Sydney, water at 19°C or more now lasts about 45% longer each year than it did a century ago, and it reaches about 215 km further down the coast. The bites have followed: further south, later in the year, and out of estuaries, harbors and rivers into coastal waters, where 68% of bull shark bites since 2015 have happened, up from 4% before 1960.
+
+None of this means more sharks. Oceanic sharks and rays are down about 71% worldwide since 1970 ([Pacoureau et al. 2021](https://www.nature.com/articles/s41586-020-03173-9)), and in Australia drowning on the coast takes about 49 lives for every one lost to a shark. It means **fewer sharks, closer encounters**, and a changing map of where to be ready.
+
+## Where this goes next
+
+- **Every coast, measured the same way.** Tiger sharks, young white sharks and whale sharks are already shifting in other oceans. The method here is open so it can be rerun wherever long-term records exist: the United States, South Africa, Brazil, Réunion, the Pacific islands.
+- **Beaches that see their warm season coming.** Which months, which species, how fast it's changing, for any beach, in plain language.
+- **Coasts that are ready.** Bleeding-control kits, patrols and first aid placed where the warm water is going, not only where it has been. Most deaths from shark bites are from blood loss, and many are survivable when bleeding is stopped within minutes.
+- **Science anyone can check.** Open data, open code, fifteen testable claims, and named credit for everyone who tests one.
+- **Perspective, not fear.** Real numbers for swimmers, students, reporters and decision-makers, and a reminder that sharks are in trouble too.
+
+## Help build it
+
+| You have | You can |
+|---|---|
+| **Data** (tracking, catch, rescue, first aid, species evidence) | [Offer it](../../issues/new?template=offer-data.yml). A description is enough to start. See [CONTRIBUTING.md](CONTRIBUTING.md). |
+| **Research skills** | Test one of the [fifteen claims](https://i-am-blake.github.io/19-degrees/#h-agenda), or rerun the method for your country with the scripts in [`src/`](src/README.md). |
+| **A classroom** | Use the [printable sheets](https://i-am-blake.github.io/19-degrees/classroom.html): a real climate story students can test themselves. |
+| **An audience** | Share the site and the [share images](share/). Accurate reporting saves lives and sharks. |
+
+---
 
 ## What's here
 
@@ -28,9 +61,7 @@ The analysis scripts are in `src/`. See [`src/README.md`](src/README.md) to rebu
 
 ## Contributing
 
-The most useful thing right now is **data**: tracking, catch, rescue and first-aid records, or evidence of which shark was involved in a past bite. See [CONTRIBUTING.md](CONTRIBUTING.md) for the data we need and how sharing works, or [open a data offer](../../issues/new?template=offer-data.yml).
-
-You can also test one of the fifteen claims on the Researchers tab, or fix an error with an issue or pull request.
+The most useful thing right now is **data**. See [CONTRIBUTING.md](CONTRIBUTING.md) for what's needed and how sharing works, or [open a data offer](../../issues/new?template=offer-data.yml). Corrections are welcome as issues or pull requests.
 
 ## Licence
 
