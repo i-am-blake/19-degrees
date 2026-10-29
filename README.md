@@ -1,10 +1,10 @@
 # 19 Degrees
 
-### Know where the sharks are going before the bites get there.
+### Know where the sharks are going, and what actually keeps people safe.
 
 The ocean is warming, and the animals in it are moving. Marine species worldwide are shifting toward the poles by about **72 km a decade, roughly 12 times faster than life on land** ([Poloczanska et al. 2013](https://www.nature.com/articles/nclimate1958)). Sharks are part of that move. So are the millions of people who swim, surf and fish on the coasts where those sharks are arriving.
 
-**Our mission is to advance climate and shark research worldwide: an open, global evidence base on where and when sharks and people will meet as the sea warms, so coasts can prepare before the first bite, not after it.**
+**Our mission is to advance shark and climate research worldwide, and to find out which shark-safety measures actually work. We're building an open, global evidence base on where and when sharks and people will meet as the sea warms, and on what really protects people when they do, so coasts can prepare before the first bite, not after it.**
 
 **[See the live site →](https://19-degrees.org/)**
 
@@ -19,6 +19,36 @@ Australia has one of the longest shark-bite records on Earth, so we started ther
 That line is moving. Off Sydney, water at 19°C or more now lasts about 45% longer each year than it did a century ago, and it reaches about 215 km further down the coast. The bites have followed: further south, later in the year, and out of estuaries, harbors and rivers into coastal waters, where 68% of bull shark bites since 2015 have happened, up from 4% before 1960.
 
 None of this means more sharks. Oceanic sharks and rays are down about 71% worldwide since 1970 ([Pacoureau et al. 2021](https://www.nature.com/articles/s41586-020-03173-9)), and in Australia drowning on the coast takes about 49 lives for every one lost to a shark. It means **fewer sharks, closer encounters**, and a changing map of where to be ready.
+
+## Does it actually work?
+
+Beaches, governments and swimmers spend millions on shark safety: nets, drumlines, drones, electric deterrents, magnetic bands, bite-resistant wetsuits, barriers, apps, bleeding kits. Some are proven. Many have never been independently tested. A few have been tested and found to do nothing. People choose between them with little more than marketing to go on.
+
+19 Degrees holds every shark-safety measure to the same standard: **a published, independent test, linked, with the result stated plainly, whatever it is.**
+
+So far we've checked 26 products against the published evidence:
+
+| What independent tests found | Products |
+|---|---|
+| Reduced bites | 1 |
+| Reduced injury when a bite happens (bite-resistant fabrics) | 5 |
+| Small or mixed effect | 4 |
+| Partly tested | 6 |
+| No effect found | 7 |
+| Not peer reviewed | 2 |
+| Trial stopped | 1 |
+
+Beyond products, the site rates beach-level measures (nets, drumlines, drones, listening stations, barriers) and first aid the same way. Each is labelled "shown to help", "helps, with limits" or "no effect found, or not shown", with the study behind it.
+
+**The goal:** a living, worldwide scorecard for shark safety that anyone can check. It covers:
+
+- **Products:** every deterrent, wetsuit, leash and bleeding-control device, tested against the species that bite people most, especially bull and tiger sharks, where the evidence is thinnest.
+- **Beach programs:** nets, drumlines, drones and alerts, judged by bites prevented and by the harm they cause to other wildlife.
+- **Readiness:** whether bleeding kits, patrols and faster first aid save lives. Most shark-bite deaths come from blood loss, and nobody has yet measured what being prepared changes.
+
+Six of the fifteen testable claims (C10–C15) are about safety: drones in murky water, tourniquet leashes, bleeding kits, beach readiness, bite-resistant wetsuits and counter-illumination lights. Researchers, makers and lifesaving organizations: if you have test results, positive or negative, we'll add them. If a product you make isn't listed, the fastest way onto the scorecard is an independent, published trial.
+
+*Listing is not endorsement. Results summarize published independent tests as of October 2026, and products may have changed since they were tested.*
 
 ## Where this goes next
 
