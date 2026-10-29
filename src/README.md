@@ -52,6 +52,15 @@ python3 -I make_site.py 19-degrees.html pub site
 
 Then copy `site/` over the repo root. The live site's address is set in `make_site.py` (`SITE`) and in the settings block at the top of `page19.html` (`N19_CFG`).
 
+## Shark tracking (IMOS)
+
+`.github/workflows/fetch-imos.yml` checks IMOS Animal Tracking every month and saves bull, tiger and white shark and green turtle detections to the `imos-data` branch when IMOS publishes new data (about every six months). The weekly build reads that branch:
+
+```sh
+git fetch origin imos-data && mkdir -p imos && git archive origin/imos-data | tar -x -C imos
+python3 -I imos19.py imos sst imos.json      # writes the tagging numbers; build19.py picks up imos.json beside it
+```
+
 ## Daily readings
 
 `update_today.py index.html index.html` refreshes only today's sea temperatures inside an already-built page.

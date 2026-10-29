@@ -325,6 +325,10 @@ coast = json.load(open(os.path.join(here, "coast.json")))
 d["coast"] = {k: coast[k] for k in ("w", "h", "lon0", "lon1", "lat0", "lat1", "d")}
 sj = json.load(open(os.path.join(here, "sharks.json")))
 d["sharks"] = dict(viewBox=sj["viewBox"], species={x["key"]: dict(name=x["name"], shapes=x["shapes"], source=x.get("source")) for x in sj["species"] if x["key"] in ("white", "tiger", "bull")})
+# IMOS tag-tracking check (imos19.py writes imos.json beside this script; optional)
+_imos = os.path.join(here, "imos.json")
+if os.path.exists(_imos):
+    d["imos"] = json.load(open(_imos)); print("imos", d["imos"]["days"], d["imos"]["pct_warm"], d["imos"]["c2"])
 blob = json.dumps(d, separators=(",", ":")).replace("</", "<\\/")
 html = open(PAGE).read()
 pat = re.compile(r'(<script type="application/json" id="n19-data">)(.*?)(</script>)', re.S)
