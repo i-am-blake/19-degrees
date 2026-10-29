@@ -6,7 +6,7 @@
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://gc.zgo.at; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self' data: blob: https://19-degrees.goatcounter.com; connect-src 'self' https://api.web3forms.com https://19-degrees.goatcounter.com; object-src 'none'; base-uri 'self'; form-action 'self'; frame-src 'none'">
 <meta name="referrer" content="strict-origin-when-cross-origin">
 <title>19 Degrees: The ocean is moving. So are the sharks.</title>
-<meta name="description" content="Warmer water is changing where sharks and people meet. 19 Degrees maps it, puts safety claims to the test, and stands up for both. Free, open data and code.">
+<meta name="description" content="Warmer water is changing where sharks and people meet. 19 Degrees maps it, puts safety claims to the test, and stands up for both. Free, open source data and code.">
 <link rel="canonical" href="https://19-degrees.org/">
 <meta name="theme-color" content="#2A86AE">
 <meta name="author" content="Blake Erickson">
@@ -81,10 +81,10 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--warm);outline-offse
 
 /* mark bar: fin-over-19 mark, today's reading on the right */
 .bar{position:sticky;top:0;z-index:6;display:flex;align-items:center;justify-content:space-between;gap:16px;padding:var(--lpad) calc(var(--lpad) + env(safe-area-inset-right,0px)) var(--lpad) calc(var(--lpad) + env(safe-area-inset-left,0px));margin:0 calc(50% - 50vw);background:linear-gradient(180deg,#3395BE,#2A86AE)}
-.barwave{position:absolute;left:0;right:0;top:100%;height:26px;overflow:hidden;pointer-events:none}
-.barwave svg{display:block;width:200%;height:26px;animation:tabripple 12.6s linear infinite reverse}
+.barwave{position:absolute;left:0;right:0;top:100%;height:28px;overflow:hidden;pointer-events:none}
+.barwave svg{display:block;width:200%;height:28px;animation:tabripple 12.6s linear infinite reverse}
 @media (max-width:1023px){.barwave svg{animation-duration:9.45s}}
-@media (max-width:600px){.barwave{height:18px}.barwave svg{animation-duration:6.3s;height:18px}}
+@media (max-width:600px){.barwave{height:19.5px}.barwave svg{animation-duration:6.3s;height:19.5px}}
 @media (prefers-reduced-motion:reduce){.barwave svg{animation:none}}
 .lockup{display:block;color:var(--ink);line-height:0}
 .lockup .mark{height:var(--logo-h);width:auto;display:block;color:#FFFFFF}
