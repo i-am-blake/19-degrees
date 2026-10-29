@@ -537,7 +537,7 @@ table.dt thead th{color:var(--muted);font-weight:600}
 /* support in the nav */
 .menupanel{display:flex}
 .menuextra{display:none}
-.supporttop{display:flex;align-items:center;gap:6px;flex:none;margin-left:4px;min-height:44px;padding:8px 14px;font:inherit;font-size:15px;font-weight:600;color:#FFFFFF;background:transparent;border:1.5px solid transparent;border-radius:999px;cursor:pointer}
+.supporttop{text-decoration:none;display:flex;align-items:center;gap:6px;flex:none;margin-left:4px;min-height:44px;padding:8px 14px;font:inherit;font-size:15px;font-weight:600;color:#FFFFFF;background:transparent;border:1.5px solid transparent;border-radius:999px;cursor:pointer}
 .supporttop:hover{border-color:rgba(255,255,255,.85)}
 @media (max-width:1100px) and (min-width:721px){.supporttop{padding:8px 11px}.supporttop .stl{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}.sharetopbtn{padding:8px 11px}.sharetopbtn .stl{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}}
 @media (max-width:720px){
@@ -546,8 +546,8 @@ table.dt thead th{color:var(--muted);font-weight:600}
  .tabs.open .menupanel{display:flex}
  .tabs .tablist{display:flex!important;position:static;width:auto;padding:0;border:0;background:none}
  .menuextra{display:block;margin-top:8px;padding-top:8px;border-top:1px solid rgba(255,255,255,.35)}
- .menuextra button{display:flex;align-items:center;gap:8px;width:100%;text-align:left;font:inherit;font-size:16px;font-weight:600;color:#FFFFFF;background:transparent;border:1.5px solid transparent;border-radius:10px;padding:12px 14px;min-height:44px;cursor:pointer}
- .menuextra button:hover{border-color:rgba(255,255,255,.85)}
+ .menuextra a{text-decoration:none;display:flex;align-items:center;gap:8px;width:100%;text-align:left;font:inherit;font-size:16px;font-weight:600;color:#FFFFFF;background:transparent;border:1.5px solid transparent;border-radius:10px;padding:12px 14px;min-height:44px;cursor:pointer}
+ .menuextra a:hover{border-color:rgba(255,255,255,.85)}
 }
 </style>
 
@@ -561,7 +561,7 @@ table.dt thead th{color:var(--muted);font-weight:600}
     <button type="button" role="tab" id="tab-students" aria-controls="panel-students" aria-selected="false" tabindex="-1">Students and schools</button>
     <button type="button" role="tab" id="tab-research" aria-controls="panel-research" aria-selected="false" tabindex="-1">Researchers</button>
     <button type="button" role="tab" id="tab-media" aria-controls="panel-media" aria-selected="false" tabindex="-1">News and media</button>
-  </div><div class="menuextra"><button type="button" class="supportopen" data-from="menu"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M12 20.5s-7.5-4.4-7.5-10.2A4.3 4.3 0 0 1 12 7.6a4.3 4.3 0 0 1 7.5 2.7c0 5.8-7.5 10.2-7.5 10.2z"/></svg>Support 19 Degrees</button></div></div></nav><button type="button" class="supporttop supportopen" data-from="nav" aria-label="Support 19 Degrees"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M12 20.5s-7.5-4.4-7.5-10.2A4.3 4.3 0 0 1 12 7.6a4.3 4.3 0 0 1 7.5 2.7c0 5.8-7.5 10.2-7.5 10.2z"/></svg><span class="stl">Support</span></button><div class="sharetop"><button type="button" class="sharetopbtn" aria-expanded="false" aria-controls="shareTopGrid" aria-label="Share this page"><svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="18" cy="5" r="2.6"/><circle cx="6" cy="12" r="2.6"/><circle cx="18" cy="19" r="2.6"/><path d="M8.3 10.8l7.4-4.4M8.3 13.2l7.4 4.4"/></svg><span class="stl">Share</span></button><div class="sharegrid drop" id="shareTopGrid" hidden role="group" aria-label="Share on"><p class="sgh">Share 19 Degrees</p><a data-net="linkedin">LinkedIn</a><a data-net="x">X</a><a data-net="facebook">Facebook</a><a data-net="whatsapp">WhatsApp</a><button type="button" class="sgcopy">Copy link</button></div></div>
+  </div><div class="menuextra"><a class="donatelink" data-from="menu" href="https://venmo.com/u/Send-It-Blake" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M12 20.5s-7.5-4.4-7.5-10.2A4.3 4.3 0 0 1 12 7.6a4.3 4.3 0 0 1 7.5 2.7c0 5.8-7.5 10.2-7.5 10.2z"/></svg>Donate</a></div></div></nav><a class="supporttop donatelink" data-from="nav" href="https://venmo.com/u/Send-It-Blake" target="_blank" rel="noopener" aria-label="Donate to 19 Degrees on Venmo (opens in a new tab)"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M12 20.5s-7.5-4.4-7.5-10.2A4.3 4.3 0 0 1 12 7.6a4.3 4.3 0 0 1 7.5 2.7c0 5.8-7.5 10.2-7.5 10.2z"/></svg><span class="stl">Donate</span></a><div class="sharetop"><button type="button" class="sharetopbtn" aria-expanded="false" aria-controls="shareTopGrid" aria-label="Share this page"><svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="18" cy="5" r="2.6"/><circle cx="6" cy="12" r="2.6"/><circle cx="18" cy="19" r="2.6"/><path d="M8.3 10.8l7.4-4.4M8.3 13.2l7.4 4.4"/></svg><span class="stl">Share</span></button><div class="sharegrid drop" id="shareTopGrid" hidden role="group" aria-label="Share on"><p class="sgh">Share 19 Degrees</p><a data-net="linkedin">LinkedIn</a><a data-net="x">X</a><a data-net="facebook">Facebook</a><a data-net="whatsapp">WhatsApp</a><button type="button" class="sgcopy">Copy link</button></div></div>
     <div class="barwave" aria-hidden="true"><svg viewBox="0 0 1200 12" preserveAspectRatio="none"><path d="M0,6 Q75,0.5 150,6 T300,6 T450,6 T600,6 T750,6 T900,6 T1050,6 T1200,6 L1200,0 L0,0 Z" fill="#2A86AE"/><path d="M0,6 Q75,0.5 150,6 T300,6 T450,6 T600,6 T750,6 T900,6 T1050,6 T1200,6" fill="none" stroke="#FFFFFF" stroke-width="1.5" vector-effect="non-scaling-stroke"/></svg></div>
   </div>
 
@@ -1668,10 +1668,8 @@ try{const VENMO="Send-It-Blake"; if(VENMO){const a=document.getElementById("venm
     try{await navigator.clipboard.writeText(url);sc.textContent="Link copied";}
     catch(e){const x=document.createElement("textarea");x.value=url;document.body.appendChild(x);x.select();try{document.execCommand("copy");sc.textContent="Link copied";}catch(_){sc.textContent="Copy failed";}x.remove();}
     setTimeout(()=>sc.textContent="Copy link",2200);}));
-  /* "Support" in the nav reopens the support pop-up, even if it was closed earlier */
-  document.querySelectorAll(".supportopen").forEach(b=>b.addEventListener("click",e=>{e.stopPropagation();pop.hidden=false;pop.style.visibility="";try{sessionStorage.removeItem("n19-support");}catch(_){}
-    const n=document.querySelector(".tabs.open");if(n){n.classList.remove("open");document.querySelector(".menubtn").setAttribute("aria-expanded","false");}
-    try{window.N19_EV&&window.N19_EV("Support open",{from:b.dataset.from});}catch(_){}document.getElementById("supportGo").focus();}));
+  /* "Donate" in the nav goes straight to Venmo */
+  document.querySelectorAll(".donatelink").forEach(a=>a.addEventListener("click",()=>{try{window.N19_EV&&window.N19_EV("Donate click",{from:a.dataset.from});}catch(_){}const n=document.querySelector(".tabs.open");if(n){n.classList.remove("open");document.querySelector(".menubtn").setAttribute("aria-expanded","false");}}));
   /* "share it instead" in the support pop-up opens the top-bar share menu */
   document.getElementById("shareInstead").addEventListener("click",e=>{e.stopPropagation();const g=document.getElementById("shareTopGrid");if(g.hidden)document.querySelector(".sharetopbtn").click();try{window.N19_EV&&window.N19_EV("Share instead");}catch(_){}});
   /* top-bar share drop-down */
