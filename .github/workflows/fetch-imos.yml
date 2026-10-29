@@ -18,33 +18,16 @@ jobs:
           mkdir -p out
           aws s3 ls --no-sign-request --recursive s3://imos-data/IMOS/AATAMS/acoustic_detections_QC_summary/ | tee out/listing.txt | tail -n 40
           echo "files: $(wc -l < out/listing.txt)"
-      - name: Download and filter (fetch mode)
+      - name: Download bull, tiger and white shark files (fetch mode)
         if: ${{ inputs.mode == 'fetch' }}
         run: |
-          pip install --quiet pandas pyarrow
-          aws s3 sync --no-sign-request s3://imos-data/IMOS/AATAMS/acoustic_detections_QC_summary/ raw/ --quiet
-          du -sh raw
-          python3 - <<'PY'
-          import glob, os, pandas as pd
-          files=[f for f in glob.glob('raw/**/*', recursive=True) if os.path.isfile(f)]
-          print(len(files), 'files'); keep=[]
-          WANT=('leucas','cuvier','carcharias','bull shark','tiger shark','white shark')
-          for f in files:
-              try:
-                  df=pd.read_parquet(f) if f.endswith('.parquet') else pd.read_csv(f, low_memory=False)
-              except Exception as e:
-                  print('skip', f, e); continue
-              if not keep: print('columns:', list(df.columns))
-              txt=df.select_dtypes('object').apply(lambda c: c.str.lower())
-              m=pd.Series(False,index=df.index)
-              for c in txt.columns:
-                  if any(k in c.lower() for k in ('species','name','common')):
-                      m|=txt[c].fillna('').str.contains('|'.join(WANT))
-              if m.any(): keep.append(df[m])
-          out=pd.concat(keep) if keep else pd.DataFrame()
-          print('kept rows', len(out))
-          out.to_csv('out/imos_sharks.csv.gz', index=False, compression='gzip')
-          PY
+          B=s3://imos-data/IMOS/AATAMS/acoustic_detections_QC_summary/IMOS_ATF-ACOUSTIC_summarised-detections_
+          for f in BullShark_Carcharhinusleucas TigerShark_Galeocerdocuvier WhiteShark_Carcharodoncarcharias; do
+            aws s3 cp --no-sign-request --quiet "${B}${f}.csv" "out/${f}.csv"
+            head -3 "out/${f}.csv" > "out/${f}.head.txt"
+            gzip -9 "out/${f}.csv"
+          done
+          ls -la out
       - name: Save results to the imos-data branch
         run: |
           cd out
