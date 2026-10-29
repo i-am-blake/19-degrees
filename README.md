@@ -4,11 +4,17 @@
 
 The ocean is warming, and the animals in it are moving. Marine species worldwide are shifting toward the poles by about **72 km a decade, roughly 12 times faster than life on land** ([Poloczanska et al. 2013](https://www.nature.com/articles/nclimate1958)). Sharks are part of that move. So are the millions of people who swim, surf and fish on the coasts where those sharks are arriving.
 
-**Our mission is to protect sharks and people as the ocean warms: advancing shark and climate research worldwide, finding out which safety measures actually work, and building an open evidence base so coasts can prepare before the first bite, not after it.**
+**Our mission is to protect sharks and people as the ocean warms: advancing shark and climate research worldwide, finding out which safety measures actually work, and building an open evidence base so coasts can prepare before the first bite, not after it.** The aim is to become the largest open research effort on sharks and a warming ocean, built by people all over the world.
 
-**[See the live site →](https://19-degrees.org/)**
+**[See the live site →](https://19-degrees.org/)** Updated every week with new data, and every day with today's sea temperatures.
 
 ---
+
+## Why this needs to exist
+
+The problem isn't a lack of shark research. It's that the research is scattered. Bite records sit in one database, tracking data in another, sea temperatures somewhere else. Deterrent tests are buried in journals few people read, and every state and country judges its own safety programs on its own terms. No one has put it all in one place, measured the same way, open to everyone.
+
+19 Degrees brings it together: one open home where bite records, ocean data, tracking studies and safety evidence meet, so scientists, agencies, lifesavers, educators and swimmers can all work from the same facts.
 
 ## It starts with one line in the water
 
@@ -58,14 +64,36 @@ Six of the fifteen testable claims (C10–C15) are about safety: drones in murky
 - **Science anyone can check.** Open data, open code, fifteen testable claims, and named credit for everyone who tests one.
 - **Perspective, not fear.** Real numbers for swimmers, students, reporters and decision-makers, and a reminder that sharks are in trouble too.
 
+## Fund the next stage
+
+19 Degrees is independent and free. Funding goes to work that no single lab or agency is set up to do:
+
+1. **More coastlines.** Rerun the method for the United States, South Africa and other coasts with long-term bite records.
+2. **The beach-readiness map.** Where bleeding kits, patrols and ambulance times fall short of where the warm water is going (claim C13).
+3. **Closing the safety evidence gap.** Independent trials of deterrents and bite-resistant wetsuits with bull and tiger sharks, run with research partners (claims C14 and C15).
+4. **Keeping it free and current.** Weekly data updates, hosting and classroom materials.
+
+Foundations, ocean and outdoor brands, and research institutions: [let's talk](https://19-degrees.org/#contact).
+
 ## Help build it
 
 | You have | You can |
 |---|---|
+| **Funding or partnership** | [Get in touch](https://19-degrees.org/#contact). See the priorities above. |
 | **Data** (tracking, catch, rescue, first aid, species evidence) | [Offer it](../../issues/new?template=offer-data.yml). A description is enough to start. See [CONTRIBUTING.md](CONTRIBUTING.md). |
 | **Research skills** | Test one of the [fifteen claims](https://19-degrees.org/#h-agenda), or rerun the method for your country with the scripts in [`src/`](src/README.md). |
 | **A classroom** | Use the [printable sheets](https://19-degrees.org/classroom.html): a real climate story students can test themselves. |
 | **An audience** | Share the site and the [share images](share/). Accurate reporting saves lives and sharks. |
+
+## Who's behind it
+
+19 Degrees is made by Blake Erickson, an ocean advocate with a lifelong obsession with sharks. It is independent: not funded by any government, deterrent maker or advocacy group. Every number comes from public data and published research, linked at the source, and anyone can rebuild it from the code here.
+
+## How to cite
+
+Erickson, B. (2026). *19 Degrees: The ocean is moving. So are the sharks.* https://19-degrees.org
+
+Please also cite the data sources below.
 
 ---
 
