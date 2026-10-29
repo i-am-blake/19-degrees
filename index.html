@@ -1681,7 +1681,7 @@ try{
 try{const VENMO="Send-It-Blake"; if(VENMO){const a=document.getElementById("venmoLink"); a.href="https://venmo.com/u/"+encodeURIComponent(VENMO); 
   const pop=document.getElementById("supportPop"); document.getElementById("supportGo").href=a.href;
   let shown=false; const show=()=>{ if(shown) return; let gone=false; try{gone=sessionStorage.getItem("n19-support")==="x";}catch(e){} if(gone) return; shown=true; pop.hidden=false; };
-  addEventListener("scroll",()=>{ const max=document.documentElement.scrollHeight-innerHeight; if(max>0&&scrollY/max>.35) show(); },{passive:true});
+  addEventListener("scroll",()=>{ const max=document.documentElement.scrollHeight-innerHeight; if(max>0&&scrollY/max>.2) show(); },{passive:true});
   
   const TXT="The ocean is warming. Here's what it means for your next swim.", HANDLE="";
   const link=src=>{const u=new URL(window.N19_URL);u.searchParams.set("ref",src);return u.toString();};
