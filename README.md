@@ -65,7 +65,11 @@ The most useful thing right now is **data**. See [CONTRIBUTING.md](CONTRIBUTING.
 
 ## Licence
 
-Code: MIT. Text, charts and the 19 Degrees datasets: CC BY 4.0. Source data stays under its own licence. See `LICENSE`.
+Code: MIT. Text, charts and the 19 Degrees datasets: CC BY 4.0. Fonts: SIL Open Font License. Source data stays under its own licence. The 19 Degrees name and logo are not licensed for reuse. See [`LICENSE`](LICENSE).
+
+## Disclaimer
+
+19 Degrees is an educational and research project, not safety, medical or professional advice, and is provided as is, without warranty. Don't use it to decide whether or where to swim: follow lifesavers, beach signs and local authorities. If you build on it, for example in an app or alert service, you are responsible for how it is used.
 
 ## Privacy
 

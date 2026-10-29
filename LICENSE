@@ -20,5 +20,15 @@ Credit: "19 Degrees, Blake Erickson", with a link to the page.
 - Queensland Shark Control Program data: Queensland Government open data (check the licence on data.qld.gov.au before redistributing).
 - Figures quoted from published studies remain the work of their authors; see the page's source list.
 
-4. Name and logo
-The 19 Degrees name and shark logo are not covered by the licences above; please don't use them to imply endorsement.
+4. Fonts and illustrations
+- The fonts in fonts/ (Bricolage Grotesque, Figtree, Martian Mono) are under the SIL Open Font License 1.1; see fonts/OFL.txt. They are not covered by the MIT License.
+- The shark outlines are traced from public-domain images (NOAA; Robbie Cada), credited on the page.
+
+5. Name and logo
+The 19 Degrees name and the shark "19" logo are not licensed under MIT or CC BY. All rights reserved. You may refer to the project by name and link to it, but don't use the name or logo for your own product, service or site, or in a way that suggests the author endorses you or your work.
+
+6. No advice, no warranty
+19 Degrees is an independent educational and research project. Its text, charts, data and code summarise public data and published research. They may contain errors or be out of date and are provided "as is", without warranty of any kind. They are not safety, medical, legal or professional advice. Don't rely on them to decide whether or where to swim, surf or dive: follow lifesavers, beach signs and local authorities. Product information summarises published independent tests, which are linked; it is not the author's own testing and is not an endorsement or a criticism of any maker. To the fullest extent the law allows, the author is not liable for any loss, injury or damage arising from use of, or reliance on, this project or anything built with it. Anyone who reuses the code, data or content (for example in an app, alert or warning service) is responsible for how they use it.
+
+7. Contributions
+Contributions are accepted under the same licences: code under MIT, text and data under CC BY 4.0, unless agreed otherwise in writing. By contributing you confirm you have the right to do so.
