@@ -22,6 +22,8 @@ Australia has one of the longest shark-bite records on Earth, so we started ther
 
 > **170 bull shark bites. Not one in water below 19°C.**
 
+Tagged sharks agree: of 20,105 days that 132 tagged bull sharks were detected off NSW, 99.5% fell in months when the sea was 19°C or warmer.
+
 That line is moving. Off Sydney, water at 19°C or more now lasts about 45% longer each year than it did a century ago, and it reaches about 215 km further down the coast. The bites have followed: further south, later in the year, and out of estuaries, harbors and rivers into coastal waters, where 68% of bull shark bites since 2015 have happened, up from 4% before 1960.
 
 None of this means more sharks. Oceanic sharks and rays are down about 71% worldwide since 1970 ([Pacoureau et al. 2021](https://www.nature.com/articles/s41586-020-03173-9)), and in Australia drowning on the coast takes about 49 lives for every one lost to a shark. It means **fewer sharks, closer encounters**, and a changing map of where to be ready.
@@ -120,6 +122,7 @@ The analysis scripts are in `src/`. See [`src/README.md`](src/README.md) to rebu
 - **Today's sea temperature:** Open-Meteo Marine
 - **Shark-control catches (claim C1):** Queensland Shark Control Program open data
 - **Coastal drownings:** Surf Life Saving Australia, National Coastal Safety Report 2025
+- **Shark tracking:** [IMOS Animal Tracking](https://researchdata.edu.au/imos-animal-tracking-2007-ongoing/3961802) acoustic detections (Integrated Marine Observing System), CC BY 4.0. Fetched by `.github/workflows/fetch-imos.yml`; analysed by `src/imos19.py`
 - **Population:** Australian Bureau of Statistics
 - **Safety evidence and other figures:** published studies, each linked on the site
 
