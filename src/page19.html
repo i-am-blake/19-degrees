@@ -509,6 +509,13 @@ table.dt thead th{color:var(--muted);font-weight:600}
 .dsteps{margin:6px 0 0;padding-left:22px;font-size:15.5px}.dsteps li{margin:8px 0}
 .dbtns{display:flex;flex-wrap:wrap;gap:12px;align-items:center;margin-top:18px}
 .ghbtn{display:inline-block;padding:11px 16px;border:1px solid currentColor;border-radius:10px;font-weight:600;font-size:15px;text-decoration:none}
+
+.sharegrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px;margin-top:-4px}
+.sharegrid[hidden]{display:none}
+.sharegrid a,.sharegrid button{display:flex;align-items:center;justify-content:center;min-height:40px;padding:6px 10px;font:inherit;font-weight:600;font-size:14px;color:var(--ink);text-decoration:none;background:rgba(255,255,255,.04);border:1px solid var(--rule);cursor:pointer;transition:border-color .15s,background-color .15s}
+.sharegrid a:hover,.sharegrid button:hover{border-color:#3395BE;background:rgba(51,149,190,.14)}
+.sharegrid a:focus-visible,.sharegrid button:focus-visible{outline:2px solid #3395BE;outline-offset:2px}
+.sharegrid .sgcopy{grid-column:1/-1}
 </style>
 
 <a class="skip" href="#top">Skip to the story</a>
@@ -1159,7 +1166,7 @@ table.dt thead th{color:var(--muted);font-weight:600}
     <p class="legal"><b>Privacy.</b> This site sets no cookies. It counts visits and clicks with <a href="https://www.goatcounter.com/" target="_blank" rel="noopener">GoatCounter</a>, which stores no personal data. The contact form sends your name, email and message to Blake through <a href="https://web3forms.com/" target="_blank" rel="noopener">Web3Forms</a>; they are used only to reply.</p>
     <p class="copy">© 2026 Blake Erickson · <a href="#contact">Contact</a></p>
   </footer>
-<aside class="supportpop" id="supportPop" hidden aria-label="Support this project"><div class="sphead"><b>Support the future of this project</b><button type="button" class="spx" id="supportX" aria-label="Close"><svg viewBox="0 0 14 14" width="14" height="14" aria-hidden="true"><path d="M1 1L13 13M13 1L1 13" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></button></div><p>19 Degrees is independent, free and open source. If it's useful to you, your class or your research, you can help keep it updated and growing.</p><div class="spbtns"><a class="supportbtn" id="supportGo" href="#" target="_blank" rel="noopener">Support on Venmo</a><button type="button" class="sharepage" id="sharePage">Share this page</button></div></aside>
+<aside class="supportpop" id="supportPop" hidden aria-label="Support this project"><div class="sphead"><b>Support the future of this project</b><button type="button" class="spx" id="supportX" aria-label="Close"><svg viewBox="0 0 14 14" width="14" height="14" aria-hidden="true"><path d="M1 1L13 13M13 1L1 13" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></button></div><p>19 Degrees is independent, free and open source. If it's useful to you, your class or your research, you can help keep it updated and growing.</p><div class="spbtns"><a class="supportbtn" id="supportGo" href="#" target="_blank" rel="noopener">Support on Venmo</a><button type="button" class="sharepage" id="sharePage" aria-expanded="false" aria-controls="shareGrid">Share this page</button></div><div class="sharegrid" id="shareGrid" hidden role="group" aria-label="Share on"><a data-net="linkedin">LinkedIn</a><a data-net="x">X</a><a data-net="facebook">Facebook</a><a data-net="whatsapp">WhatsApp</a><button type="button" class="sgcopy" id="shareCopy">Copy link</button></div></aside>
 </div>
 
 <script type="application/json" id="n19-data">{}</script>
@@ -1611,11 +1618,21 @@ try{const VENMO="Send-It-Blake"; if(VENMO){const a=document.getElementById("venm
   const pop=document.getElementById("supportPop"); document.getElementById("supportGo").href=a.href;
   let shown=false; const show=()=>{ if(shown) return; let gone=false; try{gone=sessionStorage.getItem("n19-support")==="x";}catch(e){} if(gone) return; shown=true; pop.hidden=false; };
   addEventListener("scroll",()=>{ const max=document.documentElement.scrollHeight-innerHeight; if(max>0&&scrollY/max>.35) show(); },{passive:true});
-  const sb=document.getElementById("sharePage"); sb.addEventListener("click",async()=>{const url=window.N19_URL, t="The ocean is warming. Here's what it means for your next swim.";
-    try{ if(navigator.share){await navigator.share({title:"19 Degrees",text:t,url});return;} }catch(e){if(e&&e.name==="AbortError")return;}
-    try{await navigator.clipboard.writeText(url);sb.textContent="Link copied";}
-    catch(e){const x=document.createElement("textarea");x.value=url;document.body.appendChild(x);x.select();try{document.execCommand("copy");sb.textContent="Link copied";}catch(_){sb.textContent="Copy failed";}x.remove();}
-    setTimeout(()=>sb.textContent="Share this page",2200);});
+  const sb=document.getElementById("sharePage"), sg=document.getElementById("shareGrid");
+  const TXT="The ocean is warming. Here's what it means for your next swim.", HANDLE="";
+  const link=src=>{const u=new URL(window.N19_URL);u.searchParams.set("ref",src);return u.toString();};
+  const msg=src=>TXT+" "+link(src)+(HANDLE?" via "+HANDLE:"");
+  const href={linkedin:()=>"https://www.linkedin.com/sharing/share-offsite/?url="+encodeURIComponent(link("linkedin")),
+    x:()=>"https://x.com/intent/post?text="+encodeURIComponent(TXT+(HANDLE?" via "+HANDLE:""))+"&url="+encodeURIComponent(link("x")),
+    facebook:()=>"https://www.facebook.com/sharer/sharer.php?u="+encodeURIComponent(link("facebook")),
+    whatsapp:()=>"https://wa.me/?text="+encodeURIComponent(msg("whatsapp"))};
+  sg.querySelectorAll("a[data-net]").forEach(a=>{const n=a.dataset.net;a.href=href[n]();a.target="_blank";a.rel="noopener";
+    a.addEventListener("click",()=>{try{window.N19_EV&&window.N19_EV("Share",{to:n});}catch(_){}});});
+  sb.addEventListener("click",()=>{const o=sg.hidden;sg.hidden=!o;sb.setAttribute("aria-expanded",o?"true":"false");});
+  const sc=document.getElementById("shareCopy"); sc.addEventListener("click",async()=>{const url=link("copy");
+    try{await navigator.clipboard.writeText(url);sc.textContent="Link copied";}
+    catch(e){const x=document.createElement("textarea");x.value=url;document.body.appendChild(x);x.select();try{document.execCommand("copy");sc.textContent="Link copied";}catch(_){sc.textContent="Copy failed";}x.remove();}
+    setTimeout(()=>sc.textContent="Copy link",2200);});
   document.getElementById("supportX").addEventListener("click",()=>{ pop.hidden=true; try{sessionStorage.setItem("n19-support","x");}catch(e){} });
   const f=document.getElementById("credits"); if(f){const p=document.createElement("p"); p.innerHTML=`<b>Support the future of this project:</b> <a href="${a.href}" target="_blank" rel="noopener">Venmo @${VENMO}</a>`; f.after(p);}}}catch(e){console.error(e)}
 </script>
