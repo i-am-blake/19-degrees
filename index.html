@@ -1263,7 +1263,7 @@ try{
     const NSo=D.bull_decades.nsw_south, hb=Object.values(NSo).reduce((t,v)=>t+v[1],0), tot=Object.values(NSo).reduce((t,v)=>t+v[0],0), A=D.anomaly&&D.anomaly.all;
     (document.getElementById("tk1")||{}).textContent=`About ${Math.round(R2.drown/R2.shark)} people drown on Australia's coast for every shark death. Swim between the red and yellow flags.`;
     (document.getElementById("tk2")||{}).textContent=`Not one of ${B1.n} bull shark bites since 1900 happened in water below 19°C. Tiger sharks almost the same: ${D.species.tiger.below} of ${D.species.tiger.n}.`;
-    (document.getElementById("tk3")||{}).textContent=`Sydney's sea is at 19°C or more ${SYD.recent.toFixed(0)} months a year, up from ${SYD.base.toFixed(0)}. South of Port Macquarie, ${au(eN)} of ${s4(eN)} bull shark bites since 2000 came in autumn or winter (March to August), against ${au(eA)} of ${s4(eA)} before 1960.`;
+    (document.getElementById("tk3")||{}).textContent=`Sydney's sea is at 19°C or more ${SYD.recent.toFixed(1)} months a year, up from ${SYD.base.toFixed(1)}. South of Port Macquarie, ${au(eN)} of ${s4(eN)} bull shark bites since 2000 came in autumn or winter (March to August), against ${au(eA)} of ${s4(eA)} before 1960.`;
     {const O=D.bull_open.aus.eras, f=O[0], l=O[O.length-1]; (document.getElementById("tk4")||{}).textContent=`Before 1960, ${f[1]} of ${f[0]} bull shark bites in Australia were in coastal waters; the rest were in estuaries, harbors and rivers. Since 2015, ${l[1]} of ${l[0]} have been in coastal waters. Rivers and harbors after rain are still risky, but so now are nearby beaches.`;}
     (document.getElementById("tk5")||{}).textContent=A?`Months that were unusually warm for their time of year had about the same number of bites as unusually cool ones (ratio ${A.ratio.toFixed(2)}, range ${A.lo.toFixed(2)} to ${A.hi.toFixed(2)}). What has changed is how long the warm season lasts.`:"";
     const Zt=D.zones; if(Zt) (document.getElementById("tk7")||{}).textContent=`The stretch of coast where the sea is 19°C or more for half the year now reaches about ${Math.round((Zt.line[0]-Zt.line[Zt.line.length-1])*111)} km further south than in ${Zt.eras[0][0]}–${String(Zt.eras[0][1]).slice(2)}, from near Jervis Bay to near Eden. At the pace since 1980 it passes the Victorian border by about 2050.`;
@@ -1758,7 +1758,7 @@ try{
   const A=D.ahead&&D.ahead.east, sA=A&&A.beaches.find(b=>b.name==="Sydney");
   const facts=[
     `Not one of ${B.n} bull shark bites in Australia since 1900 happened in a month when the sea was cooler than 19°C (66°F).`,
-    `Off Sydney, the sea now stays 19°C or warmer about ${Math.round(SYD.recent)} months a year, up from ${Math.round(SYD.base)} a century ago: ${Math.round((SYD.recent/SYD.base-1)*100)}% longer.`,
+    `Off Sydney, the sea now stays 19°C or warmer about ${SYD.recent.toFixed(1)} months a year, up from ${SYD.base.toFixed(1)} a century ago: ${Math.round((SYD.recent/SYD.base-1)*100)}% longer.`,
     `The line where the sea stays 19°C or warmer for half the year has moved about ${km} km south, from near Jervis Bay to near Eden.`,
     `${pc(O[O.length-1])}% of Australia's bull shark bites since 2015 happened in coastal waters, mostly off surf beaches, up from ${pc(O[0])}% before 1960.`,
     `About ${r} people drown on Australia's coast for every shark death.`];
