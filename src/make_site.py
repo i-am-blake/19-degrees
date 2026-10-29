@@ -3,7 +3,7 @@ Wraps the built page in a full HTML document with launch/head.html (link preview
 the classroom sheets, data/, share/ and launch files. Fails if the address placeholder or a personal email is left in."""
 import os, re, shutil, sys
 page, pub, out = sys.argv[1:4]
-SITE = "https://i-am-blake.github.io/19-degrees/"
+SITE = "https://19-degrees.org/"
 body = open(page).read()
 body = re.sub(r'<title>.*?</title>\n?', '', body, count=1)
 # fonts: served from this site instead of Google, so no visitor data goes to Google
@@ -26,6 +26,7 @@ doc = ('<!doctype html>\n<html lang="en">\n<head>\n<meta charset="utf-8">\n'
 if os.path.exists(out): shutil.rmtree(out)
 os.makedirs(out)
 open(os.path.join(out, "index.html"), "w").write(doc)
+open(os.path.join(out, "CNAME"), "w").write(SITE.split("//")[1].strip("/") + "\n")  # GitHub Pages custom domain
 for f in os.listdir(pub):
     if re.match(r"classroom.*\.html$", f):
         t = open(os.path.join(pub, f)).read()

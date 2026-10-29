@@ -6,7 +6,7 @@ The ocean is warming, and the animals in it are moving. Marine species worldwide
 
 **Our goal is an open, global evidence base on where and when sharks and people will meet as the sea warms, so coasts can prepare before the first bite, not after it.**
 
-**[See the live site →](https://i-am-blake.github.io/19-degrees/)**
+**[See the live site →](https://19-degrees.org/)**
 
 ---
 
@@ -33,8 +33,8 @@ None of this means more sharks. Oceanic sharks and rays are down about 71% world
 | You have | You can |
 |---|---|
 | **Data** (tracking, catch, rescue, first aid, species evidence) | [Offer it](../../issues/new?template=offer-data.yml). A description is enough to start. See [CONTRIBUTING.md](CONTRIBUTING.md). |
-| **Research skills** | Test one of the [fifteen claims](https://i-am-blake.github.io/19-degrees/#h-agenda), or rerun the method for your country with the scripts in [`src/`](src/README.md). |
-| **A classroom** | Use the [printable sheets](https://i-am-blake.github.io/19-degrees/classroom.html): a real climate story students can test themselves. |
+| **Research skills** | Test one of the [fifteen claims](https://19-degrees.org/#h-agenda), or rerun the method for your country with the scripts in [`src/`](src/README.md). |
+| **A classroom** | Use the [printable sheets](https://19-degrees.org/classroom.html): a real climate story students can test themselves. |
 | **An audience** | Share the site and the [share images](share/). Accurate reporting saves lives and sharks. |
 
 ---

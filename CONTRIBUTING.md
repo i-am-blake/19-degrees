@@ -23,7 +23,7 @@ The site already uses every public source we could find. The data that would set
 
 **How sharing works**
 
-1. **Tell us what you have.** [Open a data offer](../../issues/new?template=offer-data.yml) or use the [contact form](https://i-am-blake.github.io/19-degrees/#contact). A description is enough; don't post the data itself in an issue.
+1. **Tell us what you have.** [Open a data offer](../../issues/new?template=offer-data.yml) or use the [contact form](https://19-degrees.org/#contact). A description is enough; don't post the data itself in an issue.
 2. **Agree how it's used:** openly under CC BY, summarised only (results published, raw data stays private), or under your organisation's data agreement.
 3. **Keep people private.** Only de-identified data: no names, contact details, photos of people or medical records that identify anyone. Only share data you have the right to share. Never contact people who were bitten, or their families, for this project.
 4. **Get credit.** Your name or organisation on the claim card and in the site's changelog, using the [CRediT contributor roles](https://credit.niso.org/). The data stays yours.
