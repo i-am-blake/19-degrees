@@ -1611,7 +1611,7 @@ try{const VENMO="Send-It-Blake"; if(VENMO){const a=document.getElementById("venm
   const pop=document.getElementById("supportPop"); document.getElementById("supportGo").href=a.href;
   let shown=false; const show=()=>{ if(shown) return; let gone=false; try{gone=sessionStorage.getItem("n19-support")==="x";}catch(e){} if(gone) return; shown=true; pop.hidden=false; };
   addEventListener("scroll",()=>{ const max=document.documentElement.scrollHeight-innerHeight; if(max>0&&scrollY/max>.35) show(); },{passive:true});
-  const sb=document.getElementById("sharePage"); sb.addEventListener("click",async()=>{const url=window.N19_URL, t="19 Degrees: sea temperature and shark bites in Australia";
+  const sb=document.getElementById("sharePage"); sb.addEventListener("click",async()=>{const url=window.N19_URL, t="19 Degrees: advancing shark and climate research worldwide. 170 bull shark bites, not one below 19°C.";
     try{ if(navigator.share){await navigator.share({title:"19 Degrees",text:t,url});return;} }catch(e){if(e&&e.name==="AbortError")return;}
     try{await navigator.clipboard.writeText(url);sb.textContent="Link copied";}
     catch(e){const x=document.createElement("textarea");x.value=url;document.body.appendChild(x);x.select();try{document.execCommand("copy");sb.textContent="Link copied";}catch(_){sb.textContent="Copy failed";}x.remove();}
