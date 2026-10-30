@@ -1,0 +1,30 @@
+ok ACCESS-CM2
+skip AWI-CM-1-1-MR MemoryError Unable to allocate 5.02 TiB for an array with shape (830305, 830305) and data type float64
+ok BCC-CSM2-MR
+ok CAMS-CSM1-0
+ok CESM2-WACCM
+ok CIESM
+ok CMCC-CM2-SR5
+ok CMCC-ESM2
+ok CanESM5
+ok EC-Earth3
+ok EC-Earth3-CC
+ok EC-Earth3-Veg-LR
+ok FGOALS-f3-L
+ok FGOALS-g3
+ok FIO-ESM-2-0
+skip GFDL-CM4 ValueError Dimensions {'lat', 'lon'} do not exist. Expected one or more of FrozenMappingWarningOnValuesAccess({'y': 1080, 'x': 1440
+skip GFDL-ESM4 ValueError Dimensions {'y', 'x'} do not exist. Expected one or more of FrozenMappingWarningOnValuesAccess({'lat': 180, 'lon': 360, 
+ok IITM-ESM
+ok INM-CM4-8
+ok INM-CM5-0
+ok IPSL-CM6A-LR
+ok KACE-1-0-G
+ok MIROC6
+ok MPI-ESM1-2-HR
+ok MPI-ESM1-2-LR
+ok MRI-ESM2-0
+ok NESM3
+ok NorESM2-LM
+ok NorESM2-MM
+ok TaiESM1
