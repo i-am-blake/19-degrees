@@ -1,0 +1,41 @@
+name: Check links
+# Opens every outside link on the site and lists any that fail. Runs when started by hand and once a week.
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "17 14 * * 1"
+permissions:
+  contents: read
+jobs:
+  links:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - name: Check every outside link
+        run: |
+          python3 - <<'PY'
+          import re, html, glob, urllib.request, concurrent.futures as cf
+          urls = set()
+          for f in glob.glob("*.html"):
+              urls |= {html.unescape(u) for u in re.findall(r'href="(https?://[^"]+)"', open(f, encoding="utf-8").read())}
+          urls = sorted(u for u in urls if not u.rstrip("/").endswith("venmo.com/u"))
+          UA = "Mozilla/5.0 (Macintosh; Intel Mac OS X 14_0) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.0 Safari/605.1.15"
+          def check(u):
+              for method in ("HEAD", "GET"):
+                  try:
+                      r = urllib.request.urlopen(urllib.request.Request(u, method=method, headers={"User-Agent": UA, "Accept": "text/html,*/*"}), timeout=25)
+                      return u, r.status
+                  except urllib.error.HTTPError as e:
+                      code = e.code
+                      if method == "GET": return u, code
+                  except Exception as e:
+                      if method == "GET": return u, type(e).__name__
+              return u, "?"
+          with cf.ThreadPoolExecutor(12) as ex: res = list(ex.map(check, urls))
+          bad = [(u, s) for u, s in res if not (isinstance(s, int) and s < 400)]
+          print(f"{len(urls)} links checked, {len(bad)} need a look")
+          for u, s in bad: print(f"  {s}  {u}")
+          open("summary.md", "w").write(f"### {len(urls)} links checked, {len(bad)} need a look\n\n" + "".join(f"- `{s}` {u}\n" for u, s in bad))
+          PY
+          cat summary.md >> "$GITHUB_STEP_SUMMARY"
