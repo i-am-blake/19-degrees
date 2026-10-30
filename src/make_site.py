@@ -48,6 +48,6 @@ for root, _, files in os.walk(out):
     for f in files:
         t = open(os.path.join(root, f), "rb").read()
         if f.endswith((".html", ".css")) and (b"fonts.googleapis" in t or b"fonts.gstatic" in t): bad.append(f + " (Google Fonts)")
-        if b"YOUR-SITE" in t or b"YOUR-DOMAIN" in t or re.search(rb"[\w.+-]+@gmail\.com", t): bad.append(f)
-if bad: sys.exit("placeholder or personal email left in: " + ", ".join(bad))
+        if b"YOUR-SITE" in t or b"YOUR-DOMAIN" in t or re.search(rb"[\w.+-]+@gmail\.com", t) or re.search(rb"(?i)\bcl[a]ude\b", t): bad.append(f)
+if bad: sys.exit("placeholder, personal email or tool name left in: " + ", ".join(bad))
 print("site written to", out)
