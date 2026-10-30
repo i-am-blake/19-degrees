@@ -1,0 +1,26 @@
+name: Fetch Fremantle sea level
+# For claim C7. Downloads the monthly Fremantle tide-gauge record (PSMSL station 111), the standard index of the
+# Leeuwin Current's strength, and saves the small file to the 'ocean-data' branch. Runs only when started by hand.
+on:
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  ocean:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Download
+        run: |
+          mkdir -p out
+          curl -sSfL -o out/fremantle_psmsl111.rlrdata "https://psmsl.org/data/obtaining/rlr.monthly.data/111.rlrdata" || echo "download failed" > out/log.txt
+          printf "Monthly mean sea level at Fremantle, Western Australia (PSMSL station 111, Revised Local Reference, mm).\nSource: Permanent Service for Mean Sea Level (PSMSL), https://psmsl.org/data/obtaining/stations/111.php\nCite: Holgate, S.J. et al. (2013) New Data Systems and Products at the Permanent Service for Mean Sea Level. Journal of Coastal Research 29(3), 493-504; and PSMSL (2025), Tide Gauge Data, retrieved $(date -u +%Y-%m-%d).\n" > out/README.txt
+          ls -la out; head -3 out/fremantle_psmsl111.rlrdata || true
+      - name: Save to the ocean-data branch
+        if: always()
+        run: |
+          mkdir -p out br; cd br; git init -q -b ocean-data
+          cp ../out/* . 2>/dev/null || true
+          git add -A
+          git -c user.name="github-actions[bot]" -c user.email="41898900+github-actions[bot]@users.noreply.github.com" commit -qm "Fremantle sea level, $(date -u +%Y-%m-%d)"
+          git push -q -f "https://x-access-token:${{ github.token }}@github.com/${{ github.repository }}.git" HEAD:ocean-data
