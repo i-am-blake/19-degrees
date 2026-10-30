@@ -2,7 +2,8 @@
 Usage: python3 cmip_sst.py <out.csv> [max_models] [experiment]
 Reads the public CMIP6 archive on Google Cloud (Pangeo), monthly sea surface temperature (tos), first ensemble member of each
 model, and for every beach patch finds the nearest ocean cell. Writes each model's change per calendar month:
-mean 2040-2059 under the chosen scenario (default ssp245) minus mean 1995-2014 (historical run), in degrees C.
+mean 2040-2059 minus mean 2016-2025, both from the scenario run (default ssp245), in degrees C, so the change is measured
+from the same years as the observed baseline.
 The page adds that change to each beach's observed 2016-2025 months (HadISST) to count months at 19 C or more around 2050."""
 import sys, csv, numpy as np, pandas as pd, xarray as xr, gcsfs
 out = sys.argv[1]; MAXM = int(sys.argv[2]) if len(sys.argv) > 2 and sys.argv[2] else 99; EXP = sys.argv[3] if len(sys.argv) > 3 else "ssp245"
@@ -32,7 +33,7 @@ for m in models:
             i, j = np.unravel_index(np.argmin(d2), d2.shape)
             if d2[i, j] > 4: continue
             sel = {sp[0]: i, sp[1]: j}
-            th = dh.tos.isel(**sel).sel(time=slice("1995", "2014")).load(); tf = df.tos.isel(**sel).sel(time=slice("2040", "2059")).load()
+            th = df.tos.isel(**sel).sel(time=slice("2016", "2025")).load(); tf = df.tos.isel(**sel).sel(time=slice("2040", "2059")).load()
             for mo in range(1, 13):
                 dv = float(tf[tf["time.month"] == mo].mean() - th[th["time.month"] == mo].mean())
                 w.writerow([m, b, mo, round(dv, 3), round(float(LA[i, j]), 2), round(float(LO[i, j]), 2)])
