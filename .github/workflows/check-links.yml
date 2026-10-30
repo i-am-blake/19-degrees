@@ -35,7 +35,7 @@ jobs:
           with cf.ThreadPoolExecutor(12) as ex: res = list(ex.map(check, urls))
           bad = [(u, s) for u, s in res if not (isinstance(s, int) and s < 400)]
           print(f"{len(urls)} links checked, {len(bad)} need a look")
-          for u, s in bad: print(f"  {s}  {u}")
+          for u, s in bad: print(f"::warning title=Link needs a look::{s} {u}")
           open("summary.md", "w").write(f"### {len(urls)} links checked, {len(bad)} need a look\n\n" + "".join(f"- `{s}` {u}\n" for u, s in bad))
           PY
           cat summary.md >> "$GITHUB_STEP_SUMMARY"
