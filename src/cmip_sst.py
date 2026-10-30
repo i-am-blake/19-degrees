@@ -35,6 +35,7 @@ for m in models:
         ok = np.isfinite(dh.tos.isel(time=0).values)
         sp = [d for d in dh.tos.dims if d != "time"]
         for b, (a, o) in PTS.items():
+            o = o % 360
             d2 = np.where(ok, (LA - a) ** 2 + ((LO - o) * np.cos(np.radians(a))) ** 2, np.inf)
             i, j = np.unravel_index(np.argmin(d2), d2.shape)
             if d2[i, j] > 4: continue
