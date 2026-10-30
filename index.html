@@ -635,21 +635,22 @@ table.dt thead th{color:var(--muted);font-weight:600}
 @media (prefers-reduced-motion:reduce){.cfilter button,.jumpbar a{transition:none}}
 
 .jbtoggle{display:none}
-@media (max-width:720px){
- .jumpbar{clip-path:none;box-shadow:none;margin:0 -16px;padding:28px 16px 10px}
- .jbin{left:16px!important;right:16px!important}
- .jbtoggle{display:flex;align-items:center;gap:8px;width:100%;min-height:44px;padding:8px 14px;font:inherit;font-size:15px;font-weight:600;color:var(--ink);background:rgba(255,255,255,.04);border:1px solid var(--rule);border-radius:12px;cursor:pointer;text-align:left}
- .jbtoggle:hover,.jbtoggle[aria-expanded="true"]{border-color:#3395BE}
- .jbtoggle:focus-visible{outline:2px solid #3395BE;outline-offset:2px}
- .jbtoggle .jbl{font-weight:500;color:var(--muted)}
- .jbtoggle .jbcur{flex:1}
- .jbchev{width:8px;height:8px;border-right:2px solid currentColor;border-bottom:2px solid currentColor;transform:translateY(-2px) rotate(45deg);transition:transform .15s}
- .jbtoggle[aria-expanded="true"] .jbchev{transform:translateY(2px) rotate(-135deg)}
- .jbin{display:none;position:absolute;left:0;right:0;top:calc(100% - 4px);flex-direction:column;gap:2px;overflow:visible;padding:8px;background:#0B2E48;border:1px solid #3395BE;border-radius:12px;z-index:6;box-shadow:0 12px 28px rgba(0,0,0,.35)}
- .jumpbar.open .jbin{display:flex}
- .jbin a{border:0;border-radius:8px;padding:12px 12px;background:transparent;font-size:15px}
- .jbin a.on{background:rgba(51,149,190,.24)}
-}
+/* when the section links don't fit on one line, they become a dropdown (set by script) */
+.jumpbar.compact{clip-path:none;box-shadow:none;margin:0 -16px;padding:30px 16px 10px}
+.jumpbar.compact .jbtoggle{display:flex;align-items:center;gap:8px;width:100%;min-height:44px;padding:8px 14px;font:inherit;font-size:15px;font-weight:600;color:var(--ink);background:rgba(255,255,255,.04);border:1px solid var(--rule);border-radius:12px;cursor:pointer;text-align:left}
+.jumpbar.compact .jbtoggle:hover,.jumpbar.compact .jbtoggle[aria-expanded="true"]{border-color:#3395BE}
+.jumpbar.compact .jbtoggle:focus-visible{outline:2px solid #3395BE;outline-offset:2px}
+.jbtoggle .jbl{font-weight:500;color:var(--muted)}
+.jbtoggle .jbcur{flex:1}
+.jbchev{width:8px;height:8px;border-right:2px solid currentColor;border-bottom:2px solid currentColor;transform:translateY(-2px) rotate(45deg);transition:transform .15s}
+.jbtoggle[aria-expanded="true"] .jbchev{transform:translateY(2px) rotate(-135deg)}
+.jumpbar.compact .jbin{display:none;position:absolute;left:16px;right:16px;top:calc(100% - 4px);flex-direction:column;gap:2px;overflow:visible;padding:8px;background:#0B2E48;border:1px solid #3395BE;border-radius:12px;z-index:6;box-shadow:0 12px 28px rgba(0,0,0,.35)}
+.jumpbar.compact.open .jbin{display:flex}
+.jumpbar.compact .jbin a{border:0;border-radius:8px;padding:12px;background:transparent;font-size:15px}
+.jumpbar.compact .jbin a:hover{background:rgba(51,149,190,.12)}
+.jumpbar.compact .jbin a.on{background:rgba(51,149,190,.24)}
+/* equal space above (from the lowest point of the wave) and below */
+@media (max-width:720px){.jumpbar{top:82px}.jumpbar,.jumpbar.compact{padding-top:24px;padding-bottom:10px}}
 </style>
 
 <a class="skip" href="#top">Skip to the story</a>
@@ -1993,6 +1994,9 @@ try{const cl=[...document.querySelectorAll("article.claim")], fb=[...document.qu
   document.addEventListener("click",e=>{const a=e.target.closest('a[href^="#c"]');if(a){const c=document.getElementById(a.getAttribute("href").slice(1));if(c&&c.matches("article.claim"))setTimeout(()=>{c.hidden=false;c.querySelector("details").open=true;},0);}});
   const jl=[...document.querySelectorAll(".jumpbar a")], secs=jl.map(a=>document.getElementById(a.getAttribute("href").slice(1)));
   const jb=document.querySelector(".jumpbar"), jt=document.querySelector(".jbtoggle"), jc=document.querySelector(".jbcur");
+  const jin=jb.querySelector(".jbin"), fit=()=>{if(!jb.offsetParent)return;jb.classList.remove("compact");const over=jin.scrollWidth>jin.clientWidth+1;jb.classList.toggle("compact",over);if(!over){jb.classList.remove("open");jt.setAttribute("aria-expanded","false");}};
+  fit();document.fonts&&document.fonts.ready.then(fit);
+  try{new ResizeObserver(()=>fit()).observe(document.getElementById("panel-research"));}catch(_){addEventListener("resize",fit);}
   const jClose=()=>{jb.classList.remove("open");jt.setAttribute("aria-expanded","false");};
   jt.addEventListener("click",e=>{e.stopPropagation();const o=!jb.classList.contains("open");jb.classList.toggle("open",o);jt.setAttribute("aria-expanded",o?"true":"false");if(o)(jb.querySelector(".jbin a.on")||jb.querySelector(".jbin a")).focus();});
   document.addEventListener("click",e=>{if(jb.classList.contains("open")&&!e.target.closest(".jumpbar"))jClose();});
