@@ -1,5 +1,6 @@
 """Projected sea temperature change by 2050 at each beach's sea patch, from CMIP6 climate models (claim C3).
-Usage: python3 cmip_sst.py <out.csv> [max_models] [experiment]
+Usage: python3 cmip_sst.py <out.csv> [max_models] [experiment] [points.csv] [future years, e.g. 2040-2049]
+With a points file (name,lat,lon), uses those places instead of the beach patches.
 Reads the public CMIP6 archive on Google Cloud (Pangeo), monthly sea surface temperature (tos), first ensemble member of each
 model, and for every beach patch finds the nearest ocean cell. Writes each model's change per calendar month:
 mean 2040-2059 minus mean 2016-2025, both from the scenario run (default ssp245), in degrees C, so the change is measured
@@ -7,9 +8,14 @@ from the same years as the observed baseline.
 The page adds that change to each beach's observed 2016-2025 months (HadISST) to count months at 19 C or more around 2050."""
 import sys, csv, numpy as np, pandas as pd, xarray as xr, gcsfs
 out = sys.argv[1]; MAXM = int(sys.argv[2]) if len(sys.argv) > 2 and sys.argv[2] else 99; EXP = sys.argv[3] if len(sys.argv) > 3 else "ssp245"
+PTSFILE = sys.argv[4] if len(sys.argv) > 4 and sys.argv[4] else None
+FUT = sys.argv[5] if len(sys.argv) > 5 and sys.argv[5] else "2040-2059"
 PTS = {"goldcoast": (-28.0, 153.9), "byron": (-28.6, 154.0), "newcastle": (-32.9, 152.3), "sydney": (-33.9, 151.5), "wollongong": (-34.4, 151.3),
        "eden": (-37.1, 150.4), "exmouth": (-21.5, 113.5), "geraldton": (-28.5, 113.5), "perth": (-31.9, 115.2), "mandurah": (-32.5, 115.2),
        "margaret": (-33.9, 114.5), "albany": (-35.5, 117.9)}
+if PTSFILE:
+    PTS = {r["name"]: (float(r["lat"]), float(r["lon"])) for r in csv.DictReader(open(PTSFILE))}
+F0, F1 = FUT.split("-")
 cat = pd.read_csv("https://storage.googleapis.com/cmip6/pangeo-cmip6.csv")
 c = cat[(cat.variable_id == "tos") & (cat.table_id == "Omon") & (cat.member_id == "r1i1p1f1")]
 h = c[c.experiment_id == "historical"]; f = c[c.experiment_id == EXP]
@@ -33,7 +39,7 @@ for m in models:
             i, j = np.unravel_index(np.argmin(d2), d2.shape)
             if d2[i, j] > 4: continue
             sel = {sp[0]: i, sp[1]: j}
-            th = df.tos.isel(**sel).sel(time=slice("2016", "2025")).load(); tf = df.tos.isel(**sel).sel(time=slice("2040", "2059")).load()
+            th = df.tos.isel(**sel).sel(time=slice("2016", "2025")).load(); tf = df.tos.isel(**sel).sel(time=slice(F0, F1)).load()
             for mo in range(1, 13):
                 dv = float(tf[tf["time.month"] == mo].mean() - th[th["time.month"] == mo].mean())
                 w.writerow([m, b, mo, round(dv, 3), round(float(LA[i, j]), 2), round(float(LO[i, j]), 2)])
