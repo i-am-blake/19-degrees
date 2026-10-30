@@ -1,6 +1,6 @@
 name: Fetch Fremantle sea level
 # For claim C7. Downloads the monthly Fremantle tide-gauge record (PSMSL station 111), the standard index of the
-# Leeuwin Current's strength, and saves the small file to the 'ocean-data' branch. Runs only when started by hand.
+# Leeuwin Current's strength, plus the more recent UHSLC fast-delivery months, and saves the small file to the 'ocean-data' branch. Runs only when started by hand.
 on:
   workflow_dispatch:
 permissions:
@@ -14,6 +14,8 @@ jobs:
         run: |
           mkdir -p out
           curl -sSfL -o out/fremantle_psmsl111.rlrdata "https://psmsl.org/data/obtaining/rlr.monthly.data/111.rlrdata" || echo "download failed" > out/log.txt
+          for f in fast/monthly/m175.csv rqds/indian/monthly/m175a.csv; do curl -sSfL -o "out/uhslc_$(basename $f)" "https://uhslc.soest.hawaii.edu/data/csv/$f" || echo "uhslc $f failed" >> out/log.txt; done
+          printf "UHSLC files: University of Hawaii Sea Level Center, station 175 (Fremantle); fast-delivery (recent months) and research-quality monthly means, mm. Cite: Caldwell, P. C., M. A. Merrifield, P. R. Thompson (2015), Sea level measured by tide gauges from global oceans, the Joint Archive for Sea Level holdings (NCEI Accession 0019568), NOAA NCEI, doi:10.7289/V5V40S7W.\n" > out/README_uhslc.txt
           printf "Monthly mean sea level at Fremantle, Western Australia (PSMSL station 111, Revised Local Reference, mm).\nSource: Permanent Service for Mean Sea Level (PSMSL), https://psmsl.org/data/obtaining/stations/111.php\nCite: Holgate, S.J. et al. (2013) New Data Systems and Products at the Permanent Service for Mean Sea Level. Journal of Coastal Research 29(3), 493-504; and PSMSL (2025), Tide Gauge Data, retrieved $(date -u +%Y-%m-%d).\n" > out/README.txt
           ls -la out; head -3 out/fremantle_psmsl111.rlrdata || true
       - name: Save to the ocean-data branch
