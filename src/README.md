@@ -84,7 +84,16 @@ python3 -I imos19.py imos sst imos.json      # writes the tagging numbers; build
 python3 -I rain19.py fetch asid.csv chirps/ kd/            # downloads from NOAA ERDDAP, no account needed
 python3 -I rain19.py test  asid.csv chirps/ kd/ rain.json  # build19.py reads rain.json beside itself
 python3 -I rain19.py gauge asid.csv sites.csv gauge_monthly.csv rain.json   # rain-gauge check, files from the gauge-data branch
+python3 -I rain19.py mouths asid.csv river_mouths_east.csv ne_10m_coastline.geojson rain.json   # river-mouth check, file from the ocean-data branch
 ```
 
 The gauge files come from `.github/workflows/fetch-gauges.yml` (Actions tab, run by hand), which finds up to three long-running gauges within 25 km of each bite site in `rain_points.csv`.
+
+## Warm current off Western Australia (claim C7)
+
+`leeuwin19.py` ranks each Western Australian bull shark bite month by the strength of the Leeuwin Current, read from detrended Fremantle sea level (PSMSL station 111, from the `ocean-data` branch). The public record currently ends in December 2022, so this is a first look until it catches up.
+
+```
+python3 -I leeuwin19.py asid.csv fremantle_psmsl111.rlrdata
+```
 

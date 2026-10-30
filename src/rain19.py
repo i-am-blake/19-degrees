@@ -3,6 +3,7 @@ Usage:
   python3 -I rain19.py fetch <asid.csv> <chirps_dir> [kd_dir]   download CHIRPS monthly rain (and, optionally, MODIS water clarity) at bite sites
   python3 -I rain19.py test  <asid.csv> <chirps_dir> [kd_dir] [rain.json]
   python3 -I rain19.py gauge <asid.csv> <sites.csv> <gauge_monthly.csv> [rain.json]   adds the rain-gauge check (files from the gauge-data branch)
+  python3 -I rain19.py mouths <asid.csv> <river_mouths_east.csv> <ne_10m_coastline.geojson> [rain.json]   adds the river-mouth check (east coast, 24-36 S)
 Data: CHIRPS v2.0 monthly precipitation, 0.05 deg, 1981 to now (Funk et al. 2015, Scientific Data; public domain, CC0),
 and MODIS Aqua Kd490 monthly water clarity, 2003-2022 (NASA Ocean Biology Processing Group), both via NOAA CoastWatch ERDDAP.
 The bite database gives month and year, not the day, so this is a monthly test: for each bite, the bite month's rain is ranked
@@ -38,6 +39,34 @@ def summary(ps):
     n = len(ps); q = sum(p >= 0.75 for p in ps); t = sum(p >= 0.9 for p in ps)
     return {"n": n, "q": q, "q_pct": round(100 * q / n), "q_p": round(tail(n, q, 0.25), 3), "t": t, "t_pct": round(100 * t / n), "t_p": round(tail(n, t, 0.1), 3), "mean": round(sum(ps) / n, 2)}
 mode, asid, cdir = sys.argv[1:4]; kdir = sys.argv[4] if len(sys.argv) > 4 else None
+if mode == "mouths":
+    import random
+    out = sys.argv[5] if len(sys.argv) > 5 else os.path.join(os.path.dirname(os.path.abspath(__file__)), "rain.json")
+    M = [(float(r["lon"]), float(r["lat"])) for r in csv.DictReader(open(cdir))]
+    def km(a, b): return math.hypot((a[0] - b[0]) * 111.32 * math.cos(math.radians((a[1] + b[1]) / 2)), (a[1] - b[1]) * 110.57)
+    def dm(p): return min(km(p, m) for m in M)
+    segs = []
+    for f in json.load(open(kdir))["features"]:
+        g = f["geometry"]; cs = g["coordinates"] if g["type"] == "MultiLineString" else [g["coordinates"]]
+        for c in cs:
+            for a, b in zip(c, c[1:]):
+                if -36 <= a[1] <= -24 and a[0] > 150 and b[0] > 150: segs.append((a, b, km(a, b)))
+    tot = sum(x[2] for x in segs); random.seed(1); base = []
+    for _ in range(3000):
+        t = random.uniform(0, tot)
+        for a, b, l in segs:
+            if t <= l: f = t / l; base.append(dm((a[0] + f * (b[0] - a[0]), a[1] + f * (b[1] - a[1])))); break
+            t -= l
+    sp_d = {"bull": [], "white": [], "tiger": []}
+    for x in csv.DictReader(open(asid)):
+        sp = x["Shark.common.name"].lower(); sp = "bull" if "bull" in sp else "white" if "white" in sp else "tiger" if "tiger" in sp else None
+        if not sp or x["Provoked/unprovoked"].strip() != "unprovoked" or not x["Latitude"].strip() or x["Site.category"].strip() != "coastal": continue
+        p = (float(x["Longitude"]), float(x["Latitude"]))
+        if -36 <= p[1] <= -24 and p[0] > 149.5: sp_d[sp].append(dm(p))
+    res = json.load(open(out)) if os.path.exists(out) else {}
+    res["mouths"] = {"km": 5, "coast_pct": round(100 * sum(d <= 5 for d in base) / len(base))}
+    for sp, d in sp_d.items(): res["mouths"][sp] = {"n": len(d), "k": sum(x <= 5 for x in d), "pct": round(100 * sum(x <= 5 for x in d) / len(d))}
+    json.dump(res, open(out, "w"), indent=1); print(json.dumps(res["mouths"])); sys.exit()
 if mode == "gauge":
     import collections
     out = sys.argv[5] if len(sys.argv) > 5 else os.path.join(os.path.dirname(os.path.abspath(__file__)), "rain.json")
