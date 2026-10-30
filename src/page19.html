@@ -169,8 +169,8 @@ h2{font-family:var(--f-display);font-weight:700;font-size:clamp(26px,4.4vw,44px)
   background:linear-gradient(180deg,#3395BE 0,#2F8FB8 45%,#2A86AE 100%)}   /* sunlit surface water; white logo stays above 3.6:1 */
 .surface svg{position:absolute;left:0;bottom:-1px;width:100%;height:36px}
 /* the logo sits with equal space above it, to its left, and below it to the waterline (the wave crest is ~18px above the band's bottom) */
-:root{--lpad:24px;--logo-h:46px;--surf-h:calc(var(--lpad) * 2 + var(--logo-h) + 18px)}
-@media (max-width:520px){:root{--lpad:18px;--logo-h:46px}}
+:root{--lpad:24px;--logo-h:clamp(36px,1.25vw + 30px,46px);--surf-h:calc(var(--lpad) * 2 + var(--logo-h) + 18px)}
+@media (max-width:520px){:root{--lpad:18px}}
 .wrap{position:relative;z-index:1}
 
 /* depth gauge: how far down the page you are */
