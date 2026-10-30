@@ -1,0 +1,8 @@
+Carcharhinus leucas north 28-34S 135
+Carcharhinus leucas south 34-38S 2
+Galeocerdo cuvier north 28-34S 350
+Galeocerdo cuvier south 34-38S 114
+Carcharodon carcharias north 28-34S 626
+Carcharodon carcharias south 34-38S 82
+Carcharhinidae north 28-34S 2318
+Carcharhinidae south 34-38S 477
