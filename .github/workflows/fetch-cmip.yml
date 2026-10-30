@@ -22,7 +22,7 @@ jobs:
       - name: Extract projections
         run: |
           mkdir -p out
-          python3 -m pip install -q "xarray<2025.0" zarr==2.18.3 gcsfs pandas numpy
+          python3 -m pip install -q xarray==2024.10.0 zarr==2.18.3 numcodecs==0.13.1 gcsfs pandas numpy 2>&1 | tail -3 > out/pip_log.txt; python3 -c "import zarr, numcodecs, xarray; print(zarr.__version__, xarray.__version__)" >> out/pip_log.txt 2>&1 || true
           timeout 50m python3 src/cmip_sst.py "out/cmip_tos_delta_${{ inputs.experiment }}.csv" "${{ inputs.max_models }}" "${{ inputs.experiment }}" 2>&1 | tee "out/cmip_log_${{ inputs.experiment }}.txt" || true
           printf "Projected change in monthly sea surface temperature, 2040-2059 minus 1995-2014, at each beach's sea patch, one row per CMIP6 model, beach and month.\nSource: CMIP6 (World Climate Research Programme), via the Pangeo public archive on Google Cloud. Each model's data is licensed by its modelling centre, mostly CC BY 4.0.\n" > out/README_cmip.txt
       - name: Add to the ocean-data branch
