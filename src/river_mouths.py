@@ -1,15 +1,28 @@
-"""List river mouths around Australia from HydroRIVERS, for claim C6.
-Usage: python3 river_mouths.py <HydroRIVERS .shp> <out.csv> [min_catchment_km2]
-Keeps river segments that end at the sea (NEXT_DOWN = 0, not endorheic) and writes the downstream end point with
-catchment area (km2) and average discharge (m3/s). HydroRIVERS v1.0, Lehner & Grill (2013), CC BY 4.0."""
-import sys, csv, shapefile
-shp, out = sys.argv[1:3]; MIN = float(sys.argv[3]) if len(sys.argv) > 3 else 20
-r = shapefile.Reader(shp); f = [x[0] for x in r.fields[1:]]
-w = csv.writer(open(out, "w")); w.writerow(["lon", "lat", "catchment_km2", "discharge_m3s", "hyriv_id"]); n = 0
-for sr in r.iterShapeRecords():
-    d = dict(zip(f, sr.record))
-    if d["NEXT_DOWN"] != 0 or d["ENDORHEIC"] != 0 or d["UPLAND_SKM"] < MIN: continue
-    x, y = sr.shape.points[-1]
-    if not (105 < x < 160 and -45 < y < -9): continue
-    w.writerow([round(x, 4), round(y, 4), round(d["UPLAND_SKM"], 1), round(d["DIS_AV_CMS"], 2), d["HYRIV_ID"]]); n += 1
-print("river mouths:", n)
+"""List river mouths on Australia's east coast from OpenStreetMap, for claim C6.
+Usage: python3 river_mouths.py <overpass.json> <ne_10m_coastline.geojson> <out.csv>
+A river mouth is the end of an OpenStreetMap river (waterway=river) lying within 3 km of the Natural Earth coastline.
+Data: OpenStreetMap contributors, ODbL 1.0 (https://www.openstreetmap.org/copyright); Natural Earth, public domain."""
+import sys, json, csv, math, bisect
+osm, ne, out = sys.argv[1:4]
+coast = []
+for f in json.load(open(ne))["features"]:
+    g = f["geometry"]; cs = g["coordinates"] if g["type"] == "MultiLineString" else [g["coordinates"]]
+    for c in cs: coast += [p for p in c if 145 < p[0] < 156 and -40 < p[1] < -20]
+coast.sort(key=lambda p: p[1]); cy = [p[1] for p in coast]
+def km(a, b): return math.hypot((a[0] - b[0]) * 111.32 * math.cos(math.radians((a[1] + b[1]) / 2)), (a[1] - b[1]) * 110.57)
+def dc(p):
+    i = bisect.bisect_left(cy, p[1] - 0.1); j = bisect.bisect_right(cy, p[1] + 0.1)
+    return min((km(p, q) for q in coast[i:j]), default=999)
+mouths = {}
+for e in json.load(open(osm))["elements"]:
+    g = e.get("geometry") or []
+    if len(g) < 2: continue
+    for p in ((g[0]["lon"], g[0]["lat"]), (g[-1]["lon"], g[-1]["lat"])):
+        d = dc(p)
+        if d <= 3:
+            name = e.get("tags", {}).get("name", "")
+            key = (round(p[0], 3), round(p[1], 3))
+            if key not in mouths: mouths[key] = (name, round(d, 2), e["id"])
+w = csv.writer(open(out, "w")); w.writerow(["lon", "lat", "name", "km_to_coastline", "osm_way"])
+for (x, y), (n, d, i) in sorted(mouths.items(), key=lambda k: k[0][1]): w.writerow([x, y, n, d, i])
+print("river ends near the coast:", len(mouths))

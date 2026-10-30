@@ -1,6 +1,6 @@
 name: Fetch river mouths
-# For claim C6. Downloads HydroRIVERS for Australasia (HydroSHEDS, CC BY 4.0), keeps only the points where rivers
-# reach the sea, and adds that small file to the 'ocean-data' branch. Runs only when started by hand.
+# For claim C6. Asks OpenStreetMap (Overpass API) for rivers on Australia's east coast (24-36 S), keeps only the points
+# where they reach the sea, and adds that small file to the 'ocean-data' branch. Runs only when started by hand.
 on:
   workflow_dispatch:
 permissions:
@@ -14,15 +14,11 @@ jobs:
       - name: Download and extract river mouths
         run: |
           mkdir -p tmp out
-          for u in "https://data.hydrosheds.org/file/HydroRIVERS/HydroRIVERS_v10_au_shp.zip" "https://data.hydrosheds.org/file/HydroRIVERS/HydroRIVERS_v10_au.zip"; do
-            c=$(curl -sL -A "Mozilla/5.0" -o tmp/r.zip -w "%{http_code} %{size_download} %{content_type}" "$u" || true); echo "$c $u" >> out/rivers_log.txt
-            if echo "$c" | grep -q "^200" && unzip -tq tmp/r.zip >/dev/null 2>&1; then break; else rm -f tmp/r.zip; fi
-          done
-          if [ -s tmp/r.zip ]; then
-            unzip -q tmp/r.zip -d tmp/r && python3 -m pip install -q pyshp
-            python3 src/river_mouths.py "$(find tmp/r -name '*.shp' | head -1)" out/river_mouths_au.csv 20 2>&1 | tee -a out/rivers_log.txt
-          fi
-          printf "River mouths around Australia (catchment 20 km2 or more), from HydroRIVERS v1.0.\nSource: HydroSHEDS, https://www.hydrosheds.org, CC BY 4.0. Cite: Lehner, B., Grill G. (2013). Global river hydrography and network routing: baseline data and new approaches to study the world's large river systems. Hydrological Processes, 27(15): 2171-2186.\n" > out/README_rivers.txt
+          c=$(curl -sL -o tmp/osm.json -w "%{http_code} %{size_download}" --data-urlencode 'data=[out:json][timeout:240];way["waterway"="river"](-36.5,149.5,-23.5,154.0);out geom;' https://overpass-api.de/api/interpreter || true); echo "overpass $c" > out/rivers_log.txt
+          c=$(curl -sL -o tmp/ne.geojson -w "%{http_code} %{size_download}" https://raw.githubusercontent.com/nvkelso/natural-earth-vector/master/geojson/ne_10m_coastline.geojson || true); echo "coastline $c" >> out/rivers_log.txt
+          python3 src/river_mouths.py tmp/osm.json tmp/ne.geojson out/river_mouths_east.csv 2>&1 | tail -3 >> out/rivers_log.txt || true
+          printf "River mouths on Australia's east coast, 23.5-36.5 S: ends of OpenStreetMap rivers within 3 km of the Natural Earth coastline.\nData: (c) OpenStreetMap contributors, ODbL 1.0 (https://www.openstreetmap.org/copyright); Natural Earth coastline, public domain.\n" > out/README_rivers.txt
+          cat out/rivers_log.txt
       - name: Add to the ocean-data branch
         if: always()
         run: |
