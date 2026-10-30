@@ -23,6 +23,9 @@ on:
       global_mean:
         description: Also compute the global ocean mean change (1 = yes)
         default: ""
+      field:
+        description: Instead, compute the warm-season change on a 2-degree world grid (1 = yes)
+        default: ""
 permissions:
   contents: write
 jobs:
@@ -34,7 +37,8 @@ jobs:
       - name: Extract projections
         run: |
           mkdir -p out
-          python3 -m pip install -q xarray==2024.10.0 zarr==2.18.3 numcodecs==0.13.1 cftime gcsfs pandas numpy 2>&1 | tail -3 > out/pip_log.txt; python3 -c "import zarr, numcodecs, xarray; print(zarr.__version__, xarray.__version__)" >> out/pip_log.txt 2>&1 || true
+          python3 -m pip install -q xarray==2024.10.0 zarr==2.18.3 numcodecs==0.13.1 cftime gcsfs pandas numpy scipy 2>&1 | tail -3 > out/pip_log.txt; python3 -c "import zarr, numcodecs, xarray; print(zarr.__version__, xarray.__version__)" >> out/pip_log.txt 2>&1 || true
+          if [ "${{ inputs.field }}" = "1" ]; then timeout 55m python3 src/cmip_field.py "out/cmip_warm_field_${{ inputs.experiment }}${{ inputs.tag }}.json" "${{ inputs.max_models }}" "${{ inputs.experiment }}" "${{ inputs.future }}" 2>&1 | tee "out/cmip_field_log${{ inputs.tag }}.txt" || true; exit 0; fi
           P=""; [ -n "${{ inputs.points }}" ] && P="src/${{ inputs.points }}"
           CMIP_GLOBAL="${{ inputs.global_mean }}" timeout 50m python3 src/cmip_sst.py "out/cmip_tos_delta_${{ inputs.experiment }}${{ inputs.tag }}.csv" "${{ inputs.max_models }}" "${{ inputs.experiment }}" "$P" "${{ inputs.future }}" 2>&1 | tee "out/cmip_log_${{ inputs.experiment }}${{ inputs.tag }}.txt" || true
           printf "Projected change in monthly sea surface temperature, 2040-2059 minus 2016-2025, at each beach's sea patch, one row per CMIP6 model, beach and month.\nSource: CMIP6 (World Climate Research Programme), via the Pangeo public archive on Google Cloud. Each model's data is licensed by its modelling centre, mostly CC BY 4.0.\n" > out/README_cmip.txt
