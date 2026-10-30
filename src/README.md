@@ -97,3 +97,11 @@ The gauge files come from `.github/workflows/fetch-gauges.yml` (Actions tab, run
 python3 -I leeuwin19.py asid.csv fremantle_psmsl111.rlrdata
 ```
 
+## Warm spells (claim C19)
+
+`heat19.py` ranks each bite month's sea temperature against the same month in the 10 years either side, on the same stretch of coast (the page's HadISST regional series), and counts how many bites fall in the warmest tenth of months. It writes `heat.json`, which `build19.py` reads.
+
+```
+python3 -I heat19.py asid.csv sst/ heat.json
+```
+
