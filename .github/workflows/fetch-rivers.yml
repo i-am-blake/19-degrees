@@ -1,0 +1,29 @@
+name: Fetch river mouths
+# For claim C6. Downloads HydroRIVERS for Australasia (HydroSHEDS, CC BY 4.0), keeps only the points where rivers
+# reach the sea, and adds that small file to the 'ocean-data' branch. Runs only when started by hand.
+on:
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  rivers:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - name: Download and extract river mouths
+        run: |
+          mkdir -p tmp out
+          curl -sSfL -o tmp/r.zip "https://data.hydrosheds.org/file/HydroRIVERS/HydroRIVERS_v10_au_shp.zip" || echo "download failed" >> out/rivers_log.txt
+          if [ -s tmp/r.zip ]; then
+            unzip -q tmp/r.zip -d tmp/r && python3 -m pip install -q pyshp
+            python3 src/river_mouths.py "$(find tmp/r -name '*.shp' | head -1)" out/river_mouths_au.csv 20 2>&1 | tee -a out/rivers_log.txt
+          fi
+          printf "River mouths around Australia (catchment 20 km2 or more), from HydroRIVERS v1.0.\nSource: HydroSHEDS, https://www.hydrosheds.org, CC BY 4.0. Cite: Lehner, B., Grill G. (2013). Global river hydrography and network routing: baseline data and new approaches to study the world's large river systems. Hydrological Processes, 27(15): 2171-2186.\n" > out/README_rivers.txt
+      - name: Add to the ocean-data branch
+        if: always()
+        run: |
+          git clone -q --depth 1 --branch ocean-data "https://x-access-token:${{ github.token }}@github.com/${{ github.repository }}.git" br
+          cp out/* br/ 2>/dev/null || true; cd br; git add -A
+          git -c user.name="github-actions[bot]" -c user.email="41898900+github-actions[bot]@users.noreply.github.com" commit -qm "River mouths, $(date -u +%Y-%m-%d)" || exit 0
+          git push -q "https://x-access-token:${{ github.token }}@github.com/${{ github.repository }}.git" HEAD:ocean-data
