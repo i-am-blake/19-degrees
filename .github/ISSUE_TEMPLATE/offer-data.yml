@@ -18,7 +18,7 @@ body:
     id: claims
     attributes:
       label: Which claim could it test?
-      description: C1–C18 from the Researchers tab, or "not sure".
+      description: C1–C22 from the Researchers tab, or "not sure".
   - type: dropdown
     id: sharing
     attributes:

@@ -32,7 +32,7 @@ The site already uses every public source we could find. The data that would set
 
 ## 2. Test a claim
 
-The Researchers tab lists eighteen testable claims (C1–C18), each with what would support it and what would rule it out.
+The Researchers tab lists twenty-two testable claims (C1–C22), each with what would support it and what would rule it out.
 
 - Write down your hypothesis, data, method and what would prove it wrong **before** you look at the result. Public pre-registration (e.g. on OSF) is ideal.
 - Get any approvals your work needs (human research ethics for records about people; animal ethics and permits for fieldwork).
