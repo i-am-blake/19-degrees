@@ -121,3 +121,11 @@ python3 -I nets19.py asid.csv shark-gear-locations.xlsx scp-numbers-caught.xlsx
 python3 -I firstaid19.py asid.csv
 ```
 
+## 2050 projections (claim C3)
+
+`cmip_sst.py` (run by `.github/workflows/fetch-cmip.yml`) reads each CMIP6 model's monthly sea surface temperature at every beach's sea patch and writes the change from 2016-2025 to 2040-2059 per month. `proj19.py` adds that change to each beach's observed 2016-2025 months and counts months at 19°C or more, giving the model median and the middle 80% of models.
+
+```
+python3 -I proj19.py beach_sst/ cmip_tos_delta_ssp245.csv proj.json
+```
+

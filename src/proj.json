@@ -1,0 +1,98 @@
+{
+ "albany": {
+  "now": 2,
+  "median": 4,
+  "lo": 4,
+  "hi": 4,
+  "models": 27,
+  "warming_c": 0.5
+ },
+ "byron": {
+  "now": 12,
+  "median": 12,
+  "lo": 12,
+  "hi": 12,
+  "models": 27,
+  "warming_c": 0.56
+ },
+ "eden": {
+  "now": 5,
+  "median": 6,
+  "lo": 6,
+  "hi": 7,
+  "models": 27,
+  "warming_c": 0.7
+ },
+ "exmouth": {
+  "now": 12,
+  "median": 12,
+  "lo": 12,
+  "hi": 12,
+  "models": 27,
+  "warming_c": 0.57
+ },
+ "geraldton": {
+  "now": 12,
+  "median": 12,
+  "lo": 12,
+  "hi": 12,
+  "models": 27,
+  "warming_c": 0.54
+ },
+ "goldcoast": {
+  "now": 12,
+  "median": 12,
+  "lo": 12,
+  "hi": 12,
+  "models": 27,
+  "warming_c": 0.55
+ },
+ "mandurah": {
+  "now": 9,
+  "median": 10,
+  "lo": 9,
+  "hi": 12,
+  "models": 27,
+  "warming_c": 0.53
+ },
+ "margaret": {
+  "now": 7,
+  "median": 8,
+  "lo": 7,
+  "hi": 9,
+  "models": 27,
+  "warming_c": 0.51
+ },
+ "newcastle": {
+  "now": 12,
+  "median": 12,
+  "lo": 12,
+  "hi": 12,
+  "models": 27,
+  "warming_c": 0.58
+ },
+ "perth": {
+  "now": 9,
+  "median": 12,
+  "lo": 9,
+  "hi": 12,
+  "models": 27,
+  "warming_c": 0.53
+ },
+ "sydney": {
+  "now": 9,
+  "median": 12,
+  "lo": 10,
+  "hi": 12,
+  "models": 27,
+  "warming_c": 0.62
+ },
+ "wollongong": {
+  "now": 9,
+  "median": 10,
+  "lo": 9,
+  "hi": 12,
+  "models": 27,
+  "warming_c": 0.63
+ }
+}

@@ -21,6 +21,8 @@ Credit: "19 Degrees, Blake Erickson", with a link to the page.
 - NOAA GHCN rain gauge records: public domain (US Government work). Cite Menne, M.J. et al. (2012), Global Historical Climatology Network - Daily (GHCN-Daily), NOAA National Climatic Data Center, doi:10.7289/V5D21VHZ.
 - River mouths: © OpenStreetMap contributors, Open Database License (ODbL) 1.0, https://www.openstreetmap.org/copyright. Coastline: Natural Earth, public domain.
 - Fremantle sea level: Permanent Service for Mean Sea Level (PSMSL). Cite Holgate, S.J. et al. (2013), New Data Systems and Products at the Permanent Service for Mean Sea Level, Journal of Coastal Research 29(3), 493-504.
+- CMIP6 climate model output: licensed by each modelling centre (mostly CC BY 4.0); cite the World Climate Research Programme CMIP6 and each model used (listed in cmip_tos_delta_ssp245.csv on the ocean-data branch).
+- GBIF occurrence counts: GBIF.org; each source dataset keeps its own licence (CC0, CC BY or CC BY-NC).
 - NASA MODIS Aqua Kd490 water clarity: NASA open data, no restrictions on use. Acknowledge NASA Ocean Biology Processing Group.
 - IMOS Animal Tracking acoustic detections: CC BY 4.0. Cite: IMOS Animal Tracking Facility, Integrated Marine Observing System (IMOS). IMOS is enabled by the National Collaborative Research Infrastructure Strategy (NCRIS).
 - Queensland Shark Control Program data (catches, gear locations): Queensland Government open data, CC BY 4.0. Credit: Queensland Department of Primary Industries, Shark Control Program.

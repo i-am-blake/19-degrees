@@ -129,6 +129,8 @@ The analysis scripts are in `src/`. See [`src/README.md`](src/README.md) to rebu
 - **River mouths (claim C6):** © [OpenStreetMap](https://www.openstreetmap.org/copyright) contributors, ODbL 1.0, ends of mapped rivers within 3 km of the Natural Earth coastline (public domain). Fetched by `.github/workflows/fetch-rivers.yml` (run by hand) to the `ocean-data` branch
 - **Fremantle sea level (claim C7):** [Permanent Service for Mean Sea Level](https://psmsl.org/data/obtaining/stations/111.php), station 111, free with citation. Fetched by `.github/workflows/fetch-ocean.yml` (run by hand); analysed by `src/leeuwin19.py`
 - **Water clarity (claim C6):** NASA MODIS Aqua Kd490 monthly, 2003–2022 (NASA Ocean Biology Processing Group), NASA open data, via NOAA ERDDAP
+- **Climate-model projections (claim C3):** [CMIP6](https://wcrp-cmip.org/cmip-phase-6-cmip6/) monthly sea surface temperature from 27 models (SSP2-4.5), read from the Pangeo public archive by `.github/workflows/fetch-cmip.yml` (run by hand) to the `ocean-data` branch; analysed by `src/proj19.py`. Each modelling centre licenses its data, mostly CC BY 4.0
+- **Shark sighting counts (claim C2):** [GBIF.org](https://www.gbif.org) yearly counts, fetched by `.github/workflows/fetch-gbif.yml` (run by hand)
 - **Population:** Australian Bureau of Statistics
 - **Safety evidence and other figures:** published studies, each linked on the site
 
