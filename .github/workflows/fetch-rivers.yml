@@ -14,7 +14,10 @@ jobs:
       - name: Download and extract river mouths
         run: |
           mkdir -p tmp out
-          curl -sSfL -o tmp/r.zip "https://data.hydrosheds.org/file/HydroRIVERS/HydroRIVERS_v10_au_shp.zip" || echo "download failed" >> out/rivers_log.txt
+          for u in "https://data.hydrosheds.org/file/HydroRIVERS/HydroRIVERS_v10_au_shp.zip" "https://data.hydrosheds.org/file/HydroRIVERS/HydroRIVERS_v10_au.zip"; do
+            c=$(curl -sL -A "Mozilla/5.0" -o tmp/r.zip -w "%{http_code} %{size_download} %{content_type}" "$u" || true); echo "$c $u" >> out/rivers_log.txt
+            if echo "$c" | grep -q "^200" && unzip -tq tmp/r.zip >/dev/null 2>&1; then break; else rm -f tmp/r.zip; fi
+          done
           if [ -s tmp/r.zip ]; then
             unzip -q tmp/r.zip -d tmp/r && python3 -m pip install -q pyshp
             python3 src/river_mouths.py "$(find tmp/r -name '*.shp' | head -1)" out/river_mouths_au.csv 20 2>&1 | tee -a out/rivers_log.txt
