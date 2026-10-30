@@ -1,2 +1,0 @@
-uhslc fast/monthly/m175.csv failed
-uhslc rqds/indian/monthly/m175a.csv failed
