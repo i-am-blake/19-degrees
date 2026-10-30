@@ -120,7 +120,7 @@ The analysis scripts are in `src/`. See [`src/README.md`](src/README.md) to rebu
 - **Sea temperature, 1900 to now:** [HadISST](https://www.metoffice.gov.uk/hadobs/hadisst/) (UK Met Office), Open Government Licence, accessed through NOAA ERDDAP
 - **El Niño and La Niña:** Niño 3.4 index, calculated from HadISST
 - **Today's sea temperature:** Open-Meteo Marine
-- **Shark-control catches (claim C1):** Queensland Shark Control Program open data
+- **Shark-control catches and gear (claims C1, C20):** [Queensland Shark Control Program open data](https://www.data.qld.gov.au/dataset/fisheries-queensland-s-shark-control-program-information-and-data), CC BY 4.0: catches by beach, gear and species since 1996, and today's net and drumline locations (copies on the `ocean-data` branch). Analysed for C20 by `src/nets19.py`
 - **Coastal drownings:** Surf Life Saving Australia, National Coastal Safety Report 2025
 - **Shark tracking:** [IMOS Animal Tracking](https://researchdata.edu.au/imos-animal-tracking-2007-ongoing/3961802) acoustic detections of bull, tiger and white sharks and green turtles (Integrated Marine Observing System), CC BY 4.0, checked monthly. Fetched by `.github/workflows/fetch-imos.yml`; analysed by `src/imos19.py`
 - **Shark nets and SMART drumlines (claims C20, C21):** NSW Shark Meshing Program annual performance reports; [Cappa et al. 2026](https://doi.org/10.3389/fmars.2026.1900316), Frontiers in Marine Science (figures cited, not redistributed)

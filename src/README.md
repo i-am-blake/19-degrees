@@ -105,3 +105,11 @@ python3 -I leeuwin19.py asid.csv fremantle_psmsl111.rlrdata
 python3 -I heat19.py asid.csv sst/ heat.json
 ```
 
+## Shark nets and drumlines, Queensland (claim C20)
+
+`nets19.py` counts bull sharks caught by gear type and places each Queensland bull shark bite since 1962 relative to today's nets and drumlines. It describes only: gear locations are current, not historical, and busy beaches get gear first. The two input files are on the `ocean-data` branch.
+
+```
+python3 -I nets19.py asid.csv shark-gear-locations.xlsx scp-numbers-caught.xlsx
+```
+
