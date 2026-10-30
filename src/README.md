@@ -75,3 +75,13 @@ python3 -I imos19.py imos sst imos.json      # writes the tagging numbers; build
 - Sea temperature is the monthly HadISST average for the 1° patch of open sea nearest each bite or beach (about 110 km across). It describes the season, not the exact water a person was in.
 - "Coastal waters" bites are the database's coastal sites, mostly surf beaches; inshore bites are rivers, estuaries and harbours or places named that way.
 - Checked against NOAA ERSSTv5 as well: Sydney's months at 19°C or more rose by about three months in both data sets. Don't claim 2025 was Sydney's first full year above 19°C; that holds in HadISST but not in ERSSTv5.
+
+## Rain and water clarity (claim C6)
+
+`rain19.py` tests whether bull shark bites fall in wetter-than-usual months at the place they happened. The bite database gives the month, not the day, so each bite month's rainfall is ranked against the same calendar month in every other year (1982 to 2025) at the same 5 km cell, with white shark bites as the comparison. It also checks satellite water clarity (2003 to 2022).
+
+```
+python3 -I rain19.py fetch asid.csv chirps/ kd/            # downloads from NOAA ERDDAP, no account needed
+python3 -I rain19.py test  asid.csv chirps/ kd/ rain.json  # build19.py reads rain.json beside itself
+```
+
