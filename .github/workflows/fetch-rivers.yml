@@ -14,7 +14,7 @@ jobs:
       - name: Download and extract river mouths
         run: |
           mkdir -p tmp out
-          c=$(curl -sL -o tmp/osm.json -w "%{http_code} %{size_download}" --data-urlencode 'data=[out:json][timeout:240];way["waterway"="river"](-36.5,149.5,-23.5,154.0);out geom;' https://overpass-api.de/api/interpreter || true); echo "overpass $c" > out/rivers_log.txt
+          c=$(curl -sL -A "19-degrees/1.0 (+https://19-degrees.org)" -H "Accept: application/json" -o tmp/osm.json -w "%{http_code} %{size_download}" --data-urlencode 'data=[out:json][timeout:240];way["waterway"="river"](-36.5,149.5,-23.5,154.0);out geom;' https://overpass-api.de/api/interpreter || true); echo "overpass $c" > out/rivers_log.txt
           c=$(curl -sL -o tmp/ne.geojson -w "%{http_code} %{size_download}" https://raw.githubusercontent.com/nvkelso/natural-earth-vector/master/geojson/ne_10m_coastline.geojson || true); echo "coastline $c" >> out/rivers_log.txt
           python3 src/river_mouths.py tmp/osm.json tmp/ne.geojson out/river_mouths_east.csv 2>&1 | tail -3 >> out/rivers_log.txt || true
           printf "River mouths on Australia's east coast, 23.5-36.5 S: ends of OpenStreetMap rivers within 3 km of the Natural Earth coastline.\nData: (c) OpenStreetMap contributors, ODbL 1.0 (https://www.openstreetmap.org/copyright); Natural Earth coastline, public domain.\n" > out/README_rivers.txt
