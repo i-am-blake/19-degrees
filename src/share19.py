@@ -50,11 +50,11 @@ cards = {
 }
 cards_html = {k: (1080, 1350, v) for k, v in cards.items()}
 cards_html["link-card.png"] = (1200, 630, f"""<style>:root{{--s:150px}}body{{width:1200px;height:630px}}{CSS}
-.logo{{left:56px;top:34px;width:210px}}.p{{position:absolute;inset:176px 56px 40px 56px;display:flex;flex-direction:column;gap:18px}}
+.logo{{left:56px;top:30px;width:150px}}.p{{position:absolute;inset:176px 56px 40px 56px;display:flex;flex-direction:column;gap:18px}}
 h1{{font-size:64px}}p{{font-size:26px;color:#C9DCE4}}
 .mk{{font-family:"Martian Mono",monospace;font-size:15px;letter-spacing:.16em;text-transform:uppercase;color:#F5B061}}
 .ft{{margin-top:auto;display:flex;justify-content:space-between;align-items:flex-end;font-family:"Martian Mono",monospace;font-size:17px;letter-spacing:.06em;color:#9FC3D3}}.ft b{{color:#E8F1F2;font-weight:500}}</style>{WAVE}<div class="logo">{logo}</div>
-<div class="p"><div class="mk">Advancing shark and climate research worldwide</div><h1>{bull['n']} bull shark bites. Not one below <em>19°C</em>.</h1><p>The ocean is changing. Our research shows where it's headed.</p><div class="ft"><b>19-degrees.org</b><span>Free · Open source · Updated weekly</span></div></div>""")
+<div class="p"><div class="mk">Advancing shark and climate research worldwide</div><h1>A warming ocean is redrawing where <em>sharks</em> and <em>people</em> meet.</h1><p>The ocean is changing. Our research shows where it's headed.</p><div class="ft"><b>19-degrees.org</b><span>Free · Open source · Updated weekly</span></div></div>""")
 
 for name, (w, h, body) in cards_html.items():
     tmp = tempfile.NamedTemporaryFile("w", suffix=".html", delete=False); tmp.write('<!doctype html><meta charset="utf-8">' + body); tmp.close()
