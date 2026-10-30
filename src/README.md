@@ -113,3 +113,11 @@ python3 -I heat19.py asid.csv sst/ heat.json
 python3 -I nets19.py asid.csv shark-gear-locations.xlsx scp-numbers-caught.xlsx
 ```
 
+## First aid (claim C9)
+
+`firstaid19.py` sorts unprovoked fatal bites by where the wound was, from the database's injury records: limb only (where a tourniquet or firm pressure can reach), trunk or head, junctional (hip or shoulder), no body recovered, or not recorded.
+
+```
+python3 -I firstaid19.py asid.csv
+```
+
