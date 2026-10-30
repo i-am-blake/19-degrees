@@ -138,7 +138,7 @@ The analysis scripts are in `src/`. See [`src/README.md`](src/README.md) to rebu
 
 The most useful thing right now is **data**. See [CONTRIBUTING.md](CONTRIBUTING.md) for what's needed and how sharing works, or [open a data offer](../../issues/new?template=offer-data.yml). Corrections are welcome as issues or pull requests.
 
-## Licence
+## License
 
 Code: MIT. Text, charts and the 19 Degrees datasets: CC BY 4.0. Fonts: SIL Open Font License. Source data stays under its own license. The 19 Degrees name and logo are not licensed for reuse. See [`LICENSE`](LICENSE).
 
