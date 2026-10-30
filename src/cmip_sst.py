@@ -10,6 +10,8 @@ import sys, csv, numpy as np, pandas as pd, xarray as xr, gcsfs
 out = sys.argv[1]; MAXM = int(sys.argv[2]) if len(sys.argv) > 2 and sys.argv[2] else 99; EXP = sys.argv[3] if len(sys.argv) > 3 else "ssp245"
 PTSFILE = sys.argv[4] if len(sys.argv) > 4 and sys.argv[4] else None
 FUT = sys.argv[5] if len(sys.argv) > 5 and sys.argv[5] else "2040-2059"
+import os
+GLOBAL = os.environ.get("CMIP_GLOBAL") == "1"  # also write the area-weighted mean change over the ocean between 60 S and 60 N
 PTS = {"goldcoast": (-28.0, 153.9), "byron": (-28.6, 154.0), "newcastle": (-32.9, 152.3), "sydney": (-33.9, 151.5), "wollongong": (-34.4, 151.3),
        "eden": (-37.1, 150.4), "exmouth": (-21.5, 113.5), "geraldton": (-28.5, 113.5), "perth": (-31.9, 115.2), "mandurah": (-32.5, 115.2),
        "margaret": (-33.9, 114.5), "albany": (-35.5, 117.9)}
@@ -44,6 +46,14 @@ for m in models:
             for mo in range(1, 13):
                 dv = float(tf[tf["time.month"] == mo].mean() - th[th["time.month"] == mo].mean())
                 w.writerow([m, b, mo, round(dv, 3), round(float(LA[i, j]), 2), round(float(LO[i, j]), 2)])
+        if GLOBAL:
+            wgt = np.where(ok & (np.abs(LA) <= 60), np.cos(np.radians(LA)), 0.0)
+            g = []
+            for t0, t1 in (("2016", "2025"), (F0, F1)):
+                mean = df.tos.sel(time=slice(t0, t1)).mean("time").values
+                good = np.isfinite(mean) & (wgt > 0)
+                g.append(float((mean[good] * wgt[good]).sum() / wgt[good].sum()))
+            w.writerow([m, "GLOBAL_60S_60N", 0, round(g[1] - g[0], 3), "", ""])
         print("ok", m, flush=True)
     except Exception as e:
         print("skip", m, type(e).__name__, str(e)[:120], flush=True)
