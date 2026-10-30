@@ -14,7 +14,7 @@ c = cat[(cat.variable_id == "tos") & (cat.table_id == "Omon") & (cat.member_id =
 h = c[c.experiment_id == "historical"]; f = c[c.experiment_id == EXP]
 models = sorted(set(h.source_id) & set(f.source_id))[:MAXM]
 fs = gcsfs.GCSFileSystem(token="anon")
-def opn(row): return xr.open_zarr(fs.get_mapper(row.zstore), consolidated=True)
+def opn(row): return xr.open_zarr(fs.get_mapper(row.zstore), consolidated=True, use_cftime=True)
 w = csv.writer(open(out, "w")); w.writerow(["model", "beach", "month", "delta_c", "cell_lat", "cell_lon"])
 for m in models:
     try:
