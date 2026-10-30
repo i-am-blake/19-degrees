@@ -1,0 +1,25 @@
+name: Fetch shark record counts (GBIF)
+# For claim C2. Asks GBIF for yearly counts (not records) of bull, tiger and white shark and all requiem shark sightings
+# and specimens on Australia's east coast, and adds the small result to the 'ocean-data' branch. Runs only when started by hand.
+on:
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  gbif:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - name: Fetch counts
+        run: |
+          mkdir -p out
+          python3 src/gbif_counts.py out/gbif_counts_east.json 2>&1 | tee out/gbif_log.txt || true
+          printf "Yearly counts of shark sightings and specimens on Australia's east coast (28-38 S), from GBIF.org.\nGBIF brings together records from the Atlas of Living Australia, OBIS, museums and citizen science; each dataset keeps its own licence (CC0, CC BY or CC BY-NC). Cite: GBIF.org (%s), GBIF Occurrence Search, https://www.gbif.org\n" "$(date -u +%Y-%m-%d)" > out/README_gbif.txt
+      - name: Add to the ocean-data branch
+        if: always()
+        run: |
+          git clone -q --depth 1 --branch ocean-data "https://x-access-token:${{ github.token }}@github.com/${{ github.repository }}.git" br
+          cp out/* br/ 2>/dev/null || true; cd br; git add -A
+          git -c user.name="github-actions[bot]" -c user.email="41898900+github-actions[bot]@users.noreply.github.com" commit -qm "GBIF shark record counts, $(date -u +%Y-%m-%d)" || exit 0
+          git push -q "https://x-access-token:${{ github.token }}@github.com/${{ github.repository }}.git" HEAD:ocean-data
