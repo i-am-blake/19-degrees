@@ -1,4 +1,4 @@
-"""Fetch monthly rainfall from the nearest long-running rain gauge to each bite site (claim C6).
+"""Fetch monthly rainfall from the nearest long-running rain gauges (up to three) to each bite site (claim C6).
 Usage: python3 gauge_fetch.py <rain_points.csv> <ghcnd-inventory.txt> <ghcnd-stations.txt> <out_dir> [max_sites]
 Gauges: NOAA GHCN (Global Historical Climatology Network), Australian stations from the Bureau of Meteorology.
 Monthly totals come from NOAA's Global Summary of the Month service (no account needed), PRCP only."""
@@ -19,7 +19,8 @@ for s in sites:
     c = [(km(a, b, la, lo), i) for i, (la, lo, f, e) in inv.items() if abs(la - a) < 0.5 and abs(lo - b) < 0.5 and e - f >= 30]
     c = [x for x in c if x[0] <= 25]
     if not c: w.writerow([a, b, "", "", "", "", ""]); continue
-    d, i = min(c); pick[i] = 1; w.writerow([a, b, i, names.get(i, ""), round(d, 1), inv[i][2], inv[i][3]])
+    for d, i in sorted(c)[:3]:  # up to three nearest, so a gauge covers each bite's year
+        pick[i] = 1; w.writerow([a, b, i, names.get(i, ""), round(d, 1), inv[i][2], inv[i][3]])
 log.write(f"sites {len(sites)}, with a gauge within 25 km: {sum(1 for _ in pick)} gauges\n"); log.flush()
 end = time.strftime("%Y-12-31"); w2 = csv.writer(open(os.path.join(out, "gauge_monthly.csv"), "w")); w2.writerow(["station", "year", "month", "prcp_mm"])
 for k, i in enumerate(sorted(pick)):
