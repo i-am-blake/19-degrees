@@ -1,0 +1,32 @@
+ok ACCESS-CM2
+skip AWI-CM-1-1-MR MemoryError Unable to allocate 5.02 TiB for an array with shape (830305, 830305) and data type float64
+ok BCC-CSM2-MR
+ok CAMS-CSM1-0
+ok CESM2-WACCM
+ok CIESM
+ok CMCC-CM2-SR5
+ok CMCC-ESM2
+ok CanESM5
+ok EC-Earth3
+ok EC-Earth3-CC
+ok EC-Earth3-Veg-LR
+ok FGOALS-f3-L
+ok FGOALS-g3
+ok FIO-ESM-2-0
+ok GFDL-CM4
+ok GFDL-ESM4
+ok IITM-ESM
+ok INM-CM4-8
+ok INM-CM5-0
+ok IPSL-CM6A-LR
+ok KACE-1-0-G
+ok MIROC6
+ok MPI-ESM1-2-HR
+ok MPI-ESM1-2-LR
+ok MRI-ESM2-0
+ok NESM3
+ok NorESM2-LM
+ok NorESM2-MM
+ok TaiESM1
+/home/runner/work/19-degrees/19-degrees/src/cmip_field.py:46: RuntimeWarning: All-NaN slice encountered
+  med = np.nanmedian(M, 0) if len(M) else np.full(len(G), np.nan)
