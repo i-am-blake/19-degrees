@@ -1,0 +1,34 @@
+name: Fetch CMIP6 sea temperature projections
+# For claim C3. Reads small slices of the public CMIP6 archive on Google Cloud (monthly sea surface temperature) at each
+# beach's sea patch and adds a small table of projected 2050 change per model and month to the 'ocean-data' branch.
+# Runs only when started by hand.
+on:
+  workflow_dispatch:
+    inputs:
+      max_models:
+        description: Number of models to use (blank for all)
+        default: ""
+      experiment:
+        description: Scenario (ssp245 or ssp585)
+        default: "ssp245"
+permissions:
+  contents: write
+jobs:
+  cmip:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+      - name: Extract projections
+        run: |
+          mkdir -p out
+          python3 -m pip install -q "xarray<2025.0" zarr==2.18.3 gcsfs pandas numpy
+          timeout 50m python3 src/cmip_sst.py "out/cmip_tos_delta_${{ inputs.experiment }}.csv" "${{ inputs.max_models }}" "${{ inputs.experiment }}" 2>&1 | tee "out/cmip_log_${{ inputs.experiment }}.txt" || true
+          printf "Projected change in monthly sea surface temperature, 2040-2059 minus 1995-2014, at each beach's sea patch, one row per CMIP6 model, beach and month.\nSource: CMIP6 (World Climate Research Programme), via the Pangeo public archive on Google Cloud. Each model's data is licensed by its modelling centre, mostly CC BY 4.0.\n" > out/README_cmip.txt
+      - name: Add to the ocean-data branch
+        if: always()
+        run: |
+          git clone -q --depth 1 --branch ocean-data "https://x-access-token:${{ github.token }}@github.com/${{ github.repository }}.git" br
+          cp out/* br/ 2>/dev/null || true; cd br; git add -A
+          git -c user.name="github-actions[bot]" -c user.email="41898900+github-actions[bot]@users.noreply.github.com" commit -qm "CMIP6 sea temperature projections, $(date -u +%Y-%m-%d)" || exit 0
+          git push -q "https://x-access-token:${{ github.token }}@github.com/${{ github.repository }}.git" HEAD:ocean-data
