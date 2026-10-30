@@ -711,6 +711,10 @@ table.dt thead th{color:var(--muted);font-weight:600}
 .chip{border:1px solid var(--rule);border-radius:999px;padding:7px 14px;font-size:15px}
 .chip.on{border-color:var(--warm);font-weight:600}
 .chip.want{border-style:dashed;color:var(--muted)}
+/* outlined button: same hover as the site's other outlined controls */
+.ghbtn{display:inline-flex;align-items:center;min-height:44px;color:var(--ink);transition:border-color .15s,background-color .15s}
+.ghbtn:hover{border-color:#3395BE;background:rgba(51,149,190,.14)}
+@media (prefers-reduced-motion:reduce){.ghbtn{transition:none}}
 </style>
 
 <a class="skip" href="#home-top">Skip to the content</a>
@@ -754,9 +758,9 @@ table.dt thead th{color:var(--muted);font-weight:600}
     <div class="kicker">The three questions</div>
     <h2 id="h-threads">Three questions that are rarely answered together.</h2>
     <div class="q3">
-      <article class="card" style="--qc:var(--cold)"><div class="qhead"><div class="kicker" style="color:var(--cold)">Sharks and a warming ocean</div><h3 class="blockh">Where are sharks going?</h3></div><div class="qbody"><p class="sub"><b>0 of 170</b> bull shark bites in Australia happened in water below 19°C. As the sea warms, that line is moving south, and the season is getting longer.</p><a class="ctabtn" href="#story" data-tab="story">Read the story →</a></div></article>
-      <article class="card" style="--qc:var(--flagyellow)"><div class="qhead"><div class="kicker" style="color:var(--flagyellow)">People in the water</div><h3 class="blockh">When do people and sharks meet?</h3></div><div class="qbody"><p class="sub">White and tiger shark bites come in <b>unusually warm months about twice</b> as often as chance. The water is still the bigger danger: about 49 people drown on Australia's coast for every shark death.</p><a class="ctabtn" href="#c19" data-tab="research">See the findings →</a></div></article>
-      <article class="card" style="--qc:var(--warm)"><div class="qhead"><div class="kicker" style="color:var(--warm)">What keeps people safe</div><h3 class="blockh">What actually works?</h3></div><div class="qbody"><p class="sub">Deterrents, wetsuits, nets, drumlines, drones and bleeding kits, each held to one test: an independent, published trial. About <b>half of shark-bite deaths</b> with a recorded wound involved only a limb.</p><a class="ctabtn" href="#h-safe" data-tab="story">Open the scorecard →</a></div></article>
+      <article class="card" style="--qc:var(--cold)"><div class="qhead"><div class="kicker" style="color:var(--cold)">Sharks and a warming ocean</div><h3 class="blockh">Where are sharks going?</h3></div><div class="qbody"><p class="sub">As seas warm, the water sharks favour is creeping toward the poles. Some are turning up where they were rarely seen, and staying longer. What does that mean for the beach you swim at?</p><a class="ctabtn" href="#story" data-tab="story">Follow the 19°C line →</a></div></article>
+      <article class="card" style="--qc:var(--flagyellow)"><div class="qhead"><div class="kicker" style="color:var(--flagyellow)">People in the water</div><h3 class="blockh">When do people and sharks meet?</h3></div><div class="qbody"><p class="sub">Heatwaves, heavy rain, busy beaches: which really change the odds, and which are myths? Some answers are already in. Others are waiting on data nobody has joined up yet.</p><a class="ctabtn" href="#h-changes" data-tab="research">See what we've found →</a></div></article>
+      <article class="card" style="--qc:var(--warm)"><div class="qhead"><div class="kicker" style="color:var(--warm)">What keeps people safe</div><h3 class="blockh">What actually works?</h3></div><div class="qbody"><p class="sub">Nets, drumlines, drones, deterrents, bite-resistant wetsuits, bleeding kits. Some are proven. Many have never been independently tested. A few have been tested and found to do nothing.</p><a class="ctabtn" href="#h-safe" data-tab="story">Open the scorecard →</a></div></article>
     </div>
   </section>
 
