@@ -33,4 +33,14 @@ R["c2"] = dict(early_min=int(early.sharks.min()), early_max=int(early.sharks.max
                rec_peak=int(g.receivers.max()), rec_peak_season=int(g.receivers.idxmax()),
                rec_last3_min=int(g.tail(3).receivers.min()), rec_last3_max=int(g.tail(3).receivers.max()),
                months=sorted(int(m) for m in sc.t.dt.month.value_counts()[lambda x: x >= 5].index))
+# C16: last detection off Sydney each year (Jan-Sep), per shark
+from scipy import stats
+sy = d[(d[lon] > 150) & (d[lat] < -33.6) & (d[lat] > -34.2)].copy(); sy["t"] = sy.t.dt.tz_localize(None)
+sy = sy[(sy.t.dt.month <= 9) & (sy.t.dt.year >= 2010)]
+last = sy.groupby([sy.t.dt.year.rename("yr"), "animal_id"]).t.max().reset_index(); last["doy"] = last.t.dt.dayofyear
+lr = stats.linregress(last.yr, last.doy); y1 = int(last.yr.max())
+md = lambda a, b: (pd.Timestamp("2021-01-01") + pd.Timedelta(days=float(last[(last.yr >= a) & (last.yr <= b)].doy.median()) - 1)).strftime("%-d %B")
+R["c16"] = dict(early=md(2010, 2013), recent=md(y1 - 4, y1), recent_from=y1 - 4, recent_to=y1, slope=round(lr.slope, 1), lo=round(lr.slope - 1.96 * lr.stderr, 1), hi=round(lr.slope + 1.96 * lr.stderr, 1),
+                p=float(lr.pvalue), n=int(len(last)), sharks=int(last.animal_id.nunique()))
+print("C16 leaving Sydney:", R["c16"])
 if out: json.dump(R, open(out, "w"), indent=1); print("wrote", out)

@@ -16529,5 +16529,49 @@
   "2000": 20.4,
   "2010": 23.8,
   "2020": 26.6
+ },
+ "imos": {
+  "days": 20105,
+  "sharks": 132,
+  "y0": 2009,
+  "y1": 2026,
+  "below": 93,
+  "pct_warm": 99.5,
+  "min_sst": 18.1,
+  "last": "2026-07-11",
+  "syd_months_below": 23,
+  "syd_days_below": 0.7,
+  "south_months_below": 43,
+  "south_days_below": 0.4,
+  "c2": {
+   "early_min": 1,
+   "early_max": 5,
+   "recent_min": 10,
+   "recent_max": 17,
+   "rec_peak": 41,
+   "rec_peak_season": 2019,
+   "rec_last3_min": 8,
+   "rec_last3_max": 10,
+   "months": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    12
+   ]
+  },
+  "c16": {
+   "early": "10 March",
+   "recent": "11 April",
+   "recent_from": 2022,
+   "recent_to": 2026,
+   "slope": 1.3,
+   "lo": 0.6,
+   "hi": 2.0,
+   "p": 0.0002603205097757144,
+   "n": 420,
+   "sharks": 98
+  }
  }
 }

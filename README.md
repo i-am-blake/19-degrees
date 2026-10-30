@@ -54,7 +54,7 @@ Beyond products, the site rates beach-level measures (nets, drumlines, drones, l
 - **Beach programs:** nets, drumlines, drones and alerts, judged by bites prevented and by the harm they cause to other wildlife.
 - **Readiness:** whether bleeding kits, patrols and faster first aid save lives. Most shark-bite deaths come from blood loss, and nobody has yet measured what being prepared changes.
 
-Six of the fifteen testable claims (C10–C15) are about safety: drones in murky water, tourniquet leashes, bleeding kits, beach readiness, bite-resistant wetsuits and counter-illumination lights. Researchers, makers and lifesaving organizations: if you have test results, positive or negative, we'll add them. If a product you make isn't listed, the fastest way onto the scorecard is an independent, published trial.
+Six of the eighteen testable claims (C10–C15) are about safety: drones in murky water, tourniquet leashes, bleeding kits, beach readiness, bite-resistant wetsuits and counter-illumination lights. Researchers, makers and lifesaving organizations: if you have test results, positive or negative, we'll add them. If a product you make isn't listed, the fastest way onto the scorecard is an independent, published trial.
 
 *Listing is not endorsement. Results summarize published independent tests as of October 2026, and products may have changed since they were tested.*
 
@@ -63,7 +63,7 @@ Six of the fifteen testable claims (C10–C15) are about safety: drones in murky
 - **Every coast, measured the same way.** Tiger sharks, young white sharks and whale sharks are already shifting in other oceans. The method here is open so it can be rerun wherever long-term records exist: the United States, South Africa, Brazil, Réunion, the Pacific islands.
 - **Beaches that see their warm season coming.** Which months, which species, how fast it's changing, for any beach, in plain language.
 - **Coasts that are ready.** Bleeding-control kits, patrols and first aid placed where the warm water is going, not only where it has been. Most deaths from shark bites are from blood loss, and many are survivable when bleeding is stopped within minutes.
-- **Science anyone can check.** Open data, open code, fifteen testable claims, and named credit for everyone who tests one.
+- **Science anyone can check.** Open data, open code, eighteen testable claims, and named credit for everyone who tests one.
 - **Perspective, not fear.** Real numbers for swimmers, students, reporters and decision-makers, and a reminder that sharks are in trouble too.
 
 ## Fund the next stage
@@ -83,7 +83,7 @@ Foundations, ocean and outdoor brands, and research institutions: [let's talk](h
 |---|---|
 | **Funding or partnership** | [Get in touch](https://19-degrees.org/#contact). See the priorities above. |
 | **Data** (tracking, catch, rescue, first aid, species evidence) | [Offer it](../../issues/new?template=offer-data.yml). A description is enough to start. See [CONTRIBUTING.md](CONTRIBUTING.md). |
-| **Research skills** | Test one of the [fifteen claims](https://19-degrees.org/#h-agenda), or rerun the method for your country with the scripts in [`src/`](src/README.md). |
+| **Research skills** | Test one of the [eighteen claims](https://19-degrees.org/#h-agenda), or rerun the method for your country with the scripts in [`src/`](src/README.md). |
 | **A classroom** | Use the [printable sheets](https://19-degrees.org/classroom.html): a real climate story students can test themselves. |
 | **An audience** | Share the site and the [share images](share/). Accurate reporting saves lives and sharks. |
 
