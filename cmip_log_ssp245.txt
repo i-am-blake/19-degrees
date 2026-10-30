@@ -13,7 +13,7 @@ ok EC-Earth3-Veg-LR
 ok FGOALS-f3-L
 ok FGOALS-g3
 ok FIO-ESM-2-0
-skip GFDL-CM4 ValueError Dimensions {'lon', 'lat'} do not exist. Expected one or more of FrozenMappingWarningOnValuesAccess({'y': 1080, 'x': 1440
+skip GFDL-CM4 ValueError Dimensions {'lat', 'lon'} do not exist. Expected one or more of FrozenMappingWarningOnValuesAccess({'y': 1080, 'x': 1440
 skip GFDL-ESM4 ValueError Dimensions {'x', 'y'} do not exist. Expected one or more of FrozenMappingWarningOnValuesAccess({'lat': 180, 'lon': 360, 
 ok IITM-ESM
 ok INM-CM4-8
