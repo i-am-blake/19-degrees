@@ -83,5 +83,8 @@ python3 -I imos19.py imos sst imos.json      # writes the tagging numbers; build
 ```
 python3 -I rain19.py fetch asid.csv chirps/ kd/            # downloads from NOAA ERDDAP, no account needed
 python3 -I rain19.py test  asid.csv chirps/ kd/ rain.json  # build19.py reads rain.json beside itself
+python3 -I rain19.py gauge asid.csv sites.csv gauge_monthly.csv rain.json   # rain-gauge check, files from the gauge-data branch
 ```
+
+The gauge files come from `.github/workflows/fetch-gauges.yml` (Actions tab, run by hand), which finds up to three long-running gauges within 25 km of each bite site in `rain_points.csv`.
 

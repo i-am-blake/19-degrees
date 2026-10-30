@@ -2,6 +2,7 @@
 Usage:
   python3 -I rain19.py fetch <asid.csv> <chirps_dir> [kd_dir]   download CHIRPS monthly rain (and, optionally, MODIS water clarity) at bite sites
   python3 -I rain19.py test  <asid.csv> <chirps_dir> [kd_dir] [rain.json]
+  python3 -I rain19.py gauge <asid.csv> <sites.csv> <gauge_monthly.csv> [rain.json]   adds the rain-gauge check (files from the gauge-data branch)
 Data: CHIRPS v2.0 monthly precipitation, 0.05 deg, 1981 to now (Funk et al. 2015, Scientific Data; public domain, CC0),
 and MODIS Aqua Kd490 monthly water clarity, 2003-2022 (NASA Ocean Biology Processing Group), both via NOAA CoastWatch ERDDAP.
 The bite database gives month and year, not the day, so this is a monthly test: for each bite, the bite month's rain is ranked
@@ -27,16 +28,35 @@ def series(fn, a, b):
         if v != "NaN": cells.setdefault((float(la), float(lo)), {})[(int(t[:4]), int(t[5:7]))] = float(v)
     if not cells: return {}
     return cells[min(cells, key=lambda k: (k[0] - a) ** 2 + (k[1] - b) ** 2)]
-def rank(s, y, m, years):
+def rank(s, y, m, years, need=8):
     if (y, m) not in s: return None
     clim = [s[(yy, m)] for yy in years if yy != y and (yy, m) in s]
-    if len(clim) < 8: return None
+    if len(clim) < need: return None
     v = s[(y, m)]; return (sum(c < v for c in clim) + 0.5 * sum(c == v for c in clim)) / len(clim)
 def tail(n, k, p): return sum(math.comb(n, j) * p ** j * (1 - p) ** (n - j) for j in range(k, n + 1))
 def summary(ps):
     n = len(ps); q = sum(p >= 0.75 for p in ps); t = sum(p >= 0.9 for p in ps)
     return {"n": n, "q": q, "q_pct": round(100 * q / n), "q_p": round(tail(n, q, 0.25), 3), "t": t, "t_pct": round(100 * t / n), "t_p": round(tail(n, t, 0.1), 3), "mean": round(sum(ps) / n, 2)}
 mode, asid, cdir = sys.argv[1:4]; kdir = sys.argv[4] if len(sys.argv) > 4 else None
+if mode == "gauge":
+    import collections
+    out = sys.argv[5] if len(sys.argv) > 5 else os.path.join(os.path.dirname(os.path.abspath(__file__)), "rain.json")
+    ser = collections.defaultdict(dict); near = collections.defaultdict(list)
+    for r in csv.DictReader(open(kdir)): ser[r["station"]][(int(r["year"]), int(r["month"]))] = float(r["prcp_mm"])
+    for r in csv.DictReader(open(cdir)):
+        if r["station"]: near[(float(r["lat"]), float(r["lon"]))].append((float(r["km"]), r["station"]))
+    ps = {"bull": [], "white": []}; recent = {"bull": [], "white": []}
+    for sp, y, m, a, b, cat in bites(asid, 1900):
+        p = None
+        for d, st in sorted(near.get((a, b), [])):
+            p = rank(ser[st], y, m, range(1900, 2026), 20)
+            if p is not None: break
+        if p is None: continue
+        ps[sp].append(p)
+        if y >= 1982: recent[sp].append(p)
+    res = json.load(open(out)) if os.path.exists(out) else {}
+    res["gauge"] = {"bull": summary(ps["bull"]), "white": summary(ps["white"]), "bull_1982": summary(recent["bull"]), "white_1982": summary(recent["white"])}
+    json.dump(res, open(out, "w"), indent=1); print(json.dumps(res["gauge"])); sys.exit()
 if mode == "fetch":
     os.makedirs(cdir, exist_ok=True)
     for a, b in sorted({(r[3], r[4]) for r in bites(asid, 1981)}):

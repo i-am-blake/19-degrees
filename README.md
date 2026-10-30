@@ -125,6 +125,7 @@ The analysis scripts are in `src/`. See [`src/README.md`](src/README.md) to rebu
 - **Shark tracking:** [IMOS Animal Tracking](https://researchdata.edu.au/imos-animal-tracking-2007-ongoing/3961802) acoustic detections of bull, tiger and white sharks and green turtles (Integrated Marine Observing System), CC BY 4.0, checked monthly. Fetched by `.github/workflows/fetch-imos.yml`; analysed by `src/imos19.py`
 - **Shark nets and SMART drumlines (claims C20, C21):** NSW Shark Meshing Program annual performance reports; [Cappa et al. 2026](https://doi.org/10.3389/fmars.2026.1900316), Frontiers in Marine Science (figures cited, not redistributed)
 - **Rainfall at bite sites (claim C6):** [CHIRPS v2.0](https://www.chc.ucsb.edu/data/chirps) monthly rainfall, 1981 to now (Climate Hazards Center, UC Santa Barbara), public domain (CC0), via NOAA ERDDAP. Analysed by `src/rain19.py`
+- **Rain gauges (claim C6):** NOAA NCEI [GHCN](https://www.ncei.noaa.gov/products/land-based-station/global-historical-climatology-network-daily) monthly totals (Global Summary of the Month) for the nearest Bureau of Meteorology gauges, public domain. Fetched by `.github/workflows/fetch-gauges.yml` (run by hand) to the `gauge-data` branch; analysed by `src/rain19.py`
 - **Water clarity (claim C6):** NASA MODIS Aqua Kd490 monthly, 2003–2022 (NASA Ocean Biology Processing Group), NASA open data, via NOAA ERDDAP
 - **Population:** Australian Bureau of Statistics
 - **Safety evidence and other figures:** published studies, each linked on the site
