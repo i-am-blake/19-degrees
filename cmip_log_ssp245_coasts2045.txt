@@ -1,0 +1,4 @@
+ok ACCESS-CM2
+skip AWI-CM-1-1-MR MemoryError Unable to allocate 5.02 TiB for an array with shape (830305, 830305) and data type float64
+ok BCC-CSM2-MR
+ok CAMS-CSM1-0
