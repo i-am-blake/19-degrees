@@ -26,9 +26,9 @@ The site already uses every public source we could find. The data that would set
 **How sharing works**
 
 1. **Tell us what you have.** [Open a data offer](../../issues/new?template=offer-data.yml) or use the [contact form](https://19-degrees.org/#contact). A description is enough; don't post the data itself in an issue.
-2. **Agree how it's used:** openly under CC BY, summarised only (results published, raw data stays private), or under your organisation's data agreement.
+2. **Agree how it's used:** openly under CC BY, summarized only (results published, raw data stays private), or under your organization's data agreement.
 3. **Keep people private.** Only de-identified data: no names, contact details, photos of people or medical records that identify anyone. Only share data you have the right to share. Never contact people who were bitten, or their families, for this project.
-4. **Get credit.** Your name or organisation on the claim card and in the site's changelog, using the [CRediT contributor roles](https://credit.niso.org/). The data stays yours.
+4. **Get credit.** Your name or organization on the claim card and in the site's changelog, using the [CRediT contributor roles](https://credit.niso.org/). The data stays yours.
 
 ## 2. Test a claim
 
@@ -48,4 +48,4 @@ Spotted an error in the text, a number or the code? Open an issue or a pull requ
 
 ## Licences
 
-By contributing code you agree to license it under MIT; text and data you contribute to the site are published under CC BY 4.0 unless agreed otherwise. Source data keeps its own licence.
+By contributing code you agree to license it under MIT; text and data you contribute to the site are published under CC BY 4.0 unless agreed otherwise. Source data keeps its own license.

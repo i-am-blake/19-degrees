@@ -46,7 +46,7 @@ So far we've checked 26 products against the published evidence:
 | Not peer reviewed | 2 |
 | Trial stopped | 1 |
 
-Beyond products, the site rates beach-level measures (nets, drumlines, drones, listening stations, barriers) and first aid the same way. Each is labelled "shown to help", "helps, with limits" or "no effect found, or not shown", with the study behind it.
+Beyond products, the site rates beach-level measures (nets, drumlines, drones, listening stations, barriers) and first aid the same way. Each is labeled "shown to help", "helps, with limits" or "no effect found, or not shown", with the study behind it.
 
 **The goal:** a living, worldwide scorecard for shark safety that anyone can check. It covers:
 
@@ -120,16 +120,16 @@ The analysis scripts are in `src/`. See [`src/README.md`](src/README.md) to rebu
 - **Sea temperature, 1900 to now:** [HadISST](https://www.metoffice.gov.uk/hadobs/hadisst/) (UK Met Office), Open Government Licence, accessed through NOAA ERDDAP
 - **El Niño and La Niña:** Niño 3.4 index, calculated from HadISST
 - **Today's sea temperature:** Open-Meteo Marine
-- **Shark-control catches and gear (claims C1, C20):** [Queensland Shark Control Program open data](https://www.data.qld.gov.au/dataset/fisheries-queensland-s-shark-control-program-information-and-data), CC BY 4.0: catches by beach, gear and species since 1996, and today's net and drumline locations (copies on the `ocean-data` branch). Analysed for C20 by `src/nets19.py`
+- **Shark-control catches and gear (claims C1, C20):** [Queensland Shark Control Program open data](https://www.data.qld.gov.au/dataset/fisheries-queensland-s-shark-control-program-information-and-data), CC BY 4.0: catches by beach, gear and species since 1996, and today's net and drumline locations (copies on the `ocean-data` branch). Analyzed for C20 by `src/nets19.py`
 - **Coastal drownings:** Surf Life Saving Australia, National Coastal Safety Report 2025
-- **Shark tracking:** [IMOS Animal Tracking](https://researchdata.edu.au/imos-animal-tracking-2007-ongoing/3961802) acoustic detections of bull, tiger and white sharks and green turtles (Integrated Marine Observing System), CC BY 4.0, checked monthly. Fetched by `.github/workflows/fetch-imos.yml`; analysed by `src/imos19.py`
+- **Shark tracking:** [IMOS Animal Tracking](https://researchdata.edu.au/imos-animal-tracking-2007-ongoing/3961802) acoustic detections of bull, tiger and white sharks and green turtles (Integrated Marine Observing System), CC BY 4.0, checked monthly. Fetched by `.github/workflows/fetch-imos.yml`; analyzed by `src/imos19.py`
 - **Shark nets and SMART drumlines (claims C20, C21):** NSW Shark Meshing Program annual performance reports; [Cappa et al. 2026](https://doi.org/10.3389/fmars.2026.1900316), Frontiers in Marine Science (figures cited, not redistributed)
-- **Rainfall at bite sites (claim C6):** [CHIRPS v2.0](https://www.chc.ucsb.edu/data/chirps) monthly rainfall, 1981 to now (Climate Hazards Center, UC Santa Barbara), public domain (CC0), via NOAA ERDDAP. Analysed by `src/rain19.py`
-- **Rain gauges (claim C6):** NOAA NCEI [GHCN](https://www.ncei.noaa.gov/products/land-based-station/global-historical-climatology-network-daily) monthly totals (Global Summary of the Month) for the nearest Bureau of Meteorology gauges, public domain. Fetched by `.github/workflows/fetch-gauges.yml` (run by hand) to the `gauge-data` branch; analysed by `src/rain19.py`
+- **Rainfall at bite sites (claim C6):** [CHIRPS v2.0](https://www.chc.ucsb.edu/data/chirps) monthly rainfall, 1981 to now (Climate Hazards Center, UC Santa Barbara), public domain (CC0), via NOAA ERDDAP. Analyzed by `src/rain19.py`
+- **Rain gauges (claim C6):** NOAA NCEI [GHCN](https://www.ncei.noaa.gov/products/land-based-station/global-historical-climatology-network-daily) monthly totals (Global Summary of the Month) for the nearest Bureau of Meteorology gauges, public domain. Fetched by `.github/workflows/fetch-gauges.yml` (run by hand) to the `gauge-data` branch; analyzed by `src/rain19.py`
 - **River mouths (claim C6):** © [OpenStreetMap](https://www.openstreetmap.org/copyright) contributors, ODbL 1.0, ends of mapped rivers within 3 km of the Natural Earth coastline (public domain). Fetched by `.github/workflows/fetch-rivers.yml` (run by hand) to the `ocean-data` branch
-- **Fremantle sea level (claim C7):** [Permanent Service for Mean Sea Level](https://psmsl.org/data/obtaining/stations/111.php), station 111, free with citation. Fetched by `.github/workflows/fetch-ocean.yml` (run by hand); analysed by `src/leeuwin19.py`
+- **Fremantle sea level (claim C7):** [Permanent Service for Mean Sea Level](https://psmsl.org/data/obtaining/stations/111.php), station 111, free with citation. Fetched by `.github/workflows/fetch-ocean.yml` (run by hand); analyzed by `src/leeuwin19.py`
 - **Water clarity (claim C6):** NASA MODIS Aqua Kd490 monthly, 2003–2022 (NASA Ocean Biology Processing Group), NASA open data, via NOAA ERDDAP
-- **Climate-model projections (claim C3):** [CMIP6](https://wcrp-cmip.org/cmip-phase-6-cmip6/) monthly sea surface temperature from 27 models (SSP2-4.5), read from the Pangeo public archive by `.github/workflows/fetch-cmip.yml` (run by hand) to the `ocean-data` branch; analysed by `src/proj19.py`. Each modelling centre licenses its data, mostly CC BY 4.0
+- **Climate-model projections (claim C3):** [CMIP6](https://wcrp-cmip.org/cmip-phase-6-cmip6/) monthly sea surface temperature from 27 models (SSP2-4.5), read from the Pangeo public archive by `.github/workflows/fetch-cmip.yml` (run by hand) to the `ocean-data` branch; analyzed by `src/proj19.py`. Each modeling center licenses its data, mostly CC BY 4.0
 - **Shark sighting counts (claim C2):** [GBIF.org](https://www.gbif.org) yearly counts, fetched by `.github/workflows/fetch-gbif.yml` (run by hand)
 - **Population:** Australian Bureau of Statistics
 - **Safety evidence and other figures:** published studies, each linked on the site
@@ -140,7 +140,7 @@ The most useful thing right now is **data**. See [CONTRIBUTING.md](CONTRIBUTING.
 
 ## Licence
 
-Code: MIT. Text, charts and the 19 Degrees datasets: CC BY 4.0. Fonts: SIL Open Font License. Source data stays under its own licence. The 19 Degrees name and logo are not licensed for reuse. See [`LICENSE`](LICENSE).
+Code: MIT. Text, charts and the 19 Degrees datasets: CC BY 4.0. Fonts: SIL Open Font License. Source data stays under its own license. The 19 Degrees name and logo are not licensed for reuse. See [`LICENSE`](LICENSE).
 
 ## Disclaimer
 
