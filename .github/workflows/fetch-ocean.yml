@@ -2,8 +2,10 @@ name: Fetch Fremantle sea level
 # For claim C7. Downloads the monthly Fremantle tide-gauge record, the standard index of the Leeuwin Current's strength,
 # from three sources: PSMSL station 111 (the long record, which lags), the University of Hawaii Sea Level Center (recent
 # fast-delivery months) and the Bureau of Meteorology's monthly tide gauge table (port 62230). Adds the files to the
-# 'ocean-data' branch without touching the other files there. Runs only when started by hand.
+# 'ocean-data' branch without touching the other files there. Runs monthly; the weekly rebuild reruns claim C7 from it.
 on:
+  schedule:
+    - cron: "23 10 3 * *"   # 3rd of each month, 10:23 UTC
   workflow_dispatch:
 permissions:
   contents: write

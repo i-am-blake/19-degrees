@@ -87,6 +87,14 @@ for m in find("C19 tiger", r"tiger shark bites (\d+)% \((\d+) of (\d+), p = ([\d
 for m in find("C19 bull", r"Bull shark bites didn't stand out \((\d+)%, (\d+) of (\d+), p = ([\d.]+)\)"):
     check("C19 bull", (int(m[1]), int(m[2]), int(m[3]), float(m[4])), (hb["bull"]["t_pct"], hb["bull"]["t"], hb["bull"]["n"], round(hb["bull"]["t_p"], 2)))
 
+# Claim C7 (leeuwin19.py), when present
+if "leeuwin" in D:
+    lw = D["leeuwin"]
+    for m in find("C7 current", r"Western Australia has (\d+) recorded unprovoked bull shark bites since 1900, (\d+) of them since 2020\..*?to (\w+) (\d{4})\)\. (\d+) of the (\d+) recent bites can be checked.*?(\d+) of the (\d+) came in stronger-than-usual months, which could still be chance \(p = ([\d.]+)\)"):
+        mon = ["January","February","March","April","May","June","July","August","September","October","November","December"]
+        check("C7 warm current", (int(m[1]), int(m[2]), f"{m[4]}-{mon.index(m[3]) + 1:02d}", int(m[5]), int(m[6]), int(m[7]), int(m[8]), float(m[9])),
+              (lw["n"], lw["since2020"], lw["last"], lw["checked"], lw["since2020"], lw["strong"], lw["checked"], lw["p"]))
+
 # Réunion and New Caledonia (islands19.py), when present
 if "islands" in D:
     I = D["islands"]; c6 = I["c6"]; R, N = I["islands"]["Reunion"], I["islands"]["New Caledonia"]

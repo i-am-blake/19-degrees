@@ -2,8 +2,10 @@ name: Fetch IMOS receiver stations
 # For claims C2 and C16. The public detection data lists only stations that detected a shark, so a fall in detections
 # can't be told apart from a fall in listening stations. This downloads IMOS Animal Tracking receiver installations
 # (CC BY 4.0) from the AODN geoserver, plus a listing of IMOS's open Animal Tracking files, and adds them to the
-# 'ocean-data' branch without touching the other files there. Runs only when started by hand.
+# 'ocean-data' branch without touching the other files there. Runs monthly, a day after the Fremantle fetch so the two never push at once.
 on:
+  schedule:
+    - cron: "29 10 4 * *"   # 4th of each month, 10:29 UTC
   workflow_dispatch:
 permissions:
   contents: write

@@ -1,10 +1,10 @@
 """Claim C7 (first look): did Western Australia's bull shark bites come in months when the Leeuwin Current ran strong?
-Usage: python3 -I leeuwin19.py <asid.csv> <fremantle_psmsl111.rlrdata | bom_fremantle_62230.html>
+Usage: python3 -I leeuwin19.py <asid.csv> <fremantle_psmsl111.rlrdata | bom_fremantle_62230.html> [out leeuwin.json]
 The current's strength is read from Fremantle monthly sea level (PSMSL station 111), the standard index: the record is
 detrended (quadratic fit, to remove sea-level rise), the seasonal cycle removed, and each bite month ranked against the same
 calendar month in 1950 to the end of the record. Prints the result; the page states it as a first look."""
 import csv, sys, numpy as np
-asid, fre = sys.argv[1:3]; sl = {}
+asid, fre = sys.argv[1:3]; OUT = sys.argv[3] if len(sys.argv) > 3 else None; sl = {}
 if fre.endswith((".html", ".shtml")):
     # Bureau of Meteorology monthly table (port 62230, metres): Mth, Year, Gaps, Good, Min, Max, Mean, St Devn.
     # Keep months with at least 90% of hourly readings good; this record runs later than PSMSL's.
@@ -29,3 +29,8 @@ bites = [(int(x["Incident.year"]), int(x["Incident.month"])) for x in csv.DictRe
 rec = [b for b in bites if b[0] >= 2020]; inrec = [b for b in rec if b in an]
 strong = sum(1 for (y, m) in inrec if sum(an[(yy, m)] < an[(y, m)] for yy in range(1950, last[0] + 1) if yy != y and (yy, m) in an) / sum(1 for yy in range(1950, last[0] + 1) if yy != y and (yy, m) in an) >= 0.5)
 print(f"WA bull shark bites since 1900: {len(bites)}; since 2020: {len(rec)}; inside the sea-level record: {len(inrec)}; in stronger-than-usual months: {strong}")
+if OUT:
+    import json, math
+    p = sum(math.comb(len(inrec), k) for k in range(strong, len(inrec) + 1)) / 2 ** len(inrec) if inrec else None
+    json.dump(dict(n=len(bites), since2020=len(rec), checked=len(inrec), strong=strong, p=round(p, 2) if p is not None else None,
+                   last=f"{last[0]}-{last[1]:02d}"), open(OUT, "w"))
