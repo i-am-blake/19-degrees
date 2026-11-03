@@ -1,0 +1,1 @@
+Bureau of Meteorology monthly sea level table, Fremantle (port 62230), saved as the page, https://www.bom.gov.au/oceanography/projects/ntc/monthly/index.shtml. Data: Commonwealth of Australia (Bureau of Meteorology), retrieved 2026-11-03.

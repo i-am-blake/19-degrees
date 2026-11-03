@@ -1,0 +1,1 @@
+UHSLC files: University of Hawaii Sea Level Center, station 175 (Fremantle); fast-delivery (recent months) and research-quality monthly means, mm. Cite: Caldwell, P. C., M. A. Merrifield, P. R. Thompson (2015), Sea level measured by tide gauges from global oceans, the Joint Archive for Sea Level holdings (NCEI Accession 0019568), NOAA NCEI, doi:10.7289/V5V40S7W.
