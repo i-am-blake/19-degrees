@@ -1,7 +1,7 @@
 """Assemble the GitHub Pages site: python3 -I make_site.py <built 19-degrees.html> <pub_dir> <out_dir>
 Wraps the built page in a full HTML document with launch/head.html (link previews, icons) and copies
 the classroom sheets, data/, share/ and launch files. Fails if the address placeholder or a personal email is left in."""
-import os, re, shutil, sys
+import os, re, shutil, subprocess, sys
 page, pub, out = sys.argv[1:4]
 SITE = "https://19-degrees.org/"
 body = open(page).read()
@@ -43,6 +43,10 @@ shutil.copytree(os.path.join(pub, "fonts"), os.path.join(out, "fonts"))
 shutil.copytree(os.path.join(pub, "share"), os.path.join(out, "share"), ignore=shutil.ignore_patterns("classroom-preview.png"))
 for f in ["favicon.ico", "favicon.svg", "apple-touch-icon.png", "icon-32.png", "icon-192.png", "icon-512.png", "site.webmanifest", "LICENSE"]:
     shutil.copy(os.path.join(pub, "launch", f), out)
+# page-not-found page, built from the finished index.html so its logo and wave always match
+_m404 = os.path.join(os.path.dirname(os.path.abspath(__file__)), "make_404.py")
+if os.path.exists(_m404):
+    subprocess.run([sys.executable, "-I", _m404, os.path.join(out, "index.html"), os.path.join(out, "404.html")], check=True)
 bad = []
 for root, _, files in os.walk(out):
     for f in files:

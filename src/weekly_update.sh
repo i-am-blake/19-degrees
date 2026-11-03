@@ -1,0 +1,60 @@
+#!/usr/bin/env bash
+# The weekly rebuild, run by .github/workflows/weekly-update.yml from the repo root. Builds in a temporary folder,
+# checks the results, then copies the finished site over the repo root and the refreshed results into src/.
+set -euo pipefail
+R="$PWD"; W="${RUNNER_TEMP:-/tmp}/w"; rm -rf "$W"; mkdir -p "$W"; cp -r src/. "$W/"; cd "$W"
+warn(){ echo "::warning::$*"; }
+
+# 1. Newest Australian Shark-Incident Database from Zenodo
+python3 - <<'PY'
+import json, urllib.request
+h = json.load(urllib.request.urlopen("https://zenodo.org/api/records/18752301/versions?sort=version&size=1", timeout=60))["hits"]["hits"][0]
+f = next(x for x in h["files"] if x["key"].endswith(".xlsx"))
+urllib.request.urlretrieve(f["links"]["self"], "asid.xlsx")
+open("asid_version.txt", "w").write(str(h["id"]) + "\n"); print("database record", h["id"], h["metadata"].get("version", ""))
+PY
+python3 -I asid_to_csv.py asid.xlsx asid.csv
+NEWDB=0; cmp -s asid_version.txt "$R/src/asid_version.txt" 2>/dev/null || NEWDB=1
+
+# 2. Sea temperature (stop if NOAA is unreachable: these scripts exit with an error)
+python3 -I fetch_sst.py sst; python3 -I fetch_nino34.py sst; python3 -I fetch_beaches.py beach_sst
+
+# 3. Tagging, warm spells, rain (rain only when the database is new; the page keeps its last numbers otherwise)
+if git -C "$R" fetch -q origin imos-data 2>/dev/null; then mkdir -p imos && git -C "$R" archive origin/imos-data | tar -x -C imos && python3 -I imos19.py imos sst imos.json || warn "IMOS step failed, page keeps last numbers"; else warn "no imos-data branch"; fi
+python3 -I heat19.py asid.csv sst heat.json
+if [ "$NEWDB" = 1 ]; then
+  ( python3 -I rain19.py fetch asid.csv chirps kd && python3 -I rain19.py test asid.csv chirps kd rain.json \
+    && git -C "$R" fetch -q origin gauge-data ocean-data && mkdir -p gauge ocean \
+    && git -C "$R" archive origin/gauge-data | tar -x -C gauge && git -C "$R" archive origin/ocean-data | tar -x -C ocean \
+    && gunzip -f gauge/gauge_monthly.csv.gz && python3 -I rain19.py gauge asid.csv gauge/sites.csv gauge/gauge_monthly.csv rain.json \
+    && curl -sSfL -o coast.geojson https://raw.githubusercontent.com/nvkelso/natural-earth-vector/master/geojson/ne_10m_coastline.geojson \
+    && python3 -I rain19.py mouths asid.csv ocean/river_mouths_east.csv coast.geojson rain.json ) || warn "rain step failed, page keeps last numbers"
+fi
+
+# 4. Build the page
+python3 -I build.py asid.csv sst extra_incidents.json data.json
+python3 -I climate_analysis.py asid.csv sst climate.json
+python3 -I build19.py asid.csv sst beach_sst data.json page19.html 19-degrees.html | tee build.log
+
+# 5. Checks: never publish a page whose headline finding changed without a person looking
+python3 - <<'PY'
+import json, re, sys
+d = json.loads(re.search(r'id="n19-data">(.*?)</script>', open("19-degrees.html").read(), re.S).group(1))
+b = d["species"]["bull"]
+print("bull shark bites:", b["n"], "below 19 C:", b["below"], "beaches:", len(d["beaches"]))
+if b["below"] != 0: sys.exit("::error::A bull shark bite below 19 C appeared. Not publishing until a person checks it.")
+if b["n"] < 150 or len(d["beaches"]) < 10: sys.exit("::error::The build looks incomplete. Not publishing.")
+PY
+
+# 6. Downloads, classroom sheets, notebook, share images, site
+mkdir -p pub/launch pub/fonts
+for f in favicon.ico favicon.svg apple-touch-icon.png icon-32.png icon-192.png icon-512.png site.webmanifest LICENSE; do cp "$R/$f" pub/launch/; done
+cp launch/head.html pub/launch/head.html; cp -r "$R/fonts/." pub/fonts/
+python3 -I export19.py 19-degrees.html pub; python3 -I classroom19.py 19-degrees.html pub; python3 -I notebook19.py pub
+python3 -I share19.py 19-degrees.html pub/share || { warn "share images skipped, keeping last week's"; rm -rf pub/share; cp -r "$R/share" pub/share; }
+python3 -I make_site.py 19-degrees.html pub site
+
+# 7. Copy back
+cp -r site/. "$R/"
+cp heat.json asid_version.txt "$R/src/"; [ -f rain.json ] && cp rain.json "$R/src/"; [ -f imos.json ] && cp imos.json "$R/src/"
+echo "built OK (new database version: $NEWDB)"

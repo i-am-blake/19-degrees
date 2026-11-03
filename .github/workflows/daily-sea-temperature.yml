@@ -1,0 +1,31 @@
+name: Daily sea temperature
+# Refreshes today's sea temperature at each beach on the live page (Open-Meteo marine) and changes nothing else.
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "41 19 * * *"   # about 6:41 am in Sydney
+permissions:
+  contents: write
+concurrency: { group: site-update, cancel-in-progress: false }
+jobs:
+  today:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - name: Read today's readings
+        run: |
+          python3 -I src/update_today.py index.html new.html | tee today.log
+          python3 - <<'PY'
+          import re, sys, datetime
+          vals = [float(m) for m in re.findall(r" (-?\d+(?:\.\d+)?)$", open("today.log").read(), re.M)]
+          if not vals or any(not 10 <= v <= 32 for v in vals):
+              sys.exit("Readings look wrong, not publishing: %s" % vals)
+          print(len(vals), "beaches OK")
+          PY
+          mv new.html index.html
+      - name: Publish
+        run: |
+          git diff --quiet && { echo "No change"; exit 0; }
+          git -c user.name="Blake Erickson" -c user.email="323228245+i-am-blake@users.noreply.github.com" commit -qam "Daily sea temperature update, $(date -u +%Y-%m-%d)"
+          git pull -q --rebase origin main && git push -q origin main
