@@ -97,10 +97,10 @@ The gauge files come from `.github/workflows/fetch-gauges.yml` (Actions tab, run
 
 ## Warm current off Western Australia (claim C7)
 
-`leeuwin19.py` ranks each Western Australian bull shark bite month by the strength of the Leeuwin Current, read from detrended Fremantle sea level (PSMSL station 111, from the `ocean-data` branch). The public record currently ends in December 2022, so this is a first look until it catches up.
+`leeuwin19.py` ranks each Western Australian bull shark bite month by the strength of the Leeuwin Current, read from detrended Fremantle sea level (PSMSL station 111, or the Bureau of Meteorology table `bom_fremantle_62230.html`, which runs later; both on the `ocean-data` branch). The PSMSL copy ends in December 2022; the Bureau's runs to March 2026 (months with less than 90% of hourly readings are skipped). The page uses the Bureau's.
 
 ```
-python3 -I leeuwin19.py asid.csv fremantle_psmsl111.rlrdata
+python3 -I leeuwin19.py asid.csv bom_fremantle_62230.html      # or fremantle_psmsl111.rlrdata
 ```
 
 ## Warm spells (claim C19)
