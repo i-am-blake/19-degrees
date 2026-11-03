@@ -6,7 +6,13 @@ import sys, os, csv, io, urllib.request, collections
 out = os.path.join(sys.argv[1], "nino34.csv")
 url = ("https://coastwatch.pfeg.noaa.gov/erddap/griddap/erdHadISST.csv?sst"
        "%5B(1950-01-16):1:(last)%5D%5B(4.5):1:(-4.5)%5D%5B(-169.5):1:(-120.5)%5D")
-txt = urllib.request.urlopen(url, timeout=300).read().decode()
+import time
+for _try in range(6):  # NOAA ERDDAP sometimes answers 503 when busy
+    try:
+        txt = urllib.request.urlopen(url, timeout=300).read().decode(); break
+    except Exception:
+        if _try == 5: raise
+        time.sleep(20 * (_try + 1))
 acc = collections.defaultdict(list)
 for i, r in enumerate(csv.reader(io.StringIO(txt))):
     if i < 2 or not r[3] or r[3] == "NaN": continue
