@@ -47,6 +47,8 @@ print("bull shark bites:", b["n"], "below 19 C:", b["below"], "beaches:", len(d[
 if b["below"] != 0: sys.exit("::error::A bull shark bite below 19 C appeared. Not publishing until a person checks it.")
 if b["n"] < 150 or len(d["beaches"]) < 10: sys.exit("::error::The build looks incomplete. Not publishing.")
 PY
+# Every number written into the page text must still match the data (stops here if not)
+python3 -I check19.py 19-degrees.html asid.csv
 
 # 6. Downloads, classroom sheets, notebook, share images, site
 mkdir -p pub/launch pub/fonts

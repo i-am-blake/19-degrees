@@ -27,6 +27,12 @@ python3 -I climate_analysis.py asid.csv sst climate.json               # warm vs
 python3 -I build19.py asid.csv sst beach_sst data.json page19.html 19-degrees.html
 ```
 
+Then check that every number written into the page text still matches the data it was built from (the weekly rebuild stops here if one doesn't):
+
+```sh
+python3 -I check19.py 19-degrees.html asid.csv
+```
+
 `build19.py` prints the headline checks: bites below 19°C by species, months a year at 19°C or more by beach, the move into coastal waters, El Niño, Western Australia and north-coast white sharks.
 
 ## 3. Extras
