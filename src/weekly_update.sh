@@ -4,6 +4,8 @@
 set -euo pipefail
 R="$PWD"; W="${RUNNER_TEMP:-/tmp}/w"; rm -rf "$W"; mkdir -p "$W"; cp -r src/. "$W/"; cd "$W"
 warn(){ echo "::warning::$*"; }
+LOG="$W/run.log"; exec > >(tee -a "$LOG") 2>&1
+trap 'echo "::error::Stopped at line $LINENO ($BASH_COMMAND): $(tail -n 12 "$LOG" | tr "\n" "|" | cut -c1-900)"' ERR
 
 # 1. Newest Australian Shark-Incident Database from Zenodo
 python3 - <<'PY'
