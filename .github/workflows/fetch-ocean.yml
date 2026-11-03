@@ -1,6 +1,8 @@
 name: Fetch Fremantle sea level
-# For claim C7. Downloads the monthly Fremantle tide-gauge record (PSMSL station 111), the standard index of the
-# Leeuwin Current's strength, plus the more recent UHSLC fast-delivery months, and saves the small file to the 'ocean-data' branch. Runs only when started by hand.
+# For claim C7. Downloads the monthly Fremantle tide-gauge record, the standard index of the Leeuwin Current's strength,
+# from three sources: PSMSL station 111 (the long record, which lags), the University of Hawaii Sea Level Center (recent
+# fast-delivery months) and the Bureau of Meteorology's monthly tide gauge table (port 62230). Adds the files to the
+# 'ocean-data' branch without touching the other files there. Runs only when started by hand.
 on:
   workflow_dispatch:
 permissions:
@@ -12,17 +14,19 @@ jobs:
     steps:
       - name: Download
         run: |
-          mkdir -p out
-          curl -sSfL -o out/fremantle_psmsl111.rlrdata "https://psmsl.org/data/obtaining/rlr.monthly.data/111.rlrdata" || echo "download failed" > out/log.txt
-          for f in fast/monthly/m175.csv rqds/indian/monthly/m175a.csv; do curl -sSfL -o "out/uhslc_$(basename $f)" "https://uhslc.soest.hawaii.edu/data/csv/$f" || echo "uhslc $f failed" >> out/log.txt; done
+          mkdir -p out; : > out/fremantle_log.txt
+          curl -sSfL -o out/fremantle_psmsl111.rlrdata "https://psmsl.org/data/obtaining/rlr.monthly.data/111.rlrdata" || echo "psmsl download failed" >> out/fremantle_log.txt
+          for f in fast/monthly/m175.csv rqds/indian/monthly/m175a.csv; do curl -sSfL -o "out/uhslc_$(basename $f)" "https://uhslc.soest.hawaii.edu/data/csv/$f" || echo "uhslc $f failed" >> out/fremantle_log.txt; done
+          curl -sSfL -A "Mozilla/5.0 (19-degrees.org open data)" -o out/bom_fremantle_62230.html "https://www.bom.gov.au/ntc/IDO70000/IDO70000_62230_SLD.shtml" || echo "bom download failed" >> out/fremantle_log.txt
+          for f in out/*; do echo "$f: $(wc -c < "$f") bytes; last line: $(tail -n 1 "$f" | cut -c1-120)" >> out/fremantle_log.txt; done
+          printf "Monthly mean sea level at Fremantle, Western Australia (PSMSL station 111, Revised Local Reference, mm).\nSource: Permanent Service for Mean Sea Level (PSMSL), https://psmsl.org/data/obtaining/stations/111.php\nCite: Holgate, S.J. et al. (2013) New Data Systems and Products at the Permanent Service for Mean Sea Level. Journal of Coastal Research 29(3), 493-504; and PSMSL (%s), Tide Gauge Data, retrieved %s.\n" "$(date -u +%Y)" "$(date -u +%Y-%m-%d)" > out/README.txt
           printf "UHSLC files: University of Hawaii Sea Level Center, station 175 (Fremantle); fast-delivery (recent months) and research-quality monthly means, mm. Cite: Caldwell, P. C., M. A. Merrifield, P. R. Thompson (2015), Sea level measured by tide gauges from global oceans, the Joint Archive for Sea Level holdings (NCEI Accession 0019568), NOAA NCEI, doi:10.7289/V5V40S7W.\n" > out/README_uhslc.txt
-          printf "Monthly mean sea level at Fremantle, Western Australia (PSMSL station 111, Revised Local Reference, mm).\nSource: Permanent Service for Mean Sea Level (PSMSL), https://psmsl.org/data/obtaining/stations/111.php\nCite: Holgate, S.J. et al. (2013) New Data Systems and Products at the Permanent Service for Mean Sea Level. Journal of Coastal Research 29(3), 493-504; and PSMSL (2025), Tide Gauge Data, retrieved $(date -u +%Y-%m-%d).\n" > out/README.txt
-          ls -la out; head -3 out/fremantle_psmsl111.rlrdata || true
-      - name: Save to the ocean-data branch
+          printf "Bureau of Meteorology monthly sea level table, Fremantle (port 62230), saved as the page, https://www.bom.gov.au/oceanography/projects/ntc/monthly/index.shtml. Data: Commonwealth of Australia (Bureau of Meteorology), retrieved %s.\n" "$(date -u +%Y-%m-%d)" > out/README_bom.txt
+          cat out/fremantle_log.txt
+      - name: Add to the ocean-data branch
         if: always()
         run: |
-          mkdir -p out br; cd br; git init -q -b ocean-data
-          cp ../out/* . 2>/dev/null || true
-          git add -A
-          git -c user.name="github-actions[bot]" -c user.email="41898900+github-actions[bot]@users.noreply.github.com" commit -qm "Fremantle sea level, $(date -u +%Y-%m-%d)"
-          git push -q -f "https://x-access-token:${{ github.token }}@github.com/${{ github.repository }}.git" HEAD:ocean-data
+          git clone -q --depth 1 --branch ocean-data "https://x-access-token:${{ github.token }}@github.com/${{ github.repository }}.git" br
+          cp out/* br/ 2>/dev/null || true; cd br; git add -A
+          git -c user.name="github-actions[bot]" -c user.email="41898900+github-actions[bot]@users.noreply.github.com" commit -qm "Fremantle sea level, $(date -u +%Y-%m-%d)" || exit 0
+          git push -q "https://x-access-token:${{ github.token }}@github.com/${{ github.repository }}.git" HEAD:ocean-data

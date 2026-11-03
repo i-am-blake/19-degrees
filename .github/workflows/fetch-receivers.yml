@@ -1,0 +1,31 @@
+name: Fetch IMOS receiver stations
+# For claims C2 and C16. The public detection data lists only stations that detected a shark, so a fall in detections
+# can't be told apart from a fall in listening stations. This downloads IMOS Animal Tracking receiver installations
+# (CC BY 4.0) from the AODN geoserver, plus a listing of IMOS's open Animal Tracking files, and adds them to the
+# 'ocean-data' branch without touching the other files there. Runs only when started by hand.
+on:
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  receivers:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Download
+        run: |
+          mkdir -p out; : > out/receivers_log.txt
+          W="https://geoserver-123.aodn.org.au/geoserver/ows?service=WFS&version=1.0.0"
+          curl -sSfL -o out/receivers_schema.xml "$W&request=DescribeFeatureType&typeName=imos:acoustic_installation_summary_map" || echo "schema failed" >> out/receivers_log.txt
+          curl -sSfL -o out/receivers_installations.csv "$W&request=GetFeature&typeName=imos:acoustic_installation_summary_map&outputFormat=csv" || echo "installations failed" >> out/receivers_log.txt
+          aws s3 ls --no-sign-request s3://imos-data/IMOS/AATAMS/ > out/receivers_s3_listing.txt || echo "s3 listing failed" >> out/receivers_log.txt
+          for f in out/receivers_*; do echo "$f: $(wc -l < "$f") lines; first line: $(head -n 1 "$f" | cut -c1-300)" >> out/receivers_log.txt; done
+          printf "IMOS Animal Tracking receiver installations (layer imos:acoustic_installation_summary_map, most recent deployment per station), CC BY 4.0.\nCite: IMOS (%s), IMOS - Animal Tracking Facility - Receiver locations, https://geoserver-123.aodn.org.au/geoserver/ows, accessed %s. IMOS is enabled by the National Collaborative Research Infrastructure Strategy (NCRIS).\n" "$(date -u +%Y)" "$(date -u +%Y-%m-%d)" > out/README_receivers.txt
+          cat out/receivers_log.txt
+      - name: Add to the ocean-data branch
+        if: always()
+        run: |
+          git clone -q --depth 1 --branch ocean-data "https://x-access-token:${{ github.token }}@github.com/${{ github.repository }}.git" br
+          cp out/* br/ 2>/dev/null || true; cd br; git add -A
+          git -c user.name="github-actions[bot]" -c user.email="41898900+github-actions[bot]@users.noreply.github.com" commit -qm "IMOS receiver stations, $(date -u +%Y-%m-%d)" || exit 0
+          git push -q "https://x-access-token:${{ github.token }}@github.com/${{ github.repository }}.git" HEAD:ocean-data
