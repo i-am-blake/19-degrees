@@ -73,7 +73,7 @@ python3 -I imos19.py imos sst imos.json      # writes the tagging numbers; build
 
 ## Fixed inputs to update by hand
 
-- Drowning figures in `build.py` (`DROWN_2425`, window `W0`–`W1`) come from Surf Life Saving Australia's National Coastal Safety Report. Move the window forward when a new report is out.
+- Drowning figures in `build.py` (`DROWN_YEARS` by state and year, `DROWN_NATIONAL`, window `W0`–`W1`) are the yearly counts in Surf Life Saving Australia's National Coastal Safety Report. When a new report is out, drop the oldest year, add the newest and move the window forward.
 - Population by decade (`POP_MID` in `build.py`) uses approximate Australian Bureau of Statistics figures.
 
 ## Notes on method

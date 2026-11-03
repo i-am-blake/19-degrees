@@ -62,7 +62,7 @@ dl{{display:grid;grid-template-columns:170px 1fr;gap:6px 14px}}dt{{font-weight:6
 <li>Look at the chart. About how many months a year was the sea off Sydney 19°C or warmer in the 1900s? In the 2020s?<div class="lines"></div><div class="lines"></div></li>
 <li>If bull sharks only visit when the water is 19°C or warmer, what happens to the number of months they can be near Sydney? Why might that matter to swimmers?<div class="lines"></div><div class="lines"></div></li>
 <li>There are about 71% fewer oceanic sharks and rays than in 1970, but more bites near some beaches. Give two reasons that could both be true at once.<div class="lines"></div><div class="lines"></div></li>
-<li>Bonus: About 49 people drown on Australia's coast for every person killed by a shark. What is one thing you can do to stay safe at the beach?<div class="lines"></div></li>
+<li>Bonus: About {round(d["ratio"]["drown"] / d["ratio"]["shark"])} people drown on Australia's coast for every person killed by a shark. What is one thing you can do to stay safe at the beach?<div class="lines"></div></li>
 </ol>
 <h2>Words</h2>
 <dl><dt>Sea surface temperature</dt><dd>How warm the top of the sea is.</dd><dt>Estuary</dt><dd>Where a river meets the sea; the water is part fresh, part salty.</dd><dt>Range</dt><dd>Where an animal can live.</dd><dt>Season</dt><dd>The part of the year an animal is in a place.</dd><dt>Marine heatwave</dt><dd>Days when the sea is much warmer than usual.</dd></dl>

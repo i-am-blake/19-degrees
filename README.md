@@ -26,7 +26,7 @@ Tagged sharks agree: of 20,105 days that 132 tagged bull sharks were detected of
 
 That line is moving. Off Sydney, water at 19°C or more now lasts about 45% longer each year than it did a century ago, and it reaches about 215 km further down the coast. The bites have followed: further south, later in the year, and out of estuaries, harbors and rivers into coastal waters, where 68% of bull shark bites since 2015 have happened, up from 4% before 1960.
 
-None of this means more sharks. Oceanic sharks and rays are down about 71% worldwide since 1970 ([Pacoureau et al. 2021](https://www.nature.com/articles/s41586-020-03173-9)), and in Australia drowning on the coast takes about 49 lives for every one lost to a shark. It means **fewer sharks, closer encounters**, and a changing map of where to be ready.
+None of this means more sharks. Oceanic sharks and rays are down about 71% worldwide since 1970 ([Pacoureau et al. 2021](https://www.nature.com/articles/s41586-020-03173-9)), and in Australia drowning on the coast takes about 50 lives for every one lost to a shark. It means **fewer sharks, closer encounters**, and a changing map of where to be ready.
 
 ## Does it actually work?
 

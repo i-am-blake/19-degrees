@@ -16,10 +16,13 @@ STATES = ["NSW", "QLD", "WA", "VIC", "SA", "TAS", "NT"]
 STATE_NAMES = {"NSW": "New South Wales", "QLD": "Queensland", "WA": "Western Australia", "VIC": "Victoria",
                "SA": "South Australia", "TAS": "Tasmania", "NT": "Northern Territory"}
 
-# Coastal drowning, 10-year average per year to 2024/25, derived from SLSA National Coastal Safety Report 2025:
-# 2024/25 count / (1 + stated % difference from the 10-year average).
-DROWN_2425 = {"NSW": (52, 0.13), "QLD": (31, 0.15), "WA": (27, 0.37), "VIC": (20, 0.05),
-              "SA": (18, 1.25), "TAS": (5, -0.17), "NT": (1, -0.50)}
+# Coastal drowning deaths by financial year, 2015/16 to 2024/25, from SLSA National Coastal Safety Report 2025
+# (each state's "2015-25: ten-year coastal drowning trends" chart). The national total is the report's own figure
+# (Figure 50, N=1,301); the state charts add up to 4 more, in 2021/22 to 2023/24.
+DROWN_YEARS = {"NSW": [55, 33, 35, 43, 49, 45, 52, 46, 61, 52], "QLD": [25, 23, 29, 26, 27, 34, 30, 27, 23, 31],
+               "WA": [21, 26, 13, 13, 21, 22, 17, 21, 20, 27], "VIC": [23, 13, 19, 22, 13, 21, 14, 19, 26, 20],
+               "SA": [7, 10, 5, 13, 4, 8, 9, 6, 9, 18], "TAS": [3, 10, 6, 3, 6, 4, 11, 3, 10, 5], "NT": [3, 3, 3, 1, 0, 1, 4, 1, 1, 1]}
+DROWN_NATIONAL = 1301
 
 # Approximate Australian population (millions) at mid-decade, ABS historical estimates.
 POP_MID = {1900: 4.0, 1910: 4.9, 1920: 5.9, 1930: 6.7, 1940: 7.4, 1950: 9.2, 1960: 11.4, 1970: 13.9,
@@ -91,8 +94,7 @@ def main():
     # ---- state comparison, July 2015 – June 2025
     states = []
     for s in STATES:
-        n, pct = DROWN_2425[s]
-        dpy = n / (1 + pct)
+        dpy = sum(DROWN_YEARS[s]) / 10
         win = [r for r in rows if r["state"] == s and in_window(r, W0, W1)]
         states.append(dict(k=s, name=STATE_NAMES[s], dpy=round(dpy, 2), d10=round(dpy * 10),
                            fatal=sum(r["fatal"] for r in win), nonfatal=sum(not r["fatal"] for r in win),
@@ -206,7 +208,7 @@ def main():
         asid_last=dict(year=last[0], month=last[1]),
         window=dict(start="2015-07", end="2025-06"),
         states=states, deaths=deaths,
-        totals=dict(d10=sum(s["d10"] for s in states), fatal=sum(s["fatal"] for s in states),
+        totals=dict(d10=DROWN_NATIONAL, fatal=sum(s["fatal"] for s in states),
                     nonfatal=sum(s["nonfatal"] for s in states)),
         activity=dict(activity), ranking=ranking, decades=decades, months=months,
         climate=climate, sst_last=sst_last, east_lat=dict(bull=east_lat("bull shark"), tiger=east_lat("tiger shark")),
