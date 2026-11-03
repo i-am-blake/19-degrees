@@ -1,0 +1,4 @@
+out/receivers_installations.csv: 4551 lines; first line: FID,installation_type,receiver_name,deployment_date,recovery_date,receiver_status,active,geom,imos_b
+out/receivers_log.txt: 1 lines; first line: out/receivers_installations.csv: 4551 lines; first line: FID,installation_type,receiver_name,deployment_date,recovery_date,receiver_status,active,geom,imos_b
+out/receivers_s3_listing.txt: 6 lines; first line:                            PRE AATAMS_sattag_nrt/
+out/receivers_schema.xml: 20 lines; first line: <?xml version="1.0" encoding="UTF-8"?><xsd:schema xmlns:gml="http://www.opengis.net/gml" xmlns:imos="imos.mod" xmlns:xsd="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" targetNamespace="imos.mod">

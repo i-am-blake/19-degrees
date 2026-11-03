@@ -1,0 +1,6 @@
+                           PRE AATAMS_sattag_nrt/
+                           PRE acoustic_detections_QC/
+                           PRE acoustic_detections_QC_summary/
+                           PRE acoustic_tagging/
+                           PRE archival_tagging/
+                           PRE satellite_tagging/
