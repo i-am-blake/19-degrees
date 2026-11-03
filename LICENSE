@@ -20,6 +20,7 @@ Credit: "19 Degrees, Blake Erickson", with a link to the page.
 - CHIRPS rainfall: public domain (CC0). Cite Funk et al. (2015), The climate hazards infrared precipitation with stations, Scientific Data 2, 150066, doi:10.1038/sdata.2015.66.
 - NOAA GHCN rain gauge records: public domain (US Government work). Cite Menne, M.J. et al. (2012), Global Historical Climatology Network - Daily (GHCN-Daily), NOAA National Climatic Data Center, doi:10.7289/V5D21VHZ.
 - River mouths: © OpenStreetMap contributors, Open Database License (ODbL) 1.0, https://www.openstreetmap.org/copyright. Coastline: Natural Earth, public domain.
+- Réunion and New Caledonia shark-bite records: CC BY 4.0. Cite Taglioni, F., Guiltat, S. and Delsaut, M., Datasets of Human-shark interactions in New Caledonia and Reunion Island (1980-2022), Zenodo, doi:10.5281/zenodo.12549370. A copy is kept as src/islands_nc_run.csv.
 - Fremantle sea level: Permanent Service for Mean Sea Level (PSMSL). Cite Holgate, S.J. et al. (2013), New Data Systems and Products at the Permanent Service for Mean Sea Level, Journal of Coastal Research 29(3), 493-504.
 - CMIP6 climate model output: licensed by each modelling centre (mostly CC BY 4.0); cite the World Climate Research Programme CMIP6 and each model used (listed in cmip_tos_delta_ssp245.csv on the ocean-data branch).
 - GBIF occurrence counts: GBIF.org; each source dataset keeps its own licence (CC0, CC BY or CC BY-NC).

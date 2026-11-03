@@ -87,6 +87,18 @@ for m in find("C19 tiger", r"tiger shark bites (\d+)% \((\d+) of (\d+), p = ([\d
 for m in find("C19 bull", r"Bull shark bites didn't stand out \((\d+)%, (\d+) of (\d+), p = ([\d.]+)\)"):
     check("C19 bull", (int(m[1]), int(m[2]), int(m[3]), float(m[4])), (hb["bull"]["t_pct"], hb["bull"]["t"], hb["bull"]["n"], round(hb["bull"]["t_p"], 2)))
 
+# Réunion and New Caledonia (islands19.py), when present
+if "islands" in D:
+    I = D["islands"]; c6 = I["c6"]; R, N = I["islands"]["Reunion"], I["islands"]["New Caledonia"]
+    for m in find("islands C6", r"(\d+) of (\d+) bull shark bites \((\d+)%\) came after 50 mm or more of rain over 3 days, against (\d+) of (\d+) bites by other identified sharks \((\d+)%; p = ([\d.]+)\)\. The water was turbid at (\d+)% of bull shark bites and (\d+)% of the others \(p = ([\d.]+)\)"):
+        b, o = c6["bull"], c6["other"]
+        check("islands C6", (int(m[1]), int(m[2]), int(m[3]), int(m[4]), int(m[5]), int(m[6]), m[7], int(m[8]), int(m[9]), m[10]),
+              (b["wet"], b["rain_n"], b["wet_pct"], o["wet"], o["rain_n"], o["wet_pct"], f"{c6['p_wet']:.2f}", b["turbid_pct"], o["turbid_pct"], f"{c6['p_turbid']:.2f}"))
+    for m in find("islands C22", r"coldest month since 1980 averaged ([\d.]+)°C off Réunion and ([\d.]+)°C off New Caledonia, so all (\d+) bull shark bites there came in water above 19°C \(coolest bite month ([\d.]+)°C\)"):
+        bs = [R["species"]["bull"], N["species"]["bull"]]
+        check("islands C22", (float(m[1]), float(m[2]), int(m[3]), float(m[4])), (R["sea_min"], N["sea_min"], sum(x["n"] for x in bs), min(x["min"] for x in bs)))
+    if R["months_below19"] or N["months_below19"]: bad.append("islands: the page says the sea there never falls to 19°C, but the data has months below")
+
 # Western Australia's bull shark jump (chart data) and population
 w = D["wa_spike"]
 if not w["post"] > w["pre"]: bad.append(f"WA: page says more bull shark bites since 2020 than in the 120 years before, data has {w['post']} vs {w['pre']}")

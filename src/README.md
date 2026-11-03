@@ -135,3 +135,11 @@ python3 -I firstaid19.py asid.csv
 python3 -I proj19.py beach_sst/ cmip_tos_delta_ssp245.csv proj.json
 ```
 
+
+## Réunion and New Caledonia (claims C6 and C22)
+
+`islands19.py` uses day-dated bites from the University of Reunion Island ([Zenodo, CC BY 4.0](https://doi.org/10.5281/zenodo.12549370); a copy is in `islands_nc_run.csv`). For C6 it compares bull shark bites with bites by other identified sharks: the share after 50 mm or more of rain over 3 days, and the share in turbid water. For C22 it looks up each bite month's HadISST sea temperature off each island. It writes `islands.json`, which `build19.py` reads. The data ends in 2021, so it doesn't run weekly; rerun it when a new version is published.
+
+```
+python3 -I islands19.py islands_nc_run.csv islands.json
+```

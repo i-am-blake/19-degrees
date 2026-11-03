@@ -1,0 +1,82 @@
+{
+ "source": "doi:10.5281/zenodo.12549370",
+ "y0": 1980,
+ "y1": 2021,
+ "n": 122,
+ "islands": {
+  "Reunion": {
+   "n": 60,
+   "cell": [
+    -21.5,
+    55.5
+   ],
+   "sea_min": 22.5,
+   "sea_max": 28.8,
+   "months_below19": 0,
+   "months": 516,
+   "species": {
+    "bull": {
+     "n": 25,
+     "min": 23.2,
+     "median": 25.6,
+     "below19": 0
+    },
+    "tiger": {
+     "n": 10,
+     "min": 23.0,
+     "median": 24.9,
+     "below19": 0
+    }
+   }
+  },
+  "New Caledonia": {
+   "n": 62,
+   "cell": [
+    -22.5,
+    166.5
+   ],
+   "sea_min": 21.7,
+   "sea_max": 28.3,
+   "months_below19": 0,
+   "months": 516,
+   "species": {
+    "bull": {
+     "n": 11,
+     "min": 22.9,
+     "median": 26.1,
+     "below19": 0
+    },
+    "tiger": {
+     "n": 20,
+     "min": 22.3,
+     "median": 26.2,
+     "below19": 0
+    }
+   }
+  }
+ },
+ "c6": {
+  "bull": {
+   "n": 36,
+   "rain_n": 36,
+   "wet": 3,
+   "median_rain": 1.0,
+   "turb_n": 36,
+   "turbid": 15,
+   "wet_pct": 8,
+   "turbid_pct": 42
+  },
+  "other": {
+   "n": 49,
+   "rain_n": 49,
+   "wet": 3,
+   "median_rain": 3.0,
+   "turb_n": 49,
+   "turbid": 15,
+   "wet_pct": 6,
+   "turbid_pct": 31
+  },
+  "p_wet": 0.695,
+  "p_turbid": 0.36
+ }
+}

@@ -1,0 +1,123 @@
+SITE,N,DATE,YEAR,MONTH,DAY,HOUR,HOURTYPO,SEASON,WEEKEND,MORNING,ZONE,WIND,RAINJ,RAINJ3,SWELL,CLOUD,TURB,SCOREMOON,GENDER,AGE,ACTIVITY,GRAV,INJURY,SHARKTYPE,SHARKCAT,SHARKHEIGHT
+New Caledonia,1,1982-03-13,1982,Mar,Sat,13:00,13-15,Summer,Weekend,Afternoon,Noumea,Leeward,3,33,1,25,Slightly turbid,Full or new moon,Male,33,Spearfisher,Significant bite,Non fatal,NA,NA,NA
+New Caledonia,2,1982-07-28,1982,Jul,Wed,12:30,13-15,Winter,Week,Afternoon,East,Windward,0,35,1,50,Slightly turbid,First or last quarter,Male,35,Spearfisher,Significant bite,Non fatal,NA,NA,2.5
+New Caledonia,3,1983-03-14,1983,Mar,Mon,15:00,15-17,Summer,Week,Afternoon,Loyalty,NA,6,7,0.3,50,Slightly turbid,Full or new moon,Male,14,Swimmer,Minor bite,Non fatal,NA,NA,1.4
+New Caledonia,4,1983-08-23,1983,Aug,Tue,16:30,15-17,Winter,Week,Afternoon,East,Windward,0,1,1,15,Clear,Full or new moon,Male,23,Spearfisher,Death,Fatal,Tiger,Large sharks,3
+New Caledonia,5,1985-01-26,1985,Jan,Sat,09:30,09-11,Summer,Weekend,Morning,Noumea,Leeward,0,1,1.5,75,Clear,First or last quarter,Male,25,Spearfisher,Significant bite,Non fatal,Bull,Large sharks,3
+New Caledonia,6,1988-03-08,1988,Mar,Tue,12:40,11-13,Summer,Week,Morning,Noumea,Leeward,0,5,0,50,Clear,First or last quarter,Male,25,Spearfisher,Significant bite,Non fatal,Tiger,Large sharks,3.5
+New Caledonia,7,1991-03-02,1991,Mar,Sat,09:00,09-11,Summer,Weekend,Morning,West,Leeward,0,6,0,75,Turbid,Full or new moon,Male,34,Spearfisher,Significant bite,Non fatal,Tiger,Large sharks,4.5
+New Caledonia,8,1993-03-28,1993,Mar,Sun,08:30,07-09,Summer,Weekend,Morning,Noumea,Leeward,0,0,0,25,Slightly turbid,First or last quarter,Male,14,Spearfisher,Minor bite,Non fatal,Bull,Large sharks,3
+New Caledonia,9,1994-02-09,1994,Feb,Wed,15:00,15-17,Summer,Week,Afternoon,West,Leeward,0,0,0.7,25,Slightly turbid,Full or new moon,Male,56,Spearfisher,Death,Fatal,Tiger,Large sharks,4
+New Caledonia,10,1994-10-15,1994,Oct,Sat,17:00,17-19,Winter,Weekend,Afternoon,Noumea,Leeward,0,0,1.2,15,Turbid,Full or new moon,Male,27,Spearfisher,Minor bite,Non fatal,Bull,Large sharks,3
+New Caledonia,11,1995-10-22,1995,Oct,Sun,10:30,09-11,Winter,Weekend,Morning,West,Leeward,1,3,0.5,25,Clear,Full or new moon,Male,30,Swimmer,Minor bite,Non fatal,Grey reef,Others,1.7
+New Caledonia,12,1998-04-25,1998,Apr,Sat,11:30,11-13,Summer,Weekend,Morning,East,Windward,0,64,0.5,75,Clear,Full or new moon,Male,56,Swimmer,Significant bite,Non fatal,Grey reef,Others,1.5
+New Caledonia,13,1999-03-13,1999,Mar,Sat,12:40,11-13,Summer,Weekend,Morning,Loyalty,NA,4,48,0.5,25,Clear,First or last quarter,Male,50,Spearfisher,Minor bite,Non fatal,Tiger,Large sharks,3.5
+New Caledonia,14,2000-03-06,2000,Mar,Mon,12:30,11-13,Summer,Week,Morning,Loyalty,NA,0,3,0.5,10,Clear,Full or new moon,Male,21,Swimmer,Minor bite,Non fatal,Grey reef,Others,2
+New Caledonia,15,2000-03-15,2000,Mar,Wed,11:00,11-13,Summer,Week,Morning,West,Leeward,24,3,0.5,75,Clear,First or last quarter,Male,35,Spearfisher,Death,Fatal,Bull,Large sharks,3
+New Caledonia,16,2000-08-29,2000,Aug,Tue,12:00,11-13,Winter,Week,Morning,Noumea,Leeward,0,38,1.5,75,Clear,Full or new moon,Male,21,Spearfisher,Minor bite,Non fatal,Grey reef,Others,1.5
+New Caledonia,17,2000-12-28,2000,Dec,Thu,09:30,09-11,Summer,Week,Morning,East,Windward,0,0,0.5,15,Clear,Full or new moon,Male,30,Spearfisher,Significant bite,Non fatal,Lemon,Others,3
+New Caledonia,18,2001-03-11,2001,Mar,Sun,09:30,09-11,Summer,Weekend,Morning,East,Windward,2,3,0.5,10,Clear,Full or new moon,Male,32,Spearfisher,Minor bite,Non fatal,Sandbar,Others,1.5
+New Caledonia,19,2001-12-17,2001,Dec,Mon,12:40,11-13,Summer,Week,Morning,Noumea,Leeward,0,0,0.5,25,Clear,Full or new moon,Male,29,Spearfisher,Minor bite,Non fatal,Hammerhead,Others,3
+New Caledonia,20,2002-03-03,2002,Mar,Sun,NA,NA,Summer,Weekend,NA,Loyalty,NA,0,5,1,40,Slightly turbid,First or last quarter,Male,44,Spearfisher,Death,Fatal,NA,NA,NA
+New Caledonia,21,2002-03-27,2002,Mar,Wed,NA,NA,Summer,Week,NA,East,Windward,20,40,0.7,65,Turbid,Full or new moon,Male,32,Spearfisher,Significant bite,Non fatal,NA,NA,NA
+New Caledonia,22,2004-01-17,2004,Jan,Sat,10:30,09-11,Summer,Weekend,Morning,Noumea,Leeward,0,0,0.8,25,Clear,First or last quarter,Male,14,Spearfisher,Minor bite,Non fatal,Sleeper,Others,1.5
+New Caledonia,23,2004-04-23,2004,Apr,Fri,NA,NA,Summer,Week,NA,Loyalty,NA,0,0,1,25,Slightly turbid,Full or new moon,Male,30,Spearfisher,Significant bite,Non fatal,Whitetip,Others,2
+New Caledonia,24,2005-11-24,2005,Nov,Thu,20:30,19-21,Summer,Week,Afternoon,Loyalty,NA,1,0,1,25,Slightly turbid,First or last quarter,Male,NA,Spearfisher,Significant bite,Non fatal,Grey reef,Others,NA
+New Caledonia,25,2007-01-25,2007,Jan,Thu,14:00,13-15,Summer,Week,Afternoon,West,Leeward,0,0,1,25,Slightly turbid,First or last quarter,Male,29,Spearfisher,Significant bite,Non fatal,Tiger,Large sharks,4
+New Caledonia,26,2007-02-10,2007,Feb,Sat,10:00,09-11,Summer,Weekend,Morning,Loyalty,NA,4,52,0.7,25,Clear,First or last quarter,Male,52,Spearfisher,Minor bite,Non fatal,Whitetip,Others,1.8
+New Caledonia,27,2007-04-09,2007,Apr,Mon,16:30,17-19,Summer,Week,Afternoon,Noumea,Leeward,3,2,1.5,75,Turbid,First or last quarter,Male,26,Boardsports,Significant bite,Non fatal,Grey reef,Others,1.8
+New Caledonia,28,2007-09-30,2007,Sep,Sun,08:45,07-09,Winter,Weekend,Morning,Loyalty,NA,7,0,1,25,Turbid,Full or new moon,Female,23,Swimmer,Death,Fatal,Tiger,Large sharks,4.5
+New Caledonia,29,2007-12-25,2007,Dec,Tue,18:15,17-19,Summer,Week,Afternoon,Noumea,Leeward,0,0,0.5,25,Slightly turbid,Full or new moon,Male,31,Spearfisher,Minor bite,Non fatal,Tiger,Large sharks,3
+New Caledonia,30,2008-04-26,2008,Apr,Sat,07:40,07-09,Summer,Weekend,Morning,East,Windward,112,32,0,50,Clear,Full or new moon,Male,45,Swimmer,Significant bite,Non fatal,Bull,Large sharks,1.6
+New Caledonia,31,2008-05-07,2008,May,Wed,14:00,13-15,Winter,Week,Afternoon,East,Windward,0,1,1,25,Slightly turbid,First or last quarter,Male,40,Swimmer,Minor bite,Non fatal,Bull,Large sharks,1
+New Caledonia,32,2008-10-21,2008,Oct,Tue,11:00,11-13,Winter,Week,Morning,East,Windward,0,3,1,25,Clear,First or last quarter,Male,24,Spearfisher,Significant bite,Non fatal,Lemon,Others,2.5
+New Caledonia,33,2009-03-06,2009,Mar,Fri,11:45,11-13,Summer,Week,Morning,West,Leeward,1,26,1.5,47,Clear,First or last quarter,Male,19,Boardsports,Death,Fatal,Great white,Large sharks,4
+New Caledonia,34,2010-01-26,2010,Jan,Tue,14:15,13-15,Summer,Week,Afternoon,Noumea (Bay),Leeward,1,1,0.5,19,Clear,First or last quarter,Male,24,Boardsports,Slight injurie or damage,Non fatal,Bull,Large sharks,1.7
+New Caledonia,35,2010-10-03,2010,Oct,Sun,10:15,09-11,Winter,Weekend,Morning,East,Windward,1,3,0.8,55,Clear,First or last quarter,Male,32,Spearfisher,Significant bite,Non fatal,Grey reef,Others,2
+New Caledonia,36,2011-02-23,2011,Feb,Wed,13:00,15-17,Summer,Week,Afternoon,Loyalty,NA,1,4,0.8,50,Slightly turbid,First or last quarter,Male,21,Spearfisher,Minor bite,Non fatal,NA,NA,1.5
+New Caledonia,37,2011-05-21,2011,May,Sat,11:00,11-13,Winter,Weekend,Morning,West,Leeward,1,8,1,57,Clear,First or last quarter,Male,15,Boardsports,Death,Fatal,Tiger,Large sharks,2.8
+New Caledonia,38,2013-12-25,2013,Dec,Wed,10:30,09-11,Summer,Week,Morning,East,Windward,1,3,0.7,31,Turbid,First or last quarter,Male,37,Swimmer,Significant bite,Non fatal,Bull,Large sharks,NA
+New Caledonia,39,2014-03-18,2014,Mar,Tue,18:00,17-19,Summer,Week,Afternoon,Noumea (Bay),Leeward,7,2,1.4,74,Highly turbid,Full or new moon,Male,42,Boardsports,Significant bite,Non fatal,Tiger,Large sharks,NA
+New Caledonia,40,2015-05-09,2015,May,Sat,15:00,15-17,Winter,Weekend,Afternoon,Noumea,Leeward,2,9,1,88,Clear,First or last quarter,Male,50,Swimmer,Death,Fatal,Bull,Large sharks,3.5
+New Caledonia,41,2016-02-19,2016,Feb,Fri,16:00,15-17,Summer,Week,Afternoon,East,Windward,17,30,0.5,32,Turbid,Full or new moon,Male,31,Spearfisher,Minor bite,Non fatal,NA,NA,NA
+New Caledonia,42,2016-02-22,2016,Feb,Mon,19:00,15-17,Summer,Week,Afternoon,Noumea (Bay),Leeward,3,6,2.5,81,Turbid,Full or new moon,Male,21,Boardsports,Significant bite,Non fatal,Tiger,Large sharks,4
+New Caledonia,43,2016-04-09,2016,Apr,Sat,10:30,09-11,Summer,Weekend,Morning,West,Leeward,1,6,1.4,29,Clear,Full or new moon,Female,69,Swimmer,Death,Fatal,Tiger,Large sharks,2.5
+New Caledonia,44,2016-06-02,2016,Jun,Thu,15:45,15-17,Winter,Week,Afternoon,Noumea (Bay),Leeward,2,6,1.5,62,Turbid,Full or new moon,Male,37,Boardsports,Significant bite,Non fatal,NA,NA,3
+New Caledonia,45,2016-09-06,2016,Sep,Tue,15:50,15-17,Winter,Week,Afternoon,West,Leeward,1,1,1.7,34,Slightly turbid,First or last quarter,Male,52,Boardsports,Death,Fatal,Tiger,Large sharks,3.5
+New Caledonia,46,2016-12-31,2016,Dec,Sat,12:00,11-13,Summer,Weekend,Morning,Loyalty,NA,1,9,0.8,32,Clear,Full or new moon,Male,30,Spearfisher,Significant bite,Non fatal,Tiger,Large sharks,2.5
+New Caledonia,47,2017-03-04,2017,Mar,Sat,NA,NA,Summer,Weekend,NA,Loyalty,NA,1,17,0.8,67,Slightly turbid,First or last quarter,Male,43,Spearfisher,Significant bite,Non fatal,Sandbar,Others,2
+New Caledonia,48,2018-01-21,2018,Jan,Sun,15:30,15-17,Summer,Weekend,Afternoon,Noumea (Bay),Leeward,5,32,1.2,36,Slightly turbid,Full or new moon,Male,40,Spearfisher,Significant bite,Non fatal,Bull,Large sharks,3
+New Caledonia,49,2018-04-09,2018,Apr,Mon,17:30,17-19,Summer,Week,Afternoon,Noumea (Bay),Leeward,1,6,1.6,39,Turbid,First or last quarter,Male,17,Boardsports,Slight injurie or damage,Non fatal,NA,NA,2
+New Caledonia,50,2019-05-25,2019,May,Sat,15:30,15-17,Winter,Weekend,Afternoon,Noumea (Bay),Leeward,1,5,1,26,Slightly turbid,First or last quarter,Male,10,Swimmer,Loss of a limb,Non fatal,Bull,Large sharks,3
+New Caledonia,51,2019-05-29,2019,May,Wed,15:00,15-17,Winter,Week,Afternoon,East,Windward,0,2,1.2,12,Highly turbid,Full or new moon,Male,43,Spearfisher,Death,Fatal,NA,NA,NA
+New Caledonia,52,2020-01-03,2020,Jan,Fri,14:00,13-15,Summer,Week,Afternoon,East,Windward,1,2,1,35,Slightly turbid,First or last quarter,Male,12,Swimmer,Significant bite,Non fatal,NA,NA,NA
+New Caledonia,53,2020-06-10,2020,Jun,Wed,16:30,15-17,Winter,Week,Afternoon,Noumea (Bay),Leeward,4,4,2.3,73,Turbid,First or last quarter,Male,30,Boardsports,Death,Fatal,Tiger,Large sharks,3.5
+New Caledonia,54,2020-11-23,2020,Nov,Mon,15:30,15-17,Summer,Week,Afternoon,West,Leeward,3,3,1.5,62,Slightly turbid,First or last quarter,Female,NA,Swimmer,Significant bite,Non fatal,Tiger,Large sharks,4
+New Caledonia,55,2020-12-05,2020,Dec,Sat,13:30,13-15,Summer,Weekend,Afternoon,West,Leeward,0,1,1.9,15,Slightly turbid,First or last quarter,Female,NA,Swimmer,Minor bite,Non fatal,Tiger,Large sharks,3
+New Caledonia,56,2020-12-31,2020,Dec,Thu,11:15,11-13,Summer,Week,Morning,West,Leeward,30,27,1.1,88,Clear,Full or new moon,Female,42,Scuba diver,Significant bite,Non fatal,Tiger,Large sharks,3.5
+New Caledonia,57,2021-02-28,2021,Feb,Sun,11:00,11-13,Summer,Weekend,Morning,Noumea,Leeward,0,5,1.1,8,Clear,Full or new moon,Male,57,Swimmer,Death,Fatal,Tiger,Large sharks,4
+New Caledonia,58,2021-03-02,2021,Mar,Tue,16:00,15-17,Summer,Week,Afternoon,Loyalty,NA,2,3,1.2,44,Slightly turbid,Full or new moon,Male,16,Spearfisher,Significant bite,Non fatal,Blacktip,Others,1.5
+New Caledonia,59,2021-04-18,2021,Apr,Sun,14:00,13-15,Summer,Weekend,Afternoon,East,Windward,17,33,1,97,Turbid,First or last quarter,Male,NA,Spearfisher,Significant bite,Non fatal,NA,NA,NA
+New Caledonia,60,2021-04-24,2021,Apr,Sat,16:00,15-17,Summer,Weekend,Afternoon,Noumea (Bay),Leeward,0,3,1.2,31,Slightly turbid,Full or new moon,Male,53,Boardsports,Death,Fatal,Tiger,Large sharks,4
+New Caledonia,61,2021-05-14,2021,May,Fri,12:00,11-13,Winter,Week,Morning,Loyalty,NA,12,23,1.2,20,Slightly turbid,Full or new moon,Male,NA,Spearfisher,Significant bite,Non fatal,NA,NA,NA
+New Caledonia,62,2021-05-26,2021,May,Wed,11:30,11-13,Winter,Week,Morning,Noumea (Bay),Leeward,7,21,2.4,76,Slightly turbid,Full or new moon,Male,NA,Spearfisher,Death,Fatal,NA,NA,NA
+Reunion,1,1980-11-24,1980,Nov,Mon,15:00,13-15,Summer,Week,Afternoon,NA,Windward,0,0,1.5,25,Turbid,Full or new moon,Male,22,Spearfisher,Significant bite,Non fatal,NA,NA,NA
+Reunion,2,1981-09-10,1981,Sep,Thu,07:00,07-09,Winter,Week,Morning,NA,Leeward,0,0,2,25,Clear,First or last quarter,Male,NA,Swimmer,Death,Fatal,NA,NA,NA
+Reunion,3,1981-11-30,1981,Nov,Mon,17:00,17-19,Summer,Week,Afternoon,NA,Leeward,0,0,1,50,Clear,Full or new moon,Male,21,Spearfisher,Significant bite,Non fatal,NA,NA,NA
+Reunion,4,1984-02-18,1984,Feb,Sat,08:00,07-09,Summer,Weekend,Morning,NA,Leeward,10.5,46.1,1.5,50,Highly turbid,Full or new moon,Male,33,Swimmer,Death,Fatal,NA,NA,NA
+Reunion,5,1984-02-18,1984,Feb,Sat,08:00,07-09,Summer,Weekend,Morning,NA,Leeward,10.5,46.1,1.5,50,Highly turbid,Full or new moon,Male,27,Swimmer,Death,Fatal,NA,NA,NA
+Reunion,6,1988-01-29,1988,Jan,Fri,21:00,19-21,Summer,Week,Afternoon,NA,Windward,0,0.3,2.5,25,Highly turbid,Full or new moon,Male,38,Swimmer,Death,Fatal,NA,NA,NA
+Reunion,7,1988-03-14,1988,Mar,Mon,18:30,17-19,Summer,Week,Afternoon,NA,Leeward,12,2,1.5,75,Highly turbid,First or last quarter,Male,20,Boardsports,Minor bite,Non fatal,NA,NA,NA
+Reunion,8,1988-04-13,1988,Apr,Wed,18:15,17-19,Summer,Week,Afternoon,NA,Leeward,0,0,2.5,75,Highly turbid,Full or new moon,Male,NA,Swimmer,Death,Fatal,NA,NA,NA
+Reunion,9,1989-07-19,1989,Jul,Wed,17:00,17-19,Winter,Week,Afternoon,NA,Windward,0,13.3,2.5,50,Highly turbid,Full or new moon,Male,20,Boardsports,Death,Fatal,NA,NA,NA
+Reunion,10,1990-03-05,1990,Mar,Mon,17:45,17-19,Summer,Week,Afternoon,NA,Windward,0,0,3,75,Highly turbid,First or last quarter,Male,NA,Boardsports,Significant bite,Non fatal,Bull,Large sharks,3
+Reunion,11,1991-07-01,1991,Jul,Mon,17:30,17-19,Winter,Week,Afternoon,NA,Leeward,0,0,2,25,Highly turbid,Full or new moon,Male,30,Boardsports,Loss of a limb,Non fatal,Tiger,Large sharks,3
+Reunion,12,1992-01-29,1992,Jan,Wed,16:30,15-17,Summer,Week,Afternoon,NA,Leeward,10,17,1.5,25,Turbid,Full or new moon,Male,45,Spearfisher,Significant bite,Non fatal,Sandbar,Others,1.8
+Reunion,13,1992-05-22,1992,May,Fri,14:30,13-15,Winter,Week,Afternoon,NA,Leeward,0,0,1.5,50,Highly turbid,Full or new moon,Male,24,Swimmer,Death,Fatal,Tiger,Large sharks,3.5
+Reunion,14,1992-06-15,1992,Jun,Mon,17:00,17-19,Winter,Week,Afternoon,NA,Leeward,0,0,1,50,Highly turbid,Full or new moon,Male,NA,Scuba diver,No injury,Non fatal,Mako,Others,NA
+Reunion,15,1992-06-28,1992,Jun,Sun,14:30,13-15,Winter,Weekend,Afternoon,NA,Leeward,0,0,2.5,50,Highly turbid,First or last quarter,Male,16,Boardsports,Death,Fatal,NA,NA,NA
+Reunion,16,1994-04-03,1994,Apr,Sun,10:00,09-11,Summer,Weekend,Morning,NA,Leeward,0,10,2,25,Turbid,First or last quarter,Male,35,Swimmer,Death,Fatal,NA,NA,NA
+Reunion,17,1994-04-15,1994,Apr,Fri,NA,NA,Summer,Week,NA,NA,Leeward,0,22,1.5,50,Highly turbid,First or last quarter,Male,NA,Swimmer,Death,Fatal,Bull,Large sharks,2.5
+Reunion,18,1994-07-09,1994,Jul,Sat,13:45,13-15,Winter,Weekend,Afternoon,NA,Windward,0,0.1,3,25,Highly turbid,Full or new moon,Male,24,Boardsports,Death,Fatal,Bull,Large sharks,3.5
+Reunion,19,1995-09-16,1995,Sep,Sat,13:00,13-15,Winter,Weekend,Afternoon,NA,Windward,1.6,19,2,50,Highly turbid,First or last quarter,Male,NA,Boardsports,Death,Fatal,Tiger,Large sharks,NA
+Reunion,20,1996-01-10,1996,Jan,Wed,16:00,15-17,Summer,Week,Afternoon,NA,Leeward,0,0.8,3,50,Highly turbid,Full or new moon,Male,25,Boardsports,Death,Fatal,Tiger,Large sharks,NA
+Reunion,21,1997-01-03,1997,Jan,Fri,09:30,09-11,Summer,Week,Morning,NA,Leeward,0,0,1,0,Clear,First or last quarter,Male,25,Spearfisher,Death,Fatal,Bull,Large sharks,3
+Reunion,22,1997-02-19,1997,Feb,Wed,18:30,17-19,Summer,Week,Afternoon,NA,Leeward,0,0,0.5,0,Turbid,Full or new moon,Male,34,Swimmer,Significant bite,Non fatal,NA,NA,NA
+Reunion,23,1998-01-25,1998,Jan,Sun,15:00,15-17,Summer,Weekend,Afternoon,NA,Leeward,1.4,2.2,1.5,50,Turbid,Full or new moon,Male,32,Swimmer,Death,Fatal,NA,NA,NA
+Reunion,24,1998-10-01,1998,Oct,Thu,09:45,09-11,Winter,Week,Morning,NA,Windward,0.1,8,1.5,50,Highly turbid,First or last quarter,Male,NA,Scuba diver,Significant bite,Non fatal,NA,NA,NA
+Reunion,25,1999-04-11,1999,Apr,Sun,10:30,09-11,Summer,Weekend,Morning,NA,Leeward,0,0,2,0,Clear,First or last quarter,Male,52,Swimmer,Death,Fatal,Bull,Large sharks,NA
+Reunion,26,2000-09-08,2000,Sep,Fri,18:00,17-19,Winter,Week,Afternoon,NA,Leeward,0.4,0,1.5,50,Highly turbid,First or last quarter,Male,27,Boardsports,Significant bite,Non fatal,Tiger,Large sharks,2.5
+Reunion,27,2004-03-27,2004,Mar,Sat,17:40,17-19,Summer,Weekend,Afternoon,NA,Windward,0.2,22.2,2,20,Highly turbid,First or last quarter,Male,20,Boardsports,Significant bite,Non fatal,Tiger,Large sharks,2.5
+Reunion,28,2004-10-06,2004,Oct,Wed,16:30,15-17,Winter,Week,Afternoon,NA,Leeward,0,0,1.5,15,Clear,First or last quarter,Male,15,Boardsports,Loss of a limb,Non fatal,NA,NA,NA
+Reunion,29,2006-08-02,2006,Aug,Wed,NA,NA,Winter,Week,NA,NA,Leeward,0,0,1,25,Highly turbid,First or last quarter,Male,27,Spearfisher,Minor bite,Non fatal,Bull,Large sharks,1.5
+Reunion,30,2006-08-20,2006,Aug,Sun,11:15,11-13,Winter,Weekend,Morning,NA,Leeward,0,0,2,25,Highly turbid,Full or new moon,Male,34,Boardsports,Death,Fatal,NA,NA,NA
+Reunion,31,2006-08-27,2006,Aug,Sun,18:30,17-19,Winter,Weekend,Afternoon,NA,Leeward,0,0,2.5,24,Turbid,Full or new moon,Male,27,Boardsports,Significant bite,Non fatal,NA,NA,NA
+Reunion,32,2007-07-04,2007,Jul,Wed,14:30,13-15,Winter,Week,Afternoon,NA,Leeward,1,62,3.8,100,Turbid,Full or new moon,Male,17,Boardsports,Significant bite,Non fatal,Tiger,Large sharks,2
+Reunion,33,2010-03-27,2010,Mar,Sat,11:00,11-13,Summer,Weekend,Morning,NA,Windward,3.6,36,1.8,40,Highly turbid,Full or new moon,Male,34,Boardsports,No injury,Non fatal,NA,NA,NA
+Reunion,34,2011-02-19,2011,Feb,Sat,18:05,17-19,Summer,Weekend,Afternoon,NA,Leeward,1,0.5,2.7,98,Slightly turbid,Full or new moon,Male,32,Boardsports,Loss of a limb,Non fatal,Bull,Large sharks,NA
+Reunion,35,2011-06-15,2011,Jun,Wed,17:30,17-19,Winter,Week,Afternoon,NA,Leeward,0,90,2.7,23,Highly turbid,Full or new moon,Male,30,Boardsports,Death,Fatal,Bull,Large sharks,2.5
+Reunion,36,2011-07-06,2011,Jul,Wed,15:00,15-17,Winter,Week,Afternoon,NA,Leeward,0,6,3.6,27,Turbid,First or last quarter,Male,16,Boardsports,No injury,Non fatal,NA,NA,NA
+Reunion,37,2011-07-15,2011,Jul,Fri,17:00,17-19,Winter,Week,Afternoon,NA,Leeward,0,0,2.9,28,Clear,Full or new moon,Male,37,Boardsports,No injury,Non fatal,NA,NA,NA
+Reunion,38,2011-09-19,2011,Sep,Mon,15:00,15-17,Winter,Week,Afternoon,NA,Leeward,0,7.5,3.6,5,Slightly turbid,First or last quarter,Male,32,Boardsports,Death,Fatal,Bull,Large sharks,3.5
+Reunion,39,2011-10-05,2011,Oct,Wed,10:00,09-11,Winter,Week,Morning,NA,Leeward,1.2,6.2,1.4,0,Clear,First or last quarter,Male,51,Boardsports,No injury,Non fatal,Tiger,Large sharks,2.5
+Reunion,40,2011-11-11,2001,Nov,Fri,11:45,11-13,Summer,Week,Morning,NA,Windward,1.8,27.6,1,35,Clear,Full or new moon,Male,42,Spearfisher,Significant bite,Non fatal,NA,NA,NA
+Reunion,41,2012-03-05,2012,Mar,Mon,14:00,13-15,Summer,Week,Afternoon,NA,Windward,10.2,35.6,1.2,40,Highly turbid,First or last quarter,Male,31,Boardsports,No injury,Non fatal,NA,NA,NA
+Reunion,42,2012-07-23,2012,Jul,Mon,16:30,15-17,Winter,Week,Afternoon,NA,Leeward,0,0.6,2.7,38,Clear,First or last quarter,Male,21,Boardsports,Death,Fatal,Bull,Large sharks,NA
+Reunion,43,2012-08-05,2012,Aug,Sun,17:30,17-19,Winter,Weekend,Afternoon,NA,Leeward,0,0.5,2.7,41,Highly turbid,Full or new moon,Male,39,Boardsports,Loss of a limb,Non fatal,Bull,Large sharks,NA
+Reunion,44,2013-04-23,2013,Apr,Tue,07:50,07-09,Summer,Week,Morning,NA,Leeward,0,0,2.1,28,Clear,Full or new moon,Male,24,Boardsports,No injury,Non fatal,Tiger,Large sharks,NA
+Reunion,45,2013-05-08,2013,May,Wed,11:55,11-13,Winter,Week,Morning,NA,Leeward,0,9.5,2.4,44,Slightly turbid,Full or new moon,Male,36,Boardsports,Death,Fatal,Bull,Large sharks,NA
+Reunion,46,2013-06-30,2013,Jun,Sun,14:45,13-15,Winter,Weekend,Afternoon,NA,Leeward,0,0,2.5,10,Clear,First or last quarter,Male,35,Boardsports,No injury,Non fatal,Bull,Large sharks,NA
+Reunion,47,2013-07-15,2013,Jul,Mon,14:15,13-15,Winter,Week,Afternoon,NA,Leeward,0,0,2.3,65,Highly turbid,First or last quarter,Female,15,Swimmer,Death,Fatal,NA,NA,2
+Reunion,48,2013-10-26,2013,Oct,Sat,16:15,15-17,Winter,Weekend,Afternoon,NA,Leeward,0.5,0,2.5,43,Clear,First or last quarter,Male,23,Swimmer,Loss of a limb,Non fatal,Bull,Large sharks,NA
+Reunion,49,2014-07-22,2014,Jul,Tue,15:00,15-17,Winter,Week,Afternoon,NA,Leeward,0,0.6,3.1,20,Turbid,First or last quarter,Male,51,Boardsports,Significant bite,Non fatal,Bull,Large sharks,2
+Reunion,50,2015-02-14,2015,Feb,Sat,18:40,17-19,Summer,Weekend,Afternoon,NA,Leeward,0,0,1.8,13,Slightly turbid,First or last quarter,Female,22,Swimmer,Death,Fatal,Tiger,Large sharks,3.5
+Reunion,51,2015-04-12,2015,Apr,Sun,09:15,09-11,Summer,Weekend,Morning,NA,Leeward,0,2.6,2.7,13,Clear,First or last quarter,Male,13,Boardsports,Death,Fatal,Bull,Large sharks,2.5
+Reunion,52,2015-06-01,2015,Jun,Mon,14:45,13-15,Winter,Week,Afternoon,NA,Leeward,0,1.8,3.4,53,Highly turbid,Full or new moon,Male,47,Boardsports,Significant bite,Non fatal,Bull,Large sharks,2.5
+Reunion,53,2015-07-22,2015,Jul,Wed,13:50,13-15,Winter,Week,Afternoon,NA,Leeward,0,0,2.3,40,Slightly turbid,First or last quarter,Male,45,Boardsports,Loss of a limb,Non fatal,Bull,Large sharks,2
+Reunion,54,2016-08-27,2016,Aug,Sat,17:00,17-19,Winter,Weekend,Afternoon,NA,Leeward,0,0.5,3.3,8,Highly turbid,First or last quarter,Male,21,Boardsports,Loss of a limb,Non fatal,Bull,Large sharks,2.6
+Reunion,55,2017-02-21,2017,Feb,Tue,9:00,09-11,Summer,Week,Morning,NA,Windward,14,90,2.5,50,Highly turbid,First or last quarter,Male,26,Boardsports,Death,Fatal,Bull,Large sharks,NA
+Reunion,56,2017-04-29,2017,Apr,Sat,11:15,11-13,Summer,Weekend,Morning,NA,Leeward,0,17.3,3,75,Turbid,Full or new moon,Male,28,Boardsports,Death,Fatal,Bull,Large sharks,2.5
+Reunion,57,2017-06-19,2017,Jun,Mon,09:45,09-11,Winter,Week,Morning,NA,Leeward,0,0,1,0,Clear,First or last quarter,Male,36,Boardsports,Minor bite,Non fatal,Bull,Large sharks,2
+Reunion,58,2018-02-17,2018,Feb,Sat,15:30,15-17,Summer,Weekend,Afternoon,NA,Leeward,0,11,1.5,43,Clear,Full or new moon,Male,21,Spearfisher,Slight injurie or damage,Non fatal,Bull,Large sharks,2.5
+Reunion,59,2019-01-30,2019,Jan,Wed,09:30,09-11,Summer,Week,Morning,NA,Windward,9,82,1,25,Highly turbid,First or last quarter,Male,41,Swimmer,Death,Fatal,Bull,Large sharks,2.4
+Reunion,60,2019-05-09,2019,May,Thu,16:30,15-17,Winter,Week,Afternoon,NA,Leeward,0,5,3.6,10,Turbid,Full or new moon,Male,28,Boardsports,Death,Fatal,Bull,Large sharks,2.5
