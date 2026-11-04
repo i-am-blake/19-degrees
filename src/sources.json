@@ -4,7 +4,8 @@
   "ocean-data/README_uhslc.txt",
   "ocean-data/README_iod.txt",
   "ocean-data/README_oisst.txt",
-  "ocean-data/README_population.txt"
+  "ocean-data/README_population.txt",
+  "ocean-data/README_obis.txt"
  ],
  "groups": [
   {

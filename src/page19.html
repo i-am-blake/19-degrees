@@ -1977,11 +1977,14 @@ try{
     t.addEventListener("keydown",e=>{let j=null;if(e.key==="ArrowRight")j=(i+1)%tabs.length;if(e.key==="ArrowLeft")j=(i-1+tabs.length)%tabs.length;if(e.key==="Home")j=0;if(e.key==="End")j=tabs.length-1;
       if(j!=null){e.preventDefault();show(key(tabs[j]),true);setHash(key(tabs[j]));}});
   });
-  document.addEventListener("click",e=>{const a=e.target.closest("a[data-tab]");if(!a)return;e.preventDefault();const h=(a.getAttribute("href")||"").slice(1),sec=h&&h!==a.dataset.tab?h:null;show(a.dataset.tab,false,sec);setHash(sec||a.dataset.tab);});
+  document.addEventListener("click",e=>{const a=e.target.closest('a[href^="#"]');if(!a||e.defaultPrevented||a.closest(".skip"))return;const h=(a.getAttribute("href")||"").slice(1);if(!h)return;
+    /* in-page links keep the address of the tab they land on (#research, #story...), not the section's own id */
+    let tab=a.dataset.tab;const el=document.getElementById(h);if(!tab){const pn=panelOf(el);if(!pn)return;tab=pn.id.slice(6);}
+    e.preventDefault();const sec=h!==tab?h:null;show(tab,false,sec);setHash(tab);});
   function fromHash(){let h="";try{h=(location.hash||"").slice(1);}catch(e){}
     if(["story","students","research","media"].includes(h)){show(h);return;}
     if(h==="top"){show("story");return;}
-    const el=h&&document.getElementById(h), pn=panelOf(el); if(pn&&pn.id!=="panel-home"){show(pn.id.slice(6),false,h);}}
+    const el=h&&document.getElementById(h), pn=panelOf(el); if(pn){const t=pn.id.slice(6); if(t!=="home") show(t,false,h); else if(el) el.scrollIntoView(); setHash(t);}}
   const mb=document.querySelector(".menubtn"); mb.addEventListener("click",()=>{const n=document.querySelector(".tabs"),o=n.classList.toggle("open");mb.setAttribute("aria-expanded",o?"true":"false");});
   /* close the phone menu on a tap outside it, or with Escape */
   const closeMenu=()=>{const n=document.querySelector(".tabs.open");if(n){n.classList.remove("open");mb.setAttribute("aria-expanded","false");return true;}return false;};

@@ -1,0 +1,70 @@
+name: Fetch OBIS shark records
+# For claims C22 and the regions marked "building" or "data wanted". Downloads open OBIS occurrence records (each
+# dataset keeps its own licence, mostly CC0 or CC BY) for bull, tiger and white sharks off the US, South Africa,
+# Mozambique and Brazil, plus the whole Ocean Tracking Network Ponta do Ouro tracking dataset (bull and tiger sharks,
+# CC BY 4.0). Adds compressed CSVs to the 'ocean-data' branch without touching the other files there.
+# Runs monthly on the 7th (never the same day as the other ocean-data fetches) or by hand.
+on:
+  schedule:
+    - cron: "49 10 7 * *"   # 7th of each month, 10:49 UTC
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  obis:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - name: Download
+        run: |
+          mkdir -p out
+          python3 - <<'PY'
+          import csv, gzip, json, time, urllib.parse, urllib.request
+          API = "https://api.obis.org/v3/occurrence"
+          F = ["id", "scientificName", "eventDate", "date_year", "month", "decimalLatitude", "decimalLongitude", "basisOfRecord", "dataset_id", "license", "occurrenceID"]
+          SPECIES = {"bull": "Carcharhinus leucas", "tiger": "Galeocerdo cuvier", "white": "Carcharodon carcharias"}
+          REGIONS = {  # rough coastal boxes, WKT
+              "us_east_gulf": "POLYGON((-98 24,-75 24,-66 45,-80 45,-98 31,-98 24))",
+              "us_west": "POLYGON((-126 31,-116 31,-116 42,-126 42,-126 31))",
+              "south_africa": "POLYGON((16 -36,33 -36,33 -26.8,16 -26.8,16 -36))",
+              "mozambique": "POLYGON((32.5 -26.8,41 -26.8,41 -10,32.5 -10,32.5 -26.8))",
+              "brazil": "POLYGON((-55 -34,-34 -34,-34 -1,-55 -1,-55 -34))"}
+          log = open("out/obis_log.txt", "w")
+          def pull(params, path):
+              rows, after = [], None
+              while True:
+                  q = dict(params, size=5000, fields=",".join(F))
+                  if after: q["after"] = after
+                  url = API + "?" + urllib.parse.urlencode(q)
+                  for a in range(5):
+                      try: res = json.load(urllib.request.urlopen(url, timeout=180)); break
+                      except Exception as e:
+                          if a == 4: raise
+                          time.sleep(20 * (a + 1))
+                  got = res.get("results", [])
+                  rows += got
+                  if len(got) < 5000: break
+                  after = got[-1]["id"]
+              with gzip.open(path, "wt", newline="") as f:
+                  w = csv.DictWriter(f, fieldnames=F, extrasaction="ignore"); w.writeheader(); w.writerows(rows)
+              return len(rows)
+          try:
+              n = pull({"datasetid": "a8c9f694-bb07-451d-9ac0-c8d6b3119c1b"}, "out/obis_ponta_do_ouro.csv.gz")
+              log.write(f"ponta_do_ouro: {n} records\n")
+          except Exception as e: log.write(f"ponta_do_ouro failed: {e}\n")
+          for r, wkt in REGIONS.items():
+              for k, sci in SPECIES.items():
+                  try:
+                      n = pull({"scientificname": sci, "geometry": wkt}, f"out/obis_{r}_{k}.csv.gz")
+                      log.write(f"{r} {k}: {n} records\n")
+                  except Exception as e: log.write(f"{r} {k} failed: {e}\n")
+          PY
+          printf "Shark occurrence records from OBIS (Ocean Biodiversity Information System), https://obis.org, retrieved %s. Each record keeps its dataset's licence (license column, mostly CC0 or CC BY). Ponta do Ouro: Ocean Tracking Network and the South African Institute for Aquatic Biodiversity, Ponta do Ouro zambezi shark tracking (R. Daly), https://obis.org/dataset/a8c9f694-bb07-451d-9ac0-c8d6b3119c1b, CC BY 4.0.\n" "$(date -u +%Y-%m-%d)" > out/README_obis.txt
+          cat out/obis_log.txt
+      - name: Add to the ocean-data branch
+        if: always()
+        run: |
+          git clone -q --depth 1 --branch ocean-data "https://x-access-token:${{ github.token }}@github.com/${{ github.repository }}.git" br
+          cp out/* br/ 2>/dev/null || true; cd br; git add -A
+          git -c user.name="github-actions[bot]" -c user.email="41898900+github-actions[bot]@users.noreply.github.com" commit -qm "OBIS shark records, $(date -u +%Y-%m-%d)" || exit 0
+          git push -q "https://x-access-token:${{ github.token }}@github.com/${{ github.repository }}.git" HEAD:ocean-data
