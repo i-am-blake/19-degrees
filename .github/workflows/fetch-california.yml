@@ -1,0 +1,30 @@
+name: Fetch California shark incidents
+# For claim C23. Downloads the California Department of Fish and Wildlife shark incident database (1950 on, CC BY)
+# and adds it to the 'ocean-data' branch without touching the other files there. Runs monthly, on the 5th, so it never
+# pushes at the same time as the Fremantle (3rd) or receiver (4th) fetches.
+on:
+  schedule:
+    - cron: "37 10 5 * *"   # 5th of each month, 10:37 UTC
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  california:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Download
+        run: |
+          mkdir -p out dl; : > out/california_log.txt
+          curl -sSfL -o dl/cdfw.zip "https://data.cnra.ca.gov/dataset/022f670f-eb4e-4314-9fad-74f7f9560400/resource/fa77215c-a06c-4fa2-b8bc-ffbcaaa65286/download/sharkincidents_1950_2022_220302.zip" || echo "cdfw download failed" >> out/california_log.txt
+          if [ -s dl/cdfw.zip ]; then unzip -o -q dl/cdfw.zip -d dl/x && for f in dl/x/*; do cp "$f" "out/california_$(basename "$f" | tr ' ' '_')"; done; fi
+          for f in out/california_*; do echo "$f: $(wc -c < "$f") bytes" >> out/california_log.txt; done
+          printf "California shark incidents, California Department of Fish and Wildlife (CDFW), CC BY. https://lab.data.ca.gov/dataset/shark-incident-database-california, retrieved %s.\n" "$(date -u +%Y-%m-%d)" > out/README_california.txt
+          cat out/california_log.txt
+      - name: Add to the ocean-data branch
+        if: always()
+        run: |
+          git clone -q --depth 1 --branch ocean-data "https://x-access-token:${{ github.token }}@github.com/${{ github.repository }}.git" br
+          cp out/* br/ 2>/dev/null || true; cd br; git add -A
+          git -c user.name="github-actions[bot]" -c user.email="41898900+github-actions[bot]@users.noreply.github.com" commit -qm "California shark incidents, $(date -u +%Y-%m-%d)" || exit 0
+          git push -q "https://x-access-token:${{ github.token }}@github.com/${{ github.repository }}.git" HEAD:ocean-data
