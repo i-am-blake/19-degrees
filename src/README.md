@@ -160,3 +160,11 @@ python3 -I california19.py california_SharkIncidents_1950_2022_220302.xlsx calif
 python3 -I fieldnotes19.py asid.csv fieldnotes.json
 python3 -I lunar19.py islands_nc_run.csv california_SharkIncidents_1950_2022_220302.xlsx lunar.json
 ```
+
+## Outside Australia (claim C25)
+
+`obis19.py` reads the OBIS shark records that `fetch-obis.yml` saves monthly to the `ocean-data` branch: the Ocean Tracking Network's Ponta do Ouro tracking of bull and tiger sharks (Mozambique to the Western Cape, CC BY 4.0) and every dated bull and tiger shark record off the US Gulf and Atlantic coasts. Each record is matched to its 1° sea cell's HadISST temperature for that month; one species in one cell on one day counts once. It writes `obis.json`, which `build19.py` reads, and only reruns when the OBIS files change.
+
+```
+python3 -I obis19.py <ocean-data folder> obis.json
+```

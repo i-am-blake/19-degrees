@@ -338,7 +338,7 @@ if os.path.exists(_imos):
 _lw = os.path.join(here, "leeuwin.json")  # leeuwin19.py, claim C7; optional
 if os.path.exists(_lw):
     d["leeuwin"] = json.load(open(_lw)); print("leeuwin", d["leeuwin"])
-for _k in ("fieldnotes", "lunar"):  # fieldnotes19.py (water on the day, time of day) and lunar19.py (claim C24); optional
+for _k in ("fieldnotes", "lunar", "obis"):  # fieldnotes19.py (water on the day, time of day) and lunar19.py (claim C24); optional
     _f = os.path.join(here, _k + ".json")
     if os.path.exists(_f):
         d[_k] = json.load(open(_f)); print(_k, "loaded")

@@ -4,8 +4,7 @@
   "ocean-data/README_uhslc.txt",
   "ocean-data/README_iod.txt",
   "ocean-data/README_oisst.txt",
-  "ocean-data/README_population.txt",
-  "ocean-data/README_obis.txt"
+  "ocean-data/README_population.txt"
  ],
  "groups": [
   {
@@ -144,6 +143,23 @@
      "readme": [
       "imos-data/README.txt",
       "ocean-data/README_receivers.txt"
+     ]
+    },
+    {
+     "name": "Ponta do Ouro zambezi shark tracking",
+     "url": "https://obis.org/dataset/a8c9f694-bb07-451d-9ac0-c8d6b3119c1b",
+     "from": "Ocean Tracking Network and the South African Institute for Aquatic Biodiversity (R. Daly), via OBIS",
+     "used_for": "Tagged bull and tiger sharks, Mozambique and South Africa; claim C25",
+     "license": "CC BY 4.0"
+    },
+    {
+     "name": "Shark occurrence records",
+     "url": "https://obis.org",
+     "from": "Ocean Biodiversity Information System (OBIS)",
+     "used_for": "Bull and tiger shark records off the US Gulf and Atlantic coasts; claim C25",
+     "license": "Each dataset's own; mostly CC0 or CC BY",
+     "readme": [
+      "ocean-data/README_obis.txt"
      ]
     },
     {

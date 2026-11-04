@@ -1,0 +1,57 @@
+{
+ "fingerprint": "ef9bef15f56c2519",
+ "groups": {
+  "africa": {
+   "bull": {
+    "days": 2256,
+    "below": 0,
+    "pct_warm": 100.0,
+    "min": 19.7,
+    "cells": 16,
+    "y0": 2012,
+    "y1": 2022,
+    "cell_months": 14688,
+    "cell_months_below": 2420,
+    "cell_months_below_pct": 16
+   },
+   "tiger": {
+    "days": 799,
+    "below": 0,
+    "pct_warm": 100.0,
+    "min": 19.3,
+    "cells": 8,
+    "y0": 2014,
+    "y1": 2022,
+    "cell_months": 7344,
+    "cell_months_below": 269,
+    "cell_months_below_pct": 4
+   }
+  },
+  "us": {
+   "bull": {
+    "days": 3369,
+    "below": 6,
+    "pct_warm": 99.8,
+    "min": 16.5,
+    "cells": 80,
+    "y0": 1953,
+    "y1": 2026,
+    "cell_months": 73440,
+    "cell_months_below": 8044,
+    "cell_months_below_pct": 11
+   },
+   "tiger": {
+    "days": 862,
+    "below": 49,
+    "pct_warm": 94.3,
+    "min": 11.6,
+    "cells": 141,
+    "y0": 1950,
+    "y1": 2026,
+    "cell_months": 129438,
+    "cell_months_below": 20278,
+    "cell_months_below_pct": 16
+   }
+  }
+ }
+}

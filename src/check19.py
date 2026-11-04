@@ -87,6 +87,15 @@ for m in find("C19 tiger", r"tiger shark bites (\d+)% \((\d+) of (\d+), p = ([\d
 for m in find("C19 bull", r"Bull shark bites didn't stand out \((\d+)%, (\d+) of (\d+), p = ([\d.]+)\)"):
     check("C19 bull", (int(m[1]), int(m[2]), int(m[3]), float(m[4])), (hb["bull"]["t_pct"], hb["bull"]["t"], hb["bull"]["n"], round(hb["bull"]["t_p"], 2)))
 
+# Claim C25 (obis19.py), when present
+if "obis" in D:
+    A, U = D["obis"]["groups"]["africa"], D["obis"]["groups"]["us"]
+    for m in find("C25", r"Off Mozambique and South Africa, ([\d,]+) days that tagged bull sharks were detected \((\d+)–(\d+)\) all fell in months at 19°C or warmer, the coolest ([\d.]+)°C, though (\d+)% of months in the same places were below 19°C\. Off the US Gulf and Atlantic coasts, ([\d.]+)% of ([\d,]+) bull shark record-days were at 19°C or warmer \((\d+) below, the coolest ([\d.]+)°C\), against (\d+)% of months below 19°C there\. Tiger sharks range cooler: ([\d.]+)% of ([\d,]+) US record-days at 19°C or warmer, the coolest ([\d.]+)°C"):
+        b, ub, ut = A["bull"], U["bull"], U["tiger"]
+        check("C25 outside Australia", (int(num(m[1])), int(m[2]), int(m[3]), float(m[4]), int(m[5]), float(m[6]), int(num(m[7])), int(m[8]), float(m[9]), int(m[10]), float(m[11]), int(num(m[12])), float(m[13])),
+              (b["days"], b["y0"], b["y1"], b["min"], b["cell_months_below_pct"], ub["pct_warm"], ub["days"], ub["below"], ub["min"], ub["cell_months_below_pct"], ut["pct_warm"], ut["days"], ut["min"]))
+    if A["bull"]["below"]: bad.append("C25: the page says no African bull shark detection was in a month below 19°C, but the data has one")
+
 # Water on the day, time of day and the moon, when present
 if "fieldnotes" in D:
     w, t = D["fieldnotes"]["water"], D["fieldnotes"]["time"]
