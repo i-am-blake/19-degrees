@@ -47,6 +47,10 @@ for f in ["favicon.ico", "favicon.svg", "apple-touch-icon.png", "icon-32.png", "
 _m404 = os.path.join(os.path.dirname(os.path.abspath(__file__)), "make_404.py")
 if os.path.exists(_m404):
     subprocess.run([sys.executable, "-I", _m404, os.path.join(out, "index.html"), os.path.join(out, "404.html")], check=True)
+# Sources, Legal and Privacy pages, built the same way
+_mp = os.path.join(os.path.dirname(os.path.abspath(__file__)), "make_pages.py")
+if os.path.exists(_mp):
+    subprocess.run([sys.executable, "-I", _mp, os.path.join(out, "index.html"), out], check=True)
 bad = []
 for root, _, files in os.walk(out):
     for f in files:
