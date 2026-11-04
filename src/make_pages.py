@@ -71,7 +71,7 @@ def page(slug, title, kicker, body):
   <div class="kicker">{kicker}</div>
   <h1>{title}</h1>
 {body}
-  <p class="foot">© 2026 Blake Erickson · <a href="/">19 Degrees</a> · <a href="/#contact">Contact</a></p>
+  <p class="foot">© 2026 19 Degrees · <a href="/">Home</a></p>
 </main>
 </body>
 </html>
@@ -124,7 +124,7 @@ src_body += "  <h2>Method notes</h2>\n  <ul>" + "".join(f"<li>{m}</li>" for m in
 src_body += "  <p>Naming a source doesn't mean it endorses this site. See the " + '<a href="/legal.html">legal page</a>' + ".</p>\n"
 
 LEGAL = [
- ("License", "Code: " + a("MIT License", "https://github.com/i-am-blake/19-degrees/blob/main/LICENSE") + ". Text, charts and images: " + a("CC BY 4.0", "https://creativecommons.org/licenses/by/4.0/") + '; credit "19 Degrees, Blake Erickson". Data keeps its own license, listed on the <a href="/sources.html">sources page</a>. The 19 Degrees name and logo are not licensed for reuse.'),
+ ("License", "Code: " + a("MIT License", "https://github.com/i-am-blake/19-degrees/blob/main/LICENSE") + ". Text, charts and images: " + a("CC BY 4.0", "https://creativecommons.org/licenses/by/4.0/") + '; credit "19 Degrees". Data keeps its own license, listed on the <a href="/sources.html">sources page</a>. The 19 Degrees name and logo are not licensed for reuse.'),
  ("General information only", "19 Degrees is an independent educational project. It summarizes public data and published research and may contain errors or be out of date. It is general information only, not safety, medical, legal or professional advice, and is provided \"as is\" without warranty of any kind."),
  ("Not a guide to whether or where to swim", "Don't rely on this site to decide whether or where to swim. Follow lifesavers, beach signs and local authorities. Results describe how often bites came under past conditions; they are not forecasts, and conditions don't cause bites on their own. In an emergency, call your local emergency number: 000 in Australia, 911 in the US and Canada, 999 in the UK, 112 across Europe and on most mobile phones worldwide."),
  ("First aid", "First-aid information summarizes published research. It is not a substitute for first-aid training or for help from emergency services."),
@@ -143,7 +143,7 @@ leg_body += "  <p>Last updated 3 November 2026.</p>\n"
 
 PRIV = [
  ("What this site collects", "No cookies, no ads and no tracking across sites. Visits and clicks are counted with " + a("GoatCounter", "https://www.goatcounter.com/") + ", which keeps aggregate counts and stores no personal data."),
- ("The contact form", "The form sends your name, email address and message to Blake through " + a("Web3Forms", "https://web3forms.com/") + ", which passes it on by email. They are used only to reply and are never sold or shared. Ask through the form to have a message deleted."),
+ ("The contact form", "The form sends your name, email address and message to the author through " + a("Web3Forms", "https://web3forms.com/") + ", which passes it on by email. They are used only to reply and are never sold or shared. Ask through the form to have a message deleted."),
  ("Hosting", "The site is hosted on GitHub Pages, which may keep server logs for security under " + a("GitHub's privacy statement", "https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement") + "."),
  ("Other sites", "Links such as Venmo, social media and data sources take you to other sites with their own privacy policies."),
  ("Children", "Under 13? Ask a parent, guardian or teacher to use the contact form for you."),

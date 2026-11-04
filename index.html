@@ -1442,14 +1442,14 @@ section[aria-labelledby="h-q"] .cards.qs{grid-template-columns:repeat(2,minmax(0
       <li>Shark deterrent testing: Huveneers and colleagues, Flinders University.</li>
     </ul>
     <h3 class="blockh" style="margin-top:12px">Contact</h3>
-    <p class="readout">19 Degrees is made by Blake Erickson. For interviews, data questions or corrections, use the <a href="#contact">contact form</a>.</p>
+    <p class="readout">19 Degrees is an independent project. For interviews, data questions or corrections, use the <a href="#contact">contact form</a>.</p>
   </section>
   </div>
 
   <section id="contact" class="contact" aria-labelledby="h-contact">
     <div class="kicker">Get in touch</div>
     <h2 id="h-contact">Questions, corrections, or want to use this?</h2>
-    <p class="sub">Teachers, researchers, journalists and anyone who spots an error: send a note and Blake will reply. Under 13? Ask a teacher or parent to send it for you.</p>
+    <p class="sub">Teachers, researchers, journalists and anyone who spots an error: send a note and the author will reply. Under 13? Ask a teacher or parent to send it for you.</p>
     <form id="cform" novalidate>
       <div class="cgrid">
         <label>Your name<input name="name" autocomplete="name" required aria-describedby="err-name"><span class="ferr" id="err-name" aria-live="polite"></span></label>
@@ -1458,13 +1458,14 @@ section[aria-labelledby="h-q"] .cards.qs{grid-template-columns:repeat(2,minmax(0
       <label>What is it about?<select name="topic"><option>A question</option><option>A correction or data issue</option><option>Using it in a class</option><option>Research or collaboration</option><option>Sharing data</option><option>Funding or partnership</option><option>Media or interview</option><option>Something else</option></select></label>
       <label>Message<textarea name="msg" rows="5" required aria-describedby="err-msg"></textarea><span class="ferr" id="err-msg" aria-live="polite"></span></label>
       <div class="crow"><button type="submit" class="cbtn">Send message</button><span class="cnote" id="cnote" role="status"></span></div>
-      <div class="csent" id="csent" hidden tabindex="-1"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="11"/><path d="M7 12.5l3.2 3.2L17 9"/></svg><div><p class="csent-h">Message sent</p><p id="csentTxt">Thanks. Blake will reply by email.</p><button type="button" class="csent-again" id="csentAgain">Send another message</button></div></div>
+      <div class="csent" id="csent" hidden tabindex="-1"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="11"/><path d="M7 12.5l3.2 3.2L17 9"/></svg><div><p class="csent-h">Message sent</p><p id="csentTxt">Thanks. You'll get a reply by email.</p><button type="button" class="csent-again" id="csentAgain">Send another message</button></div></div>
       <input type="text" name="botcheck" tabindex="-1" autocomplete="off" aria-hidden="true" aria-label="Leave this empty" style="position:absolute;left:-9999px">
     </form>
   </section>
 
   <footer>
-    <p class="copy">© 2026 Blake Erickson · Code <a href="https://github.com/i-am-blake/19-degrees" target="_blank" rel="noopener">MIT</a> · Content <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener">CC BY 4.0</a> · <a href="/sources.html">Sources</a> · <a href="/legal.html">Legal</a> · <a href="/privacy.html">Privacy</a> · <a href="#contact">Contact</a> · <a class="donatelink" data-from="footer" href="https://venmo.com/u/Send-It-Blake" target="_blank" rel="noopener">Support 19 Degrees</a></p>
+    <p class="copy">© 2026 19 Degrees · <a class="donatelink" data-from="footer" href="https://venmo.com/u/Send-It-Blake" target="_blank" rel="noopener">Support 19 Degrees</a></p>
+    <p class="copy"><a href="/sources.html">Sources</a> · <a href="/legal.html">Legal</a> · <a href="/privacy.html">Privacy</a></p>
   </footer>
 <aside class="supportpop" id="supportPop" hidden aria-label="Support this project"><div class="sphead"><b>Support the future of this project</b><button type="button" class="spx" id="supportX" aria-label="Close"><svg viewBox="0 0 14 14" width="14" height="14" aria-hidden="true"><path d="M1 1L13 13M13 1L1 13" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></button></div><p>I built 19 Degrees on my own and keep it free and open for everyone. Your support helps advance shark and climate research, test what actually keeps people safe, and keep the data updated every week. If it's helped you, your class or your research, help it grow.</p><div class="spbtns"><a class="supportbtn" id="supportGo" href="#" target="_blank" rel="noopener">Support 19 Degrees</a></div><p class="spalt">Can't give right now? <button type="button" class="linkbtn" id="shareInstead">Share it instead.</button></p><p class="spalt">Foundations and partners: <a href="#contact" class="spcontact" data-contact="Funding or partnership" data-msg="">get in touch</a>.</p></aside>
 </div>
@@ -1475,7 +1476,7 @@ section[aria-labelledby="h-q"] .cards.qs{grid-template-columns:repeat(2,minmax(0
 /* ===== SITE SETTINGS: the only things to fill in before launch (see LAUNCH.md) ===== */
 window.N19_CFG={
   SITE_URL: "https://19-degrees.org/",
-  FORM_KEY: "efeceb4b-f78a-4730-9f0e-05640cc897fc",                               /* Web3Forms access key (public by design; it can only send mail to Blake) */
+  FORM_KEY: "efeceb4b-f78a-4730-9f0e-05640cc897fc",                               /* Web3Forms access key (public by design; it can only send mail to the author) */
   GOATCOUNTER: "19-degrees"                             /* free analytics: your GoatCounter code, e.g. "nineteen" for nineteen.goatcounter.com */
 };
 window.N19_URL=window.N19_CFG.SITE_URL||location.href.split("#")[0];
@@ -2031,7 +2032,7 @@ try{
   document.addEventListener("keydown",e=>{if(e.key==="Escape"&&closeMenu())mb.focus();});
   document.addEventListener("keydown",e=>{const n=document.querySelector(".tabs");if(e.key==="Escape"&&n.classList.contains("open")){n.classList.remove("open");mb.setAttribute("aria-expanded","false");mb.focus();}});
   const CF=document.getElementById("cform"), EMAIL=/^[^@\s]+@[^@\s]+\.[^@\s]{2,}$/;
-  const checks={name:v=>v?"":"Please add your name.",email:v=>!v?"Please add your email so Blake can reply.":(EMAIL.test(v)?"":"That doesn't look like an email address, for example name@example.com."),msg:v=>v.length>=5?"":"Please write a short message."};
+  const checks={name:v=>v?"":"Please add your name.",email:v=>!v?"Please add your email so you can get a reply.":(EMAIL.test(v)?"":"That doesn't look like an email address, for example name@example.com."),msg:v=>v.length>=5?"":"Please write a short message."};
   const vf=(k,show)=>{const el=CF.elements[k],m=checks[k](el.value.trim()),er=document.getElementById("err-"+k);if(show||el.dataset.touched){er.textContent=m;el.setAttribute("aria-invalid",m?"true":"false");}return !m;};
   ["name","email","msg"].forEach(k=>{const el=CF.elements[k];el.addEventListener("blur",()=>{if(el.value.trim()){el.dataset.touched=1;vf(k,true);}});el.addEventListener("input",()=>{if(el.dataset.touched)vf(k,true);});});
   CF.addEventListener("submit",e=>{e.preventDefault();const f=e.target,v=k=>f.elements[k].value.trim(),note=document.getElementById("cnote");
@@ -2045,7 +2046,7 @@ try{
       body:JSON.stringify({access_key:window.N19_CFG.FORM_KEY,subject:sub,from_name:"19 Degrees contact form",replyto:v("email"),name:v("name"),email:v("email"),topic:v("topic"),message:v("msg"),botcheck:f.elements.botcheck.value})})
     .then(r=>r.json().then(j=>{if(!r.ok||j.success!==true)throw new Error(j.message||r.status);}))
     .then(()=>{try{window.N19_EV&&window.N19_EV("Contact sent",{topic:v("topic")});}catch(_){}f.reset();["name","email","msg"].forEach(k=>{const el=f.elements[k];el.removeAttribute("aria-invalid");delete el.dataset.touched;document.getElementById("err-"+k).textContent="";});note.textContent="";
-      const box=document.getElementById("csent");document.getElementById("csentTxt").textContent=`Thanks, ${nm}. Blake will reply to ${em}.`;f.classList.add("sent");box.hidden=false;box.focus();})
+      const box=document.getElementById("csent");document.getElementById("csentTxt").textContent=`Thanks, ${nm}. A reply will go to ${em}.`;f.classList.add("sent");box.hidden=false;box.focus();})
     .catch(()=>{note.classList.add("bad");note.textContent="That didn\u2019t send. Please check your connection and try again in a minute.";})
     .finally(()=>{btn.disabled=false;btn.textContent="Send message";});});
   document.getElementById("csentAgain").addEventListener("click",()=>{CF.classList.remove("sent");document.getElementById("csent").hidden=true;CF.elements.name.focus();});

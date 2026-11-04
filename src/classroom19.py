@@ -70,7 +70,7 @@ def page(title, kicker, body):
 <title>{title}</title><style>{CSS}</style></head><body><div class="wrap">
 <div class="top"><div><div class="k">{kicker}</div><h1>{title}</h1></div><div class="logo" aria-hidden="true">{logo}</div></div>
 {body}
-<p class="src">Data: Australian Shark-Incident Database (Taronga Conservation Society Australia and Flinders University); HadISST sea temperature (UK Met Office); Pacoureau et al. 2021; Surf Life Saving Australia. From 19 Degrees, free and open source. © 2026 Blake Erickson.</p>
+<p class="src">Data: Australian Shark-Incident Database (Taronga Conservation Society Australia and Flinders University); HadISST sea temperature (UK Met Office); Pacoureau et al. 2021; Surf Life Saving Australia. From 19 Degrees, free and open source. © 2026 19 Degrees.</p>
 </div></body></html>"""
 
 BTN = '<div class="btns"><button class="btn" onclick="window.print()">Print this sheet</button><a class="btn" href="classroom.html">All versions</a></div>'
