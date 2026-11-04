@@ -1,0 +1,86 @@
+name: Fetch climate and population data
+# For the conditions explorer and the fitted model. Downloads three open datasets and adds small summaries to the
+# 'ocean-data' branch without touching the other files there:
+#  1. Indian Ocean Dipole (Dipole Mode Index from HadISST), NOAA PSL, public domain.
+#  2. NOAA OISST v2.1 daily sea temperature (0.25°, 1981 on, public domain, via ERDDAP) at the day-dated bite coasts:
+#     California, Réunion and New Caledonia.
+#  3. EU JRC Global Human Settlement Layer population (GHS-POP R2023A, 30 arcsec, CC BY 4.0): people within a 1° box
+#     around each of the page's coastal regions, 1975 to 2030 in 5-year steps.
+# Runs monthly on the 6th (never the same day as the other ocean-data fetches) or by hand.
+on:
+  schedule:
+    - cron: "43 10 6 * *"   # 6th of each month, 10:43 UTC
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  climate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    steps:
+      - uses: actions/checkout@v4
+      - name: Indian Ocean Dipole
+        run: |
+          mkdir -p out; : > out/climate_log.txt
+          curl -sSfL -o out/iod_dmi_hadisst.txt "https://psl.noaa.gov/gcos_wgsp/Timeseries/Data/dmi.had.long.data" || echo "iod download failed" >> out/climate_log.txt
+          printf "Indian Ocean Dipole, Dipole Mode Index from HadISST, NOAA Physical Sciences Laboratory, https://psl.noaa.gov/gcos_wgsp/Timeseries/DMI/ (public domain). Cite Saji, N.H. et al. (1999), Nature 401, 360-363. Retrieved %s.\n" "$(date -u +%Y-%m-%d)" > out/README_iod.txt
+      - name: Daily sea temperature at day-dated bite coasts
+        run: |
+          python3 - <<'PY'
+          import time, urllib.request
+          E = "https://coastwatch.pfeg.noaa.gov/erddap/griddap/ncdcOisst21Agg_LonPM180.csv?sst"
+          PTS = {"california_san_diego": (32.625, -117.375), "california_santa_barbara": (34.375, -119.875),
+                 "california_monterey": (36.625, -122.125), "california_san_francisco": (37.625, -122.625),
+                 "california_humboldt": (40.875, -124.375), "reunion_west": (-21.125, 55.125), "new_caledonia_noumea": (-22.375, 166.375)}
+          log = open("out/climate_log.txt", "a")
+          for k, (la, lo) in PTS.items():
+              url = f"{E}%5B(1981-09-01):1:(last)%5D%5B(0.0)%5D%5B({la})%5D%5B({lo})%5D"
+              for a in range(5):
+                  try:
+                      txt = urllib.request.urlopen(url, timeout=300).read().decode(); open(f"out/oisst_{k}.csv", "w").write(txt)
+                      log.write(f"oisst {k}: {txt.count(chr(10))} lines\n"); break
+                  except Exception as e:
+                      if a == 4: log.write(f"oisst {k} failed: {e}\n")
+                      time.sleep(30 * (a + 1))
+          PY
+          printf "NOAA OISST v2.1 daily sea surface temperature (0.25°), NOAA NCEI, via NOAA CoastWatch ERDDAP (public domain). Cite Huang, B. et al. (2021), J. Climate 34, 2923-2939. One file per 0.25° ocean cell off each coast. Retrieved %s.\n" "$(date -u +%Y-%m-%d)" > out/README_oisst.txt
+      - name: Coastal population (GHSL)
+        run: |
+          pip install -q rasterio
+          python3 - <<'PY'
+          import csv, os, sys, urllib.request, zipfile
+          import rasterio
+          from rasterio.windows import from_bounds
+          sys.path.insert(0, "src"); from regions import REGIONS
+          EXTRA = [("California San Diego", 32.7, -117.2), ("California Santa Barbara", 34.4, -119.7), ("California Monterey", 36.6, -121.9),
+                   ("California San Francisco", 37.7, -122.5), ("California Humboldt", 40.8, -124.2), ("Reunion", -21.1, 55.5), ("New Caledonia Noumea", -22.3, 166.4)]
+          pts = [(n, la, lo) for n, _, _, la, lo in REGIONS] + EXTRA
+          log = open("out/climate_log.txt", "a"); rows = []
+          for y in range(1975, 2031, 5):
+              base = f"GHS_POP_E{y}_GLOBE_R2023A_4326_30ss"
+              url = f"https://jeodpp.jrc.ec.europa.eu/ftp/jrc-opendata/GHSL/GHS_POP_GLOBE_R2023A/{base}/V1-0/{base}_V1_0.zip"
+              try:
+                  urllib.request.urlretrieve(url, "pop.zip")
+                  z = zipfile.ZipFile("pop.zip"); tif = next(n for n in z.namelist() if n.endswith(".tif")); z.extract(tif, "pop")
+                  with rasterio.open(os.path.join("pop", tif)) as r:
+                      for n, la, lo in pts:
+                          a = r.read(1, window=from_bounds(lo - 0.5, la - 0.5, lo + 0.5, la + 0.5, r.transform), masked=True)
+                          rows.append([n, y, int(a.clip(min=0).sum())])
+                  log.write(f"ghsl {y}: ok\n")
+              except Exception as e:
+                  log.write(f"ghsl {y} failed: {e}\n")
+              for f in ("pop.zip",):
+                  if os.path.exists(f): os.remove(f)
+              os.system("rm -rf pop")
+          with open("out/population_coastal_ghsl.csv", "w", newline="") as f:
+              w = csv.writer(f); w.writerow(["region", "year", "people_within_1deg_box"]); w.writerows(rows)
+          PY
+          printf "Population within a 1° box around each coastal region, from GHS-POP R2023A (30 arcsec), European Commission Joint Research Centre, CC BY 4.0. Cite Schiavina, M. et al. (2023), GHS-POP R2023A, doi:10.2905/2FF68A52-5B5B-4A22-8F40-C41DA8332CFE. Retrieved %s.\n" "$(date -u +%Y-%m-%d)" > out/README_population.txt
+          cat out/climate_log.txt
+      - name: Add to the ocean-data branch
+        if: always()
+        run: |
+          git clone -q --depth 1 --branch ocean-data "https://x-access-token:${{ github.token }}@github.com/${{ github.repository }}.git" br
+          cp out/* br/ 2>/dev/null || true; cd br; git add -A
+          git -c user.name="github-actions[bot]" -c user.email="41898900+github-actions[bot]@users.noreply.github.com" commit -qm "Climate and population data, $(date -u +%Y-%m-%d)" || exit 0
+          git push -q "https://x-access-token:${{ github.token }}@github.com/${{ github.repository }}.git" HEAD:ocean-data
