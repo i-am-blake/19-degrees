@@ -50,7 +50,7 @@ if os.path.exists(_m404):
 # Sources, Legal and Privacy pages, built the same way
 _mp = os.path.join(os.path.dirname(os.path.abspath(__file__)), "make_pages.py")
 if os.path.exists(_mp):
-    subprocess.run([sys.executable, "-I", _mp, os.path.join(out, "index.html"), out], check=True)
+    subprocess.run([sys.executable, "-I", _mp, os.path.join(out, "index.html"), out] + [d + "=" + b for d, b in (("ocean", "ocean-data"), ("imos", "imos-data")) if os.path.isdir(d)], check=True)
 bad = []
 for root, _, files in os.walk(out):
     for f in files:

@@ -1,9 +1,10 @@
 """Build the Sources and methods, Legal and Privacy pages from the built index.html, reusing its logo and wave
-(like make_404.py) so they always match. Usage: python3 -I make_pages.py <index.html> <out_dir>
-Writes sources.html, legal.html and privacy.html. The text lives here; the main page's footer links to them."""
-import html, os, re, sys
+(like make_404.py) so they always match. Usage: python3 -I make_pages.py <index.html> <out_dir> [folder=branch ...]
+Writes sources.html (from sources.json, plus any new data-branch README not yet in it), legal.html and privacy.html."""
+import html, json, os, re, sys
 
 src, out = sys.argv[1:3]
+DATA_DIRS = sys.argv[3:]  # "folder=branch-name" pairs, e.g. ocean=ocean-data imos=imos-data
 t = open(src, encoding="utf-8").read()
 logo = re.search(r'<svg class="mark"[^>]*>.*?</svg>', t, re.S).group(0)
 wave = re.search(r'<div class="barwave"[^>]*>.*?</svg></div>', t, re.S).group(0)
@@ -80,53 +81,41 @@ def table(rows):
     head = "<tr><th>Data</th><th>From</th><th>Used for</th><th>License</th></tr>"
     return '<div class="tbl"><table>' + head + "".join(f"<tr><td>{d}</td><td>{f}</td><td>{u}</td><td>{l}</td></tr>" for d, f, u, l in rows) + "</table></div>"
 
-SOURCES = {
- "Shark bites": [
-  (a("Australian Shark-Incident Database", "https://zenodo.org/records/18752301"), "Taronga Conservation Society Australia and Flinders University (Meagher 2026; Riley et al. 2022, Scientific Data)", "Every Australian bite on the page; water temperature and time of day reported at the scene", "CC BY 4.0"),
-  (a("Human-shark interactions in New Caledonia and Reunion Island, 1980–2022", "https://doi.org/10.5281/zenodo.12549370"), "University of Reunion Island (Taglioni, Guiltat and Delsaut)", "Claims C6, C22, C24", "CC BY 4.0"),
-  (a("Shark Incident Database, California", "https://lab.data.ca.gov/dataset/shark-incident-database-california"), "California Department of Fish and Wildlife", "Claims C23, C24", "CC BY"),
-  ("News reports", "Linked from each entry", "Bites newer than the database, marked unconfirmed until the database covers them", "Linked only"),
- ],
- "Sea and climate": [
-  (a("HadISST monthly sea surface temperature", "https://www.metoffice.gov.uk/hadobs/hadisst/"), "UK Met Office, via " + a("NOAA ERDDAP", "https://coastwatch.pfeg.noaa.gov/erddap/griddap/erdHadISST.html"), "The 19°C line, warm spells, El Niño index, every sea temperature chart", "Open Government Licence; © British Crown Copyright, Met Office"),
-  (a("ERSSTv5", "https://www.ncei.noaa.gov/products/extended-reconstructed-sst"), "NOAA NCEI", "Cross-check of Sydney's 19°C season", "Public domain"),
-  (a("Open-Meteo Marine", "https://open-meteo.com/en/docs/marine-weather-api"), "Open-Meteo", "Today's sea temperature at each beach", "CC BY 4.0"),
-  (a("CMIP6 sea surface temperature, 27 models", "https://wcrp-cmip.org/cmip-phase-6-cmip6/"), "World Climate Research Programme modeling centers, via the Pangeo public archive", "Claim C3, 2050", "Licensed by each center, mostly CC BY 4.0"),
-  (a("Fremantle monthly sea level", "https://www.bom.gov.au/oceanography/projects/ntc/monthly/index.shtml"), "Bureau of Meteorology (port 62230), and " + a("PSMSL", "https://psmsl.org/") + " station 111", "Claim C7, the Leeuwin Current", "© Commonwealth of Australia; PSMSL free with citation"),
-  (a("State of the Climate 2024", "https://www.csiro.au/en/research/environmental-impacts/climate-change/State-of-the-Climate/Oceans"), "CSIRO and Bureau of Meteorology", "Australian ocean warming figures", "Cited"),
- ],
- "Rain, water and rivers": [
-  (a("CHIRPS v2.0 rainfall", "https://www.chc.ucsb.edu/data/chirps"), "Climate Hazards Center, UC Santa Barbara (Funk et al. 2015)", "Claim C6", "Public domain (CC0)"),
-  (a("GHCN-Daily rain gauges", "https://www.ncei.noaa.gov/products/land-based-station/global-historical-climatology-network-daily"), "NOAA NCEI (Bureau of Meteorology stations)", "Claim C6", "Public domain"),
-  ("MODIS Aqua Kd490 water clarity", "NASA Ocean Biology Processing Group, via NOAA ERDDAP", "Claim C6", "NASA open data"),
-  (a("River mouths", "https://www.openstreetmap.org/copyright"), "© OpenStreetMap contributors", "Claim C6", "ODbL 1.0"),
- ],
- "Sharks in the water": [
-  (a("IMOS Animal Tracking", "https://researchdata.edu.au/imos-animal-tracking-2007-ongoing/3961802"), "Integrated Marine Observing System, enabled by NCRIS", "Tagged bull sharks off NSW; claims C2, C16; receiver stations", "CC BY 4.0"),
-  (a("Shark Control Program", "https://www.data.qld.gov.au/dataset/fisheries-queensland-s-shark-control-program-information-and-data"), "Queensland Government", "Claims C1, C20", "CC BY 4.0"),
-  (a("Shark sighting and specimen counts", "https://www.gbif.org"), "GBIF.org", "Claim C2", "CC0, CC BY or CC BY-NC by dataset"),
-  ("Shark Meshing (Bather Protection) Program reports", "NSW Department of Primary Industries and Regional Development", "Staying safe; claim C20", "Cited"),
- ],
- "People": [
-  (a("National Coastal Safety Report 2025", "https://www.surflifesaving.com.au/"), "Surf Life Saving Australia", "Coastal drownings by year, 2015/16 to 2024/25", "Cited; © Surf Life Saving Australia"),
-  ("Population by decade", "Australian Bureau of Statistics historical estimates", "Bites per 10 million people", "Cited"),
- ],
- "Maps, drawings and fonts": [
-  (a("Natural Earth", "https://www.naturalearthdata.com/"), "Natural Earth", "Coastline and maps", "Public domain"),
-  ("Shark outlines", "White shark from FAO field-guide anatomy; tiger shark traced from Robbie Cada's illustration; bull shark traced from a NOAA drawing (both public domain, via Wikimedia Commons)", "Every shark drawing", "Public domain sources"),
-  ("Bricolage Grotesque, Figtree, Martian Mono", "Google Fonts, self-hosted", "Type", "SIL Open Font License"),
- ],
-}
+REG = json.load(open(os.path.join(os.path.dirname(os.path.abspath(__file__)), "sources.json"), encoding="utf-8"))
+
+def cell(e):
+    return a(html.escape(e["name"]), e["url"]) if e.get("url") else html.escape(e["name"])
+
+def auto_rows():
+    """Data saved by a fetch job with a README_*.txt that sources.json doesn't cover yet, listed from the README."""
+    covered = set(REG.get("hide", [])) | {r for g in REG["groups"] for e in g["sources"] for r in e.get("readme", [])}
+    rows = []
+    for spec in DATA_DIRS:
+        folder, label = spec.split("=", 1)
+        if not os.path.isdir(folder): continue
+        for f in sorted(os.listdir(folder)):
+            key = label + "/" + f
+            if re.fullmatch(r"README(_\w+)?\.txt", f) and key not in covered:
+                txt = re.sub(r"\s+", " ", open(os.path.join(folder, f), encoding="utf-8", errors="replace").read()).strip()
+                lic = re.search(r"\b(CC BY[\w .-]*?\d\.\d|CC BY|CC0|public domain|Open Government Licence)\b", txt, re.I)
+                title = re.split(r"[,(.]", txt, maxsplit=1)[0][:90]
+                rows.append((html.escape(title), html.escape(txt[:240] + ("…" if len(txt) > 240 else "")), "Recently added", html.escape(lic.group(1) if lic else "See source")))
+                print("make_pages: listed new source automatically:", key)
+    return rows
+
 METHODS = [
  "Sea temperature is the monthly HadISST average for the 1° patch of open sea nearest each bite or beach, about 110 km across. It describes the season, not the water a person was in, and runs a little warmer than water at the beach.",
  "Many bull shark bites, especially before 2000, happened in harbors and rivers, where the water can be warmer than the open-sea patch it is measured against.",
  "The look ahead to 2050 adds each beach's 1980–2025 warming trend to its 2016–2025 average month. It is a simple extrapolation, not a climate model; claim C3 uses 27 climate models instead.",
  "Fewer people swim in cold water, but white sharks still bite there, so people are in the water when bull sharks are not.",
- "Every number written on the page is checked against the data it was built from on each weekly rebuild, which stops if one no longer matches.",
 ]
 src_body = '  <p class="lead">Everything on 19 Degrees is built from public data and published research. Each source keeps its own license. All code is on ' + a("GitHub", "https://github.com/i-am-blake/19-degrees") + ", so every result can be rerun.</p>\n"
-for k, rows in SOURCES.items():
-    src_body += f"  <h2>{k}</h2>\n  {table(rows)}\n"
+for g in REG["groups"]:
+    rows = [(cell(e), html.escape(e.get("from", "")), html.escape(e.get("used_for", "")), html.escape(e.get("license", ""))) for e in g["sources"]]
+    src_body += f"  <h2>{html.escape(g['group'])}</h2>\n  {table(rows)}\n"
+_auto = auto_rows()
+if _auto:
+    src_body += f"  <h2>Recently added</h2>\n  {table(_auto)}\n"
 src_body += "  <h2>Method notes</h2>\n  <ul>" + "".join(f"<li>{m}</li>" for m in METHODS) + "</ul>\n"
 src_body += "  <p>Naming a source doesn't mean it endorses this site. See the " + '<a href="/legal.html">legal page</a>' + ".</p>\n"
 
@@ -135,24 +124,23 @@ LEGAL = [
  ("General information only", "19 Degrees is an independent educational project. It summarizes public data and published research and may contain errors or be out of date. It is general information only, not safety, medical, legal or professional advice, and is provided \"as is\" without warranty of any kind."),
  ("Not a guide to whether or where to swim", "Don't rely on this site to decide whether or where to swim. Follow lifesavers, beach signs and local authorities. Results describe how often bites came under past conditions; they are not forecasts, and conditions don't cause bites on their own. In an emergency, call your local emergency number: 000 in Australia, 911 in the US and Canada, 999 in the UK, 112 across Europe and on most mobile phones worldwide."),
  ("First aid", "First-aid information summarizes published research. It is not a substitute for first-aid training or for help from emergency services."),
- ("No affiliation or endorsement", "19 Degrees is not affiliated with, sponsored by or endorsed by any organization named on the site, including Taronga Conservation Society Australia, Flinders University, IMOS, NOAA, the UK Met Office, the Bureau of Meteorology, CSIRO, Surf Life Saving Australia, state governments and their agencies, or any research group, university or company. Naming a source, citing a study or linking a page does not mean that organization has reviewed or approved this site."),
+ ("No affiliation or endorsement", "19 Degrees is not affiliated with, sponsored by or endorsed by any organization, data provider, government agency, research group or company named on the site. Naming a source, citing a study or linking a page does not mean that organization has reviewed or approved this site."),
  ("Third-party data", "Results depend on data published by others, which can change, be corrected or contain errors. Bites reported in the news after the database's latest month are marked unconfirmed until the database covers them."),
  ("Products", "Product information summarizes published independent tests, which are linked. It is not the author's own testing, and it is not an endorsement or a criticism of any maker or product."),
  ("Links to other sites", "Links to other sites are provided for reference. The author does not control and is not responsible for their content, accuracy or availability."),
  ("Classroom materials", "Classroom sheets are intended for use under a teacher's or parent's supervision."),
- ("Support and donations", "Support sent through Venmo is a personal gift to Blake Erickson to help keep the project running. 19 Degrees is not a registered charity, gifts are not tax-deductible, and nothing is given in return."),
+ ("Support and donations", "Support sent through Venmo is a personal gift to the project's author to help keep it running. 19 Degrees is not a registered charity, gifts are not tax-deductible, and nothing is given in return."),
  ("Corrections, copyright and privacy requests", 'Report an error, a copyright concern, or a privacy concern (for example, from someone connected to a bite) through the <a href="/#contact">contact form</a>. Reports are reviewed and the page is corrected or the material removed where appropriate.'),
  ("Limitation of liability", "To the extent the law allows, the author accepts no liability for any loss or harm arising from use of this site, its data, its downloads or anything built from them. Nothing here limits rights that cannot be limited by law."),
- ("Changes", "These terms may be updated. The date below shows the latest version."),
 ]
-leg_body = '  <p class="lead">The short version: use the data and code freely with credit, follow lifesavers rather than this site, and remember that no one named here endorses it.</p>\n'
+leg_body = ""
 leg_body += "".join(f"  <h2>{h}</h2>\n  <p>{p}</p>\n" for h, p in LEGAL)
 leg_body += "  <p>Last updated 3 November 2026.</p>\n"
 
 PRIV = [
  ("What this site collects", "No cookies, no ads and no tracking across sites. Visits and clicks are counted with " + a("GoatCounter", "https://www.goatcounter.com/") + ", which keeps aggregate counts and stores no personal data."),
  ("The contact form", "The form sends your name, email address and message to Blake through " + a("Web3Forms", "https://web3forms.com/") + ", which passes it on by email. They are used only to reply and are never sold or shared. Ask through the form to have a message deleted."),
- ("Hosting", "The site is hosted on GitHub Pages. GitHub may log visitors' IP addresses for security, under " + a("GitHub's privacy statement", "https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement") + ". Fonts are served from this site, not from Google."),
+ ("Hosting", "The site is hosted on GitHub Pages, which may keep server logs for security under " + a("GitHub's privacy statement", "https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement") + "."),
  ("Other sites", "Links such as Venmo, social media and data sources take you to other sites with their own privacy policies."),
  ("Children", "Under 13? Ask a parent, guardian or teacher to use the contact form for you."),
 ]

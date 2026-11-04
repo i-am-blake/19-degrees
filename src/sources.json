@@ -1,0 +1,40 @@
+{
+ "_about": "Every data source the site uses; the Sources page is built from this list. Data a fetch job saves with a README_*.txt on a data branch is listed automatically, from that README, until it is added here: cover it with a 'readme' key, or put it in 'hide' if the site doesn't use it.",
+ "hide": ["ocean-data/README_uhslc.txt"],
+ "groups": [
+  {"group": "Shark bites", "sources": [
+   {"name": "Australian Shark-Incident Database", "url": "https://zenodo.org/records/18752301", "from": "Taronga Conservation Society Australia and Flinders University (Meagher 2026; Riley et al. 2022, Scientific Data)", "used_for": "Every Australian bite on the page", "license": "CC BY 4.0"},
+   {"name": "Human-shark interactions in New Caledonia and Reunion Island, 1980–2022", "url": "https://doi.org/10.5281/zenodo.12549370", "from": "University of Reunion Island (Taglioni, Guiltat and Delsaut)", "used_for": "Claims C6, C22, C24", "license": "CC BY 4.0"},
+   {"name": "Shark Incident Database, California", "url": "https://lab.data.ca.gov/dataset/shark-incident-database-california", "from": "California Department of Fish and Wildlife", "used_for": "Claims C23, C24", "license": "CC BY", "readme": ["ocean-data/README_california.txt"]},
+   {"name": "News reports", "from": "Linked from each entry", "used_for": "Bites newer than the database, marked unconfirmed", "license": "Linked only"}
+  ]},
+  {"group": "Sea and climate", "sources": [
+   {"name": "HadISST monthly sea surface temperature", "url": "https://www.metoffice.gov.uk/hadobs/hadisst/", "from": "UK Met Office, via NOAA ERDDAP", "used_for": "The 19°C line and every sea temperature chart", "license": "Open Government Licence; © British Crown Copyright, Met Office"},
+   {"name": "ERSSTv5", "url": "https://www.ncei.noaa.gov/products/extended-reconstructed-sst", "from": "NOAA NCEI", "used_for": "Cross-check of Sydney's 19°C season", "license": "Public domain"},
+   {"name": "Open-Meteo Marine", "url": "https://open-meteo.com/en/docs/marine-weather-api", "from": "Open-Meteo", "used_for": "Today's sea temperature at each beach", "license": "CC BY 4.0"},
+   {"name": "CMIP6 sea surface temperature, 27 models", "url": "https://wcrp-cmip.org/cmip-phase-6-cmip6/", "from": "World Climate Research Programme modeling centers, via the Pangeo public archive", "used_for": "Claim C3, 2050", "license": "Licensed by each center, mostly CC BY 4.0", "readme": ["ocean-data/README_cmip.txt"]},
+   {"name": "Fremantle monthly sea level", "url": "https://www.bom.gov.au/oceanography/projects/ntc/monthly/index.shtml", "from": "Bureau of Meteorology (port 62230) and PSMSL (station 111)", "used_for": "Claim C7", "license": "© Commonwealth of Australia; PSMSL free with citation", "readme": ["ocean-data/README.txt", "ocean-data/README_bom.txt"]},
+   {"name": "State of the Climate 2024", "url": "https://www.csiro.au/en/research/environmental-impacts/climate-change/State-of-the-Climate/Oceans", "from": "CSIRO and Bureau of Meteorology", "used_for": "Australian ocean warming figures", "license": "Cited"}
+  ]},
+  {"group": "Rain, water and rivers", "sources": [
+   {"name": "CHIRPS v2.0 rainfall", "url": "https://www.chc.ucsb.edu/data/chirps", "from": "Climate Hazards Center, UC Santa Barbara (Funk et al. 2015)", "used_for": "Claim C6", "license": "Public domain (CC0)"},
+   {"name": "GHCN-Daily rain gauges", "url": "https://www.ncei.noaa.gov/products/land-based-station/global-historical-climatology-network-daily", "from": "NOAA NCEI", "used_for": "Claim C6", "license": "Public domain"},
+   {"name": "MODIS Aqua Kd490 water clarity", "from": "NASA Ocean Biology Processing Group, via NOAA ERDDAP", "used_for": "Claim C6", "license": "NASA open data"},
+   {"name": "River mouths", "url": "https://www.openstreetmap.org/copyright", "from": "© OpenStreetMap contributors", "used_for": "Claim C6", "license": "ODbL 1.0", "readme": ["ocean-data/README_rivers.txt"]}
+  ]},
+  {"group": "Sharks in the water", "sources": [
+   {"name": "IMOS Animal Tracking", "url": "https://researchdata.edu.au/imos-animal-tracking-2007-ongoing/3961802", "from": "Integrated Marine Observing System, enabled by NCRIS", "used_for": "Tagged bull sharks off NSW; claims C2, C16", "license": "CC BY 4.0", "readme": ["imos-data/README.txt", "ocean-data/README_receivers.txt"]},
+   {"name": "Shark Control Program", "url": "https://www.data.qld.gov.au/dataset/fisheries-queensland-s-shark-control-program-information-and-data", "from": "Queensland Government", "used_for": "Claims C1, C20", "license": "CC BY 4.0", "readme": ["ocean-data/README_qld_scp.txt"]},
+   {"name": "Shark sighting and specimen counts", "url": "https://www.gbif.org", "from": "GBIF.org", "used_for": "Claim C2", "license": "CC0, CC BY or CC BY-NC by dataset", "readme": ["ocean-data/README_gbif.txt"]},
+   {"name": "Shark Meshing (Bather Protection) Program reports", "from": "NSW Department of Primary Industries and Regional Development", "used_for": "Staying safe; claim C20", "license": "Cited"}
+  ]},
+  {"group": "People", "sources": [
+   {"name": "National Coastal Safety Report 2025", "url": "https://www.surflifesaving.com.au/", "from": "Surf Life Saving Australia", "used_for": "Coastal drownings by year", "license": "Cited; © Surf Life Saving Australia"},
+   {"name": "Population by decade", "from": "Australian Bureau of Statistics", "used_for": "Bites per 10 million people", "license": "Cited"}
+  ]},
+  {"group": "Maps and drawings", "sources": [
+   {"name": "Natural Earth", "url": "https://www.naturalearthdata.com/", "from": "Natural Earth", "used_for": "Coastline and maps", "license": "Public domain"},
+   {"name": "Shark outlines", "from": "FAO field-guide anatomy (white); Robbie Cada and NOAA drawings via Wikimedia Commons (tiger, bull)", "used_for": "Every shark drawing", "license": "Public domain sources"}
+  ]}
+ ]
+}
