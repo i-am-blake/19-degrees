@@ -1,0 +1,1 @@
+Indian Ocean Dipole, Dipole Mode Index from HadISST, NOAA Physical Sciences Laboratory, https://psl.noaa.gov/gcos_wgsp/Timeseries/DMI/ (public domain). Cite Saji, N.H. et al. (1999), Nature 401, 360-363. Retrieved 2026-11-04.
