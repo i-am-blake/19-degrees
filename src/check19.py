@@ -87,6 +87,12 @@ for m in find("C19 tiger", r"tiger shark bites (\d+)% \((\d+) of (\d+), p = ([\d
 for m in find("C19 bull", r"Bull shark bites didn't stand out \((\d+)%, (\d+) of (\d+), p = ([\d.]+)\)"):
     check("C19 bull", (int(m[1]), int(m[2]), int(m[3]), float(m[4])), (hb["bull"]["t_pct"], hb["bull"]["t"], hb["bull"]["n"], round(hb["bull"]["t_p"], 2)))
 
+# Tiger sharks in the rain test (C6), when present
+if rn.get("tiger"):
+    tg = rn["tiger"]
+    for m in find("C6 tiger", r"Tiger shark bites lean wetter too: (\d+) of (\d+) \((\d+)%\) came in the wettest quarter of months \(p = ([\d.]+)\), and (\d+) \((\d+)%\) in the wettest tenth \(p = ([\d.]+)\)"):
+        check("C6 tiger", (int(m[1]), int(m[2]), int(m[3]), m[4], int(m[5]), int(m[6]), m[7]), (tg["q"], tg["n"], tg["q_pct"], f"{tg['q_p']:.2f}", tg["t"], tg["t_pct"], f"{tg['t_p']:.3f}"))
+
 # Claims C26 (iod19.py) and C18 (coastpop19.py), when present
 if "iod" in D:
     a = D["iod"]["all"]
