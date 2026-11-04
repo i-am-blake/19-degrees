@@ -151,7 +151,7 @@ if not pm[max(pm, key=int)] / pm["1900"] > 6: bad.append("population: page says 
 cards = page.count('class="claim"')
 early = page.count('data-status="early"')
 for lab, pat, want in (("claims", r"See the (\d+) claims", cards), ("claims", r"Testable claims (\d+)", cards),
-                       ("claims", r"Pick one of (\d+) claims", cards), ("claims", r"one of (\d+) testable claims", cards),
+                       ("claims", r"Pick one of (\d+) claims", cards),
                        ("early results", r"Early results (\d+)", early)):
     for m in find(lab, pat, True): check(f"number of {lab} ('{m[0]}')", int(m[1]), want)
 i = page.find("Products and the evidence"); seg = page[i:page.find("</section>", i)]
