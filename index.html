@@ -60,8 +60,8 @@
   --warm:#F0A04B;      /* 19°C and above */
   --death:#FF6B5E;     /* shark deaths in the dot field */
   --rule:rgba(232,241,242,.16);
-  --flagred:#D7262E;     /* beach safety flag: swim between the red and yellow flags */
-  --flagyellow:#F6C915;
+  --flagred:#DA291C;     /* beach safety flag: swim between the red and yellow flags */
+  --flagyellow:#FFCD00;
   --f-display:"Bricolage Grotesque","Arial Narrow",system-ui,sans-serif;
   --f-body:"Figtree",system-ui,-apple-system,"Segoe UI",sans-serif;
   --f-data:"Martian Mono",ui-monospace,"SFMono-Regular",Menlo,monospace;
@@ -95,7 +95,7 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--warm);outline-offse
 /* hero: the hook (near the surface the water is lighter, so secondary text is lighter too) */
 .hero{--muted:#B4CDD8;--cold:#7CC7F0;--warm:#F5B061}
 .hero{padding-block:44px 44px;display:grid;gap:20px;border-bottom:1px solid var(--rule)}
-.state{font-family:var(--f-display);font-weight:800;font-size:clamp(46px,9.6vw,112px);line-height:.96;letter-spacing:-.035em;margin:0;text-wrap:balance}
+.state{font-family:var(--f-display);font-weight:800;font-size:clamp(38px,5.6vw,68px);line-height:.96;letter-spacing:-.035em;margin:0;text-wrap:balance}
 .lede{font-size:clamp(20px,2.8vw,28px);line-height:1.35;margin:0;text-wrap:pretty}
 .live{display:grid;gap:14px;margin-top:8px;padding-top:22px;border-top:1px solid var(--rule)}
 .livehead{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:10px 16px}
@@ -203,7 +203,7 @@ h2{font-family:var(--f-display);font-weight:700;font-size:clamp(26px,4.4vw,44px)
 
 /* the red-and-yellow beach safety flag */
 .callout{margin:0;font-size:clamp(16px,1.9vw,19px);line-height:1.5}
-.swimflags{border-left:4px solid var(--flagred);box-shadow:inset 4px 0 0 0 var(--flagred);padding:2px 0 2px 14px;border-image:linear-gradient(var(--flagred) 0 50%,var(--flagyellow) 50% 100%) 1;color:var(--ink)}
+.swimflags{border-left:6px solid var(--flagred);padding:2px 0 2px 14px;border-image:linear-gradient(var(--flagred) 0 50%,var(--flagyellow) 50% 100%) 1;color:var(--ink)}
 .swimflags b{font-weight:600}
 .flag{width:1.05em;height:1.15em;flex:none;color:var(--muted)}
 .flagk,.flagh{display:flex;align-items:center;gap:10px}
@@ -662,7 +662,6 @@ table.dt thead th{color:var(--muted);font-weight:600}
 section[aria-labelledby="h-q"] .cards.qs{grid-template-columns:repeat(2,minmax(0,1fr))}
 @media (max-width:720px){section[aria-labelledby="h-q"] .cards.qs{grid-template-columns:1fr}}
 /* home tab */
-#panel-home .state{font-size:clamp(38px,5.6vw,68px)}
 #panel-home .stats4 .atile .big{color:var(--ink)}
 #panel-home .stats4 #hcEarly{color:var(--warm)}
 #panel-home .hcta{display:flex;flex-wrap:wrap;gap:12px;margin:6px 0 0}
@@ -720,6 +719,9 @@ section[aria-labelledby="h-q"] .cards.qs{grid-template-columns:repeat(2,minmax(0
 .chip{border:1px solid var(--rule);border-radius:999px;padding:7px 14px;font-size:15px}
 .chip.on{border-color:var(--warm);font-weight:600}
 .chip.want{border-style:dashed;color:var(--muted)}
+.chip.build{border-color:var(--warm);border-style:dashed;display:inline-flex;align-items:center;gap:8px}
+.chip.build::before{content:"";width:10px;height:10px;border-radius:50%;border:1.5px solid var(--warm);background:linear-gradient(90deg,var(--warm) 50%,transparent 50%);flex:none}
+.chip.on::before{content:"";display:inline-block;width:10px;height:10px;border-radius:50%;background:var(--warm);margin-right:8px;vertical-align:-1px}
 /* outlined button: same hover as the site's other outlined controls */
 .ghbtn{display:inline-flex;align-items:center;min-height:44px;color:var(--ink);transition:border-color .15s,background-color .15s}
 .ghbtn:hover{border-color:#3395BE;background:rgba(51,149,190,.14)}
@@ -757,8 +759,8 @@ section[aria-labelledby="h-q"] .cards.qs{grid-template-columns:repeat(2,minmax(0
     <h2 id="h-evidence">Twenty-four claims, tested in public.</h2>
     <div class="stats4">
       <div class="atile"><span class="lab">Testable claims</span><span class="big" id="hcClaims">24</span><span class="cap">Each says in advance what would prove it wrong.</span></div>
-      <div class="atile"><span class="lab">Early results</span><span class="big" id="hcEarly">10</span><span class="cap">Tested on open data, whichever way they came out.</span></div>
-      <div class="atile"><span class="lab">Data sources joined</span><span class="big">18</span><span class="cap">Tracking, climate, rainfall, drownings, catches and trials.</span></div>
+      <div class="atile"><span class="lab">Early results</span><span class="big" id="hcEarly">10</span><span class="cap">Claims with a first result from open data and published research, whether or not it backed the claim.</span></div>
+      <div class="atile"><span class="lab">Data sources joined</span><span class="big">18</span><span class="cap">Bites, tracking, climate, rainfall, drownings, catches and trials.</span></div>
       <div class="atile"><span class="lab">Products checked</span><span class="big">26</span><span class="cap">Safety products, against independent, published tests.</span></div>
     </div>
   </section>
@@ -803,7 +805,7 @@ section[aria-labelledby="h-q"] .cards.qs{grid-template-columns:repeat(2,minmax(0
     <div class="kicker">Global by design</div>
     <h2 id="h-global">Australia is the first case study.</h2>
     <p class="sub">The methods and code work for any coast. Bull, tiger and white sharks bite in warm water worldwide, and the same questions apply wherever people swim.</p>
-    <ul class="chips"><li class="chip on">Australia · live</li><li class="chip want">South Africa · data wanted</li><li class="chip on">United States · California live</li><li class="chip on">Réunion and New Caledonia · live</li><li class="chip want">Brazil · data wanted</li><li class="chip want">Mozambique · data wanted</li></ul>
+    <ul class="chips"><li class="chip on">Australia · live</li><li class="chip want">South Africa · data wanted</li><li class="chip build">United States · building</li><li class="chip build">Réunion and New Caledonia · building</li><li class="chip want">Brazil · data wanted</li><li class="chip want">Mozambique · data wanted</li></ul>
     <p class="note"><a href="#h-refs" data-tab="research">Run it for your coast →</a></p>
   </section>
 
@@ -995,7 +997,7 @@ section[aria-labelledby="h-q"] .cards.qs{grid-template-columns:repeat(2,minmax(0
     <p class="sub">Most shark safety tools were designed for white sharks in clear water. Bull sharks bite in murky water, close to shore, and now later in the year.</p>
     <p class="sub">This section summarizes published research. It isn't safety advice: follow lifesavers, beach signs and local authorities.</p>
     <div class="persp">
-    <div class="kicker flagk" style="margin-top:8px"><svg class="flag" viewBox="0 0 22 24" aria-hidden="true"><rect x="1" y="1" width="2" height="22" fill="currentColor"/><rect x="3" y="2" width="18" height="6.5" fill="var(--flagred)"/><rect x="3" y="8.5" width="18" height="6.5" fill="var(--flagyellow)"/></svg>First, perspective</div>
+    <div class="kicker flagk" style="margin-top:8px"><svg class="flag" viewBox="0 0 22 24" aria-hidden="true"><rect x="1" y="1" width="2" height="22" fill="currentColor"/><rect x="3" y="2" width="18" height="7" fill="var(--flagred)"/><rect x="3" y="9" width="18" height="7" fill="var(--flagyellow)"/></svg>First, perspective</div>
     <h3 class="ratioh" id="h-ratio">For every shark death on Australia's coast, about <span id="ratioN">50</span> people drown.</h3>
     <p class="sub" id="ratioSub">July 2015 to June 2025. Each dot is one life.</p>
     <div class="fig" id="dots" role="img" aria-label="Dot field of coastal drownings and fatal shark bites"></div>
@@ -1079,7 +1081,7 @@ section[aria-labelledby="h-q"] .cards.qs{grid-template-columns:repeat(2,minmax(0
   <div role="tabpanel" id="panel-students" aria-labelledby="tab-students" hidden>
   <section aria-labelledby="h-stu">
     <div class="kicker">Students and schools</div>
-    <h2 id="h-stu">A real climate story, with real data, for the classroom.</h2>
+    <h2 class="state" id="h-stu">A real climate story, with real data, for the classroom.</h2>
     <p class="sub">Everything here comes from the same records scientists use. Pick a printable sheet for your class, or use the facts and questions below for a project. Each sheet has teacher notes on its last page: learning intentions, success criteria, big ideas, curriculum links for Australia, the US, England, the International Baccalaureate and others, and the UN Sustainable Development Goals, a lesson sequence, differentiation, a wellbeing note and an answer guide. <a href="classroom.html" target="_blank" rel="noopener">See all teacher notes</a>.</p>
     <div class="cards three">
       <a class="card linkcard" href="classroom-primary.html" target="_blank" rel="noopener"><span class="kicker">Ages 8 to 11 · 45–60 min</span><h3>Shark detectives</h3><p>Read a map, count the warm months, and draw a beach safety poster.</p><span class="go">Open the sheet →</span></a>
@@ -1112,7 +1114,7 @@ section[aria-labelledby="h-q"] .cards.qs{grid-template-columns:repeat(2,minmax(0
   <nav class="jumpbar" aria-label="On this tab"><button type="button" class="jbtoggle" aria-expanded="false" aria-controls="jbin"><span class="jbl">Jump to</span><span class="jbcur">Claims</span><i class="jbchev" aria-hidden="true"></i></button><div class="jbin" id="jbin"><a href="#h-agenda">Claims</a><a href="#h-changes">Changes</a><a href="#h-data">Data we need</a><a href="#h-contrib">Contribute</a><a href="#h-products">Products</a><a href="#h-forces">Other explanations</a><a href="#h-q">Open questions</a><a href="#h-refs">Methods and sources</a></div></nav>
   <section aria-labelledby="h-help-test" class="helptest">
     <div class="kicker">For researchers</div>
-    <h2 id="h-help-test">Help test this.</h2>
+    <h2 class="state" id="h-help-test">Help test this.</h2>
     <p class="sub">19 Degrees is open: every number here can be checked, and every claim can be challenged. The aim is a shared, growing evidence base on two questions: how a warming ocean is changing where sharks and people meet, and which shark-safety measures actually work. Every deterrent, wetsuit, beach program and first-aid step is held to the same standard: a published, independent test, whatever it found. Here's how to take part.</p>
     <div class="ways">
       <article class="way"><span class="wn">1</span><h3>Test a claim</h3><p>Twenty-four specific claims, each with what would support it and what would rule it out. Pick one that fits your skills.</p><a class="ctabtn" href="#h-agenda">See the twenty-four claims →</a></article>
@@ -1406,7 +1408,7 @@ section[aria-labelledby="h-q"] .cards.qs{grid-template-columns:repeat(2,minmax(0
   <div role="tabpanel" id="panel-media" aria-labelledby="tab-media" hidden>
   <section aria-labelledby="h-media">
     <div class="kicker">News and media</div>
-    <h2 id="h-media">The findings, the images, and how to report them accurately.</h2>
+    <h2 class="state" id="h-media">The findings, the images, and how to report them accurately.</h2>
     <p class="sub">Free to use with credit to 19 Degrees and the original data sources. Every number below is checked against the data on this page and updates weekly.</p>
     <h3 class="blockh" style="margin-top:6px">Key findings</h3>
     <ol class="facts5" id="mediaFacts"></ol>
@@ -1442,7 +1444,7 @@ section[aria-labelledby="h-q"] .cards.qs{grid-template-columns:repeat(2,minmax(0
       <li>Shark deterrent testing: Huveneers and colleagues, Flinders University.</li>
     </ul>
     <h3 class="blockh" style="margin-top:12px">Contact</h3>
-    <p class="readout">19 Degrees is an independent project. For interviews, data questions or corrections, use the <a href="#contact">contact form</a>.</p>
+    <p>19 Degrees is an independent project. For interviews, data questions or corrections, use the <a href="#contact">contact form</a>.</p>
   </section>
   </div>
 

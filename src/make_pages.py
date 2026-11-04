@@ -144,7 +144,7 @@ leg_body += "  <p>Last updated 3 November 2026.</p>\n"
 PRIV = [
  ("What this site collects", "No cookies, no ads and no tracking across sites. Visits and clicks are counted with " + a("GoatCounter", "https://www.goatcounter.com/") + ", which keeps aggregate counts and stores no personal data."),
  ("The contact form", "The form sends your name, email address and message to the author through " + a("Web3Forms", "https://web3forms.com/") + ", which passes it on by email. They are used only to reply and are never sold or shared. Ask through the form to have a message deleted."),
- ("Hosting", "The site is hosted on GitHub Pages, which may keep server logs for security under " + a("GitHub's privacy statement", "https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement") + "."),
+ ("Hosting", "The site is served through " + a("Cloudflare", "https://www.cloudflare.com/privacypolicy/") + " and " + a("GitHub Pages", "https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement") + ", which may keep server logs for security."),
  ("Other sites", "Links such as Venmo, social media and data sources take you to other sites with their own privacy policies."),
  ("Children", "Under 13? Ask a parent, guardian or teacher to use the contact form for you."),
 ]
