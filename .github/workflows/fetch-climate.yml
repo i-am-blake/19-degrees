@@ -6,7 +6,8 @@ name: Fetch climate and population data
 #     California, Réunion and New Caledonia.
 #  3. EU JRC Global Human Settlement Layer population (GHS-POP R2023A, 30 arcsec, CC BY 4.0): people within a 1° box
 #     around each of the page's coastal regions, 1975 to 2030 in 5-year steps.
-# Runs monthly on the 6th (never the same day as the other ocean-data fetches) or by hand.
+# Runs monthly on the 6th (never the same day as the other ocean-data fetches) or by hand. It pauses between requests,
+# because a burst of long requests makes NOAA refuse the weekly rebuild's own downloads for a while.
 on:
   schedule:
     - cron: "43 10 6 * *"   # 6th of each month, 10:43 UTC
@@ -44,7 +45,7 @@ jobs:
                   for a in range(5):
                       try:
                           req = urllib.request.Request(url, headers={"User-Agent": "19-degrees.org open data"})
-                          txt = urllib.request.urlopen(req, timeout=600).read().decode(); rows += txt.splitlines()[2:]; break
+                          txt = urllib.request.urlopen(req, timeout=600).read().decode(); rows += txt.splitlines()[2:]; time.sleep(20); break
                       except Exception as e:
                           if a == 4: log.write(f"oisst {k} {y0} failed: {e}\n"); ok = False
                           time.sleep(30 * (a + 1))
