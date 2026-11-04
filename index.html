@@ -1463,13 +1463,10 @@ section[aria-labelledby="h-q"] .cards.qs{grid-template-columns:repeat(2,minmax(0
   </section>
 
   <footer>
-    <p>Temperatures are in °C; 19°C is 66°F.</p>
-    <p><b>Australian shark bites and sea temperature, 1900–<span id="yNow">2026</span>.</b> Built from the <a href="https://zenodo.org/records/18752301" target="_blank" rel="noopener">Australian Shark-Incident Database</a> (Taronga Conservation Society and Flinders University), HadISST sea temperature (UK Met Office) and more than 20 other open sources. <a href="/sources.html">All sources, licenses and method notes →</a></p>
-    <p id="credits"></p>
+    <p><b>Australian shark bites and sea temperature, 1900–<span id="yNow">2026</span>.</b> Temperatures in °C; 19°C is 66°F. Built from the <a href="https://zenodo.org/records/18752301" target="_blank" rel="noopener">Australian Shark-Incident Database</a> (Taronga Conservation Society and Flinders University), HadISST sea temperature (UK Met Office) and more than 20 other open sources. <a href="/sources.html">All sources, licenses and method notes →</a></p>
     <p id="built"></p>
     <p class="legal">General information only, not safety, medical or professional advice. Follow lifesavers, beach signs and local authorities, and in an emergency call 000 in Australia, 911 in the US and Canada, or 112 across Europe and on most mobiles. 19 Degrees is independent and not affiliated with or endorsed by any organization named on it.</p>
-    <p class="legal">Code: MIT License (<a href="https://github.com/i-am-blake/19-degrees" target="_blank" rel="noopener">source on GitHub</a>). Text, charts and images: <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener">CC BY 4.0</a>. Data keeps its own license.</p>
-    <p class="copy">© 2026 Blake Erickson · <a href="/sources.html">Sources</a> · <a href="/legal.html">Legal</a> · <a href="/privacy.html">Privacy</a> · <a href="#contact">Contact</a> · <a class="donatelink" data-from="footer" href="https://venmo.com/u/Send-It-Blake" target="_blank" rel="noopener">Support 19 Degrees</a></p>
+    <p class="copy">© 2026 Blake Erickson · Code <a href="https://github.com/i-am-blake/19-degrees" target="_blank" rel="noopener">MIT</a> · Content <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener">CC BY 4.0</a> · <a href="/sources.html">Sources</a> · <a href="/legal.html">Legal</a> · <a href="/privacy.html">Privacy</a> · <a href="#contact">Contact</a> · <a class="donatelink" data-from="footer" href="https://venmo.com/u/Send-It-Blake" target="_blank" rel="noopener">Support 19 Degrees</a></p>
   </footer>
 <aside class="supportpop" id="supportPop" hidden aria-label="Support this project"><div class="sphead"><b>Support the future of this project</b><button type="button" class="spx" id="supportX" aria-label="Close"><svg viewBox="0 0 14 14" width="14" height="14" aria-hidden="true"><path d="M1 1L13 13M13 1L1 13" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></button></div><p>I built 19 Degrees on my own and keep it free and open for everyone. Your support helps advance shark and climate research, test what actually keeps people safe, and keep the data updated every week. If it's helped you, your class or your research, help it grow.</p><div class="spbtns"><a class="supportbtn" id="supportGo" href="#" target="_blank" rel="noopener">Support 19 Degrees</a></div><p class="spalt">Can't give right now? <button type="button" class="linkbtn" id="shareInstead">Share it instead.</button></p><p class="spalt">Foundations and partners: <a href="#contact" class="spcontact" data-contact="Funding or partnership" data-msg="">get in touch</a>.</p></aside>
 </div>
@@ -2228,7 +2225,7 @@ try{
 /* footer */
 try{
   const c=Object.values(D.sharks.species).map(s=>s.source?`${s.name}: traced from <a href="${s.source.url}" target="_blank" rel="noopener">${s.source.title}</a> (${s.source.credit})`:`${s.name}: drawn from FAO field-guide anatomy`).join(". ");
-  document.getElementById("credits").innerHTML="<b>Shark outlines.</b> "+c+".";
+  const cr=document.getElementById("credits"); if(cr) cr.innerHTML="<b>Shark outlines.</b> "+c+".";
   const ym=v=>{if(!v)return"";if(typeof v==="string")return MON[+v.slice(5,7)-1]+" "+v.slice(0,4);return MON[v.month-1]+" "+v.year;};
   const t=SYD.today?localStamp(SYD.today.time,true):"";
   document.getElementById("built").textContent=`Updated ${D.built}. Today's readings from ${t} Sydney time. Monthly sea temperature to ${ym(D.sst_last)}; shark database to ${ym(D.asid_last)}.`;
