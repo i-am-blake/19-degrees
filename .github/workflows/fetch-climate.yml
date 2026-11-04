@@ -16,7 +16,7 @@ permissions:
 jobs:
   climate:
     runs-on: ubuntu-latest
-    timeout-minutes: 90
+    timeout-minutes: 240
     steps:
       - uses: actions/checkout@v4
       - name: Indian Ocean Dipole
@@ -33,15 +33,24 @@ jobs:
                  "california_monterey": (36.625, -122.125), "california_san_francisco": (37.625, -122.625),
                  "california_humboldt": (40.875, -124.375), "reunion_west": (-21.125, 55.125), "new_caledonia_noumea": (-22.375, 166.375)}
           log = open("out/climate_log.txt", "a")
+          import datetime
+          y_now = datetime.date.today().year
           for k, (la, lo) in PTS.items():
-              url = f"{E}%5B(1981-09-01):1:(last)%5D%5B(0.0)%5D%5B({la})%5D%5B({lo})%5D"
-              for a in range(5):
-                  try:
-                      txt = urllib.request.urlopen(url, timeout=300).read().decode(); open(f"out/oisst_{k}.csv", "w").write(txt)
-                      log.write(f"oisst {k}: {txt.count(chr(10))} lines\n"); break
-                  except Exception as e:
-                      if a == 4: log.write(f"oisst {k} failed: {e}\n")
-                      time.sleep(30 * (a + 1))
+              # the full daily record in one request times out, so ask for five years at a time
+              rows, ok = [], True
+              for y0 in range(1981, y_now + 1, 5):
+                  a0 = "1981-09-01" if y0 == 1981 else f"{y0}-01-01"; a1 = f"{min(y0 + 4, y_now)}-12-31" if y0 + 4 < y_now else "last"
+                  url = f"{E}%5B({a0}):1:({a1})%5D%5B(0.0)%5D%5B({la})%5D%5B({lo})%5D"
+                  for a in range(5):
+                      try:
+                          req = urllib.request.Request(url, headers={"User-Agent": "19-degrees.org open data"})
+                          txt = urllib.request.urlopen(req, timeout=600).read().decode(); rows += txt.splitlines()[2:]; break
+                      except Exception as e:
+                          if a == 4: log.write(f"oisst {k} {y0} failed: {e}\n"); ok = False
+                          time.sleep(30 * (a + 1))
+              if rows:
+                  open(f"out/oisst_{k}.csv", "w").write("time,zlev,latitude,longitude,sst\n" + "\n".join(rows) + "\n")
+              log.write(f"oisst {k}: {len(rows)} days{'' if ok else ' (some years missing)'}\n")
           PY
           printf "NOAA OISST v2.1 daily sea surface temperature (0.25°), NOAA NCEI, via NOAA CoastWatch ERDDAP (public domain). Cite Huang, B. et al. (2021), J. Climate 34, 2923-2939. One file per 0.25° ocean cell off each coast. Retrieved %s.\n" "$(date -u +%Y-%m-%d)" > out/README_oisst.txt
       - name: Coastal population (GHSL)
