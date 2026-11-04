@@ -87,6 +87,17 @@ for m in find("C19 tiger", r"tiger shark bites (\d+)% \((\d+) of (\d+), p = ([\d
 for m in find("C19 bull", r"Bull shark bites didn't stand out \((\d+)%, (\d+) of (\d+), p = ([\d.]+)\)"):
     check("C19 bull", (int(m[1]), int(m[2]), int(m[3]), float(m[4])), (hb["bull"]["t_pct"], hb["bull"]["t"], hb["bull"]["n"], round(hb["bull"]["t_p"], 2)))
 
+# Claims C26 (iod19.py) and C18 (coastpop19.py), when present
+if "iod" in D:
+    a = D["iod"]["all"]
+    for m in find("C26", r"Compared with the same calendar month in the same decade, (\d+) bites against about ([\d.]+) expected \(p = ([\d.]+)\), and (\d+) in negative months against about (\d+(?:\.\d)?)"):
+        check("C26 dipole", (int(m[1]), float(m[2]), m[3], int(m[4]), float(m[5])), (a["pos"], a["pos_exp"], f"{a['p']:.2f}", a["neg"], a["neg_exp"]))
+if "coastpop" in D:
+    C = D["coastpop"]; d0 = next(x for x in C["decades"] if x["decade"] == C["base"]); dN = C["decades"][-1]
+    for m in find("C18", r"grew ([\d.]+) times from the 1990s to the (\d+)s, while unprovoked bites per million coastal residents a year rose from ([\d.]+) to ([\d.]+) \(([\d.]+) times\), and bull shark bites from ([\d.]+) to ([\d.]+) \(([\d.]+) times\)"):
+        check("C18 coastal population", (float(m[1]), int(m[2]), float(m[3]), float(m[4]), float(m[5]), float(m[6]), float(m[7]), float(m[8])),
+              (C["pop_growth"], dN["decade"], d0["rate"], dN["rate"], C["rate_growth"], d0["bull_rate"], dN["bull_rate"], C["bull_growth"]))
+
 # Claim C25 (obis19.py), when present
 if "obis" in D:
     A, U = D["obis"]["groups"]["africa"], D["obis"]["groups"]["us"]

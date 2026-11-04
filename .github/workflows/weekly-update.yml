@@ -8,6 +8,9 @@ on:
       dry_run:
         description: Build and check only, don't publish (1 = yes)
         default: ""
+      rerun_rain:
+        description: Rerun the rain tests (claim C6) even if the shark database hasn't changed (1 = yes)
+        default: ""
   schedule:
     - cron: "53 16 * * 1"   # Monday, about 8:53 am in Seattle
 permissions:
@@ -16,7 +19,7 @@ concurrency: { group: site-update, cancel-in-progress: false }
 jobs:
   build:
     runs-on: ubuntu-latest
-    timeout-minutes: 45
+    timeout-minutes: 150
     steps:
       - uses: actions/checkout@v4
         with: { fetch-depth: 0 }
@@ -28,7 +31,7 @@ jobs:
           mkdir -p ~/.local/share/fonts && cp fonts/*.woff ~/.local/share/fonts/ && fc-cache -f >/dev/null
           cd "$RUNNER_TEMP" && npm init -y >/dev/null && npm i -s playwright@1.48.2 && npx playwright install --with-deps chromium >/dev/null
       - name: Build and check
-        env: { NODE_PATH: "${{ runner.temp }}/node_modules" }
+        env: { NODE_PATH: "${{ runner.temp }}/node_modules", RERUN_RAIN: "${{ inputs.rerun_rain }}" }
         run: bash src/weekly_update.sh
       - name: Publish
         if: inputs.dry_run != '1'

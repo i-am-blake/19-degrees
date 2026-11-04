@@ -168,3 +168,13 @@ python3 -I lunar19.py islands_nc_run.csv california_SharkIncidents_1950_2022_220
 ```
 python3 -I obis19.py <ocean-data folder> obis.json
 ```
+
+## Indian Ocean Dipole (claim C26), coastal population (claim C18), turtles (claim C8)
+
+`iod19.py` compares unprovoked WA bites since 1950 with NOAA's Dipole Mode Index, against the same calendar month in the same decade so season and long-term trends cancel. `coastpop19.py` counts southern NSW bites per million coastal residents by decade, using the EU population grid that `fetch-climate.yml` saves. `turtles19.py` looks for a lead or lag between green turtles and tiger sharks heard on the same IMOS receivers. The first two run in the weekly build from the `ocean-data` branch; the third is run by hand.
+
+```
+python3 -I iod19.py asid.csv iod_dmi_hadisst.txt iod.json
+python3 -I coastpop19.py asid.csv population_coastal_ghsl.csv coastpop.json
+python3 -I turtles19.py imos turtles.json
+```

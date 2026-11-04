@@ -35,9 +35,12 @@ python3 -I fieldnotes19.py asid.csv fieldnotes.json || warn "fieldnotes step fai
 # reruns only when those files change (obis19.py keeps the last result otherwise)
 cp "$R/src/obis.json" obis.json 2>/dev/null || true
 python3 -I obis19.py ocean obis.json || warn "C25 step failed, page keeps last numbers"
+# Indian Ocean Dipole and WA bites (claim C26); coastal population and southern NSW bites (claim C18)
+[ -f ocean/iod_dmi_hadisst.txt ] && { python3 -I iod19.py asid.csv ocean/iod_dmi_hadisst.txt iod.json || warn "C26 step failed, page keeps last numbers"; }
+[ -f ocean/population_coastal_ghsl.csv ] && { python3 -I coastpop19.py asid.csv ocean/population_coastal_ghsl.csv coastpop.json || warn "C18 step failed, page keeps last numbers"; }
 # California white sharks (claim C23), from the incident file the monthly fetch saves to ocean-data
 { f=$(ls ocean/california_*.xlsx 2>/dev/null | head -n 1); [ -n "$f" ] && python3 -I california19.py "$f" california.json; } || warn "C23 step failed, page keeps last numbers"
-if [ "$NEWDB" = 1 ]; then
+if [ "$NEWDB" = 1 ] || [ "${RERUN_RAIN:-}" = 1 ]; then
   ( python3 -I rain19.py fetch asid.csv chirps kd && python3 -I rain19.py test asid.csv chirps kd rain.json \
     && git -C "$R" fetch -q origin gauge-data ocean-data && mkdir -p gauge ocean \
     && git -C "$R" archive origin/gauge-data | tar -x -C gauge && git -C "$R" archive origin/ocean-data | tar -x -C ocean \
@@ -73,5 +76,5 @@ python3 -I make_site.py 19-degrees.html pub site
 
 # 7. Copy back
 cp -r site/. "$R/"
-cp heat.json asid_version.txt "$R/src/"; [ -f rain.json ] && cp rain.json "$R/src/"; [ -f imos.json ] && cp imos.json "$R/src/"; [ -f leeuwin.json ] && cp leeuwin.json "$R/src/"; [ -f california.json ] && cp california.json "$R/src/"; for j in fieldnotes lunar obis; do [ -f $j.json ] && cp $j.json "$R/src/"; done
+cp heat.json asid_version.txt "$R/src/"; [ -f rain.json ] && cp rain.json "$R/src/"; [ -f imos.json ] && cp imos.json "$R/src/"; [ -f leeuwin.json ] && cp leeuwin.json "$R/src/"; [ -f california.json ] && cp california.json "$R/src/"; for j in fieldnotes lunar obis iod coastpop; do [ -f $j.json ] && cp $j.json "$R/src/"; done
 echo "built OK (new database version: $NEWDB)"

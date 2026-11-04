@@ -291,7 +291,7 @@ if os.path.exists(enso_f):
     oni = {r["date"]: float(r["oni"]) for r in csv.DictReader(open(enso_f))}
     ph = lambda v: "nino" if v >= .5 else "nina" if v <= -.5 else "neutral"
     months = collections.Counter(ph(v) for v in oni.values())
-    cnt = collections.defaultdict(collections.Counter); recent_nina = collections.Counter()
+    cnt = collections.defaultdict(collections.Counter); recent_nina = collections.Counter(); cnt_sp = collections.defaultdict(collections.Counter)
     for x in csv.DictReader(open(ASID, encoding="utf-8")):
         try: y = int(float(x["Incident.year"])); mo = int(float(x["Incident.month"]))
         except ValueError: continue
@@ -299,6 +299,8 @@ if os.path.exists(enso_f):
         if k not in oni: continue
         st = x["State"].strip().upper(); c = "east" if st in ("QLD", "NSW") else "west" if st == "WA" else None
         sp = (x["Shark.common.name"] or "").strip().lower()
+        for nm in ("bull", "white", "tiger"):
+            if c and nm in sp: cnt_sp[(c, nm)][ph(oni[k])] += 1
         if c and sp == "bull shark":
             cnt[c][ph(oni[k])] += 1
             if y >= 2020 and ph(oni[k]) == "nina": recent_nina[c] += 1
@@ -312,6 +314,12 @@ if os.path.exists(enso_f):
                        ratio=round((v["nina"] / months["nina"]) / ((n - v["nina"]) / (tot_m - months["nina"])), 2),
                        p=round(binom2(v["nina"], n, months["nina"] / tot_m), 3),
                        nina_since_2020=recent_nina[c])
+    enso["species"] = {}
+    for (c, nm), v in cnt_sp.items():  # La Niña against other months, by species and coast
+        n = sum(v.values())
+        if n < 8: continue
+        enso["species"].setdefault(nm, {})[c] = dict(n=n, nina=v["nina"], ratio=round((v["nina"] / months["nina"]) / max(1e-9, (n - v["nina"]) / (tot_m - months["nina"])), 2),
+                                                      p=round(binom2(v["nina"], n, months["nina"] / tot_m), 3))
     d["enso"] = enso
     print("enso", json.dumps(enso))
 print("bull_open", json.dumps(bull_open))
@@ -338,7 +346,7 @@ if os.path.exists(_imos):
 _lw = os.path.join(here, "leeuwin.json")  # leeuwin19.py, claim C7; optional
 if os.path.exists(_lw):
     d["leeuwin"] = json.load(open(_lw)); print("leeuwin", d["leeuwin"])
-for _k in ("fieldnotes", "lunar", "obis"):  # fieldnotes19.py (water on the day, time of day) and lunar19.py (claim C24); optional
+for _k in ("fieldnotes", "lunar", "obis", "iod", "coastpop"):  # fieldnotes19.py (water on the day, time of day) and lunar19.py (claim C24); optional
     _f = os.path.join(here, _k + ".json")
     if os.path.exists(_f):
         d[_k] = json.load(open(_f)); print(_k, "loaded")

@@ -13,7 +13,7 @@ import csv, glob, json, math, os, sys, time, urllib.request
 E = "https://coastwatch.pfeg.noaa.gov/erddap/griddap/"
 def bites(asid, y0):
     for x in csv.DictReader(open(asid)):
-        sp = x["Shark.common.name"].lower(); sp = "bull" if "bull" in sp else "white" if "white" in sp else None
+        sp = x["Shark.common.name"].lower(); sp = "bull" if "bull" in sp else "white" if "white" in sp else "tiger" if "tiger" in sp else None
         if not sp or x["Provoked/unprovoked"].strip() != "unprovoked" or not x["Latitude"].strip(): continue
         if not x["Incident.year"].isdigit() or not x["Incident.month"].strip() or int(x["Incident.year"]) < y0: continue
         yield sp, int(x["Incident.year"]), int(x["Incident.month"]), round(float(x["Latitude"]), 2), round(float(x["Longitude"]), 2), x["Site.category"].strip()
@@ -74,7 +74,7 @@ if mode == "gauge":
     for r in csv.DictReader(open(kdir)): ser[r["station"]][(int(r["year"]), int(r["month"]))] = float(r["prcp_mm"])
     for r in csv.DictReader(open(cdir)):
         if r["station"]: near[(float(r["lat"]), float(r["lon"]))].append((float(r["km"]), r["station"]))
-    ps = {"bull": [], "white": []}; recent = {"bull": [], "white": []}
+    ps = {"bull": [], "white": [], "tiger": []}; recent = {"bull": [], "white": [], "tiger": []}
     for sp, y, m, a, b, cat in bites(asid, 1900):
         p = None
         for d, st in sorted(near.get((a, b), [])):
@@ -96,7 +96,7 @@ if mode == "fetch":
             get(E + f"erdMH1kd490mday.csv?k490%5B(2003-01-16):1:(2022-05-16)%5D%5B({a+0.15}):1:({a-0.15})%5D%5B({b-0.15}):1:({b+0.15})%5D", os.path.join(kdir, f"{a}_{b}.csv"))
     sys.exit()
 out = sys.argv[5] if len(sys.argv) > 5 else os.path.join(os.path.dirname(os.path.abspath(__file__)), "rain.json")
-res = {"y0": 1982}; ps = {"bull": [], "white": []}; cats = {}
+res = {"y0": 1982}; ps = {"bull": [], "white": [], "tiger": []}; cats = {}
 for sp, y, m, a, b, cat in bites(asid, 1982):
     fn = os.path.join(cdir, f"{a}_{b}.csv")
     if not os.path.exists(fn): continue
@@ -106,6 +106,7 @@ for sp, y, m, a, b, cat in bites(asid, 1982):
     if sp == "bull": cats.setdefault(cat, []).append(p)
     res["y1"] = max(res.get("y1", 0), y)
 res["bull"] = summary(ps["bull"]); res["white"] = summary(ps["white"])
+if ps["tiger"]: res["tiger"] = summary(ps["tiger"])
 res["bull_cat"] = {k: summary(v) for k, v in cats.items() if len(v) >= 5}
 if kdir:
     import statistics as st

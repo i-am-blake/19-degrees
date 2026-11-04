@@ -1,0 +1,53 @@
+{
+ "decades": [
+  {
+   "decade": 1980,
+   "years": 10,
+   "people": 2259510,
+   "bites": 3,
+   "bull": 0,
+   "rate": 0.13,
+   "bull_rate": 0.0
+  },
+  {
+   "decade": 1990,
+   "years": 10,
+   "people": 2545926,
+   "bites": 10,
+   "bull": 4,
+   "rate": 0.39,
+   "bull_rate": 0.157
+  },
+  {
+   "decade": 2000,
+   "years": 10,
+   "people": 2667498,
+   "bites": 42,
+   "bull": 7,
+   "rate": 1.57,
+   "bull_rate": 0.262
+  },
+  {
+   "decade": 2010,
+   "years": 10,
+   "people": 3030724,
+   "bites": 41,
+   "bull": 4,
+   "rate": 1.35,
+   "bull_rate": 0.132
+  },
+  {
+   "decade": 2020,
+   "years": 7,
+   "people": 3489232,
+   "bites": 47,
+   "bull": 11,
+   "rate": 1.92,
+   "bull_rate": 0.45
+  }
+ ],
+ "base": 1990,
+ "pop_growth": 1.37,
+ "rate_growth": 4.9,
+ "bull_growth": 2.9
+}

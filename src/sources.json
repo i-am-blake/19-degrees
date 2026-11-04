@@ -2,9 +2,7 @@
  "_about": "Every data source the site uses; the Sources page is built from this list. Data a fetch job saves with a README_*.txt on a data branch is listed automatically, from that README, until it is added here: cover it with a 'readme' key, or put it in 'hide' if the site doesn't use it.",
  "hide": [
   "ocean-data/README_uhslc.txt",
-  "ocean-data/README_iod.txt",
-  "ocean-data/README_oisst.txt",
-  "ocean-data/README_population.txt"
+  "ocean-data/README_oisst.txt"
  ],
  "groups": [
   {
@@ -93,6 +91,16 @@
      "from": "CSIRO and Bureau of Meteorology",
      "used_for": "Australian ocean warming figures",
      "license": "Cited"
+    },
+    {
+     "name": "Indian Ocean Dipole (Dipole Mode Index)",
+     "url": "https://psl.noaa.gov/gcos_wgsp/Timeseries/DMI/",
+     "from": "NOAA Physical Sciences Laboratory, from HadISST",
+     "used_for": "Claim C26",
+     "license": "Public domain",
+     "readme": [
+      "ocean-data/README_iod.txt"
+     ]
     }
    ]
   },
@@ -205,6 +213,16 @@
      "from": "Australian Bureau of Statistics",
      "used_for": "Bites per 10 million people",
      "license": "Cited"
+    },
+    {
+     "name": "GHS-POP R2023A population grid",
+     "url": "https://human-settlement.emergency.copernicus.eu/",
+     "from": "European Commission Joint Research Centre",
+     "used_for": "Coastal population by region; claim C18",
+     "license": "CC BY 4.0",
+     "readme": [
+      "ocean-data/README_population.txt"
+     ]
     }
    ]
   },

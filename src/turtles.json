@@ -1,0 +1,14 @@
+{
+ "installations": 4,
+ "months": 90,
+ "pairs": 84,
+ "turtles_lead": -0.066,
+ "sharks_lead": 0.034,
+ "p": 0.51,
+ "sites": [
+  "CSIRO Mangrove Bay",
+  "IMOS-ATF Ningaloo Reef North Line",
+  "Mangrove Bay Inner",
+  "NSW DPIRD (Tagged shark listening stations)"
+ ]
+}
