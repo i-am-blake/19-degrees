@@ -21,6 +21,7 @@ Credit: "19 Degrees, Blake Erickson", with a link to the page.
 - NOAA GHCN rain gauge records: public domain (US Government work). Cite Menne, M.J. et al. (2012), Global Historical Climatology Network - Daily (GHCN-Daily), NOAA National Climatic Data Center, doi:10.7289/V5D21VHZ.
 - River mouths: © OpenStreetMap contributors, Open Database License (ODbL) 1.0, https://www.openstreetmap.org/copyright. Coastline: Natural Earth, public domain.
 - Réunion and New Caledonia shark-bite records: CC BY 4.0. Cite Taglioni, F., Guiltat, S. and Delsaut, M., Datasets of Human-shark interactions in New Caledonia and Reunion Island (1980-2022), Zenodo, doi:10.5281/zenodo.12549370. A copy is kept as src/islands_nc_run.csv.
+- California shark incidents: California Department of Fish and Wildlife, Shark Incident Database, CC BY, https://lab.data.ca.gov/dataset/shark-incident-database-california.
 - Fremantle sea level: Permanent Service for Mean Sea Level (PSMSL). Cite Holgate, S.J. et al. (2013), New Data Systems and Products at the Permanent Service for Mean Sea Level, Journal of Coastal Research 29(3), 493-504.
 - Fremantle sea level, recent months: Bureau of Meteorology monthly tide gauge data, port 62230, © Commonwealth of Australia (Bureau of Meteorology), used with attribution under the Bureau's copyright terms (https://www.bom.gov.au/other/copyright.shtml).
 - IMOS Animal Tracking receiver installations: CC BY 4.0. Cite IMOS, IMOS - Animal Tracking Facility - Receiver locations, https://geoserver-123.aodn.org.au/geoserver/ows.

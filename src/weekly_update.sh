@@ -28,6 +28,8 @@ python3 -I heat19.py asid.csv sst heat.json
 ( git -C "$R" fetch -q origin ocean-data && mkdir -p ocean && git -C "$R" archive origin/ocean-data | tar -x -C ocean \
   && { [ -s ocean/bom_fremantle_62230.html ] && python3 -I leeuwin19.py asid.csv ocean/bom_fremantle_62230.html leeuwin.json \
        || python3 -I leeuwin19.py asid.csv ocean/fremantle_psmsl111.rlrdata leeuwin.json; } ) || warn "C7 step failed, page keeps last numbers"
+# California white sharks (claim C23), from the incident file the monthly fetch saves to ocean-data
+{ f=$(ls ocean/california_*.xlsx 2>/dev/null | head -n 1); [ -n "$f" ] && python3 -I california19.py "$f" california.json; } || warn "C23 step failed, page keeps last numbers"
 if [ "$NEWDB" = 1 ]; then
   ( python3 -I rain19.py fetch asid.csv chirps kd && python3 -I rain19.py test asid.csv chirps kd rain.json \
     && git -C "$R" fetch -q origin gauge-data ocean-data && mkdir -p gauge ocean \
@@ -64,5 +66,5 @@ python3 -I make_site.py 19-degrees.html pub site
 
 # 7. Copy back
 cp -r site/. "$R/"
-cp heat.json asid_version.txt "$R/src/"; [ -f rain.json ] && cp rain.json "$R/src/"; [ -f imos.json ] && cp imos.json "$R/src/"; [ -f leeuwin.json ] && cp leeuwin.json "$R/src/"
+cp heat.json asid_version.txt "$R/src/"; [ -f rain.json ] && cp rain.json "$R/src/"; [ -f imos.json ] && cp imos.json "$R/src/"; [ -f leeuwin.json ] && cp leeuwin.json "$R/src/"; [ -f california.json ] && cp california.json "$R/src/"
 echo "built OK (new database version: $NEWDB)"

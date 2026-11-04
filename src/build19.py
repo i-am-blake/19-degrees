@@ -338,6 +338,9 @@ if os.path.exists(_imos):
 _lw = os.path.join(here, "leeuwin.json")  # leeuwin19.py, claim C7; optional
 if os.path.exists(_lw):
     d["leeuwin"] = json.load(open(_lw)); print("leeuwin", d["leeuwin"])
+_ca = os.path.join(here, "california.json")  # california19.py, claim C23; optional
+if os.path.exists(_ca):
+    d["california"] = json.load(open(_ca)); print("california", d["california"]["test"])
 _isl = os.path.join(here, "islands.json")  # islands19.py: Réunion and New Caledonia (claims C6, C22); optional
 if os.path.exists(_isl):
     d["islands"] = json.load(open(_isl)); print("islands", d["islands"]["c6"]["bull"], {k: v["sea_min"] for k, v in d["islands"]["islands"].items()})

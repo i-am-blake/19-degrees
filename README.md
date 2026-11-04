@@ -54,7 +54,7 @@ Beyond products, the site rates beach-level measures (nets, drumlines, drones, l
 - **Beach programs:** nets, drumlines, drones and alerts, judged by bites prevented and by the harm they cause to other wildlife.
 - **Readiness:** whether bleeding kits, patrols and faster first aid save lives. Most shark-bite deaths come from blood loss, and nobody has yet measured what being prepared changes.
 
-Eight of the twenty-two testable claims (C10–C15, C20, C21) are about safety: drones in murky water, tourniquet leashes, bleeding kits, beach readiness, bite-resistant wetsuits, counter-illumination lights, shark nets and SMART drumlines. Researchers, makers and lifesaving organizations: if you have test results, positive or negative, we'll add them. If a product you make isn't listed, the fastest way onto the scorecard is an independent, published trial.
+Eight of the twenty-three testable claims (C10–C15, C20, C21) are about safety: drones in murky water, tourniquet leashes, bleeding kits, beach readiness, bite-resistant wetsuits, counter-illumination lights, shark nets and SMART drumlines. Researchers, makers and lifesaving organizations: if you have test results, positive or negative, we'll add them. If a product you make isn't listed, the fastest way onto the scorecard is an independent, published trial.
 
 *Listing is not endorsement. Results summarize published independent tests as of October 2026, and products may have changed since they were tested.*
 
@@ -63,7 +63,7 @@ Eight of the twenty-two testable claims (C10–C15, C20, C21) are about safety: 
 - **Every coast, measured the same way.** Tiger sharks, young white sharks and whale sharks are already shifting in other oceans. The method here is open so it can be rerun wherever long-term records exist: the United States, South Africa, Brazil, Réunion, the Pacific islands.
 - **Beaches that see their warm season coming.** Which months, which species, how fast it's changing, for any beach, in plain language.
 - **Coasts that are ready.** Bleeding-control kits, patrols and first aid placed where the warm water is going, not only where it has been. Most deaths from shark bites are from blood loss, and many are survivable when bleeding is stopped within minutes.
-- **Science anyone can check.** Open data, open code, twenty-two testable claims, and named credit for everyone who tests one.
+- **Science anyone can check.** Open data, open code, twenty-three testable claims, and named credit for everyone who tests one.
 - **Perspective, not fear.** Real numbers for swimmers, students, reporters and decision-makers, and a reminder that sharks are in trouble too.
 
 ## Fund the next stage
@@ -83,7 +83,7 @@ Foundations, ocean and outdoor brands, and research institutions: [let's talk](h
 |---|---|
 | **Funding or partnership** | [Get in touch](https://19-degrees.org/#contact). See the priorities above. |
 | **Data** (tracking, catch, rescue, first aid, species evidence) | [Offer it](../../issues/new?template=offer-data.yml). A description is enough to start. See [CONTRIBUTING.md](CONTRIBUTING.md). |
-| **Research skills** | Test one of the [twenty-two claims](https://19-degrees.org/#h-agenda), or rerun the method for your country with the scripts in [`src/`](src/README.md). |
+| **Research skills** | Test one of the [twenty-three claims](https://19-degrees.org/#h-agenda), or rerun the method for your country with the scripts in [`src/`](src/README.md). |
 | **A classroom** | Use the [printable sheets](https://19-degrees.org/classroom.html): a real climate story students can test themselves. |
 | **An audience** | Share the site and the [share images](share/). Accurate reporting saves lives and sharks. |
 
@@ -128,6 +128,7 @@ The analysis scripts are in `src/`. See [`src/README.md`](src/README.md) to rebu
 - **Rain gauges (claim C6):** NOAA NCEI [GHCN](https://www.ncei.noaa.gov/products/land-based-station/global-historical-climatology-network-daily) monthly totals (Global Summary of the Month) for the nearest Bureau of Meteorology gauges, public domain. Fetched by `.github/workflows/fetch-gauges.yml` (run by hand) to the `gauge-data` branch; analyzed by `src/rain19.py`
 - **River mouths (claim C6):** © [OpenStreetMap](https://www.openstreetmap.org/copyright) contributors, ODbL 1.0, ends of mapped rivers within 3 km of the Natural Earth coastline (public domain). Fetched by `.github/workflows/fetch-rivers.yml` (run by hand) to the `ocean-data` branch
 - **Bites in Réunion and New Caledonia (claims C6, C22):** Taglioni, Guiltat and Delsaut, [Datasets of human-shark interactions in New Caledonia and Reunion Island (1980–2022)](https://doi.org/10.5281/zenodo.12549370), University of Reunion Island, CC BY 4.0. Day-dated bites with rainfall and turbidity; analyzed by `src/islands19.py`.
+- **California shark incidents (claim C23):** California Department of Fish and Wildlife, [Shark Incident Database](https://lab.data.ca.gov/dataset/shark-incident-database-california), 1950 on, CC BY. Fetched monthly by `.github/workflows/fetch-california.yml`; analyzed by `src/california19.py`.
 - **Fremantle sea level (claim C7):** [Permanent Service for Mean Sea Level](https://psmsl.org/data/obtaining/stations/111.php), station 111, free with citation. Fetched by `.github/workflows/fetch-ocean.yml` (run by hand); analyzed by `src/leeuwin19.py`
 - **Fremantle sea level, recent months (claim C7):** [Bureau of Meteorology](https://www.bom.gov.au/oceanography/projects/ntc/monthly/index.shtml) monthly tide gauge table, port 62230, © Commonwealth of Australia (Bureau of Meteorology). Fetched by `.github/workflows/fetch-ocean.yml`; runs later than the PSMSL copy.
 - **Water clarity (claim C6):** NASA MODIS Aqua Kd490 monthly, 2003–2022 (NASA Ocean Biology Processing Group), NASA open data, via NOAA ERDDAP

@@ -87,6 +87,14 @@ for m in find("C19 tiger", r"tiger shark bites (\d+)% \((\d+) of (\d+), p = ([\d
 for m in find("C19 bull", r"Bull shark bites didn't stand out \((\d+)%, (\d+) of (\d+), p = ([\d.]+)\)"):
     check("C19 bull", (int(m[1]), int(m[2]), int(m[3]), float(m[4])), (hb["bull"]["t_pct"], hb["bull"]["t"], hb["bull"]["n"], round(hb["bull"]["t_p"], 2)))
 
+# Claim C23 (california19.py), when present
+if "california" in D:
+    ca = D["california"]; e0, e3, t = ca["eras"][0], ca["eras"][-1], ca["test"]
+    for m in find("C23", r"Of (\d+) white shark incidents in California from (\d+) to (\d+), (\d+) were south of Point Conception, against (\d+) of (\d+) in (\d+)–(\d+)\. The median latitude moved from ([\d.]+)°N in (\d+)–(\d+) to ([\d.]+)°N since 2014, about (\d+) km south \(p = ([\d.]+)\)"):
+        check("C23 California", (int(m[1]), int(m[2]), int(m[3]), int(m[4]), int(m[5]), int(m[6]), int(m[7]), int(m[8]), float(m[9]), int(m[10]), int(m[11]), float(m[12]), int(m[13]), float(m[14])),
+              (e3["n"], e3["era"][0], e3["era"][1], e3["south"], e0["south"], e0["n"], e0["era"][0], e0["era"][1], t["pre_lat"], t["pre"][0], t["pre"][1], t["post_lat"], abs(t["shift_km"]), t["p"]))
+    if t["shift_km"] >= 0: bad.append("C23: the page says incidents moved south, but the data now shows a northward shift")
+
 # Claim C7 (leeuwin19.py), when present
 if "leeuwin" in D:
     lw = D["leeuwin"]
