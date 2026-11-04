@@ -993,6 +993,7 @@ section[aria-labelledby="h-q"] .cards.qs{grid-template-columns:repeat(2,minmax(0
     <div class="kicker">Staying safe</div>
     <h2 id="h-safe">What actually reduces bites, and why bull sharks are the hard case</h2>
     <p class="sub">Most shark safety tools were designed for white sharks in clear water. Bull sharks bite in murky water, close to shore, and now later in the year.</p>
+    <p class="sub">This section summarizes published research. It isn't safety advice: follow lifesavers, beach signs and local authorities.</p>
     <div class="persp">
     <div class="kicker flagk" style="margin-top:8px"><svg class="flag" viewBox="0 0 22 24" aria-hidden="true"><rect x="1" y="1" width="2" height="22" fill="currentColor"/><rect x="3" y="2" width="18" height="6.5" fill="var(--flagred)"/><rect x="3" y="8.5" width="18" height="6.5" fill="var(--flagyellow)"/></svg>First, perspective</div>
     <h3 class="ratioh" id="h-ratio">For every shark death on Australia's coast, about <span id="ratioN">50</span> people drown.</h3>
@@ -1463,9 +1464,6 @@ section[aria-labelledby="h-q"] .cards.qs{grid-template-columns:repeat(2,minmax(0
   </section>
 
   <footer>
-    <p><b>Australian shark bites and sea temperature, 1900–<span id="yNow">2026</span>.</b> Temperatures in °C; 19°C is 66°F. Built from the <a href="https://zenodo.org/records/18752301" target="_blank" rel="noopener">Australian Shark-Incident Database</a> (Taronga Conservation Society and Flinders University), HadISST sea temperature (UK Met Office) and more than 20 other open sources. <a href="/sources.html">All sources, licenses and method notes →</a></p>
-    <p id="built"></p>
-    <p class="legal">General information only, not safety, medical or professional advice. Follow lifesavers, beach signs and local authorities, and in an emergency call 000 in Australia, 911 in the US and Canada, or 112 across Europe and on most mobiles. 19 Degrees is independent and not affiliated with or endorsed by any organization named on it.</p>
     <p class="copy">© 2026 Blake Erickson · Code <a href="https://github.com/i-am-blake/19-degrees" target="_blank" rel="noopener">MIT</a> · Content <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener">CC BY 4.0</a> · <a href="/sources.html">Sources</a> · <a href="/legal.html">Legal</a> · <a href="/privacy.html">Privacy</a> · <a href="#contact">Contact</a> · <a class="donatelink" data-from="footer" href="https://venmo.com/u/Send-It-Blake" target="_blank" rel="noopener">Support 19 Degrees</a></p>
   </footer>
 <aside class="supportpop" id="supportPop" hidden aria-label="Support this project"><div class="sphead"><b>Support the future of this project</b><button type="button" class="spx" id="supportX" aria-label="Close"><svg viewBox="0 0 14 14" width="14" height="14" aria-hidden="true"><path d="M1 1L13 13M13 1L1 13" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></button></div><p>I built 19 Degrees on my own and keep it free and open for everyone. Your support helps advance shark and climate research, test what actually keeps people safe, and keep the data updated every week. If it's helped you, your class or your research, help it grow.</p><div class="spbtns"><a class="supportbtn" id="supportGo" href="#" target="_blank" rel="noopener">Support 19 Degrees</a></div><p class="spalt">Can't give right now? <button type="button" class="linkbtn" id="shareInstead">Share it instead.</button></p><p class="spalt">Foundations and partners: <a href="#contact" class="spcontact" data-contact="Funding or partnership" data-msg="">get in touch</a>.</p></aside>
@@ -1523,7 +1521,7 @@ try{
     :`${fmt(B0.n)} bull shark bites. Only ${B0.below} below <span class="w">19°C</span>.`;
   const words=n=>["zero","one","two","three","four","five","six","seven","eight","nine","ten","eleven","twelve"][Math.round(n)]||Math.round(n);
   document.getElementById("lede").textContent=`Sydney's sea now stays above 19°C (66°F) ${words(SYD.recent)} months a year. A century ago it was ${words(SYD.base)}. The warm season keeps getting longer, and tagged bull sharks are staying longer with it.`;
-  document.getElementById("yNow").textContent=SYD.last_year;
+  {const y=document.getElementById("yNow"); if(y) y.textContent=SYD.last_year;}
   try{
     const R2=D.ratio, B1=D.species.bull, BM=D.bite_months, eN=BM.counts.east[BM.counts.east.length-1], eA=BM.counts.east[0], s4=r=>r.reduce((t,x)=>t+x,0), au=r=>r[2]+r[3]+r[4]+r[5]+r[6]+r[7];
     const NSo=D.bull_decades.nsw_south, hb=Object.values(NSo).reduce((t,v)=>t+v[1],0), tot=Object.values(NSo).reduce((t,v)=>t+v[0],0), A=D.anomaly&&D.anomaly.all;
@@ -2228,7 +2226,7 @@ try{
   const cr=document.getElementById("credits"); if(cr) cr.innerHTML="<b>Shark outlines.</b> "+c+".";
   const ym=v=>{if(!v)return"";if(typeof v==="string")return MON[+v.slice(5,7)-1]+" "+v.slice(0,4);return MON[v.month-1]+" "+v.year;};
   const t=SYD.today?localStamp(SYD.today.time,true):"";
-  document.getElementById("built").textContent=`Updated ${D.built}. Today's readings from ${t} Sydney time. Monthly sea temperature to ${ym(D.sst_last)}; shark database to ${ym(D.asid_last)}.`;
+  {const bl=document.getElementById("built"); if(bl) bl.textContent=`Updated ${D.built}. Today's readings from ${t} Sydney time. Monthly sea temperature to ${ym(D.sst_last)}; shark database to ${ym(D.asid_last)}.`;}
 }catch(e){console.error(e)}
 </script>
 

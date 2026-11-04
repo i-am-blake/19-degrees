@@ -109,7 +109,11 @@ METHODS = [
  "The look ahead to 2050 adds each beach's 1980–2025 warming trend to its 2016–2025 average month. It is a simple extrapolation, not a climate model; claim C3 uses 27 climate models instead.",
  "Fewer people swim in cold water, but white sharks still bite there, so people are in the water when bull sharks are not.",
 ]
-src_body = '  <p class="lead">Everything on 19 Degrees is built from public data and published research. Each source keeps its own license. All code is on ' + a("GitHub", "https://github.com/i-am-blake/19-degrees") + ", so every result can be rerun.</p>\n"
+_D = json.loads(re.search(r'id="n19-data">(.*?)</script>', t, re.S).group(1))
+_M = "Jan Feb Mar Apr May Jun Jul Aug Sep Oct Nov Dec".split()
+_ym = lambda v: (_M[int(v[5:7]) - 1] + " " + v[:4]) if isinstance(v, str) else (_M[v["month"] - 1] + " " + str(v["year"]))
+CURRENT = f'Updated {_D["built"]}. Monthly sea temperature to {_ym(_D["sst_last"])}; shark database to {_ym(_D["asid_last"])}. Today\'s beach readings refresh daily. Temperatures are in °C; 19°C is 66°F.'
+src_body = '  <p class="lead">Everything on 19 Degrees is built from public data and published research. Each source keeps its own license. All code is on ' + a("GitHub", "https://github.com/i-am-blake/19-degrees") + ", so every result can be rerun.</p>\n  <p>" + CURRENT + "</p>\n"
 for g in REG["groups"]:
     rows = [(cell(e), html.escape(e.get("from", "")), html.escape(e.get("used_for", "")), html.escape(e.get("license", ""))) for e in g["sources"]]
     src_body += f"  <h2>{html.escape(g['group'])}</h2>\n  {table(rows)}\n"
