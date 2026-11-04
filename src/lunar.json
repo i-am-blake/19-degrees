@@ -1,0 +1,42 @@
+{
+ "california_white": {
+  "n": 181,
+  "near": 92,
+  "near_pct": 51,
+  "full": 45,
+  "new": 47,
+  "p": 0.882
+ },
+ "islands_bull": {
+  "n": 36,
+  "near": 9,
+  "near_pct": 25,
+  "full": 4,
+  "new": 5,
+  "p": 0.004
+ },
+ "islands_tiger": {
+  "n": 30,
+  "near": 13,
+  "near_pct": 43,
+  "full": 10,
+  "new": 3,
+  "p": 0.585
+ },
+ "islands_all": {
+  "n": 122,
+  "near": 54,
+  "near_pct": 44,
+  "full": 31,
+  "new": 23,
+  "p": 0.239
+ },
+ "all": {
+  "n": 303,
+  "near": 146,
+  "near_pct": 48,
+  "full": 76,
+  "new": 70,
+  "p": 0.566
+ }
+}

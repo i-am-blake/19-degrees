@@ -1,0 +1,58 @@
+{
+ "water": {
+  "bull": {
+   "n": 16,
+   "min": 20.0,
+   "below19": 0
+  },
+  "tiger": {
+   "n": 10,
+   "min": 18.0,
+   "below19": 2
+  },
+  "white": {
+   "n": 41,
+   "min": 8.0,
+   "below19": 9
+  }
+ },
+ "time": {
+  "bull": {
+   "n": 90,
+   "dawn": 11,
+   "day": 57,
+   "dusk": 16,
+   "night": 6,
+   "low": 33,
+   "low_pct": 37,
+   "night_pct": 7
+  },
+  "tiger": {
+   "n": 67,
+   "dawn": 5,
+   "day": 49,
+   "dusk": 11,
+   "night": 2,
+   "low": 18,
+   "low_pct": 27
+  },
+  "white": {
+   "n": 244,
+   "dawn": 36,
+   "day": 164,
+   "dusk": 39,
+   "night": 5,
+   "low": 80,
+   "low_pct": 33
+  },
+  "others": {
+   "n": 311,
+   "low": 98,
+   "low_pct": 32,
+   "night": 7,
+   "night_pct": 2
+  },
+  "p": 0.373,
+  "p_night": 0.082
+ }
+}

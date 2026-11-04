@@ -87,6 +87,23 @@ for m in find("C19 tiger", r"tiger shark bites (\d+)% \((\d+) of (\d+), p = ([\d
 for m in find("C19 bull", r"Bull shark bites didn't stand out \((\d+)%, (\d+) of (\d+), p = ([\d.]+)\)"):
     check("C19 bull", (int(m[1]), int(m[2]), int(m[3]), float(m[4])), (hb["bull"]["t_pct"], hb["bull"]["t"], hb["bull"]["n"], round(hb["bull"]["t_p"], 2)))
 
+# Water on the day, time of day and the moon, when present
+if "fieldnotes" in D:
+    w, t = D["fieldnotes"]["water"], D["fieldnotes"]["time"]
+    for m in find("water on the day", r"all (\d+) bull shark bites were in water of ([\d.]+)°C or warmer\. For comparison, (\d+) of (\d+) tiger shark bites and (\d+) of (\d+) white shark bites were below 19°C, the coldest at ([\d.]+)°C"):
+        check("water on the day", (int(m[1]), float(m[2]), int(m[3]), int(m[4]), int(m[5]), int(m[6]), float(m[7])),
+              (w["bull"]["n"], w["bull"]["min"], w["tiger"]["below19"], w["tiger"]["n"], w["white"]["below19"], w["white"]["n"], w["white"]["min"]))
+    if w["bull"]["below19"]: bad.append("water on the day: a bull shark bite below 19°C was recorded at the scene")
+    for m in find("C21 time of day", r"(\d+)% of (\d+) bull shark bites with a recorded time happened at night \(8 pm to 5 am\), against (\d+)% of (\d+) white and tiger shark bites \(p = ([\d.]+)\)\. Across dawn, dusk and night together the shares are close \((\d+)% and (\d+)%, p = ([\d.]+)\)"):
+        b, o = t["bull"], t["others"]
+        check("C21 time of day", (int(m[1]), int(m[2]), int(m[3]), int(m[4]), m[5], int(m[6]), int(m[7]), m[8]),
+              (b["night_pct"], b["n"], o["night_pct"], o["n"], f"{t['p_night']:.2f}", b["low_pct"], o["low_pct"], f"{t['p']:.2f}"))
+if "lunar" in D:
+    A, C, I = D["lunar"]["all"], D["lunar"]["california_white"], D["lunar"]["islands_bull"]
+    for m in find("C24 moon", r"Of (\d+) bites with a known date in California, Réunion and New Caledonia, (\d+) \((\d+)%\) came within 3\.7 days of a full or new moon, about the half that chance gives \(p = ([\d.]+)\)\. California's white shark bites: (\d+) of (\d+) \((\d+)%\)\. The exception was bull sharks in the islands, with only (\d+) of (\d+) \((\d+)%; p = ([\d.]+)\)"):
+        check("C24 moon", (int(m[1]), int(m[2]), int(m[3]), m[4], int(m[5]), int(m[6]), int(m[7]), int(m[8]), int(m[9]), int(m[10]), float(m[11])),
+              (A["n"], A["near"], A["near_pct"], f"{A['p']:.2f}", C["near"], C["n"], C["near_pct"], I["near"], I["n"], I["near_pct"], I["p"]))
+
 # Claim C23 (california19.py), when present
 if "california" in D:
     ca = D["california"]; e0, e3, t = ca["eras"][0], ca["eras"][-1], ca["test"]

@@ -151,3 +151,12 @@ python3 -I islands19.py islands_nc_run.csv islands.json
 ```
 python3 -I california19.py california_SharkIncidents_1950_2022_220302.xlsx california.json
 ```
+
+## Water on the day, time of day and the moon (claims C21, C24)
+
+`fieldnotes19.py` reads two fields the bite database records for some bites: the water temperature reported at the scene (a check of the 19°C line that doesn't rely on monthly averages) and the time of day (dawn, day, dusk and night shares by species, for claim C21). `lunar19.py` calculates the moon's phase for every dated bite in California, Réunion and New Caledonia and tests whether more than half fall within 3.7 days of a full or new moon (claim C24). Both write JSON files that `build19.py` reads; the weekly rebuild reruns them.
+
+```
+python3 -I fieldnotes19.py asid.csv fieldnotes.json
+python3 -I lunar19.py islands_nc_run.csv california_SharkIncidents_1950_2022_220302.xlsx lunar.json
+```
