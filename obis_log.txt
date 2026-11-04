@@ -1,0 +1,16 @@
+ponta_do_ouro: 10419 records
+us_east_gulf bull: 133924 records
+us_east_gulf tiger: 1377 records
+us_east_gulf white: 343 records
+us_west bull: 0 records
+us_west tiger: 2 records
+us_west white: 765 records
+south_africa bull: 8552 records
+south_africa tiger: 1655 records
+south_africa white: 415 records
+mozambique bull: 411 records
+mozambique tiger: 14 records
+mozambique white: 13 records
+brazil bull: 2 records
+brazil tiger: 33 records
+brazil white: 3 records
