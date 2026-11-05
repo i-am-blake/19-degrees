@@ -19,7 +19,7 @@ jobs:
           urls = set()
           for f in glob.glob("*.html"):
               urls |= {html.unescape(u) for u in re.findall(r'href="(https?://[^"]+)"', open(f, encoding="utf-8").read())}
-          urls = sorted(u for u in urls if not u.rstrip("/").endswith("venmo.com/u"))
+          urls = sorted(u for u in urls if "ko-fi.com" not in u)
           UA = "Mozilla/5.0 (Macintosh; Intel Mac OS X 14_0) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.0 Safari/605.1.15"
           def check(u):
               for method in ("HEAD", "GET"):
