@@ -1,0 +1,19 @@
+oisst california_san_diego: 15290 days
+oisst california_santa_barbara: 15290 days
+oisst california_monterey: 15290 days
+oisst california_san_francisco: 15290 days
+oisst california_humboldt: 15290 days
+oisst reunion_west: 15290 days
+oisst new_caledonia_noumea: 15290 days
+ghsl 1975: ok
+ghsl 1980: ok
+ghsl 1985: ok
+ghsl 1990: ok
+ghsl 1995: ok
+ghsl 2000: ok
+ghsl 2005: ok
+ghsl 2010: ok
+ghsl 2015: ok
+ghsl 2020: ok
+ghsl 2025: ok
+ghsl 2030: ok

@@ -1,1 +1,1 @@
-Population within a 1° box around each coastal region, from GHS-POP R2023A (30 arcsec), European Commission Joint Research Centre, CC BY 4.0. Cite Schiavina, M. et al. (2023), GHS-POP R2023A, doi:10.2905/2FF68A52-5B5B-4A22-8F40-C41DA8332CFE. Retrieved 2026-11-04.
+Population within a 1° box around each coastal region, from GHS-POP R2023A (30 arcsec), European Commission Joint Research Centre, CC BY 4.0. Cite Schiavina, M. et al. (2023), GHS-POP R2023A, doi:10.2905/2FF68A52-5B5B-4A22-8F40-C41DA8332CFE. Retrieved 2026-11-05.
