@@ -1,5 +1,0 @@
-uhslc fast/monthly/m175.csv failed
-uhslc rqds/indian/monthly/m175a.csv failed
-out/bom_fremantle_62230.html: 313933 bytes; last line: </html>
-out/fremantle_log.txt: 141 bytes; last line: out/bom_fremantle_62230.html: 313933 bytes; last line: </html>
-out/fremantle_psmsl111.rlrdata: 39312 bytes; last line:   2022.9583;  6862; 0;000
