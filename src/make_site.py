@@ -10,12 +10,13 @@ body = re.sub(r'<title>.*?</title>\n?', '', body, count=1)
 body, nf = re.subn(r'<link rel="preconnect" href="https://fonts\.googleapis\.com">\n<link rel="preconnect" href="https://fonts\.gstatic\.com" crossorigin>\n<link rel="stylesheet" href="https://fonts\.googleapis\.com/css2[^"]*">',
                    '<link rel="stylesheet" href="fonts/fonts.css">', body)
 if nf != 1: sys.exit("Google Fonts tags not found")
-# security: the page may only load its own files and talk to GoatCounter (visit counts) and Web3Forms (contact form)
+# security: the page may only load its own files, talk to GoatCounter (visit counts) and Web3Forms (contact form),
+# and frame Ko-fi's tip panel (loaded only after a Donate click)
 GC = re.search(r'GOATCOUNTER:\s*"([^"]*)"', body).group(1)
 gc = f" https://{GC}.goatcounter.com" if GC else ""
 CSP = ("default-src 'self'; script-src 'self' 'unsafe-inline'" + (" https://gc.zgo.at" if GC else "") +
        "; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self' data: blob:" + gc +
-       "; connect-src 'self' https://api.web3forms.com" + gc + "; object-src 'none'; base-uri 'self'; form-action 'self'; frame-src 'none'")
+       "; connect-src 'self' https://api.web3forms.com" + gc + "; object-src 'none'; base-uri 'self'; form-action 'self'; frame-src https://ko-fi.com")
 SEC = f'<meta http-equiv="Content-Security-Policy" content="{CSP}">\n<meta name="referrer" content="strict-origin-when-cross-origin">\n'
 SEC_STATIC = ('<meta http-equiv="Content-Security-Policy" content="default-src \'self\'; script-src \'self\' \'unsafe-inline\'; style-src \'self\' \'unsafe-inline\'; img-src \'self\' data:; '
               'object-src \'none\'; base-uri \'self\'; form-action \'none\'; frame-src \'none\'">\n')

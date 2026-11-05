@@ -143,7 +143,7 @@ leg_body += "".join(f"  <h2>{h}</h2>\n  <p>{p}</p>\n" for h, p in LEGAL)
 leg_body += "  <p>Last updated 5 November 2026.</p>\n"
 
 PRIV = [
- ("What this site collects", "No cookies, no ads and no tracking across sites. Visits and clicks are counted with " + a("GoatCounter", "https://www.goatcounter.com/") + ", which keeps aggregate counts and stores no personal data."),
+ ("What this site collects", "No cookies, no ads and no tracking across sites. Visits and clicks are counted with " + a("GoatCounter", "https://www.goatcounter.com/") + ", which keeps aggregate counts and stores no personal data. Clicking Donate opens " + a("Ko-fi", "https://ko-fi.com/") + "'s tip form on the page; only then does Ko-fi load, under its own privacy policy, and it may set cookies."),
  ("The contact form", "The form sends your name, email address and message to the author through " + a("Web3Forms", "https://web3forms.com/") + ", which passes it on to the author's email. They are used only to reply and are never sold or shared. Messages are kept for up to two years, so a conversation can be followed up, and then deleted. Ask through the form to have yours deleted sooner."),
  ("Hosting", "The site is served through " + a("Cloudflare", "https://www.cloudflare.com/privacypolicy/") + " and " + a("GitHub Pages", "https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement") + ", which may keep server logs for security."),
  ("Other sites", "Links such as Ko-fi, social media and data sources take you to other sites with their own privacy policies."),

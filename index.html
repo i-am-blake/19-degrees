@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://gc.zgo.at; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self' data: blob: https://19-degrees.goatcounter.com; connect-src 'self' https://api.web3forms.com https://19-degrees.goatcounter.com; object-src 'none'; base-uri 'self'; form-action 'self'; frame-src 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://gc.zgo.at; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self' data: blob: https://19-degrees.goatcounter.com; connect-src 'self' https://api.web3forms.com https://19-degrees.goatcounter.com; object-src 'none'; base-uri 'self'; form-action 'self'; frame-src https://ko-fi.com">
 <meta name="referrer" content="strict-origin-when-cross-origin">
 <title>19 Degrees: The ocean is moving. So are the sharks.</title>
 <meta name="description" content="Seas are warming on every coast. 19 Degrees brings scattered shark, climate and safety research into one open harbor and tests every claim in public.">
@@ -726,6 +726,17 @@ section[aria-labelledby="h-q"] .cards.qs{grid-template-columns:repeat(2,minmax(0
 .ghbtn{display:inline-flex;align-items:center;min-height:44px;color:var(--ink);transition:border-color .15s,background-color .15s}
 .ghbtn:hover{border-color:#3395BE;background:rgba(51,149,190,.14)}
 @media (prefers-reduced-motion:reduce){.ghbtn{transition:none}}
+
+/* Ko-fi tip panel: opens on the page when someone clicks Donate; Ko-fi only loads after that click */
+#kofiDlg{border:0;padding:0;background:var(--sea);color:var(--ink);width:min(440px,calc(100vw - 32px));max-height:calc(100dvh - 32px);overflow:auto;box-shadow:0 20px 60px rgba(0,0,0,.55)}
+#kofiDlg::backdrop{background:rgba(2,12,22,.72)}
+#kofiDlg .kh{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:16px 10px 4px 18px}
+#kofiDlg .kh h2{margin:0;font-size:1.25rem}
+#kofiDlg .kx{background:none;border:0;color:var(--ink);font-size:1.6rem;line-height:1;cursor:pointer;min-width:44px;min-height:44px}
+#kofiDlg .ks{margin:0 18px 12px;color:var(--muted);font-size:.9rem}
+#kofiDlg iframe{display:block;border:0;width:calc(100% - 24px);margin:0 12px;height:712px;max-height:calc(100dvh - 190px);min-height:480px;background:#f9f9f9}
+#kofiDlg .kf{display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px 12px;padding:12px 18px 16px;font-size:.85rem;color:var(--muted)}
+#kofiDlg .kf a{color:var(--cold)}
 </style>
 
 <a class="skip" href="#home-top">Skip to the content</a>
@@ -1427,6 +1438,7 @@ section[aria-labelledby="h-q"] .cards.qs{grid-template-columns:repeat(2,minmax(0
     <p class="copy">© 2026 19 Degrees · <a class="donatelink" data-from="footer" href="https://ko-fi.com/19degrees" target="_blank" rel="noopener">Support this project</a></p>
     <p class="copy"><a href="/sources.html">Sources</a> · <a href="/legal.html">Legal</a> · <a href="/privacy.html">Privacy</a></p>
   </footer>
+<dialog id="kofiDlg" aria-labelledby="kofiT"><div class="kh"><h2 id="kofiT">Support 19 Degrees</h2><button type="button" class="kx" aria-label="Close">×</button></div><p class="ks">A personal gift to keep the project free and open. Not tax-deductible. <a href="/legal.html">Details</a></p><iframe title="Tip 19 Degrees on Ko-fi" loading="lazy" data-src="https://ko-fi.com/19degrees/?hidefeed=true&amp;widget=true&amp;embed=true&amp;preview=true"></iframe><div class="kf"><span>Secure checkout by Ko-fi and Stripe</span><a href="https://ko-fi.com/19degrees" target="_blank" rel="noopener">Open in a new tab ↗</a></div></dialog>
 <aside class="supportpop" id="supportPop" hidden aria-label="Support this project"><div class="sphead"><b>Support the future of this project</b><button type="button" class="spx" id="supportX" aria-label="Close"><svg viewBox="0 0 14 14" width="14" height="14" aria-hidden="true"><path d="M1 1L13 13M13 1L1 13" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></button></div><p>I built 19 Degrees on my own and keep it free and open for everyone. Your support helps advance shark and climate research, test what actually keeps people safe, and keep the data updated every week. If it's helped you, your class or your research, help it grow.</p><div class="spbtns"><a class="supportbtn" id="supportGo" href="#" target="_blank" rel="noopener">Support 19 Degrees</a></div><p class="spalt">Can't give right now? <button type="button" class="linkbtn" id="shareInstead">Share it instead.</button></p><p class="spalt">Foundations and partners: <a href="#contact" class="spcontact" data-contact="Funding or partnership" data-msg="">get in touch</a>.</p></aside>
 </div>
 
@@ -2193,4 +2205,17 @@ try{
 }catch(e){console.error(e)}
 </script>
 
+<script>
+/* Donate buttons open the Ko-fi tip panel on the page. Ko-fi's frame loads on the first click only, so ordinary visits
+   send nothing to Ko-fi. Ctrl/Cmd-click, middle-click or a browser without <dialog> still opens ko-fi.com in a new tab. */
+try{const dlg=document.getElementById("kofiDlg");
+  if(dlg&&typeof dlg.showModal==="function"){const fr=dlg.querySelector("iframe");
+    const open=()=>{if(!fr.src)fr.src=fr.dataset.src; const pop=document.getElementById("supportPop"); if(pop)pop.hidden=true; dlg.showModal();
+      try{window.N19_EV&&window.N19_EV("Donate panel open");}catch(_){}};
+    document.addEventListener("click",e=>{const a=e.target.closest(".donatelink,#supportLink,#supportGo");
+      if(!a||e.defaultPrevented||e.button!==0||e.metaKey||e.ctrlKey||e.shiftKey||e.altKey)return; e.preventDefault(); open();});
+    dlg.querySelector(".kx").addEventListener("click",()=>dlg.close());
+    dlg.addEventListener("click",e=>{if(e.target===dlg)dlg.close();});}
+}catch(e){console.error(e)}
+</script>
 </html>
