@@ -22,7 +22,7 @@ if UH:
         for row in r:
             try: v = float(row[iv])
             except (ValueError, IndexError): continue
-            if v < -9000: continue
+            if not v == v or v < -9000: continue  # skip NaN and fill values
             days.setdefault((int(row[it][:4]), int(row[it][5:7])), []).append(v)
     uh = {k: float(np.mean(v)) for k, v in days.items() if len(v) >= 24}
     both = [k for k in uh if k in sl and k[0] >= 1990]
