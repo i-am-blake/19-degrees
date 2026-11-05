@@ -94,7 +94,7 @@
     },
     {
      "name": "Indian Ocean Dipole (Dipole Mode Index)",
-     "url": "https://psl.noaa.gov/gcos_wgsp/Timeseries/DMI/",
+     "url": "https://psl.noaa.gov/gcos_wgsp/timeseries/DMI/",
      "from": "NOAA Physical Sciences Laboratory, from HadISST",
      "used_for": "Claim C26",
      "license": "Public domain",

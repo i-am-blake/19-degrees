@@ -11,7 +11,12 @@ for b in d["beaches"]:
     lat, lon = b["beach"]
     u = (f"https://marine-api.open-meteo.com/v1/marine?latitude={lat}&longitude={lon}"
          "&current=sea_surface_temperature&daily=sea_surface_temperature_max&past_days=6&forecast_days=1&timezone=Australia%2FSydney")
-    j = json.load(urllib.request.urlopen(u, timeout=60))
+    for _try in range(4):  # Open-Meteo occasionally times out; wait and try again before giving up
+        try:
+            j = json.load(urllib.request.urlopen(u, timeout=60)); break
+        except Exception:
+            if _try == 3: raise
+            __import__("time").sleep(30 * (_try + 1))
     b["today"] = dict(time=j["current"]["time"], sst=j["current"]["sea_surface_temperature"],
                       week=list(zip(j["daily"]["time"], j["daily"]["sea_surface_temperature_max"])))
     print(b["name"], b["today"]["time"], b["today"]["sst"])
