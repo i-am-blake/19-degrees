@@ -1,0 +1,3 @@
+out/fremantle_log.txt: 0 bytes; last line: 
+out/fremantle_psmsl111.rlrdata: 39312 bytes; last line:   2022.9583;  6862; 0;000
+out/uhslc_fremantle_daily.csv: 151609 bytes; last line: 2026-06-30T12:00:00Z,985
