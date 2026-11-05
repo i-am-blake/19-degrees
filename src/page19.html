@@ -682,16 +682,17 @@ section[aria-labelledby="h-q"] .cards.qs{grid-template-columns:repeat(2,minmax(0
 .ghbtn:hover{border-color:#3395BE;background:rgba(51,149,190,.14)}
 @media (prefers-reduced-motion:reduce){.ghbtn{transition:none}}
 
-/* Ko-fi tip panel: opens on the page when someone clicks Donate; Ko-fi only loads after that click */
-#kofiDlg{border:0;padding:0;background:var(--sea);color:var(--ink);width:min(440px,calc(100vw - 32px));max-height:calc(100dvh - 32px);overflow:auto;box-shadow:0 20px 60px rgba(0,0,0,.55)}
+/* Ko-fi tip panel: opens on the page when someone clicks Donate; Ko-fi only loads after that click.
+   Ko-fi's form is a fixed 712 px tall, so it is scaled to fit the screen: nothing scrolls on any device. */
+#kofiDlg{border:0;padding:0;background:var(--sea);color:var(--ink);width:min(440px,calc(100vw - 24px));max-width:none;max-height:none;overflow:hidden;box-shadow:0 20px 60px rgba(0,0,0,.55)}
 #kofiDlg::backdrop{background:rgba(2,12,22,.72)}
-#kofiDlg .kh{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:16px 10px 4px 18px}
-#kofiDlg .kh h2{margin:0;font-size:1.25rem}
-#kofiDlg .kx{background:none;border:0;color:var(--ink);font-size:1.6rem;line-height:1;cursor:pointer;min-width:44px;min-height:44px}
-#kofiDlg .ks{margin:0 18px 12px;color:var(--muted);font-size:.9rem}
-#kofiDlg iframe{display:block;border:0;width:calc(100% - 24px);margin:0 12px;height:712px;max-height:calc(100dvh - 190px);min-height:480px;background:#f9f9f9}
-#kofiDlg .kf{display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px 12px;padding:12px 18px 16px;font-size:.85rem;color:var(--muted)}
-#kofiDlg .kf a{color:var(--cold)}
+#kofiDlg .kh{display:flex;align-items:center;gap:4px;padding:6px 4px 0 16px}
+#kofiDlg .kh h2{margin:0;font-size:1.1rem;flex:1}
+#kofiDlg .kh a,#kofiDlg .kx{display:inline-flex;align-items:center;justify-content:center;min-width:44px;min-height:44px;color:var(--ink);background:none;border:0;cursor:pointer;font-size:1.5rem;line-height:1;text-decoration:none}
+#kofiDlg .kh a{font-size:1.15rem}
+#kofiDlg .ks{margin:0 16px 8px;color:var(--muted);font-size:.8rem;line-height:1.35}
+#kofiDlg .kw{margin:0 8px 8px;overflow:hidden;background:#f9f9f9}
+#kofiDlg iframe{display:block;border:0;height:712px;transform-origin:0 0;background:#f9f9f9}
 </style>
 
 <a class="skip" href="#home-top">Skip to the content</a>
@@ -1393,7 +1394,7 @@ section[aria-labelledby="h-q"] .cards.qs{grid-template-columns:repeat(2,minmax(0
     <p class="copy">© 2026 19 Degrees · <a class="donatelink" data-from="footer" href="https://ko-fi.com/19degrees" target="_blank" rel="noopener">Support this project</a></p>
     <p class="copy"><a href="/sources.html">Sources</a> · <a href="/legal.html">Legal</a> · <a href="/privacy.html">Privacy</a></p>
   </footer>
-<dialog id="kofiDlg" aria-labelledby="kofiT"><div class="kh"><h2 id="kofiT">Support 19 Degrees</h2><button type="button" class="kx" aria-label="Close">×</button></div><p class="ks">A personal gift to keep the project free and open. Not tax-deductible. <a href="/legal.html">Details</a></p><iframe title="Tip 19 Degrees on Ko-fi" loading="lazy" data-src="https://ko-fi.com/19degrees/?hidefeed=true&amp;widget=true&amp;embed=true&amp;preview=true"></iframe><div class="kf"><span>Secure checkout by Ko-fi and Stripe</span><a href="https://ko-fi.com/19degrees" target="_blank" rel="noopener">Open in a new tab ↗</a></div></dialog>
+<dialog id="kofiDlg" aria-labelledby="kofiT"><div class="kh"><h2 id="kofiT">Support 19 Degrees</h2><a href="https://ko-fi.com/19degrees" target="_blank" rel="noopener" aria-label="Open Ko-fi in a new tab" title="Open in a new tab">↗</a><button type="button" class="kx" aria-label="Close" autofocus>×</button></div><p class="ks">A personal gift, not tax-deductible. Secure checkout by Ko-fi and Stripe. <a href="/legal.html">Details</a></p><div class="kw"><iframe title="Tip 19 Degrees on Ko-fi" data-src="https://ko-fi.com/19degrees/?hidefeed=true&amp;widget=true&amp;embed=true&amp;preview=true"></iframe></div></dialog>
 <aside class="supportpop" id="supportPop" hidden aria-label="Support this project"><div class="sphead"><b>Support the future of this project</b><button type="button" class="spx" id="supportX" aria-label="Close"><svg viewBox="0 0 14 14" width="14" height="14" aria-hidden="true"><path d="M1 1L13 13M13 1L1 13" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></button></div><p>I built 19 Degrees on my own and keep it free and open for everyone. Your support helps advance shark and climate research, test what actually keeps people safe, and keep the data updated every week. If it's helped you, your class or your research, help it grow.</p><div class="spbtns"><a class="supportbtn" id="supportGo" href="#" target="_blank" rel="noopener">Support 19 Degrees</a></div><p class="spalt">Can't give right now? <button type="button" class="linkbtn" id="shareInstead">Share it instead.</button></p><p class="spalt">Foundations and partners: <a href="#contact" class="spcontact" data-contact="Funding or partnership" data-msg="">get in touch</a>.</p></aside>
 </div>
 
@@ -2163,7 +2164,16 @@ try{
    send nothing to Ko-fi. Ctrl/Cmd-click, middle-click or a browser without <dialog> still opens ko-fi.com in a new tab. */
 try{const dlg=document.getElementById("kofiDlg");
   if(dlg&&typeof dlg.showModal==="function"){const fr=dlg.querySelector("iframe");
+    const H=712, wrap=dlg.querySelector(".kw");
+    /* scale Ko-fi's fixed-height form so the whole window fits the visible screen */
+    const fit=()=>{if(!dlg.open)return; const vh=(window.visualViewport?visualViewport.height:innerHeight);
+      const chrome=dlg.querySelector(".kh").offsetHeight+dlg.querySelector(".ks").offsetHeight+8+8;
+      const w=wrap.clientWidth, s=Math.min(1,(vh-24-chrome)/H);
+      fr.style.width=(w/s)+"px"; fr.style.transform="scale("+s+")"; wrap.style.height=(H*s)+"px"; return s;};
+    addEventListener("resize",fit); if(window.visualViewport)visualViewport.addEventListener("resize",fit);
     const open=()=>{if(!fr.src)fr.src=fr.dataset.src; const pop=document.getElementById("supportPop"); if(pop)pop.hidden=true; dlg.showModal();
+      /* too short to read when scaled (a phone held sideways): use Ko-fi's own page in a new tab instead */
+      if(fit()<0.45){dlg.close(); window.open("https://ko-fi.com/19degrees","_blank","noopener"); return;}
       try{window.N19_EV&&window.N19_EV("Donate panel open");}catch(_){}};
     document.addEventListener("click",e=>{const a=e.target.closest(".donatelink,#supportLink,#supportGo");
       if(!a||e.defaultPrevented||e.button!==0||e.metaKey||e.ctrlKey||e.shiftKey||e.altKey)return; e.preventDefault(); open();});
