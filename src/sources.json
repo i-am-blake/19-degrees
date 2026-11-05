@@ -195,6 +195,13 @@
      "from": "NSW Department of Primary Industries and Regional Development",
      "used_for": "Staying safe; claim C20",
      "license": "Cited"
+    },
+    {
+     "name": "Western Australian shark research reports",
+     "url": "https://www.sharksmart.com.au/research/research-reports/",
+     "from": "WA Department of Fisheries and Department of Primary Industries and Regional Development: Fisheries Research Report 273 (2016); Fisheries Occasional Publications 108 and 109 (2012) and 140 (2021)",
+     "used_for": "Claims C7, C20, C21; water temperature at the bite",
+     "license": "Cited"
     }
    ]
   },
