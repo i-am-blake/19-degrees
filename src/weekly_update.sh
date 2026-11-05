@@ -26,7 +26,7 @@ if git -C "$R" fetch -q origin imos-data 2>/dev/null; then mkdir -p imos && git 
 python3 -I heat19.py asid.csv sst heat.json
 # Warm current off WA (claim C7), from the Fremantle sea-level files the monthly fetch saves to ocean-data
 ( git -C "$R" fetch -q origin ocean-data && mkdir -p ocean && git -C "$R" archive origin/ocean-data | tar -x -C ocean \
-  && { [ -s ocean/bom_fremantle_62230.html ] && python3 -I leeuwin19.py asid.csv ocean/bom_fremantle_62230.html leeuwin.json \
+  && { [ -s ocean/uhslc_fremantle_daily.csv ] && python3 -I leeuwin19.py asid.csv ocean/fremantle_psmsl111.rlrdata ocean/uhslc_fremantle_daily.csv leeuwin.json \
        || python3 -I leeuwin19.py asid.csv ocean/fremantle_psmsl111.rlrdata leeuwin.json; } ) || warn "C7 step failed, page keeps last numbers"
 # Water on the day and time of day (bite database), and the moon (claim C24, needs dated bites from ocean-data)
 python3 -I fieldnotes19.py asid.csv fieldnotes.json || warn "fieldnotes step failed, page keeps last numbers"
