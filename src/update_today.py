@@ -11,12 +11,15 @@ for b in d["beaches"]:
     lat, lon = b["beach"]
     u = (f"https://marine-api.open-meteo.com/v1/marine?latitude={lat}&longitude={lon}"
          "&current=sea_surface_temperature&daily=sea_surface_temperature_max&past_days=6&forecast_days=1&timezone=Australia%2FSydney")
-    for _try in range(4):  # Open-Meteo occasionally times out; wait and try again before giving up
+    j = None
+    for _try in range(4):  # Open-Meteo occasionally times out; wait and try again
         try:
             j = json.load(urllib.request.urlopen(u, timeout=60)); break
-        except Exception:
-            if _try == 3: raise
-            __import__("time").sleep(30 * (_try + 1))
+        except Exception as e:
+            if _try == 3: print("kept yesterday's reading for", b["name"], "-", e, file=sys.stderr)
+            else: __import__("time").sleep(30 * (_try + 1))
+    if j is None:
+        continue  # one beach timing out shouldn't stop the others from updating
     b["today"] = dict(time=j["current"]["time"], sst=j["current"]["sea_surface_temperature"],
                       week=list(zip(j["daily"]["time"], j["daily"]["sea_surface_temperature_max"])))
     print(b["name"], b["today"]["time"], b["today"]["sst"])

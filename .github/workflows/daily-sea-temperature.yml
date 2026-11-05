@@ -14,7 +14,9 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Read today's readings
+        shell: bash
         run: |
+          set -o pipefail
           python3 -I src/update_today.py index.html new.html | tee today.log
           python3 - <<'PY'
           import re, sys, datetime
