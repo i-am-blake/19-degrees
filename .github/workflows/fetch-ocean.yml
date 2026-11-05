@@ -13,13 +13,13 @@ permissions:
 jobs:
   ocean:
     runs-on: ubuntu-latest
-    timeout-minutes: 5
+    timeout-minutes: 20
     steps:
       - name: Download
         run: |
           mkdir -p out; : > out/fremantle_log.txt
           curl -sSfL -o out/fremantle_psmsl111.rlrdata "https://psmsl.org/data/obtaining/rlr.monthly.data/111.rlrdata" || echo "psmsl download failed" >> out/fremantle_log.txt
-          curl -sSfL --retry 3 -o out/uhslc_fremantle_daily.csv "https://pae-paha.pacioos.hawaii.edu/erddap/tabledap/uhslc_global_daily_fast.csv?time,sea_level&uhslc_id=175" || echo "uhslc download failed" >> out/fremantle_log.txt
+          curl -sSfL --retry 3 -m 300 -o out/uhslc_fremantle_daily.csv "https://pae-paha.pacioos.hawaii.edu/erddap/tabledap/uhslc_global_daily_fast.csv?time,sea_level&uhslc_id=175&time%3E=2010-01-01" || echo "uhslc download failed" >> out/fremantle_log.txt
           for f in out/*; do echo "$f: $(wc -c < "$f") bytes; last line: $(tail -n 1 "$f" | cut -c1-120)" >> out/fremantle_log.txt; done
           printf "Monthly mean sea level at Fremantle, Western Australia (PSMSL station 111, Revised Local Reference, mm).\nSource: Permanent Service for Mean Sea Level (PSMSL), https://psmsl.org/data/obtaining/stations/111.php\nCite: Holgate, S.J. et al. (2013) New Data Systems and Products at the Permanent Service for Mean Sea Level. Journal of Coastal Research 29(3), 493-504; and PSMSL (%s), Tide Gauge Data, retrieved %s.\n" "$(date -u +%Y)" "$(date -u +%Y-%m-%d)" > out/README.txt
           printf "uhslc_fremantle_daily.csv: University of Hawaii Sea Level Center, station 175 (Fremantle), fast-delivery daily mean sea level, mm, via the PacIOOS ERDDAP (uhslc_global_daily_fast); free to use and redistribute. Cite: Caldwell, P. C., M. A. Merrifield, P. R. Thompson (2015), Sea level measured by tide gauges from global oceans, the Joint Archive for Sea Level holdings (NCEI Accession 0019568), NOAA NCEI, doi:10.7289/V5V40S7W.\n" > out/README_uhslc.txt

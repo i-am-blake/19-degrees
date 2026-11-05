@@ -1,7 +1,6 @@
 {
  "_about": "Every data source the site uses; the Sources page is built from this list. Data a fetch job saves with a README_*.txt on a data branch is listed automatically, from that README, until it is added here: cover it with a 'readme' key, or put it in 'hide' if the site doesn't use it.",
  "hide": [
-  "ocean-data/README_uhslc.txt",
   "ocean-data/README_oisst.txt"
  ],
  "groups": [
@@ -76,13 +75,13 @@
     },
     {
      "name": "Fremantle monthly sea level",
-     "url": "https://www.bom.gov.au/oceanography/projects/ntc/monthly/index.shtml",
-     "from": "Bureau of Meteorology (port 62230) and PSMSL (station 111)",
+     "url": "https://psmsl.org/data/obtaining/stations/111.php",
+     "from": "Permanent Service for Mean Sea Level (station 111) and University of Hawaii Sea Level Center (station 175, recent months)",
      "used_for": "Claim C7",
-     "license": "© Commonwealth of Australia; PSMSL free with citation",
+     "license": "Free to use with citation (PSMSL); free to use and redistribute (UHSLC)",
      "readme": [
       "ocean-data/README.txt",
-      "ocean-data/README_bom.txt"
+      "ocean-data/README_uhslc.txt"
      ]
     },
     {
@@ -245,7 +244,7 @@
     },
     {
      "name": "Shark outlines",
-     "from": "FAO field-guide anatomy (white); Robbie Cada and NOAA drawings via Wikimedia Commons (tiger, bull)",
+     "from": "Drawn by the author from field-guide anatomy (white); traced from Robbie Cada and NOAA drawings via Wikimedia Commons (tiger, bull)",
      "used_for": "Every shark drawing",
      "license": "Public domain sources"
     }

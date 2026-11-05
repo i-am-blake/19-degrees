@@ -1,4 +1,4 @@
-19 Degrees — licences
+19 Degrees — licenses
 
 1. Code (HTML, CSS, JavaScript and the Python build scripts): MIT License
 
@@ -12,9 +12,9 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 
 2. Text, charts, images, classroom sheets and share cards: Creative Commons Attribution 4.0 International (CC BY 4.0)
 https://creativecommons.org/licenses/by/4.0/
-Credit: "19 Degrees, Blake Erickson", with a link to the page.
+Credit: "19 Degrees", with a link to the page.
 
-3. Data keeps its own licence
+3. Data keeps its own license
 - Australian Shark-Incident Database: CC BY 4.0. Cite: Meagher, P. (2026). Australian Shark Incident Database. Zenodo. https://zenodo.org/records/18752301 — and Riley et al. (2022), Scientific Data, for the database description.
 - HadISST sea surface temperature: © British Crown Copyright, Met Office, provided under the Open Government Licence. Cite Rayner et al. (2003), J. Geophys. Res. 108(D14), 4407, doi:10.1029/2002JD002670; acknowledge www.metoffice.gov.uk/hadobs.
 - CHIRPS rainfall: public domain (CC0). Cite Funk et al. (2015), The climate hazards infrared precipitation with stations, Scientific Data 2, 150066, doi:10.1038/sdata.2015.66.
@@ -23,18 +23,26 @@ Credit: "19 Degrees, Blake Erickson", with a link to the page.
 - Réunion and New Caledonia shark-bite records: CC BY 4.0. Cite Taglioni, F., Guiltat, S. and Delsaut, M., Datasets of Human-shark interactions in New Caledonia and Reunion Island (1980-2022), Zenodo, doi:10.5281/zenodo.12549370. A copy is kept as src/islands_nc_run.csv.
 - California shark incidents: California Department of Fish and Wildlife, Shark Incident Database, CC BY, https://lab.data.ca.gov/dataset/shark-incident-database-california.
 - Fremantle sea level: Permanent Service for Mean Sea Level (PSMSL). Cite Holgate, S.J. et al. (2013), New Data Systems and Products at the Permanent Service for Mean Sea Level, Journal of Coastal Research 29(3), 493-504.
-- Fremantle sea level, recent months: Bureau of Meteorology monthly tide gauge data, port 62230, © Commonwealth of Australia (Bureau of Meteorology), used with attribution under the Bureau's copyright terms (https://www.bom.gov.au/other/copyright.shtml).
+- Fremantle sea level, recent months: University of Hawaii Sea Level Center, station 175, fast-delivery daily means, free to use and redistribute. Cite Caldwell, P.C., Merrifield, M.A. and Thompson, P.R. (2015), Sea level measured by tide gauges from global oceans, the Joint Archive for Sea Level holdings (NCEI Accession 0019568), NOAA NCEI, doi:10.7289/V5V40S7W.
 - IMOS Animal Tracking receiver installations: CC BY 4.0. Cite IMOS, IMOS - Animal Tracking Facility - Receiver locations, https://geoserver-123.aodn.org.au/geoserver/ows.
 - CMIP6 climate model output: licensed by each modelling centre (mostly CC BY 4.0); cite the World Climate Research Programme CMIP6 and each model used (listed in cmip_tos_delta_ssp245.csv on the ocean-data branch).
-- GBIF occurrence counts: GBIF.org; each source dataset keeps its own licence (CC0, CC BY or CC BY-NC).
+- GBIF occurrence counts: GBIF.org; each source dataset keeps its own license (CC0, CC BY or CC BY-NC).
 - NASA MODIS Aqua Kd490 water clarity: NASA open data, no restrictions on use. Acknowledge NASA Ocean Biology Processing Group.
 - IMOS Animal Tracking acoustic detections: CC BY 4.0. Cite: IMOS Animal Tracking Facility, Integrated Marine Observing System (IMOS). IMOS is enabled by the National Collaborative Research Infrastructure Strategy (NCRIS).
 - Queensland Shark Control Program data (catches, gear locations): Queensland Government open data, CC BY 4.0. Credit: Queensland Department of Primary Industries, Shark Control Program.
+- ERSSTv5 sea surface temperature: NOAA NCEI, public domain (US Government work). Cite Huang, B. et al. (2017), Extended Reconstructed Sea Surface Temperature, Version 5 (ERSSTv5), J. Climate 30, 8179-8205, doi:10.1175/JCLI-D-16-0836.1.
+- NOAA OISST v2.1 daily sea surface temperature: NOAA NCEI, public domain (US Government work). Cite Huang, B. et al. (2021), J. Climate 34, 2923-2939.
+- Today's sea temperature at each beach: Open-Meteo Marine Weather API, CC BY 4.0, https://open-meteo.com/. Used on its free, non-commercial terms.
+- Indian Ocean Dipole (Dipole Mode Index from HadISST): NOAA Physical Sciences Laboratory, public domain. Cite Saji, N.H. et al. (1999), Nature 401, 360-363.
+- Shark occurrence records: Ocean Biodiversity Information System (OBIS), https://obis.org. Each dataset keeps its own license (mostly CC0 or CC BY; a few CC BY-NC, which may not be used commercially). Cite OBIS (2026), Ocean Biodiversity Information System, Intergovernmental Oceanographic Commission of UNESCO, and each dataset used.
+- Ponta do Ouro bull and tiger shark tracking: Ocean Tracking Network and the South African Institute for Aquatic Biodiversity (R. Daly), via OBIS, CC BY 4.0, https://obis.org/dataset/a8c9f694-bb07-451d-9ac0-c8d6b3119c1b.
+- Coastal population: GHS-POP R2023A, European Commission Joint Research Centre, CC BY 4.0. Cite Schiavina, M. et al. (2023), doi:10.2905/2FF68A52-5B5B-4A22-8F40-C41DA8332CFE.
+- Coastal drownings: Surf Life Saving Australia, National Coastal Safety Report 2025 (figures cited, © Surf Life Saving Australia). Population by decade: Australian Bureau of Statistics (figures cited).
 - Figures quoted from published studies remain the work of their authors; see the page's source list.
 
 4. Fonts and illustrations
 - The fonts in fonts/ (Bricolage Grotesque, Figtree, Martian Mono) are under the SIL Open Font License 1.1; see fonts/OFL.txt. They are not covered by the MIT License.
-- The shark outlines are traced from public-domain images (NOAA; Robbie Cada), credited on the page.
+- The tiger and bull shark outlines are traced from public-domain drawings (Robbie Cada; NOAA) via Wikimedia Commons, credited on the page. The white shark and the other outlines were drawn by the author from field-guide anatomy.
 
 5. Name and logo
 The 19 Degrees name and the shark "19" logo are not licensed under MIT or CC BY. All rights reserved. You may refer to the project by name and link to it, but don't use the name or logo for your own product, service or site, or in a way that suggests the author endorses you or your work.
@@ -43,4 +51,4 @@ The 19 Degrees name and the shark "19" logo are not licensed under MIT or CC BY.
 19 Degrees is an independent educational and research project. Its text, charts, data and code summarise public data and published research. They may contain errors or be out of date and are provided "as is", without warranty of any kind. They are not safety, medical, legal or professional advice. Don't rely on them to decide whether or where to swim, surf or dive: follow lifesavers, beach signs and local authorities. Product information summarises published independent tests, which are linked; it is not the author's own testing and is not an endorsement or a criticism of any maker. To the fullest extent the law allows, the author is not liable for any loss, injury or damage arising from use of, or reliance on, this project or anything built with it. Anyone who reuses the code, data or content (for example in an app, alert or warning service) is responsible for how they use it.
 
 7. Contributions
-Contributions are accepted under the same licences: code under MIT, text and data under CC BY 4.0, unless agreed otherwise in writing. By contributing you confirm you have the right to do so.
+Contributions are accepted under the same licenses: code under MIT, text and data under CC BY 4.0, unless agreed otherwise in writing. By contributing you confirm you have the right to do so.
