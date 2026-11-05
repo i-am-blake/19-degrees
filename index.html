@@ -730,7 +730,7 @@ section[aria-labelledby="h-q"] .cards.qs{grid-template-columns:repeat(2,minmax(0
 /* Ko-fi tip panel: opens on the page when someone clicks Donate; Ko-fi only loads after that click.
    Just Ko-fi's form over the page, with a close button above it. The form is a fixed 712 px tall, so it is scaled
    to fit the screen: nothing scrolls on any device. */
-#kofiDlg{border:0;padding:0;background:transparent;color:var(--ink);width:min(420px,calc(100vw - 24px));max-width:none;max-height:none;overflow:visible}
+#kofiDlg{border:0;padding:0;background:transparent;color:var(--ink);width:min(420px,calc(100vw - 24px));margin:auto;max-width:none;max-height:none;overflow:visible}
 #kofiDlg:focus{outline:none}
 #kofiDlg::backdrop{background:rgba(2,12,22,.78)}
 #kofiDlg .kx{display:flex;align-items:center;justify-content:center;margin:0 0 6px auto;width:44px;height:44px;border:0;border-radius:50%;background:var(--sea);color:#fff;box-shadow:0 4px 14px rgba(0,0,0,.4);font-size:1.5rem;line-height:1;cursor:pointer}
@@ -2210,13 +2210,15 @@ try{
    send nothing to Ko-fi. Ctrl/Cmd-click, middle-click or a browser without <dialog> still opens ko-fi.com in a new tab. */
 try{const dlg=document.getElementById("kofiDlg");
   if(dlg&&typeof dlg.showModal==="function"){const fr=dlg.querySelector("iframe");
-    const H=712, wrap=dlg.querySelector(".kw");
-    /* scale Ko-fi's fixed-height form so the whole window fits the visible screen */
-    const fit=()=>{if(!dlg.open)return; const vh=(window.visualViewport?visualViewport.height:innerHeight);
+    const H=712, NW=420, wrap=dlg.querySelector(".kw");
+    /* scale Ko-fi's form (rendered at its natural 420 px width and 712 px height) so the whole panel fits the screen.
+       Sized when it opens and on rotation only: the phone keyboard opening must not shrink it. */
+    let lastW=0;
+    const fit=()=>{if(!dlg.open)return 1; lastW=innerWidth;
       const chrome=dlg.querySelector(".kx").offsetHeight+6;
-      const w=wrap.clientWidth, s=Math.min(1,(vh-24-chrome)/H);
-      fr.style.width=(w/s)+"px"; fr.style.transform="scale("+s+")"; wrap.style.height=(H*s)+"px"; return s;};
-    addEventListener("resize",fit); if(window.visualViewport)visualViewport.addEventListener("resize",fit);
+      const s=Math.min(1,(Math.min(440,innerWidth-24))/NW,(innerHeight-24-chrome)/H);
+      dlg.style.width=(NW*s)+"px"; fr.style.width=NW+"px"; fr.style.transform="scale("+s+")"; wrap.style.height=(H*s)+"px"; return s;};
+    addEventListener("resize",()=>{if(innerWidth!==lastW)fit();});
     const open=()=>{if(!fr.src)fr.src=fr.dataset.src; const pop=document.getElementById("supportPop"); if(pop)pop.hidden=true; dlg.showModal(); dlg.focus();
       /* too short to read when scaled (a phone held sideways): use Ko-fi's own page in a new tab instead */
       if(fit()<0.45){dlg.close(); window.open("https://ko-fi.com/19degrees","_blank","noopener"); return;}
