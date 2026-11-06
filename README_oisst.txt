@@ -1,1 +1,1 @@
-NOAA OISST v2.1 daily sea surface temperature (0.25°), NOAA NCEI, via NOAA CoastWatch ERDDAP (public domain). Cite Huang, B. et al. (2021), J. Climate 34, 2923-2939. One file per 0.25° ocean cell off each coast. Retrieved 2026-11-05.
+NOAA OISST v2.1 daily sea surface temperature (0.25°), NOAA NCEI, via NOAA CoastWatch ERDDAP (public domain). Cite Huang, B. et al. (2021), J. Climate 34, 2923-2939. One file per 0.25° ocean cell off each coast. Retrieved 2026-11-06.

@@ -1,10 +1,17 @@
-oisst california_san_diego: 15290 days
-oisst california_santa_barbara: 15290 days
-oisst california_monterey: 15290 days
-oisst california_san_francisco: 15290 days
-oisst california_humboldt: 15290 days
-oisst reunion_west: 15290 days
-oisst new_caledonia_noumea: 15290 days
+oisst california_san_diego 1981 failed: HTTP Error 404: 
+oisst california_san_diego 1986 failed: HTTP Error 404: 
+oisst california_san_diego 2016 failed: HTTP Error 404: 
+oisst california_san_diego: 10055 days (some years missing)
+oisst california_santa_barbara: 15291 days
+oisst california_monterey 2026 failed: HTTP Error 404: 
+oisst california_monterey: 14999 days (some years missing)
+oisst california_san_francisco: 15292 days
+oisst california_humboldt 2006 failed: HTTP Error 404: 
+oisst california_humboldt 2011 failed: HTTP Error 404: 
+oisst california_humboldt: 11640 days (some years missing)
+oisst reunion_west 1981 failed: HTTP Error 503: 
+oisst reunion_west: 13709 days (some years missing)
+oisst new_caledonia_noumea: 15292 days
 ghsl 1975: ok
 ghsl 1980: ok
 ghsl 1985: ok
