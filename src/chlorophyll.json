@@ -1,0 +1,37 @@
+{
+ "all": {
+  "n": 273,
+  "greenest_quarter": 80,
+  "pct": 29,
+  "mean_rank": 0.52,
+  "p": 0.06
+ },
+ "other": {
+  "n": 98,
+  "greenest_quarter": 31,
+  "pct": 32,
+  "mean_rank": 0.54,
+  "p": 0.083
+ },
+ "white": {
+  "n": 139,
+  "greenest_quarter": 39,
+  "pct": 28,
+  "mean_rank": 0.51,
+  "p": 0.229
+ },
+ "bull": {
+  "n": 25,
+  "greenest_quarter": 8,
+  "pct": 32,
+  "mean_rank": 0.53,
+  "p": 0.273
+ },
+ "tiger": {
+  "n": 11,
+  "greenest_quarter": 2,
+  "pct": 18,
+  "mean_rank": 0.55,
+  "p": 0.803
+ }
+}

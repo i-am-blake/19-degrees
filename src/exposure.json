@@ -1,0 +1,86 @@
+{
+ "weekend": {
+  "california": {
+   "n": 211,
+   "busy": 103,
+   "pct": 49,
+   "expected_pct": 29,
+   "ratio": 2.38,
+   "p": 0.0
+  },
+  "reunion": {
+   "n": 60,
+   "busy": 21,
+   "pct": 35,
+   "expected_pct": 29,
+   "ratio": 1.35,
+   "p": 0.317
+  },
+  "new_caledonia": {
+   "n": 62,
+   "busy": 26,
+   "pct": 42,
+   "expected_pct": 29,
+   "ratio": 1.81,
+   "p": 0.024
+  },
+  "hawaii": {
+   "n": 174,
+   "busy": 48,
+   "pct": 28,
+   "expected_pct": 29,
+   "ratio": 0.95,
+   "p": 0.867
+  },
+  "all": {
+   "n": 507,
+   "busy": 198,
+   "pct": 39,
+   "expected_pct": 29,
+   "ratio": 1.6,
+   "p": 0.0
+  }
+ },
+ "weekend_or_holiday": {
+  "california": {
+   "n": 211,
+   "busy": 115,
+   "pct": 55,
+   "expected_pct": 31,
+   "ratio": 2.62,
+   "p": 0.0
+  },
+  "reunion": {
+   "n": 60,
+   "busy": 23,
+   "pct": 38,
+   "expected_pct": 31,
+   "ratio": 1.38,
+   "p": 0.264
+  },
+  "new_caledonia": {
+   "n": 62,
+   "busy": 29,
+   "pct": 47,
+   "expected_pct": 31,
+   "ratio": 1.95,
+   "p": 0.013
+  },
+  "hawaii": {
+   "n": 174,
+   "busy": 52,
+   "pct": 30,
+   "expected_pct": 32,
+   "ratio": 0.91,
+   "p": 0.626
+  },
+  "all": {
+   "n": 507,
+   "busy": 219,
+   "pct": 43,
+   "expected_pct": 32,
+   "ratio": 1.65,
+   "p": 0.0
+  }
+ }
+}
