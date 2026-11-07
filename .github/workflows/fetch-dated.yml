@@ -13,12 +13,22 @@ on:
   schedule:
     - cron: "29 11 10 * *"   # 10th of each month, 11:29 UTC
   workflow_dispatch:
+    inputs:
+      parts:
+        description: Which parts to fetch (weather, waves, tides, humpback, chlorophyll), comma-separated; blank = all
+        default: ""
+      points:
+        description: Only these weather and wave points (text each name must contain, e.g. hawaii); blank = all
+        default: ""
 permissions:
   contents: write
 jobs:
   dated:
     runs-on: ubuntu-latest
     timeout-minutes: 240
+    env:
+      PARTS: ${{ inputs.parts }}
+      POINTS: ${{ inputs.points }}
     steps:
       - uses: actions/checkout@v4
       - name: Weather and waves (Open-Meteo)
@@ -37,12 +47,16 @@ jobs:
                   try: return json.load(urllib.request.urlopen(urllib.request.Request(url, headers={"User-Agent": "19-degrees.org open data"}), timeout=300))
                   except Exception as e: err = e; time.sleep(30 * (a + 1))
               raise err
+          import os
+          want = {p.strip() for p in os.environ.get("PARTS", "").split(",") if p.strip()}
           for k, (la, lo) in PTS.items():
               for kind, url, cols in (
                   ("weather", f"https://archive-api.open-meteo.com/v1/archive?latitude={la}&longitude={lo}&start_date=1950-01-01&end_date={end}&daily=temperature_2m_max,sunshine_duration,wind_speed_10m_max,precipitation_sum&timezone=auto",
                    ["temperature_2m_max", "sunshine_duration", "wind_speed_10m_max", "precipitation_sum"]),
-                  ("waves", f"https://marine-api.open-meteo.com/v1/marine?latitude={la}&longitude={lo}&start_date=1980-01-01&end_date={end}&daily=wave_height_max&timezone=auto",
+                  ("waves", f"https://marine-api.open-meteo.com/v1/marine?latitude={la}&longitude={lo}&start_date=1980-01-01&end_date={end}&daily=wave_height_max&models=era5_ocean&timezone=auto",
                    ["wave_height_max"])):
+                  if want and kind not in want: continue
+                  if os.environ.get("POINTS") and os.environ["POINTS"] not in k: continue
                   try:
                       d = get(url)["daily"]
                       with open(f"out/{kind}_{k}.csv", "w") as f:
@@ -52,10 +66,12 @@ jobs:
                       log.write(f"{kind} {k}: {len(d['time'])} days\n")
                   except Exception as e:
                       log.write(f"{kind} {k} failed: {e}\n")
-                  log.flush(); time.sleep(5)
+                  log.flush(); time.sleep(20)
           PY
+          for f in out/waves_*.csv out/weather_*.csv; do [ -e "$f" ] || continue; [ $(awk -F, 'NR>1 && $2!=""' "$f" | wc -l) -gt 3650 ] || { echo "dropped $f (under 10 years of values)" >> out/dated_log.txt; rm -f "$f"; }; done
           printf "Open-Meteo historical weather and marine data (ERA5 reanalysis, Copernicus Climate Change Service), CC BY 4.0, https://open-meteo.com/ . Daily maximum air temperature, sunshine, wind and rain (1950 on) and daily maximum wave height (1980 on) at each coast with day-dated bites. Cite Hersbach, H. et al. (2020), Q. J. R. Meteorol. Soc. 146, 1999-2049. Retrieved %s.\n" "$(date -u +%Y-%m-%d)" > out/README_openmeteo.txt
       - name: Tide predictions (NOAA)
+        if: env.PARTS == '' || contains(env.PARTS, 'tides')
         run: |
           python3 - <<'PY'
           import datetime, json, time, urllib.request
@@ -82,6 +98,7 @@ jobs:
           PY
           printf "NOAA CO-OPS tide predictions (times and heights of high and low water, local time), public domain, https://tidesandcurrents.noaa.gov/ . Stations in California and Hawaii. Retrieved %s.\n" "$(date -u +%Y-%m-%d)" > out/README_tides.txt
       - name: Humpback whales off NSW (OBIS)
+        if: env.PARTS == '' || contains(env.PARTS, 'humpback')
         run: |
           python3 - <<'PY'
           import json, urllib.parse, urllib.request
@@ -105,6 +122,7 @@ jobs:
           PY
           printf "Humpback whale (Megaptera novaeangliae) occurrence records off New South Wales, Ocean Biodiversity Information System (OBIS), https://obis.org . Each dataset keeps its own license (mostly CC0 or CC BY). Retrieved %s.\n" "$(date -u +%Y-%m-%d)" > out/README_humpback.txt
       - name: Chlorophyll (NASA MODIS)
+        if: env.PARTS == '' || contains(env.PARTS, 'chlorophyll')
         run: |
           python3 - <<'PY'
           import sys, time, urllib.request
@@ -114,7 +132,7 @@ jobs:
           with open("out/chlorophyll_regions.csv", "w") as f:
               f.write("region,time,lat,lon,chlorophyll\n")
               for name, _, _, la, lo in REGIONS:
-                  url = f"{E}%5B(2003-01-16):1:(2022-05-16)%5D%5B({la+0.15}):1:({la-0.15})%5D%5B({lo-0.15}):1:({lo+0.15})%5D"
+                  url = f"{E}%5B(2003-01-16):1:(2022-03-16)%5D%5B({la+0.15}):1:({la-0.15})%5D%5B({lo-0.15}):1:({lo+0.15})%5D"
                   for a in range(4):
                       try:
                           rows = urllib.request.urlopen(url, timeout=600).read().decode().splitlines()[2:]
@@ -125,8 +143,11 @@ jobs:
                           time.sleep(30 * (a + 1))
                   log.flush(); time.sleep(15)
           PY
-          printf "MODIS Aqua monthly chlorophyll-a (4 km), NASA Ocean Biology Processing Group, via NOAA CoastWatch ERDDAP (erdMH1chlamday), NASA open data. A 0.3° box around each Australian region's sea temperature point, 2003-2022. Retrieved %s.\n" "$(date -u +%Y-%m-%d)" > out/README_chlorophyll.txt
-          cat out/dated_log.txt
+          [ -s out/chlorophyll_regions.csv ] && [ $(wc -l < out/chlorophyll_regions.csv) -gt 1 ] || rm -f out/chlorophyll_regions.csv
+          printf "MODIS Aqua monthly chlorophyll-a (4 km), NASA Ocean Biology Processing Group, via NOAA CoastWatch ERDDAP (erdMH1chlamday), NASA open data. A 0.3° box around each Australian region's sea temperature point, 2003 to March 2022. Retrieved %s.\n" "$(date -u +%Y-%m-%d)" > out/README_chlorophyll.txt
+      - name: Show the log
+        if: always()
+        run: cat out/dated_log.txt
       - name: Add to the ocean-data branch
         if: always()
         run: |
