@@ -1,3 +1,18 @@
 redmap: 4054 lines; columns: FID,ID,SIGHTING_DATE,LATITUDE,LONGITUDE,GEOM,ACCURACY_CODE,ACCURACY_DESCRIPTION,SPECIES_CATEGORY_ID,SPECIES_CATEGORY,MB_SPECIES_ID,SPECIES,COMMON_NAME,OTHER_SPECIES,COUNT_CODE,COUNT_DESCRIPTION,SEX_CODE,SEX_DESCRIPTION,SIZE,WEIGHT,SIZE_METHOD_CODE,SIZE_METHOD_DESCRIPTION,WEIGHT_METHOD_CODE,WEIGHT_METHOD_DESCRIPTION,HABITAT_CODE,HABITAT_DESCRIPTION,DEPTH,WATER_TEMPERATURE,METHOD_CODE,METHOD_DESCRIPTION,ACTIVITY_CODE,ACTIVITY_DESCRIPTION,ACTIVITY_OTHER,TIME_CODE,TIME_DESCRIPTION,IS_VALID_SIGHTING,LOGGING_DATE,ORGANISATION_DESCRIPTION,RM_REGION_ID,REGION_DESCRIPTION
 hawaii: 175 table rows; header: ['Date and Time', 'Location', 'Activity', 'Water Clarity', 'Water Depth', 'Victim', 'Description', 'Shark']
 hawaii: 174 incidents kept, columns ['Date and Time', 'Location', 'Activity', 'Water Clarity', 'Water Depth', 'Shark']
+beachwatch: ok
+oisst hawaii_oahu_south 1981: 1583 days in 74 s
+oisst hawaii_oahu_south 1986: 1826 days in 65 s
+oisst hawaii_oahu_south 1991 try 1 failed: HTTP Error 503: 
+oisst hawaii_oahu_south 1991: 1160 days in 51 s
+oisst hawaii_oahu_south 1996 try 1 failed: HTTP Error 503: 
+oisst hawaii_oahu_south 1996: 1316 days in 58 s
+oisst hawaii_oahu_south 2001: 1826 days in 54 s
+oisst hawaii_oahu_south 2006: 1826 days in 48 s
+oisst hawaii_oahu_south 2011: 1826 days in 81 s
+oisst hawaii_oahu_south 2016 try 1 failed: HTTP Error 503: 
+oisst hawaii_oahu_south 2016 try 2 failed: HTTP Error 503: 
+oisst hawaii_oahu_south 2016 try 3 failed: HTTP Error 503: 
+oisst hawaii_oahu_south 2021: 1809 days in 157 s
+oisst hawaii_oahu_south 2026 try 1 failed: HTTP Error 503: 
