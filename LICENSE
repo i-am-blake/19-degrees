@@ -39,6 +39,11 @@ Credit: "19 Degrees", with a link to the page.
 - Coastal population: GHS-POP R2023A, European Commission Joint Research Centre, CC BY 4.0. Cite Schiavina, M. et al. (2023), doi:10.2905/2FF68A52-5B5B-4A22-8F40-C41DA8332CFE.
 - Hawaii shark incidents since 1995: Hawaii Department of Land and Natural Resources, https://dlnr.hawaii.gov/sharks/shark-incidents/incidents/ . Only the facts (date and time, place, activity, water clarity and depth, shark) are used; the list itself is © State of Hawaii.
 - NSW beach water quality: Beachwatch and Harbourwatch enterococci results, NSW Government, CC BY, https://www.beachwatch.nsw.gov.au/ (via the TidyTuesday 2025-05-20 cleaned copy, https://github.com/rfordatascience/tidytuesday).
+- Weather and waves on the day: Open-Meteo historical weather and marine data, CC BY 4.0, https://open-meteo.com/ (ERA5 reanalysis; cite Hersbach, H. et al. (2020), Q. J. R. Meteorol. Soc. 146, 1999-2049). Used on Open-Meteo's free, non-commercial terms.
+- Tide predictions: NOAA CO-OPS, public domain, https://tidesandcurrents.noaa.gov/ .
+- Chlorophyll: MODIS Aqua monthly chlorophyll-a, NASA Ocean Biology Processing Group, NASA open data, via NOAA CoastWatch ERDDAP.
+- Humpback whale records off NSW: OBIS, https://obis.org ; each dataset keeps its own license.
+- Public holidays: the open-source 'holidays' Python package (MIT), https://github.com/vacanza/holidays .
 - Coastal drownings: Surf Life Saving Australia, National Coastal Safety Report 2025 (figures cited, © Surf Life Saving Australia). Population by decade: Australian Bureau of Statistics (figures cited).
 - Figures quoted from published studies remain the work of their authors; see the page's source list.
 

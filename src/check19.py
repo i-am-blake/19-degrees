@@ -152,6 +152,31 @@ if "lunar" in D and "hawaii_all" in D["lunar"]:
     for m in find("C24 Hawaii", r"Hawaii agrees: (\d+) of (\d+) bites \((\d+)%; p = ([\d.]+)\), and (\d+) of (\d+) tiger shark bites"):
         check("C24 Hawaii", (int(m[1]), int(m[2]), int(m[3]), m[4], int(m[5]), int(m[6])), (a["near"], a["n"], a["near_pct"], f"{a['p']:.2f}", t["near"], t["n"]))
 
+# Day-dated tests: weekends and beach weather (C18), humpbacks (C5), chlorophyll (C4), tides (C24), when present
+def _pf(p): return "p < 0.001" if p < 0.001 else f"p = {p:.3f}" if p < 0.01 else f"p = {p:.2f}"
+P = r"(p < 0\.001|p = [\d.]+)"
+if "exposure" in D:
+    w = D["exposure"]["weekend"]; ca, nc, hi, al = w["california"], w["new_caledonia"], w["hawaii"], w["all"]
+    for m in find("C18 weekends", r"In California, (\d+) of (\d+) bites \((\d+)%\) fell on a weekend, which is (\d+)% of days: ([\d.]+) times as many bites per weekend day as per weekday \(" + P + r"\)\. New Caledonia shows the same \((\d+) of (\d+), ([\d.]+) times; " + P + r"\); Hawaii, where locals surf every day, doesn't \((\d+) of (\d+), ([\d.]+) times\)\. All (\d+) day-dated bites: ([\d.]+) times \(" + P + r"\)"):
+        check("C18 weekends", m.groups(), tuple(str(x) for x in (ca["busy"], ca["n"], ca["pct"], ca["expected_pct"], ca["ratio"], _pf(ca["p"]), nc["busy"], nc["n"], nc["ratio"], _pf(nc["p"]),
+              hi["busy"], hi["n"], hi["ratio"], al["n"], al["ratio"], _pf(al["p"]))))
+if "beachday" in D:
+    h, c, su, ns = D["beachday"]["hot"]["all"], D["beachday"]["calm"]["all"], D["beachday"]["big_waves"]["surfers"], D["beachday"]["big_waves"]["not_surfing"]
+    for m in find("C18 beach weather", r"(\d+) of (\d+) bites \((\d+)%\) came on a day in the hottest quarter for the place and season, and (\d+) \((\d+)%\) in the calmest, against 25% by chance \(" + P + " and " + P + r"\)\. Big surf: (\d+)% of surfers' bites came on the biggest-wave quarter of days and (\d+)% of everyone else's"):
+        check("C18 beach weather", m.groups(), tuple(str(x) for x in (h["k"], h["n"], h["pct"], c["k"], c["pct"], _pf(h["p"]), _pf(c["p"]), su["pct"], ns["pct"])))
+if "whales" in D:
+    w = D["whales"]
+    for m in find("C5 humpbacks", r"([\d,]+) humpback whale records on OBIS ?peak in .*? (\d+) of (\d+) NSW white shark bites since 1980 \((\d+)%\) came in those months, against (\d+) of (\d+) bull, tiger and whaler shark bites \((\d+)%; " + P + r"\)"):
+        check("C5 humpbacks", m.groups(), tuple(str(x) for x in (f"{w['humpback_records']:,}", w["white_in"], w["white_n"], w["white_pct"], w["other_in"], w["other_n"], w["other_pct"], _pf(w["p"]))))
+if "chlorophyll" in D:
+    c = D["chlorophyll"]
+    for m in find("C4 chlorophyll", r"(\d+) of (\d+) Australian bites \((\d+)%\) came in a month in the greenest quarter for that place and time of year, against 25% by chance \(" + P + r"\); white sharks (\d+)%, bull sharks (\d+)%"):
+        check("C4 chlorophyll", m.groups(), tuple(str(x) for x in (c["all"]["greenest_quarter"], c["all"]["n"], c["all"]["pct"], _pf(c["all"]["p"]), c["white"]["pct"], c["bull"]["pct"])))
+if "tides" in D:
+    t = D["tides"]["all"]
+    for m in find("C24 tides", r"Of (\d+) bites with a known time in California and Hawaii, (\d+)% came around low water, (\d+)% on the rising tide, (\d+)% around high water and (\d+)% on the falling tide, close to a quarter each \(" + P + r"\)"):
+        check("C24 tides", m.groups(), tuple(str(x) for x in (t["n"], *t["pct"], _pf(t["p"]))))
+
 # Claim C23 (california19.py), when present
 if "california" in D:
     ca = D["california"]; e0, e3, t = ca["eras"][0], ca["eras"][-1], ca["test"]

@@ -1,0 +1,127 @@
+{
+ "hot": {
+  "california": {
+   "n": 205,
+   "k": 62,
+   "pct": 30,
+   "mean_rank": 0.54,
+   "p": 0.051
+  },
+  "reunion": {
+   "n": 60,
+   "k": 17,
+   "pct": 28,
+   "mean_rank": 0.54,
+   "p": 0.32
+  },
+  "new_caledonia": {
+   "n": 62,
+   "k": 15,
+   "pct": 24,
+   "mean_rank": 0.54,
+   "p": 0.606
+  },
+  "hawaii": {
+   "n": 174,
+   "k": 46,
+   "pct": 26,
+   "mean_rank": 0.52,
+   "p": 0.358
+  },
+  "all": {
+   "n": 501,
+   "k": 140,
+   "pct": 28,
+   "mean_rank": 0.53,
+   "p": 0.072
+  }
+ },
+ "calm": {
+  "california": {
+   "n": 205,
+   "k": 62,
+   "pct": 30,
+   "mean_rank": 0.44,
+   "p": 0.051
+  },
+  "reunion": {
+   "n": 60,
+   "k": 16,
+   "pct": 27,
+   "mean_rank": 0.52,
+   "p": 0.431
+  },
+  "new_caledonia": {
+   "n": 62,
+   "k": 12,
+   "pct": 19,
+   "mean_rank": 0.44,
+   "p": 0.882
+  },
+  "hawaii": {
+   "n": 174,
+   "k": 51,
+   "pct": 29,
+   "mean_rank": 0.48,
+   "p": 0.111
+  },
+  "all": {
+   "n": 501,
+   "k": 141,
+   "pct": 28,
+   "mean_rank": 0.46,
+   "p": 0.059
+  }
+ },
+ "big_waves": {
+  "california": {
+   "n": 162,
+   "k": 32,
+   "pct": 20,
+   "mean_rank": 0.41,
+   "p": 0.952
+  },
+  "reunion": {
+   "n": 60,
+   "k": 18,
+   "pct": 30,
+   "mean_rank": 0.55,
+   "p": 0.225
+  },
+  "new_caledonia": {
+   "n": 62,
+   "k": 7,
+   "pct": 11,
+   "mean_rank": 0.43,
+   "p": 0.998
+  },
+  "hawaii": {
+   "n": 174,
+   "k": 46,
+   "pct": 26,
+   "mean_rank": 0.53,
+   "p": 0.358
+  },
+  "all": {
+   "n": 458,
+   "k": 103,
+   "pct": 22,
+   "mean_rank": 0.48,
+   "p": 0.903
+  },
+  "surfers": {
+   "n": 223,
+   "k": 63,
+   "pct": 28,
+   "mean_rank": 0.52,
+   "p": 0.148
+  },
+  "not_surfing": {
+   "n": 235,
+   "k": 40,
+   "pct": 17,
+   "mean_rank": 0.43,
+   "p": 0.999
+  }
+ }
+}

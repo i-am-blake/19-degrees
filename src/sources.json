@@ -120,6 +120,36 @@
      "readme": [
       "ocean-data/README_oisst.txt"
      ]
+    },
+    {
+     "name": "Open-Meteo historical weather and waves",
+     "url": "https://open-meteo.com/",
+     "from": "Open-Meteo, from the ERA5 reanalysis (Copernicus Climate Change Service)",
+     "used_for": "Air temperature, wind and wave height on the day of each dated bite; claim C18",
+     "license": "CC BY 4.0",
+     "readme": [
+      "ocean-data/README_openmeteo.txt"
+     ]
+    },
+    {
+     "name": "Tide predictions",
+     "url": "https://tidesandcurrents.noaa.gov/",
+     "from": "NOAA Center for Operational Oceanographic Products and Services",
+     "used_for": "Tide stage at the time of each bite in California and Hawaii; claim C24",
+     "license": "Public domain",
+     "readme": [
+      "ocean-data/README_tides.txt"
+     ]
+    },
+    {
+     "name": "MODIS Aqua chlorophyll",
+     "url": "https://oceancolor.gsfc.nasa.gov/",
+     "from": "NASA Ocean Biology Processing Group, via NOAA ERDDAP",
+     "used_for": "Plankton in bite months around Australia; claim C4",
+     "license": "NASA open data",
+     "readme": [
+      "ocean-data/README_chlorophyll.txt"
+     ]
     }
    ]
   },
@@ -231,6 +261,16 @@
      "from": "WA Department of Fisheries and Department of Primary Industries and Regional Development: Fisheries Research Report 273 (2016); Fisheries Occasional Publications 108 and 109 (2012) and 140 (2021)",
      "used_for": "Claims C7, C20, C21; water temperature at the bite",
      "license": "Cited"
+    },
+    {
+     "name": "Humpback whale records off NSW",
+     "url": "https://obis.org",
+     "from": "Ocean Biodiversity Information System (OBIS)",
+     "used_for": "When humpbacks pass NSW; claim C5",
+     "license": "Each dataset's own; mostly CC0 or CC BY",
+     "readme": [
+      "ocean-data/README_humpback.txt"
+     ]
     }
    ]
   },
