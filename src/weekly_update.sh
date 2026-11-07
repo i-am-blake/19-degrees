@@ -33,6 +33,11 @@ python3 -I fieldnotes19.py asid.csv fieldnotes.json || warn "fieldnotes step fai
 HI=""; [ -s ocean/hawaii_incidents.csv ] && HI=ocean/hawaii_incidents.csv
 { f=$(ls ocean/california_*.xlsx 2>/dev/null | head -n 1); [ -n "$f" ] && python3 -I lunar19.py islands_nc_run.csv "$f" $HI lunar.json; } || warn "C24 step failed, page keeps last numbers"
 { [ -n "$HI" ] && python3 -I hawaii19.py "$HI" hawaii.json; } || warn "Hawaii step failed, page keeps last numbers"
+{ f=$(ls ocean/california_*.xlsx 2>/dev/null | head -n 1); [ -n "$f" ] && python3 -I exposure19.py islands_nc_run.csv "$f" $HI exposure.json; } || warn "C18 weekend step failed, page keeps last numbers"
+{ f=$(ls ocean/california_*.xlsx 2>/dev/null | head -n 1); [ -n "$f" ] && ls ocean/weather_*.csv >/dev/null 2>&1 && python3 -I beachday19.py ocean islands_nc_run.csv "$f" $HI beachday.json; } || warn "Beach weather step failed, page keeps last numbers"
+{ f=$(ls ocean/california_*.xlsx 2>/dev/null | head -n 1); [ -n "$f" ] && [ -s ocean/tides_hilo.csv ] && python3 -I tides19.py ocean/tides_hilo.csv "$f" $HI tides.json; } || warn "Tides step failed, page keeps last numbers"
+{ [ -s ocean/obis_humpback_nsw.csv ] && python3 -I whales19.py asid.csv ocean/obis_humpback_nsw.csv whales.json; } || warn "C5 whale step failed, page keeps last numbers"
+{ [ -s ocean/chlorophyll_regions.csv ] && python3 -I chl19.py asid.csv ocean/chlorophyll_regions.csv chlorophyll.json; } || warn "Chlorophyll step failed, page keeps last numbers"
 { f=$(ls ocean/california_*.xlsx 2>/dev/null | head -n 1); [ -n "$f" ] && python3 -I mhw19.py ocean islands_nc_run.csv "$f" $HI mhw.json; } || warn "C19 heatwave step failed, page keeps last numbers"
 { [ -s ocean/beachwatch_enterococci.csv.gz ] && python3 -I beach19.py asid.csv ocean/beachwatch_enterococci.csv.gz beachwatch.json; } || warn "C6 Beachwatch step failed, page keeps last numbers"
 # Tagged and recorded bull and tiger sharks outside Australia (claim C25), from OBIS records on ocean-data;
@@ -80,5 +85,5 @@ python3 -I make_site.py 19-degrees.html pub site
 
 # 7. Copy back
 cp -r site/. "$R/"
-cp heat.json asid_version.txt "$R/src/"; [ -f rain.json ] && cp rain.json "$R/src/"; [ -f imos.json ] && cp imos.json "$R/src/"; [ -f leeuwin.json ] && cp leeuwin.json "$R/src/"; [ -f california.json ] && cp california.json "$R/src/"; for j in fieldnotes lunar obis iod coastpop mhw beachwatch hawaii; do [ -f $j.json ] && cp $j.json "$R/src/"; done
+cp heat.json asid_version.txt "$R/src/"; [ -f rain.json ] && cp rain.json "$R/src/"; [ -f imos.json ] && cp imos.json "$R/src/"; [ -f leeuwin.json ] && cp leeuwin.json "$R/src/"; [ -f california.json ] && cp california.json "$R/src/"; for j in fieldnotes lunar obis iod coastpop mhw beachwatch hawaii exposure beachday tides whales chlorophyll; do [ -f $j.json ] && cp $j.json "$R/src/"; done
 echo "built OK (new database version: $NEWDB)"
