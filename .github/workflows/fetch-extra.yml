@@ -17,7 +17,7 @@ permissions:
 jobs:
   extra:
     runs-on: ubuntu-latest
-    timeout-minutes: 180
+    timeout-minutes: 240
     steps:
       - uses: actions/checkout@v4
       - name: Redmap sightings
@@ -56,6 +56,12 @@ jobs:
           log.write(f"hawaii: {n} incidents kept, columns {[head[i] for i in keep]}\n")
           PY
           printf "Hawaii shark incidents since 1995, Hawaii Department of Land and Natural Resources, https://dlnr.hawaii.gov/sharks/shark-incidents/incidents/ . Facts only (date and time, location, activity, water clarity and depth, shark); see the source for the full record. Retrieved %s.\n" "$(date -u +%Y-%m-%d)" > out/README_hawaii.txt
+      - name: NSW Beachwatch
+        run: |
+          curl -sSfL --retry 3 -o out/beachwatch_enterococci.csv "https://raw.githubusercontent.com/rfordatascience/tidytuesday/main/data/2025/2025-05-20/water_quality.csv" \
+            && gzip -f out/beachwatch_enterococci.csv && echo "beachwatch: ok" >> out/extra_log.txt || echo "beachwatch download failed" >> out/extra_log.txt
+          printf "NSW Beachwatch and Harbourwatch bacteriological results (enterococci per 100 mL), NSW Government, CC BY, https://www.beachwatch.nsw.gov.au/ ; via the cleaned TidyTuesday 2025-05-20 copy (https://github.com/rfordatascience/tidytuesday). Retrieved %s.\n" "$(date -u +%Y-%m-%d)" > out/README_beachwatch.txt
+          cat out/extra_log.txt
       - name: Daily sea temperature off Hawaii
         run: |
           python3 - <<'PY'
@@ -69,22 +75,18 @@ jobs:
               for y0 in range(1981, y_now + 1, 5):
                   a0 = "1981-09-01" if y0 == 1981 else f"{y0}-01-01"; a1 = f"{y0 + 4}-12-31" if y0 + 4 < y_now else "last"
                   url = f"{E}%5B({a0}):1:({a1})%5D%5B(0.0)%5D%5B({la})%5D%5B({lo})%5D"
-                  for a in range(5):
+                  for a in range(3):
                       try:
                           req = urllib.request.Request(url, headers={"User-Agent": "19-degrees.org open data"})
-                          rows += urllib.request.urlopen(req, timeout=600).read().decode().splitlines()[2:]; time.sleep(20); break
+                          t0 = time.time(); got = urllib.request.urlopen(req, timeout=180).read().decode().splitlines()[2:]; rows += got
+                          log.write(f"oisst {k} {y0}: {len(got)} days in {time.time() - t0:.0f} s\n"); log.flush(); time.sleep(20); break
                       except Exception as e:
-                          if a == 4: log.write(f"oisst {k} {y0} failed: {e}\n"); ok = False
-                          time.sleep(30 * (a + 1))
+                          log.write(f"oisst {k} {y0} try {a + 1} failed: {e}\n"); log.flush()
+                          if a == 2: ok = False
+                          else: time.sleep(30 * (a + 1))
               if rows: open(f"out/oisst_{k}.csv", "w").write("time,zlev,latitude,longitude,sst\n" + "\n".join(rows) + "\n")
               log.write(f"oisst {k}: {len(rows)} days{'' if ok else ' (some years missing)'}\n")
           PY
-      - name: NSW Beachwatch
-        run: |
-          curl -sSfL --retry 3 -o out/beachwatch_enterococci.csv "https://raw.githubusercontent.com/rfordatascience/tidytuesday/main/data/2025/2025-05-20/water_quality.csv" \
-            && gzip -f out/beachwatch_enterococci.csv && echo "beachwatch: ok" >> out/extra_log.txt || echo "beachwatch download failed" >> out/extra_log.txt
-          printf "NSW Beachwatch and Harbourwatch bacteriological results (enterococci per 100 mL), NSW Government, CC BY, https://www.beachwatch.nsw.gov.au/ ; via the cleaned TidyTuesday 2025-05-20 copy (https://github.com/rfordatascience/tidytuesday). Retrieved %s.\n" "$(date -u +%Y-%m-%d)" > out/README_beachwatch.txt
-          cat out/extra_log.txt
       - name: Add to the ocean-data branch
         if: always()
         run: |
