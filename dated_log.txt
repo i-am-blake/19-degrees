@@ -1,0 +1,45 @@
+weather california_san_diego: 28063 days
+waves california_san_diego: 17106 days
+weather california_santa_barbara: 28063 days
+waves california_santa_barbara: 17106 days
+weather california_monterey: 28063 days
+waves california_monterey: 17106 days
+weather california_san_francisco: 28063 days
+waves california_san_francisco: 17106 days
+weather california_humboldt: 28063 days
+waves california_humboldt: 17106 days
+weather reunion_west: 28063 days
+waves reunion_west: 17106 days
+weather new_caledonia_noumea: 28063 days
+waves new_caledonia_noumea: 17106 days
+weather hawaii_oahu_south: 28063 days
+waves hawaii_oahu_south: 17106 days
+weather hawaii_oahu_north failed: HTTP Error 429: Too Many Requests
+waves hawaii_oahu_north: 17106 days
+weather hawaii_maui failed: HTTP Error 429: Too Many Requests
+waves hawaii_maui: 17106 days
+weather hawaii_kauai failed: HTTP Error 429: Too Many Requests
+waves hawaii_kauai: 17106 days
+weather hawaii_big_island failed: HTTP Error 429: Too Many Requests
+waves hawaii_big_island: 17106 days
+tides 9410170 San Diego: 65695 highs and lows
+tides 9410840 Santa Monica: 65529 highs and lows
+tides 9411340 Santa Barbara: 65636 highs and lows
+tides 9413450 Monterey: 66181 highs and lows
+tides 9414290 San Francisco: 66343 highs and lows
+tides 9418767 Humboldt Bay: 66343 highs and lows
+tides 1612340 Honolulu: 66040 highs and lows
+tides 1612480 Mokuoloe (Oahu windward): 60142 highs and lows
+tides 1615680 Kahului (Maui): 61079 highs and lows
+tides 1611400 Nawiliwili (Kauai): 63936 highs and lows
+tides 1617760 Hilo (Big Island): 63669 highs and lows
+tides 1617433 Kawaihae (Big Island): 66114 highs and lows
+humpback NSW: 13074 records
+chlorophyll NSW North Coast failed: HTTP Error 404: 
+chlorophyll Mid North Coast & Hunter failed: HTTP Error 404: 
+chlorophyll Sydney & Central Coast failed: HTTP Error 404: 
+chlorophyll NSW South Coast failed: HTTP Error 404: 
+chlorophyll Gold Coast failed: HTTP Error 404: 
+chlorophyll Sunshine Coast & Moreton Bay failed: HTTP Error 404: 
+chlorophyll Central QLD & Whitsundays failed: HTTP Error 404: 
+chlorophyll Far North Queensland failed: HTTP Error 404: 

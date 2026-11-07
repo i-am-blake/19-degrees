@@ -1,0 +1,1 @@
+Humpback whale (Megaptera novaeangliae) occurrence records off New South Wales, Ocean Biodiversity Information System (OBIS), https://obis.org . Each dataset keeps its own license (mostly CC0 or CC BY). Retrieved 2026-11-07.
