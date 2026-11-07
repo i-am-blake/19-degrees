@@ -1,0 +1,1 @@
+MODIS Aqua monthly chlorophyll-a (4 km), NASA Ocean Biology Processing Group, via NOAA CoastWatch ERDDAP (erdMH1chlamday), NASA open data. A 0.3° box around each Australian region's sea temperature point, 2003 to March 2022. Retrieved 2026-11-07.
