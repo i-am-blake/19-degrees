@@ -31,12 +31,13 @@ Credit: "19 Degrees", with a link to the page.
 - IMOS Animal Tracking acoustic detections: CC BY 4.0. Cite: IMOS Animal Tracking Facility, Integrated Marine Observing System (IMOS). IMOS is enabled by the National Collaborative Research Infrastructure Strategy (NCRIS).
 - Queensland Shark Control Program data (catches, gear locations): Queensland Government open data, CC BY 4.0. Credit: Queensland Department of Primary Industries, Shark Control Program.
 - ERSSTv5 sea surface temperature: NOAA NCEI, public domain (US Government work). Cite Huang, B. et al. (2017), Extended Reconstructed Sea Surface Temperature, Version 5 (ERSSTv5), J. Climate 30, 8179-8205, doi:10.1175/JCLI-D-16-0836.1.
-- NOAA OISST v2.1 daily sea surface temperature: NOAA NCEI, public domain (US Government work). Cite Huang, B. et al. (2021), J. Climate 34, 2923-2939.
+- NOAA OISST v2.1 daily sea surface temperature: NOAA NCEI, public domain (US Government work). Cite Huang, B. et al. (2021), J. Climate 34, 2923-2939. Marine heatwaves follow Hobday, A.J. et al. (2016), Progress in Oceanography 141, 227-238.
 - Today's sea temperature at each beach: Open-Meteo Marine Weather API, CC BY 4.0, https://open-meteo.com/. Used on its free, non-commercial terms.
 - Indian Ocean Dipole (Dipole Mode Index from HadISST): NOAA Physical Sciences Laboratory, public domain. Cite Saji, N.H. et al. (1999), Nature 401, 360-363.
 - Shark occurrence records: Ocean Biodiversity Information System (OBIS), https://obis.org. Each dataset keeps its own license (mostly CC0 or CC BY; a few CC BY-NC, which may not be used commercially). Cite OBIS (2026), Ocean Biodiversity Information System, Intergovernmental Oceanographic Commission of UNESCO, and each dataset used.
 - Ponta do Ouro bull and tiger shark tracking: Ocean Tracking Network and the South African Institute for Aquatic Biodiversity (R. Daly), via OBIS, CC BY 4.0, https://obis.org/dataset/a8c9f694-bb07-451d-9ac0-c8d6b3119c1b.
 - Coastal population: GHS-POP R2023A, European Commission Joint Research Centre, CC BY 4.0. Cite Schiavina, M. et al. (2023), doi:10.2905/2FF68A52-5B5B-4A22-8F40-C41DA8332CFE.
+- NSW beach water quality: Beachwatch and Harbourwatch enterococci results, NSW Government, CC BY, https://www.beachwatch.nsw.gov.au/ (via the TidyTuesday 2025-05-20 cleaned copy, https://github.com/rfordatascience/tidytuesday).
 - Coastal drownings: Surf Life Saving Australia, National Coastal Safety Report 2025 (figures cited, © Surf Life Saving Australia). Population by decade: Australian Bureau of Statistics (figures cited).
 - Figures quoted from published studies remain the work of their authors; see the page's source list.
 

@@ -130,6 +130,17 @@ if "lunar" in D:
         check("C24 moon", (int(m[1]), int(m[2]), int(m[3]), m[4], int(m[5]), int(m[6]), int(m[7]), int(m[8]), int(m[9]), int(m[10]), float(m[11])),
               (A["n"], A["near"], A["near_pct"], f"{A['p']:.2f}", C["near"], C["n"], C["near_pct"], I["near"], I["n"], I["near_pct"], I["p"]))
 
+# C19 daily marine heatwaves (mhw19.py) and C6 Beachwatch (beach19.py), when present
+if "mhw" in D:
+    c, ib, it = D["mhw"]["california_white"], D["mhw"]["islands_bull"], D["mhw"]["islands_tiger"]
+    for m in find("C19 heatwaves", r"in California, (\d+) of (\d+) white shark bites \((\d+)%\) came during a marine heatwave ?, against (\d+)% expected for the same place and time of year \(p = ([\d.]+)\)\. Bull and tiger shark bites at Réunion and New Caledonia didn't \((\d+) of (\d+) and (\d+) of (\d+)\)"):
+        check("C19 heatwaves", (int(m[1]), int(m[2]), int(m[3]), int(m[4]), float(m[5]), int(m[6]), int(m[7]), int(m[8]), int(m[9])),
+              (c["in_heatwave"], c["n"], c["pct"], c["expected_pct"], c["p"], ib["in_heatwave"], ib["n"], it["in_heatwave"], it["n"]))
+if "beachwatch" in D:
+    b, w = D["beachwatch"]["bull"], D["beachwatch"]["white"]
+    for m in find("C6 Beachwatch", r"(\d+) of (\d+) NSW bull shark bites since 1992 came in months when that water was in its dirtiest quarter for the time of year \(p = ([\d.]+)\), against (\d+) of (\d+) white shark bites"):
+        check("C6 Beachwatch", (int(m[1]), int(m[2]), float(m[3]), int(m[4]), int(m[5])), (b["dirtiest_quarter"], b["n"], b["p"], w["dirtiest_quarter"], w["n"]))
+
 # Claim C23 (california19.py), when present
 if "california" in D:
     ca = D["california"]; e0, e3, t = ca["eras"][0], ca["eras"][-1], ca["test"]

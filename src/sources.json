@@ -1,8 +1,6 @@
 {
  "_about": "Every data source the site uses; the Sources page is built from this list. Data a fetch job saves with a README_*.txt on a data branch is listed automatically, from that README, until it is added here: cover it with a 'readme' key, or put it in 'hide' if the site doesn't use it.",
- "hide": [
-  "ocean-data/README_oisst.txt"
- ],
+ "hide": [],
  "groups": [
   {
    "group": "Shark bites",
@@ -100,6 +98,16 @@
      "readme": [
       "ocean-data/README_iod.txt"
      ]
+    },
+    {
+     "name": "NOAA OISST v2.1 daily sea surface temperature",
+     "url": "https://www.ncei.noaa.gov/products/optimum-interpolation-sst",
+     "from": "NOAA NCEI, via NOAA CoastWatch ERDDAP",
+     "used_for": "Marine heatwaves on the coasts that record the day of each bite; claim C19",
+     "license": "Public domain",
+     "readme": [
+      "ocean-data/README_oisst.txt"
+     ]
     }
    ]
   },
@@ -134,6 +142,16 @@
      "license": "ODbL 1.0",
      "readme": [
       "ocean-data/README_rivers.txt"
+     ]
+    },
+    {
+     "name": "Beachwatch water quality",
+     "url": "https://www.beachwatch.nsw.gov.au/",
+     "from": "NSW Government (Beachwatch and Harbourwatch), via the cleaned TidyTuesday copy",
+     "used_for": "Gut bacteria at NSW beaches as a sign of runoff plumes; claim C6",
+     "license": "CC BY",
+     "readme": [
+      "ocean-data/README_beachwatch.txt"
      ]
     }
    ]

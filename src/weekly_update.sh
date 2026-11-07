@@ -31,6 +31,8 @@ python3 -I heat19.py asid.csv sst heat.json
 # Water on the day and time of day (bite database), and the moon (claim C24, needs dated bites from ocean-data)
 python3 -I fieldnotes19.py asid.csv fieldnotes.json || warn "fieldnotes step failed, page keeps last numbers"
 { f=$(ls ocean/california_*.xlsx 2>/dev/null | head -n 1); [ -n "$f" ] && python3 -I lunar19.py islands_nc_run.csv "$f" lunar.json; } || warn "C24 step failed, page keeps last numbers"
+{ f=$(ls ocean/california_*.xlsx 2>/dev/null | head -n 1); [ -n "$f" ] && if [ -s ocean/hawaii_incidents.csv ]; then python3 -I mhw19.py ocean islands_nc_run.csv "$f" ocean/hawaii_incidents.csv mhw.json; else python3 -I mhw19.py ocean islands_nc_run.csv "$f" mhw.json; fi; } || warn "C19 heatwave step failed, page keeps last numbers"
+{ [ -s ocean/beachwatch_enterococci.csv.gz ] && python3 -I beach19.py asid.csv ocean/beachwatch_enterococci.csv.gz beachwatch.json; } || warn "C6 Beachwatch step failed, page keeps last numbers"
 # Tagged and recorded bull and tiger sharks outside Australia (claim C25), from OBIS records on ocean-data;
 # reruns only when those files change (obis19.py keeps the last result otherwise)
 cp "$R/src/obis.json" obis.json 2>/dev/null || true
@@ -76,5 +78,5 @@ python3 -I make_site.py 19-degrees.html pub site
 
 # 7. Copy back
 cp -r site/. "$R/"
-cp heat.json asid_version.txt "$R/src/"; [ -f rain.json ] && cp rain.json "$R/src/"; [ -f imos.json ] && cp imos.json "$R/src/"; [ -f leeuwin.json ] && cp leeuwin.json "$R/src/"; [ -f california.json ] && cp california.json "$R/src/"; for j in fieldnotes lunar obis iod coastpop; do [ -f $j.json ] && cp $j.json "$R/src/"; done
+cp heat.json asid_version.txt "$R/src/"; [ -f rain.json ] && cp rain.json "$R/src/"; [ -f imos.json ] && cp imos.json "$R/src/"; [ -f leeuwin.json ] && cp leeuwin.json "$R/src/"; [ -f california.json ] && cp california.json "$R/src/"; for j in fieldnotes lunar obis iod coastpop mhw beachwatch; do [ -f $j.json ] && cp $j.json "$R/src/"; done
 echo "built OK (new database version: $NEWDB)"
