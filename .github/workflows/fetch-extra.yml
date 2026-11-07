@@ -20,7 +20,8 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Start the log
-        run: mkdir -p out; : > out/extra_log.txt
+        run: |
+          mkdir -p out; : > out/extra_log.txt
       - name: Hawaii incidents (facts only)
         run: |
           python3 - <<'PY'
