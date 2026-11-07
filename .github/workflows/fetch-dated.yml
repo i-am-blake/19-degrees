@@ -1,0 +1,136 @@
+name: Fetch weather, waves, tides, whales and chlorophyll
+# Data for the tests that use the day (or month) of each bite. Adds to the 'ocean-data' branch without touching the other
+# files there:
+#  1. Open-Meteo historical weather (ERA5; CC BY 4.0, free for non-commercial use): daily maximum air temperature, sunshine,
+#     wind and rain, 1950 on, at each coast with day-dated bites (California, Réunion, New Caledonia, Hawaii).
+#  2. Open-Meteo historical marine data (ERA5 waves; CC BY 4.0): daily maximum wave height at the same coasts.
+#  3. NOAA CO-OPS tide predictions (high and low times; public domain) for Hawaii and California stations, 1980 on.
+#  4. OBIS humpback whale records off NSW (each dataset's own license, mostly CC0 or CC BY). Claim C5.
+#  5. NASA MODIS Aqua monthly chlorophyll (NASA Ocean Biology Processing Group, via NOAA CoastWatch ERDDAP; NASA open
+#     data), 2003-2022, around each Australian region. Claims C4, C17.
+# Runs monthly on the 10th (never the same day as the other ocean-data fetches) or by hand.
+on:
+  schedule:
+    - cron: "29 11 10 * *"   # 10th of each month, 11:29 UTC
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  dated:
+    runs-on: ubuntu-latest
+    timeout-minutes: 240
+    steps:
+      - uses: actions/checkout@v4
+      - name: Weather and waves (Open-Meteo)
+        run: |
+          mkdir -p out; : > out/dated_log.txt
+          python3 - <<'PY'
+          import datetime, json, time, urllib.request
+          PTS = {"california_san_diego": (32.75, -117.25), "california_santa_barbara": (34.4, -119.75), "california_monterey": (36.6, -121.9),
+                 "california_san_francisco": (37.75, -122.5), "california_humboldt": (40.8, -124.2), "reunion_west": (-21.1, 55.25),
+                 "new_caledonia_noumea": (-22.3, 166.45), "hawaii_oahu_south": (21.27, -157.82), "hawaii_oahu_north": (21.6, -158.1),
+                 "hawaii_maui": (20.8, -156.5), "hawaii_kauai": (21.95, -159.4), "hawaii_big_island": (19.65, -156.0)}
+          end = (datetime.date.today() - datetime.timedelta(days=7)).isoformat()
+          log = open("out/dated_log.txt", "a")
+          def get(url):
+              for a in range(4):
+                  try: return json.load(urllib.request.urlopen(urllib.request.Request(url, headers={"User-Agent": "19-degrees.org open data"}), timeout=300))
+                  except Exception as e: err = e; time.sleep(30 * (a + 1))
+              raise err
+          for k, (la, lo) in PTS.items():
+              for kind, url, cols in (
+                  ("weather", f"https://archive-api.open-meteo.com/v1/archive?latitude={la}&longitude={lo}&start_date=1950-01-01&end_date={end}&daily=temperature_2m_max,sunshine_duration,wind_speed_10m_max,precipitation_sum&timezone=auto",
+                   ["temperature_2m_max", "sunshine_duration", "wind_speed_10m_max", "precipitation_sum"]),
+                  ("waves", f"https://marine-api.open-meteo.com/v1/marine?latitude={la}&longitude={lo}&start_date=1980-01-01&end_date={end}&daily=wave_height_max&timezone=auto",
+                   ["wave_height_max"])):
+                  try:
+                      d = get(url)["daily"]
+                      with open(f"out/{kind}_{k}.csv", "w") as f:
+                          f.write("date," + ",".join(cols) + "\n")
+                          for i, t in enumerate(d["time"]):
+                              f.write(t + "," + ",".join("" if d[c][i] is None else str(d[c][i]) for c in cols) + "\n")
+                      log.write(f"{kind} {k}: {len(d['time'])} days\n")
+                  except Exception as e:
+                      log.write(f"{kind} {k} failed: {e}\n")
+                  log.flush(); time.sleep(5)
+          PY
+          printf "Open-Meteo historical weather and marine data (ERA5 reanalysis, Copernicus Climate Change Service), CC BY 4.0, https://open-meteo.com/ . Daily maximum air temperature, sunshine, wind and rain (1950 on) and daily maximum wave height (1980 on) at each coast with day-dated bites. Cite Hersbach, H. et al. (2020), Q. J. R. Meteorol. Soc. 146, 1999-2049. Retrieved %s.\n" "$(date -u +%Y-%m-%d)" > out/README_openmeteo.txt
+      - name: Tide predictions (NOAA)
+        run: |
+          python3 - <<'PY'
+          import datetime, json, time, urllib.request
+          ST = {"9410170": "San Diego", "9410840": "Santa Monica", "9411340": "Santa Barbara", "9413450": "Monterey", "9414290": "San Francisco",
+                "9418767": "Humboldt Bay", "1612340": "Honolulu", "1612480": "Mokuoloe (Oahu windward)", "1615680": "Kahului (Maui)",
+                "1611400": "Nawiliwili (Kauai)", "1617760": "Hilo (Big Island)", "1617433": "Kawaihae (Big Island)"}
+          log = open("out/dated_log.txt", "a"); yn = datetime.date.today().year
+          with open("out/tides_hilo.csv", "w") as f:
+              f.write("station,time_local,type,height_m\n")
+              for s, name in ST.items():
+                  n = 0
+                  for y in range(1980, yn + 1):
+                      url = (f"https://api.tidesandcurrents.noaa.gov/api/prod/datagetter?product=predictions&station={s}&begin_date={y}0101&end_date={y}1231"
+                             "&datum=MLLW&units=metric&time_zone=lst_ldt&interval=hilo&format=json&application=19-degrees.org")
+                      for a in range(3):
+                          try:
+                              p = json.load(urllib.request.urlopen(url, timeout=120)).get("predictions", [])
+                              for r in p: f.write(f"{s},{r['t']},{r['type']},{r['v']}\n")
+                              n += len(p); break
+                          except Exception as e:
+                              if a == 2: log.write(f"tides {s} {y} failed: {e}\n")
+                              time.sleep(10)
+                  log.write(f"tides {s} {name}: {n} highs and lows\n"); log.flush()
+          PY
+          printf "NOAA CO-OPS tide predictions (times and heights of high and low water, local time), public domain, https://tidesandcurrents.noaa.gov/ . Stations in California and Hawaii. Retrieved %s.\n" "$(date -u +%Y-%m-%d)" > out/README_tides.txt
+      - name: Humpback whales off NSW (OBIS)
+        run: |
+          python3 - <<'PY'
+          import json, urllib.parse, urllib.request
+          log = open("out/dated_log.txt", "a")
+          geom = "POLYGON((149.5 -37.6, 154.5 -37.6, 154.5 -28.1, 149.5 -28.1, 149.5 -37.6))"
+          base = "https://api.obis.org/v3/occurrence?" + urllib.parse.urlencode({"scientificname": "Megaptera novaeangliae", "geometry": geom, "size": 5000, "fields": "id,eventDate,date_year,month,decimalLatitude,decimalLongitude,dataset_id"})
+          rows, after = [], None
+          try:
+              while True:
+                  d = json.load(urllib.request.urlopen(base + (f"&after={after}" if after else ""), timeout=300))
+                  res = d.get("results", [])
+                  if not res: break
+                  rows += res; after = res[-1]["id"]
+                  if len(res) < 5000: break
+              with open("out/obis_humpback_nsw.csv", "w") as f:
+                  f.write("id,eventDate,year,month,lat,lon,dataset_id\n")
+                  for r in rows: f.write(",".join(str(r.get(k, "")).replace(",", " ") for k in ("id", "eventDate", "date_year", "month", "decimalLatitude", "decimalLongitude", "dataset_id")) + "\n")
+              log.write(f"humpback NSW: {len(rows)} records\n")
+          except Exception as e:
+              log.write(f"humpback failed: {e}\n")
+          PY
+          printf "Humpback whale (Megaptera novaeangliae) occurrence records off New South Wales, Ocean Biodiversity Information System (OBIS), https://obis.org . Each dataset keeps its own license (mostly CC0 or CC BY). Retrieved %s.\n" "$(date -u +%Y-%m-%d)" > out/README_humpback.txt
+      - name: Chlorophyll (NASA MODIS)
+        run: |
+          python3 - <<'PY'
+          import sys, time, urllib.request
+          sys.path.insert(0, "src"); from regions import REGIONS
+          E = "https://coastwatch.pfeg.noaa.gov/erddap/griddap/erdMH1chlamday.csv?chlorophyll"
+          log = open("out/dated_log.txt", "a")
+          with open("out/chlorophyll_regions.csv", "w") as f:
+              f.write("region,time,lat,lon,chlorophyll\n")
+              for name, _, _, la, lo in REGIONS:
+                  url = f"{E}%5B(2003-01-16):1:(2022-05-16)%5D%5B({la+0.15}):1:({la-0.15})%5D%5B({lo-0.15}):1:({lo+0.15})%5D"
+                  for a in range(4):
+                      try:
+                          rows = urllib.request.urlopen(url, timeout=600).read().decode().splitlines()[2:]
+                          for r in rows: f.write(name.replace(",", " ") + "," + r + "\n")
+                          log.write(f"chlorophyll {name}: {len(rows)} cells\n"); break
+                      except Exception as e:
+                          if a == 3: log.write(f"chlorophyll {name} failed: {e}\n")
+                          time.sleep(30 * (a + 1))
+                  log.flush(); time.sleep(15)
+          PY
+          printf "MODIS Aqua monthly chlorophyll-a (4 km), NASA Ocean Biology Processing Group, via NOAA CoastWatch ERDDAP (erdMH1chlamday), NASA open data. A 0.3° box around each Australian region's sea temperature point, 2003-2022. Retrieved %s.\n" "$(date -u +%Y-%m-%d)" > out/README_chlorophyll.txt
+          cat out/dated_log.txt
+      - name: Add to the ocean-data branch
+        if: always()
+        run: |
+          git clone -q --depth 1 --branch ocean-data "https://x-access-token:${{ github.token }}@github.com/${{ github.repository }}.git" br
+          cp out/* br/ 2>/dev/null || true; cd br; git add -A
+          git -c user.name="github-actions[bot]" -c user.email="41898900+github-actions[bot]@users.noreply.github.com" commit -qm "Weather, waves, tides, whales and chlorophyll, $(date -u +%Y-%m-%d)" || exit 0
+          git push -q "https://x-access-token:${{ github.token }}@github.com/${{ github.repository }}.git" HEAD:ocean-data
