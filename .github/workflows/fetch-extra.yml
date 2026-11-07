@@ -1,0 +1,94 @@
+name: Fetch Redmap, Hawaii and Beachwatch data
+# Adds three sources to the 'ocean-data' branch without touching the other files there:
+#  1. Redmap sightings of range-shifting marine species (IMAS, University of Tasmania), CC BY-NC 2.5 AU. Newest 3 years
+#     embargoed and locations blurred by Redmap. Claims C1, C2, C17.
+#  2. Hawaii shark incidents (Hawaii DLNR). Only the facts are kept: date and time, place, activity, water clarity,
+#     depth and shark; the people involved and the write-ups are left out, and the page itself isn't saved.
+#     Plus NOAA OISST daily sea temperature (public domain) off each island. Claims C6, C19, C24.
+#  3. NSW Beachwatch enterococci results, CC BY (NSW Government), via the cleaned TidyTuesday copy (1991 to April 2025).
+#     Claim C6.
+# Runs monthly on the 9th (never the same day as the other ocean-data fetches) or by hand.
+on:
+  schedule:
+    - cron: "17 11 9 * *"   # 9th of each month, 11:17 UTC
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  extra:
+    runs-on: ubuntu-latest
+    timeout-minutes: 180
+    steps:
+      - uses: actions/checkout@v4
+      - name: Redmap sightings
+        run: |
+          mkdir -p out; : > out/extra_log.txt
+          curl -sSfL --retry 3 -m 600 -o out/redmap_sightings.csv "https://geoserver.imas.utas.edu.au/geoserver/redmap/wfs?version=1.0.0&request=GetFeature&typeName=RM_SIGHTING_VIEW_DATA&outputFormat=CSV" \
+            && echo "redmap: $(wc -l < out/redmap_sightings.csv) lines; columns: $(head -1 out/redmap_sightings.csv)" >> out/extra_log.txt \
+            || echo "redmap download failed" >> out/extra_log.txt
+          gzip -f out/redmap_sightings.csv 2>/dev/null || true
+          printf "Redmap sightings of range-shifting marine species, Institute for Marine and Antarctic Studies, University of Tasmania, https://www.redmap.org.au/ (CC BY-NC 2.5 AU; sightings from the last 3 years are embargoed and locations are reduced in precision). Retrieved %s.\n" "$(date -u +%Y-%m-%d)" > out/README_redmap.txt
+      - name: Hawaii incidents (facts only)
+        run: |
+          python3 - <<'PY'
+          import csv, html, re, urllib.request
+          log = open("out/extra_log.txt", "a")
+          try:
+              req = urllib.request.Request("https://dlnr.hawaii.gov/sharks/shark-incidents/incidents/", headers={"User-Agent": "Mozilla/5.0 (19-degrees.org open data)"})
+              page = urllib.request.urlopen(req, timeout=120).read().decode("utf-8", "replace")
+          except Exception as e:
+              log.write(f"hawaii download failed: {e}\n"); raise SystemExit(0)
+          def text(c): return re.sub(r"\s+", " ", html.unescape(re.sub(r"<[^>]+>", " ", c))).strip()
+          rows = []
+          for t in re.findall(r"<table.*?</table>", page, re.S | re.I):
+              for tr in re.findall(r"<tr.*?</tr>", t, re.S | re.I):
+                  cells = [text(c) for c in re.findall(r"<t[hd][^>]*>(.*?)</t[hd]>", tr, re.S | re.I)]
+                  if cells: rows.append(cells)
+          head = next((r for r in rows if any("date" in c.lower() for c in r) and any("shark" in c.lower() for c in r)), None)
+          log.write(f"hawaii: {len(rows)} table rows; header: {head}\n")
+          if not head: raise SystemExit(0)
+          keep = [i for i, h in enumerate(head) if h.lower().split()[0] in ("date", "location", "activity", "water", "shark")]
+          with open("out/hawaii_incidents.csv", "w", newline="") as f:
+              w = csv.writer(f); w.writerow([head[i] for i in keep]); n = 0
+              for r in rows:
+                  if r is head or len(r) != len(head) or r == head: continue
+                  w.writerow([r[i] for i in keep]); n += 1
+          log.write(f"hawaii: {n} incidents kept, columns {[head[i] for i in keep]}\n")
+          PY
+          printf "Hawaii shark incidents since 1995, Hawaii Department of Land and Natural Resources, https://dlnr.hawaii.gov/sharks/shark-incidents/incidents/ . Facts only (date and time, location, activity, water clarity and depth, shark); see the source for the full record. Retrieved %s.\n" "$(date -u +%Y-%m-%d)" > out/README_hawaii.txt
+      - name: Daily sea temperature off Hawaii
+        run: |
+          python3 - <<'PY'
+          import datetime, time, urllib.request
+          E = "https://coastwatch.pfeg.noaa.gov/erddap/griddap/ncdcOisst21Agg_LonPM180.csv?sst"
+          PTS = {"hawaii_oahu_south": (21.125, -157.875), "hawaii_oahu_north": (21.875, -158.125), "hawaii_maui": (20.625, -156.625),
+                 "hawaii_kauai": (21.875, -159.625), "hawaii_big_island": (19.625, -156.125)}
+          log = open("out/extra_log.txt", "a"); y_now = datetime.date.today().year
+          for k, (la, lo) in PTS.items():
+              rows, ok = [], True
+              for y0 in range(1981, y_now + 1, 5):
+                  a0 = "1981-09-01" if y0 == 1981 else f"{y0}-01-01"; a1 = f"{y0 + 4}-12-31" if y0 + 4 < y_now else "last"
+                  url = f"{E}%5B({a0}):1:({a1})%5D%5B(0.0)%5D%5B({la})%5D%5B({lo})%5D"
+                  for a in range(5):
+                      try:
+                          req = urllib.request.Request(url, headers={"User-Agent": "19-degrees.org open data"})
+                          rows += urllib.request.urlopen(req, timeout=600).read().decode().splitlines()[2:]; time.sleep(20); break
+                      except Exception as e:
+                          if a == 4: log.write(f"oisst {k} {y0} failed: {e}\n"); ok = False
+                          time.sleep(30 * (a + 1))
+              if rows: open(f"out/oisst_{k}.csv", "w").write("time,zlev,latitude,longitude,sst\n" + "\n".join(rows) + "\n")
+              log.write(f"oisst {k}: {len(rows)} days{'' if ok else ' (some years missing)'}\n")
+          PY
+      - name: NSW Beachwatch
+        run: |
+          curl -sSfL --retry 3 -o out/beachwatch_enterococci.csv "https://raw.githubusercontent.com/rfordatascience/tidytuesday/main/data/2025/2025-05-20/water_quality.csv" \
+            && gzip -f out/beachwatch_enterococci.csv && echo "beachwatch: ok" >> out/extra_log.txt || echo "beachwatch download failed" >> out/extra_log.txt
+          printf "NSW Beachwatch and Harbourwatch bacteriological results (enterococci per 100 mL), NSW Government, CC BY, https://www.beachwatch.nsw.gov.au/ ; via the cleaned TidyTuesday 2025-05-20 copy (https://github.com/rfordatascience/tidytuesday). Retrieved %s.\n" "$(date -u +%Y-%m-%d)" > out/README_beachwatch.txt
+          cat out/extra_log.txt
+      - name: Add to the ocean-data branch
+        if: always()
+        run: |
+          git clone -q --depth 1 --branch ocean-data "https://x-access-token:${{ github.token }}@github.com/${{ github.repository }}.git" br
+          cp out/* br/ 2>/dev/null || true; cd br; git add -A
+          git -c user.name="github-actions[bot]" -c user.email="41898900+github-actions[bot]@users.noreply.github.com" commit -qm "Redmap, Hawaii and Beachwatch data, $(date -u +%Y-%m-%d)" || exit 0
+          git push -q "https://x-access-token:${{ github.token }}@github.com/${{ github.repository }}.git" HEAD:ocean-data
