@@ -1,6 +1,8 @@
 {
  "_about": "Every data source the site uses; the Sources page is built from this list. Data a fetch job saves with a README_*.txt on a data branch is listed automatically, from that README, until it is added here: cover it with a 'readme' key, or put it in 'hide' if the site doesn't use it.",
- "hide": [],
+ "hide": [
+  "ocean-data/README_redmap.txt"
+ ],
  "groups": [
   {
    "group": "Shark bites",
@@ -27,6 +29,16 @@
      "license": "CC BY",
      "readme": [
       "ocean-data/README_california.txt"
+     ]
+    },
+    {
+     "name": "Hawaii shark incidents, 1995 on",
+     "url": "https://dlnr.hawaii.gov/sharks/shark-incidents/incidents/",
+     "from": "Hawaii Department of Land and Natural Resources",
+     "used_for": "Claims C6, C24 (facts only: date, place, activity, water clarity, shark)",
+     "license": "© State of Hawaii; facts used, see the source",
+     "readme": [
+      "ocean-data/README_hawaii.txt"
      ]
     },
     {

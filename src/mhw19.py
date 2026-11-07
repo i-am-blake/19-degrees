@@ -82,20 +82,23 @@ for r in csv.DictReader(raw, delimiter=";" if raw[0].count(";") > raw[0].count("
     pt = "new_caledonia_noumea" if r["SITE"].startswith("New") else "reunion_west"
     if r["SHARKTYPE"] == "Bull": groups["islands_bull"].append((d, pt))
     if r["SHARKTYPE"] == "Tiger": groups["islands_tiger"].append((d, pt))
+def norm(t):
+    import unicodedata
+    t = unicodedata.normalize("NFKD", t.lower())
+    return re.sub(r"[^a-z ,]", "", t)
+def hawaii_date(t):  # DLNR writes "2026/09/07, 4:32 pm"
+    m = re.match(r"\s*(\d{4})/(\d{1,2})/(\d{1,2})", t)
+    try: return dt.date(*map(int, m.groups())) if m else None
+    except ValueError: return None
 if HI and os.path.exists(HI):
     ISLES = [("kauai", "hawaii_kauai"), ("maui", "hawaii_maui"), ("molokai", "hawaii_maui"), ("lanai", "hawaii_maui"),
-             ("hawaii", "hawaii_big_island"), ("big island", "hawaii_big_island"), ("oahu", "hawaii_oahu_south"), ("o'ahu", "hawaii_oahu_south")]
+             ("hawaii", "hawaii_big_island"), ("big island", "hawaii_big_island"), ("oahu", "hawaii_oahu_south")]
     NORTH = ("north shore", "haleiwa", "sunset", "waimea", "pipeline", "laie", "kahuku", "mokuleia", "kaena", "makaha", "waianae", "yokohama")
     for r in csv.DictReader(open(HI)):
         k = {h.lower().split()[0]: v for h, v in r.items()}
-        m = re.search(r"(\d{1,2})/(\d{1,2})/(\d{2,4})", k.get("date", "")) or re.search(r"(\w+) (\d{1,2}), (\d{4})", k.get("date", ""))
-        if not m: continue
-        try:
-            if "/" in m.group(0): mo, da, yr = map(int, m.groups()); yr += 1900 if yr < 100 and yr > 50 else (2000 if yr < 100 else 0)
-            else: mo, da, yr = dt.datetime.strptime(m.group(1)[:3], "%b").month, int(m.group(2)), int(m.group(3))
-            d = dt.date(yr, mo, da)
-        except ValueError: continue
-        loc = k.get("location", "").lower()
+        d = hawaii_date(k.get("date", ""))
+        if not d: continue
+        loc = norm(k.get("location", ""))  # "O‘ahu", "Oʻahu" and "Oahu" all become "oahu"
         pt = next((p for name, p in ISLES if name in loc.split(",")[0] or loc.startswith(name)), None)
         if pt == "hawaii_oahu_south" and any(w in loc for w in NORTH): pt = "hawaii_oahu_north"
         if not pt: continue

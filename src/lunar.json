@@ -31,6 +31,22 @@
   "new": 23,
   "p": 0.239
  },
+ "hawaii_all": {
+  "n": 174,
+  "near": 80,
+  "near_pct": 46,
+  "full": 44,
+  "new": 36,
+  "p": 0.324
+ },
+ "hawaii_tiger": {
+  "n": 80,
+  "near": 38,
+  "near_pct": 48,
+  "full": 22,
+  "new": 16,
+  "p": 0.738
+ },
  "all": {
   "n": 303,
   "near": 146,

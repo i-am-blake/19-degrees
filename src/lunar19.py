@@ -1,14 +1,14 @@
 """Claim C24: do shark bites cluster around the full or new moon?
-Usage: python3 -I lunar19.py <islands_nc_run.csv> <CDFW SharkIncidents xlsx> <out lunar.json>
+Usage: python3 -I lunar19.py <islands_nc_run.csv> <CDFW SharkIncidents xlsx> [hawaii_incidents.csv] <out lunar.json>
 Needs the day of each bite, so it uses the regions that record it: California (CDFW, white sharks, CC BY) and Réunion and
-New Caledonia (University of Reunion Island, CC BY 4.0). The Australian database gives the month only.
+New Caledonia (University of Reunion Island, CC BY 4.0), and Hawaii (DLNR) when given. The Australian database gives the month only.
 Moon phase is calculated from the date (mean synodic month from the new moon of 6 January 2000, 18:14 UTC); dates are
 local, so the phase is right to within about a day. "Near full or new" is within 3.7 days of either, half of every
 lunar month, so with no moon effect about half of all bites would fall there. Two-sided binomial test against one half."""
 import csv, datetime as dt, json, math, sys
 import openpyxl
 
-ISL, CA, OUT = sys.argv[1:4]
+ISL, CA = sys.argv[1:3]; HI = sys.argv[3] if len(sys.argv) == 5 else None; OUT = sys.argv[-1]
 SYN, NEW0 = 29.530588853, dt.datetime(2000, 1, 6, 18, 14)
 
 def age(d):  # days since the last new moon
@@ -38,6 +38,15 @@ groups = {"california_white": ca,
           "islands_bull": [d for r in isl if r["SHARKTYPE"] == "Bull" and (d := d_isl(r))],
           "islands_tiger": [d for r in isl if r["SHARKTYPE"] == "Tiger" and (d := d_isl(r))],
           "islands_all": [d for r in isl if (d := d_isl(r))]}
+hi = []
+if HI:
+    import re
+    for r in csv.DictReader(open(HI, encoding="utf-8")):
+        m = re.match(r"\s*(\d{4})/(\d{1,2})/(\d{1,2})", r.get("Date and Time", ""))
+        if m:
+            try: hi.append((dt.date(*map(int, m.groups())), "tiger" in r.get("Shark", "").lower()))
+            except ValueError: pass
+groups["hawaii_all"] = [d for d, _ in hi]; groups["hawaii_tiger"] = [d for d, t in hi if t]
 out = {k: summary(v) for k, v in groups.items()}
 out["all"] = summary(groups["california_white"] + groups["islands_all"])
 json.dump(out, open(OUT, "w"), indent=1)

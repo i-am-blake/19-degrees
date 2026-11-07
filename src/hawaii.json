@@ -1,0 +1,49 @@
+{
+ "n": 174,
+ "first": 1995,
+ "last": 2026,
+ "tiger": 80,
+ "tiger_murky": 48,
+ "tiger_clarity_n": 78,
+ "tiger_murky_pct": 62,
+ "other_murky": 16,
+ "other_clarity_n": 32,
+ "other_murky_pct": 50,
+ "p_murky": 0.29,
+ "by_month": [
+  11,
+  8,
+  16,
+  12,
+  14,
+  11,
+  9,
+  12,
+  16,
+  32,
+  16,
+  17
+ ],
+ "activity": [
+  [
+   "surfing",
+   65
+  ],
+  [
+   "swimming",
+   32
+  ],
+  [
+   "snorkeling",
+   21
+  ],
+  [
+   "stand-up paddleboarding",
+   13
+  ],
+  [
+   "spearfishing",
+   10
+  ]
+ ]
+}

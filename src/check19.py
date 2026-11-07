@@ -141,6 +141,16 @@ if "beachwatch" in D:
     for m in find("C6 Beachwatch", r"(\d+) of (\d+) NSW bull shark bites since 1992 came in months when that water was in its dirtiest quarter for the time of year \(p = ([\d.]+)\), against (\d+) of (\d+) white shark bites"):
         check("C6 Beachwatch", (int(m[1]), int(m[2]), float(m[3]), int(m[4]), int(m[5])), (b["dirtiest_quarter"], b["n"], b["p"], w["dirtiest_quarter"], w["n"]))
 
+if "hawaii" in D:
+    h = D["hawaii"]
+    for m in find("C6 Hawaii", r"Hawaii \((\d+)–(\d+)\): the water was turbid or muddy at (\d+)% of tiger shark bites \((\d+) of (\d+)\) and (\d+)% of bites by other identified sharks \((\d+) of (\d+); p = ([\d.]+)\)"):
+        check("C6 Hawaii", (int(m[1]), int(m[2]), int(m[3]), int(m[4]), int(m[5]), int(m[6]), int(m[7]), int(m[8]), m[9]),
+              (h["first"], h["last"], h["tiger_murky_pct"], h["tiger_murky"], h["tiger_clarity_n"], h["other_murky_pct"], h["other_murky"], h["other_clarity_n"], f"{h['p_murky']:.2f}"))
+if "lunar" in D and "hawaii_all" in D["lunar"]:
+    a, t = D["lunar"]["hawaii_all"], D["lunar"]["hawaii_tiger"]
+    for m in find("C24 Hawaii", r"Hawaii agrees: (\d+) of (\d+) bites \((\d+)%; p = ([\d.]+)\), and (\d+) of (\d+) tiger shark bites"):
+        check("C24 Hawaii", (int(m[1]), int(m[2]), int(m[3]), m[4], int(m[5]), int(m[6])), (a["near"], a["n"], a["near_pct"], f"{a['p']:.2f}", t["near"], t["n"]))
+
 # Claim C23 (california19.py), when present
 if "california" in D:
     ca = D["california"]; e0, e3, t = ca["eras"][0], ca["eras"][-1], ca["test"]

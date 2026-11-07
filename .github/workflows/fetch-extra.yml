@@ -1,11 +1,10 @@
-name: Fetch Redmap, Hawaii and Beachwatch data
-# Adds three sources to the 'ocean-data' branch without touching the other files there:
-#  1. Redmap sightings of range-shifting marine species (IMAS, University of Tasmania), CC BY-NC 2.5 AU. Newest 3 years
-#     embargoed and locations blurred by Redmap. Claims C1, C2, C17.
-#  2. Hawaii shark incidents (Hawaii DLNR). Only the facts are kept: date and time, place, activity, water clarity,
+name: Fetch Hawaii and Beachwatch data
+# Adds two sources to the 'ocean-data' branch without touching the other files there (Redmap was tried and dropped:
+# too few sightings, shaped by who was reporting, to test C17):
+#  1. Hawaii shark incidents (Hawaii DLNR). Only the facts are kept: date and time, place, activity, water clarity,
 #     depth and shark; the people involved and the write-ups are left out, and the page itself isn't saved.
 #     Plus NOAA OISST daily sea temperature (public domain) off each island. Claims C6, C19, C24.
-#  3. NSW Beachwatch enterococci results, CC BY (NSW Government), via the cleaned TidyTuesday copy (1991 to April 2025).
+#  2. NSW Beachwatch enterococci results, CC BY (NSW Government), via the cleaned TidyTuesday copy (1991 to April 2025).
 #     Claim C6.
 # Runs monthly on the 9th (never the same day as the other ocean-data fetches) or by hand.
 on:
@@ -20,14 +19,8 @@ jobs:
     timeout-minutes: 240
     steps:
       - uses: actions/checkout@v4
-      - name: Redmap sightings
-        run: |
-          mkdir -p out; : > out/extra_log.txt
-          curl -sSfL --retry 3 -m 600 -o out/redmap_sightings.csv "https://geoserver.imas.utas.edu.au/geoserver/redmap/wfs?version=1.0.0&request=GetFeature&typeName=RM_SIGHTING_VIEW_DATA&outputFormat=CSV" \
-            && echo "redmap: $(wc -l < out/redmap_sightings.csv) lines; columns: $(head -1 out/redmap_sightings.csv)" >> out/extra_log.txt \
-            || echo "redmap download failed" >> out/extra_log.txt
-          gzip -f out/redmap_sightings.csv 2>/dev/null || true
-          printf "Redmap sightings of range-shifting marine species, Institute for Marine and Antarctic Studies, University of Tasmania, https://www.redmap.org.au/ (CC BY-NC 2.5 AU; sightings from the last 3 years are embargoed and locations are reduced in precision). Retrieved %s.\n" "$(date -u +%Y-%m-%d)" > out/README_redmap.txt
+      - name: Start the log
+        run: mkdir -p out; : > out/extra_log.txt
       - name: Hawaii incidents (facts only)
         run: |
           python3 - <<'PY'
@@ -91,6 +84,6 @@ jobs:
         if: always()
         run: |
           git clone -q --depth 1 --branch ocean-data "https://x-access-token:${{ github.token }}@github.com/${{ github.repository }}.git" br
-          cp out/* br/ 2>/dev/null || true; cd br; git add -A
-          git -c user.name="github-actions[bot]" -c user.email="41898900+github-actions[bot]@users.noreply.github.com" commit -qm "Redmap, Hawaii and Beachwatch data, $(date -u +%Y-%m-%d)" || exit 0
+          cp out/* br/ 2>/dev/null || true; cd br; rm -f redmap_sightings.csv.gz README_redmap.txt; git add -A
+          git -c user.name="github-actions[bot]" -c user.email="41898900+github-actions[bot]@users.noreply.github.com" commit -qm "Hawaii and Beachwatch data, $(date -u +%Y-%m-%d)" || exit 0
           git push -q "https://x-access-token:${{ github.token }}@github.com/${{ github.repository }}.git" HEAD:ocean-data
