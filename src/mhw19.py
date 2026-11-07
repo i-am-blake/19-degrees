@@ -63,7 +63,7 @@ def chance(pt, d):
         for i in range(-15, 16):
             x = c + dt.timedelta(i)
             if x in have: n += 1; k += x in mhw
-    return k / n if n >= 300 else None
+    return k / n if n >= 150 else None  # at least about 5 years of the same season
 
 # bites: (date, point)
 CA_PTS = [(32.625, "california_san_diego"), (34.375, "california_santa_barbara"), (36.625, "california_monterey"),

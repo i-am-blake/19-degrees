@@ -132,10 +132,11 @@ if "lunar" in D:
 
 # C19 daily marine heatwaves (mhw19.py) and C6 Beachwatch (beach19.py), when present
 if "mhw" in D:
-    c, ib, it = D["mhw"]["california_white"], D["mhw"]["islands_bull"], D["mhw"]["islands_tiger"]
-    for m in find("C19 heatwaves", r"in California, (\d+) of (\d+) white shark bites \((\d+)%\) came during a marine heatwave ?, against (\d+)% expected for the same place and time of year \(p = ([\d.]+)\)\. Bull and tiger shark bites at Réunion and New Caledonia didn't \((\d+) of (\d+) and (\d+) of (\d+)\)"):
-        check("C19 heatwaves", (int(m[1]), int(m[2]), int(m[3]), int(m[4]), float(m[5]), int(m[6]), int(m[7]), int(m[8]), int(m[9])),
-              (c["in_heatwave"], c["n"], c["pct"], c["expected_pct"], c["p"], ib["in_heatwave"], ib["n"], it["in_heatwave"], it["n"]))
+    M = D["mhw"]; c, h, ht, ib, it, a = M["california_white"], M["hawaii_all"], M["hawaii_tiger"], M["islands_bull"], M["islands_tiger"], M["all"]
+    for m in find("C19 heatwaves", r"California's white shark bites lean that way, (\d+) of (\d+) \((\d+)%\) during a heatwave against (\d+)% expected for the same place and time of year \(p = ([\d.]+)\), and so do Hawaii's, (\d+) of (\d+) \((\d+)% against (\d+)%; p = ([\d.]+)\), tiger sharks (\d+) of (\d+)\. Bull and tiger shark bites at Réunion and New Caledonia didn't \((\d+) of (\d+) and (\d+) of (\d+)\)\. All together, (\d+) of (\d+) \((\d+)% against (\d+)%; p = ([\d.]+)\)"):
+        g = m.groups()
+        check("C19 heatwaves", tuple(g), tuple(str(x) for x in (c["in_heatwave"], c["n"], c["pct"], c["expected_pct"], f"{c['p']:.2f}", h["in_heatwave"], h["n"], h["pct"], h["expected_pct"], f"{h['p']:.2f}",
+              ht["in_heatwave"], ht["n"], ib["in_heatwave"], ib["n"], it["in_heatwave"], it["n"], a["in_heatwave"], a["n"], a["pct"], a["expected_pct"], f"{a['p']:.2f}")))
 if "beachwatch" in D:
     b, w = D["beachwatch"]["bull"], D["beachwatch"]["white"]
     for m in find("C6 Beachwatch", r"(\d+) of (\d+) NSW bull shark bites since 1992 came in months when that water was in its dirtiest quarter for the time of year \(p = ([\d.]+)\), against (\d+) of (\d+) white shark bites"):

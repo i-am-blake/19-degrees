@@ -78,7 +78,7 @@ jobs:
                           log.write(f"oisst {k} {y0} try {a + 1} failed: {e}\n"); log.flush()
                           if a == 2: ok = False
                           else: time.sleep(30 * (a + 1))
-              if rows: open(f"out/oisst_{k}.csv", "w").write("time,zlev,latitude,longitude,sst\n" + "\n".join(rows) + "\n")
+              if rows and ok: open(f"out/oisst_{k}.csv", "w")  # a partial download never replaces a complete file.write("time,zlev,latitude,longitude,sst\n" + "\n".join(rows) + "\n")
               log.write(f"oisst {k}: {len(rows)} days{'' if ok else ' (some years missing)'}\n")
           PY
       - name: Add to the ocean-data branch

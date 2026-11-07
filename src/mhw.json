@@ -1,56 +1,94 @@
 {
  "california_white": {
-  "n": 84,
+  "n": 124,
   "in_heatwave": 21,
-  "pct": 25,
-  "expected_pct": 14,
-  "ratio": 1.82,
-  "p": 0.004,
-  "first": 1985,
+  "pct": 17,
+  "expected_pct": 12,
+  "ratio": 1.46,
+  "p": 0.057,
+  "first": 1981,
   "last": 2022
  },
  "islands_bull": {
-  "n": 27,
+  "n": 33,
   "in_heatwave": 3,
-  "pct": 11,
-  "expected_pct": 15,
-  "ratio": 0.74,
-  "p": 0.783,
-  "first": 2006,
+  "pct": 9,
+  "expected_pct": 13,
+  "ratio": 0.69,
+  "p": 0.601,
+  "first": 1985,
   "last": 2019
  },
  "islands_tiger": {
-  "n": 21,
+  "n": 28,
   "in_heatwave": 0,
   "pct": 0,
-  "expected_pct": 13,
+  "expected_pct": 11,
   "ratio": 0.0,
-  "p": 0.094,
-  "first": 1988,
+  "p": 0.058,
+  "first": 1983,
   "last": 2021
  },
  "hawaii_tiger": {
-  "n": 0
+  "n": 79,
+  "in_heatwave": 23,
+  "pct": 29,
+  "expected_pct": 24,
+  "ratio": 1.21,
+  "p": 0.251,
+  "first": 1996,
+  "last": 2026
  },
  "hawaii_all": {
-  "n": 0
+  "n": 170,
+  "in_heatwave": 52,
+  "pct": 31,
+  "expected_pct": 26,
+  "ratio": 1.18,
+  "p": 0.126,
+  "first": 1996,
+  "last": 2026
  },
  "all": {
-  "n": 132,
-  "in_heatwave": 24,
-  "pct": 18,
-  "expected_pct": 14,
-  "ratio": 1.3,
-  "p": 0.153,
-  "first": 1985,
-  "last": 2022
+  "n": 355,
+  "in_heatwave": 76,
+  "pct": 21,
+  "expected_pct": 19,
+  "ratio": 1.16,
+  "p": 0.136,
+  "first": 1981,
+  "last": 2026
  },
  "points": {
+  "hawaii_big_island": {
+   "days": 15293,
+   "heatwave_days": 2257,
+   "first": "1981-09-01",
+   "last": "2026-10-23"
+  },
   "california_monterey": {
    "days": 14999,
    "heatwave_days": 1554,
    "first": "1981-09-01",
    "last": "2025-12-31"
+  },
+  "hawaii_oahu_south": {
+   "days": 13709,
+   "heatwave_days": 2414,
+   "first": "1986-01-01",
+   "last": "2026-10-22"
+  },
+  "hawaii_maui": {
+   "days": 15292,
+   "heatwave_days": 2738,
+   "first": "1981-09-01",
+   "last": "2026-10-22"
+  },
+  "hawaii_oahu_north": {
+   "days": 13709,
+   "heatwave_days": 2310,
+   "first": "1986-01-01",
+   "last": "2026-10-22"
   },
   "reunion_west": {
    "days": 13709,
@@ -75,6 +113,12 @@
    "heatwave_days": 859,
    "first": "1981-09-01",
    "last": "2026-10-22"
+  },
+  "hawaii_kauai": {
+   "days": 15293,
+   "heatwave_days": 2493,
+   "first": "1981-09-01",
+   "last": "2026-10-23"
   },
   "california_santa_barbara": {
    "days": 15291,
