@@ -3,8 +3,9 @@ Usage: python3 -I beachday19.py <ocean dir> <islands_nc_run.csv> <CDFW SharkInci
 Weather and waves: Open-Meteo historical data (ERA5; CC BY 4.0), files weather_<point>.csv and waves_<point>.csv in the
 ocean dir. Each bite day is ranked against the same place within 15 days of the same date in the 5 years either side, so
 the season and long-term trends are matched. With no link, a quarter of bites fall in the top quarter of days.
-Hot, sunny, calm days bring more people to the beach; big surf brings surfers. One-sided binomial tests against a quarter
-(hot, sunny, big waves: top quarter; calm: bottom quarter of wind)."""
+Hot, calm days bring more people to the beach; big surf brings surfers. (Sunshine isn't tested: too many days tie at the
+maximum, so it can't rank them.) One-sided binomial tests against a quarter
+(hot, big waves: top quarter; calm: bottom quarter of wind)."""
 import csv, datetime as dt, json, math, os, re, sys, unicodedata
 import openpyxl
 
@@ -75,7 +76,7 @@ def summary(sel, kind, var, top=True):
     k = sum((r >= 0.75) if top else (r < 0.25) for r in rs)
     return dict(n=len(rs), k=k, pct=round(100 * k / len(rs)), mean_rank=round(sum(rs) / len(rs), 2), p=binom_ge(k, len(rs)))
 
-TESTS = {"hot": ("weather", "temperature_2m_max", True), "sunny": ("weather", "sunshine_duration", True),
+TESTS = {"hot": ("weather", "temperature_2m_max", True),
          "calm": ("weather", "wind_speed_10m_max", False), "big_waves": ("waves", "wave_height_max", True)}
 out = {}
 for name, (kind, var, top) in TESTS.items():
