@@ -1,0 +1,1 @@
+Daily mean river flow (m3/s) at coastal gauges from Eden to K'gari, Water Data Online, Bureau of Meteorology, with data from the NSW and Queensland water agencies, CC BY 3.0 AU, https://www.bom.gov.au/waterdata/ . Retrieved 2026-11-08.

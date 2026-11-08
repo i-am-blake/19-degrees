@@ -1,3 +1,2 @@
-overpass 200 26662689
-coastline 200 10110735
-river ends near the coast: 374
+1375 discharge gauges in the box, 1031 near the coast
+534 gauges with 10+ years of daily flow
