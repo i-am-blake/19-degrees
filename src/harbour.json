@@ -1,0 +1,32 @@
+{
+ "first": "1994-10-03",
+ "last": "2025-04-28",
+ "animals": 97,
+ "sharks": {
+  "months": 95,
+  "weeks_dirtier": 180,
+  "weeks_cleaner": 180,
+  "after_dirtier": 12.8,
+  "after_cleaner": 13.4,
+  "ratio": 0.96,
+  "p": 0.231
+ },
+ "hours": {
+  "months": 95,
+  "weeks_dirtier": 180,
+  "weeks_cleaner": 180,
+  "after_dirtier": 472.1,
+  "after_cleaner": 516.7,
+  "ratio": 0.91,
+  "p": 0.165
+ },
+ "hours_west": {
+  "months": 43,
+  "weeks_dirtier": 83,
+  "weeks_cleaner": 83,
+  "after_dirtier": 199.0,
+  "after_cleaner": 253.4,
+  "ratio": 0.79,
+  "p": 0.01
+ }
+}
