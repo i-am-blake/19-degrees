@@ -1,0 +1,42 @@
+{
+ "areas": [
+  "Gold Coast",
+  "Nth Stradbroke Is.",
+  "Bribie Island",
+  "Sunshine Coast South",
+  "Sunshine Coast North",
+  "Rainbow Beach",
+  "Bundaberg"
+ ],
+ "months": 2520,
+ "tiger": {
+  "ratio": 1.03,
+  "caught_high": 645,
+  "months_high": 520,
+  "caught_other": 2420,
+  "months_other": 2000,
+  "per_month_high": 1.24,
+  "per_month_other": 1.21,
+  "p": 0.977
+ },
+ "bull": {
+  "ratio": 2.29,
+  "caught_high": 310,
+  "months_high": 520,
+  "caught_other": 520,
+  "months_other": 2000,
+  "per_month_high": 0.6,
+  "per_month_other": 0.26,
+  "p": 0.0
+ },
+ "other_sharks": {
+  "ratio": 1.1,
+  "caught_high": 1039,
+  "months_high": 520,
+  "caught_other": 3637,
+  "months_other": 2000,
+  "per_month_high": 2.0,
+  "per_month_other": 1.82,
+  "p": 0.738
+ }
+}

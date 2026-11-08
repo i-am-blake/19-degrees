@@ -183,6 +183,14 @@ if "rivers" in D and "harbour" in D:
         check("C6 rivers and harbour", m.groups(), tuple(str(x) for x in (b["n"], b["high_quarter"], b["pct"], w["high_quarter"], w["n"], w["pct"], t["high_quarter"], t["n"], t["pct"],
               hb["animals"], hb["sharks"]["ratio"], _pf(hb["sharks"]["p"]), hb["hours_west"]["ratio"], _pf(hb["hours_west"]["p"]))))
 
+if "tigerqld" in D and "tigerrain" in D:
+    q, ta = D["tigerqld"], D["tigerrain"]["all"]["tiger"]
+    for m in find("C6 Queensland bull catches", r"caught ([\d.]+) bull sharks a month in months when nearby rivers ran in their highest quarter for the time of year, against ([\d.]+) in other months of the same calendar month, place and five years: ([\d.]+) times as many \(" + P + r"\), and higher at 6 of 7 areas\. Tiger sharks didn't change \(([\d.]+) times; C28 ?\), nor did other sharks \(([\d.]+) times\)\. With (\d+) bull sharks caught"):
+        check("C6 Queensland bull catches", m.groups(), tuple(str(x) for x in (f"{q['bull']['per_month_high']:.2f}", f"{q['bull']['per_month_other']:.2f}", q["bull"]["ratio"], _pf(q["bull"]["p"]),
+              q["tiger"]["ratio"], q["other_sharks"]["ratio"], q["bull"]["caught_high"] + q["bull"]["caught_other"])))
+    for m in find("C28 tiger sharks", r"By the day, (\d+) of (\d+) tiger shark bites in Hawaii, Réunion and New Caledonia followed a 3-day spell in the wettest quarter for the place and season, the quarter chance gives \(" + P + r"\)\. And Queensland's shark-control gear, Gold Coast to Bundaberg since 1996, caught tiger sharks at the same rate in high-river months as in others \(([\d.]+) against ([\d.]+) a month; ([\d.]+) times, " + P + r"\)"):
+        check("C28 tiger sharks", m.groups(), tuple(str(x) for x in (ta["wettest_quarter"], ta["n"], _pf(ta["p"]), f"{q['tiger']['per_month_high']:.2f}", f"{q['tiger']['per_month_other']:.2f}", q["tiger"]["ratio"], _pf(q["tiger"]["p"]))))
+
 # Claim C23 (california19.py), when present
 if "california" in D:
     ca = D["california"]; e0, e3, t = ca["eras"][0], ca["eras"][-1], ca["test"]

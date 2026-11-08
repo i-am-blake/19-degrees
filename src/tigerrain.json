@@ -1,0 +1,86 @@
+{
+ "hawaii": {
+  "tiger": {
+   "n": 80,
+   "wettest_quarter": 21,
+   "pct": 26,
+   "p": 0.44
+  },
+  "bull": {
+   "n": 0,
+   "wettest_quarter": 0,
+   "pct": null,
+   "p": null
+  },
+  "other": {
+   "n": 94,
+   "wettest_quarter": 23,
+   "pct": 24,
+   "p": 0.587
+  },
+  "tiger_vs_rest_p": 0.862
+ },
+ "reunion": {
+  "tiger": {
+   "n": 10,
+   "wettest_quarter": 2,
+   "pct": 20,
+   "p": 0.756
+  },
+  "bull": {
+   "n": 25,
+   "wettest_quarter": 3,
+   "pct": 12,
+   "p": 0.968
+  },
+  "other": {
+   "n": 25,
+   "wettest_quarter": 4,
+   "pct": 16,
+   "p": 0.904
+  },
+  "tiger_vs_rest_p": 0.637
+ },
+ "new_caledonia": {
+  "tiger": {
+   "n": 20,
+   "wettest_quarter": 4,
+   "pct": 20,
+   "p": 0.775
+  },
+  "bull": {
+   "n": 11,
+   "wettest_quarter": 2,
+   "pct": 18,
+   "p": 0.803
+  },
+  "other": {
+   "n": 31,
+   "wettest_quarter": 8,
+   "pct": 26,
+   "p": 0.527
+  },
+  "tiger_vs_rest_p": 1.0
+ },
+ "all": {
+  "tiger": {
+   "n": 110,
+   "wettest_quarter": 27,
+   "pct": 25,
+   "p": 0.58
+  },
+  "bull": {
+   "n": 36,
+   "wettest_quarter": 5,
+   "pct": 14,
+   "p": 0.966
+  },
+  "other": {
+   "n": 150,
+   "wettest_quarter": 35,
+   "pct": 23,
+   "p": 0.71
+  },
+  "tiger_vs_rest_p": 0.567
+ }
+}
