@@ -6,6 +6,7 @@ name: Fetch weather, waves, tides, whales and chlorophyll
 #  2. Open-Meteo historical marine data (ERA5 waves; CC BY 4.0): daily maximum wave height at the same coasts.
 #  3. NOAA CO-OPS tide predictions (high and low times; public domain) for Hawaii and California stations, 1980 on.
 #  4. OBIS humpback whale records off NSW (each dataset's own license, mostly CC0 or CC BY). Claim C5.
+#  6. NOAA Coastal Upwelling Transport Index (CUTI), daily by latitude off the US west coast (free to use). Claim C29.
 #  5. NASA MODIS Aqua monthly chlorophyll (NASA Ocean Biology Processing Group, via NOAA CoastWatch ERDDAP; NASA open
 #     data), 2003-2022, around each Australian region. Claims C4, C17.
 # Runs monthly on the 10th (never the same day as the other ocean-data fetches) or by hand.
@@ -15,7 +16,7 @@ on:
   workflow_dispatch:
     inputs:
       parts:
-        description: Which parts to fetch (weather, waves, tides, humpback, chlorophyll), comma-separated; blank = all
+        description: Which parts to fetch (weather, waves, tides, humpback, chlorophyll, upwelling), comma-separated; blank = all
         default: ""
       points:
         description: Only these weather and wave points (text each name must contain, e.g. hawaii); blank = all
@@ -145,6 +146,13 @@ jobs:
           PY
           [ -s out/chlorophyll_regions.csv ] && [ $(wc -l < out/chlorophyll_regions.csv) -gt 1 ] || rm -f out/chlorophyll_regions.csv
           printf "MODIS Aqua monthly chlorophyll-a (4 km), NASA Ocean Biology Processing Group, via NOAA CoastWatch ERDDAP (erdMH1chlamday), NASA open data. A 0.3° box around each Australian region's sea temperature point, 2003 to March 2022. Retrieved %s.\n" "$(date -u +%Y-%m-%d)" > out/README_chlorophyll.txt
+      - name: Upwelling index (NOAA CUTI)
+        if: env.PARTS == '' || contains(env.PARTS, 'upwelling')
+        run: |
+          curl -sSfL --retry 4 --retry-delay 60 -m 900 -o out/cuti_daily.csv "https://upwell.pfeg.noaa.gov/erddap/griddap/erdCUTIdaily.csv?CUTI%5B(1988-01-01):1:(last)%5D%5B(31.0):1:(47.0)%5D" \
+            && echo "upwelling: $(wc -l < out/cuti_daily.csv) lines" >> out/dated_log.txt || echo "upwelling download failed" >> out/dated_log.txt
+          [ -s out/cuti_daily.csv ] && gzip -f out/cuti_daily.csv
+          printf "Coastal Upwelling Transport Index (CUTI), daily, 31-47N, 1988 on, NOAA Southwest Fisheries Science Center, via NOAA ERDDAP (erdCUTIdaily); free to use and redistribute. Cite Jacox, M.G., Edwards, C.A., Hazen, E.L. and Bograd, S.J. (2018), J. Geophys. Res. Oceans 123, 7332-7350, doi:10.1029/2018JC014187. Retrieved %s.\n" "$(date -u +%Y-%m-%d)" > out/README_cuti.txt
       - name: Show the log
         if: always()
         run: cat out/dated_log.txt
