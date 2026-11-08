@@ -191,6 +191,12 @@ if "tigerqld" in D and "tigerrain" in D:
     for m in find("C28 tiger sharks", r"By the day, (\d+) of (\d+) tiger shark bites in Hawaii, Réunion and New Caledonia followed a 3-day spell in the wettest quarter for the place and season, the quarter chance gives \(" + P + r"\)\. And Queensland's shark-control gear, Gold Coast to Bundaberg since 1996, caught tiger sharks at the same rate in high-river months as in others \(([\d.]+) against ([\d.]+) a month; ([\d.]+) times, " + P + r"\)"):
         check("C28 tiger sharks", m.groups(), tuple(str(x) for x in (ta["wettest_quarter"], ta["n"], _pf(ta["p"]), f"{q['tiger']['per_month_high']:.2f}", f"{q['tiger']['per_month_other']:.2f}", q["tiger"]["ratio"], _pf(q["tiger"]["p"]))))
 
+if "whitecool" in D:
+    w = D["whitecool"]
+    for m in find("C5 Queensland white catches", r"caught (\d+) white sharks from May to November between 1996 and 2025\. East Australian humpbacks grew roughly tenfold over those years, but white shark catches didn't \(([-\d.]+)% a year, " + P + r"; (\d+) in the first fifteen years, (\d+) in the next\)\. Nor did cooler-than-usual months catch more \(([\d.]+) against ([\d.]+) a month in warmer ones, compared within the same calendar month; ([\d.]+) times, " + P + r"\)"):
+        check("C5 Queensland white catches", m.groups(), tuple(str(x) for x in (w["total"], w["trend_pct_per_year"], _pf(w["trend_p"]), w["first_half"], w["second_half"],
+              f"{w['cooler']['per_month']:.3f}", f"{w['warmer']['per_month']:.3f}", w["cool_ratio"], _pf(w["cool_p"]))))
+
 # Claim C23 (california19.py), when present
 if "california" in D:
     ca = D["california"]; e0, e3, t = ca["eras"][0], ca["eras"][-1], ca["test"]

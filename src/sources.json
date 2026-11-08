@@ -1,7 +1,8 @@
 {
  "_about": "Every data source the site uses; the Sources page is built from this list. Data a fetch job saves with a README_*.txt on a data branch is listed automatically, from that README, until it is added here: cover it with a 'readme' key, or put it in 'hide' if the site doesn't use it.",
  "hide": [
-  "ocean-data/README_redmap.txt"
+  "ocean-data/README_redmap.txt",
+  "ocean-data/README_cuti.txt"
  ],
  "groups": [
   {

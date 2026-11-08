@@ -346,7 +346,7 @@ if os.path.exists(_imos):
 _lw = os.path.join(here, "leeuwin.json")  # leeuwin19.py, claim C7; optional
 if os.path.exists(_lw):
     d["leeuwin"] = json.load(open(_lw)); print("leeuwin", d["leeuwin"])
-for _k in ("fieldnotes", "lunar", "obis", "iod", "coastpop", "mhw", "beachwatch", "hawaii", "exposure", "beachday", "tides", "whales", "chlorophyll", "rivers", "harbour", "tigerqld", "tigerrain"):  # fieldnotes19.py, lunar19.py (C24), mhw19.py (C19 daily), beach19.py (C6 water quality); optional
+for _k in ("fieldnotes", "lunar", "obis", "iod", "coastpop", "mhw", "beachwatch", "hawaii", "exposure", "beachday", "tides", "whales", "chlorophyll", "rivers", "harbour", "tigerqld", "tigerrain", "whitecool"):  # fieldnotes19.py, lunar19.py (C24), mhw19.py (C19 daily), beach19.py (C6 water quality); optional
     _f = os.path.join(here, _k + ".json")
     if os.path.exists(_f):
         d[_k] = json.load(open(_f)); print(_k, "loaded")

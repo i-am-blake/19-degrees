@@ -42,6 +42,7 @@ HI=""; [ -s ocean/hawaii_incidents.csv ] && HI=ocean/hawaii_incidents.csv
 { [ -s imos/BullShark_Carcharhinusleucas.csv.gz ] && [ -s ocean/beachwatch_enterococci.csv.gz ] && python3 -I harbour19.py imos/BullShark_Carcharhinusleucas.csv.gz ocean/beachwatch_enterococci.csv.gz harbour.json; } || warn "C6 harbour step failed, page keeps last numbers"
 { [ -s ocean/river_gauges.csv ] && [ -s ocean/scp-numbers-caught.xlsx ] && python3 -I tigerqld19.py ocean/scp-numbers-caught.xlsx ocean/river_gauges.csv ocean/river_flow_daily.csv.gz tigerqld.json; } || warn "C6/C28 Queensland catch step failed, page keeps last numbers"
 { ls ocean/weather_*.csv >/dev/null 2>&1 && python3 -I tigerrain19.py ocean islands_nc_run.csv $HI tigerrain.json; } || warn "C28 rain step failed, page keeps last numbers"
+{ [ -s ocean/scp-numbers-caught.xlsx ] && [ -s sst/Gold_Coast.csv ] && python3 -I whitecool19.py ocean/scp-numbers-caught.xlsx sst/Gold_Coast.csv "sst/Sunshine_Coast_and_Moreton_Bay.csv" whitecool.json; } || warn "C5 white shark catch step failed, page keeps last numbers"
 { f=$(ls ocean/california_*.xlsx 2>/dev/null | head -n 1); [ -n "$f" ] && python3 -I mhw19.py ocean islands_nc_run.csv "$f" $HI mhw.json; } || warn "C19 heatwave step failed, page keeps last numbers"
 { [ -s ocean/beachwatch_enterococci.csv.gz ] && python3 -I beach19.py asid.csv ocean/beachwatch_enterococci.csv.gz beachwatch.json; } || warn "C6 Beachwatch step failed, page keeps last numbers"
 # Tagged and recorded bull and tiger sharks outside Australia (claim C25), from OBIS records on ocean-data;
@@ -89,5 +90,5 @@ python3 -I make_site.py 19-degrees.html pub site
 
 # 7. Copy back
 cp -r site/. "$R/"
-cp heat.json asid_version.txt "$R/src/"; [ -f rain.json ] && cp rain.json "$R/src/"; [ -f imos.json ] && cp imos.json "$R/src/"; [ -f leeuwin.json ] && cp leeuwin.json "$R/src/"; [ -f california.json ] && cp california.json "$R/src/"; for j in fieldnotes lunar obis iod coastpop mhw beachwatch hawaii exposure beachday tides whales chlorophyll rivers harbour tigerqld tigerrain; do [ -f $j.json ] && cp $j.json "$R/src/"; done
+cp heat.json asid_version.txt "$R/src/"; [ -f rain.json ] && cp rain.json "$R/src/"; [ -f imos.json ] && cp imos.json "$R/src/"; [ -f leeuwin.json ] && cp leeuwin.json "$R/src/"; [ -f california.json ] && cp california.json "$R/src/"; for j in fieldnotes lunar obis iod coastpop mhw beachwatch hawaii exposure beachday tides whales chlorophyll rivers harbour tigerqld tigerrain whitecool; do [ -f $j.json ] && cp $j.json "$R/src/"; done
 echo "built OK (new database version: $NEWDB)"

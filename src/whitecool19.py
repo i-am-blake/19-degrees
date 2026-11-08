@@ -14,10 +14,12 @@ from collections import defaultdict
 import openpyxl
 
 SCP, GC, SC, OUT = sys.argv[1:5]
-def sst(p):
+def sst(p):  # the weekly build's sst/<region>.csv (date,sst) or a raw ERDDAP csv (time,lat,lon,sst)
     d = {}
     for l in open(p):
-        t, _, _, v = l.strip().split(",")
+        f = l.strip().split(",")
+        if len(f) < 2 or not f[0][:4].isdigit(): continue
+        t, v = f[0], f[-1]
         if v not in ("NaN", ""): d[(int(t[:4]), int(t[5:7]))] = float(v)
     return d
 SST = {"gc": sst(GC), "sc": sst(SC)}
