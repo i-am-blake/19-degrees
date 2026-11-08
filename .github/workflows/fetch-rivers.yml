@@ -1,77 +1,28 @@
-name: Fetch river flow (NSW and Queensland coast)
-# Daily mean river flow at gauges near the coast from Victoria's border to K'gari, for the bull shark plume test (claim C6).
-# Source: Water Data Online, Bureau of Meteorology, from state water agencies (CC BY 3.0 AU). Adds files to the 'ocean-data'
-# branch without touching the other files there. Runs monthly on the 11th (never the same day as the other ocean-data
-# fetches) or by hand.
+name: Fetch river mouths
+# For claim C6. Asks OpenStreetMap (Overpass API) for rivers on Australia's east coast (24-36 S), keeps only the points
+# where they reach the sea, and adds that small file to the 'ocean-data' branch. Runs only when started by hand.
 on:
-  schedule:
-    - cron: "41 11 11 * *"   # 11th of each month, 11:41 UTC
   workflow_dispatch:
 permissions:
   contents: write
 jobs:
   rivers:
     runs-on: ubuntu-latest
-    timeout-minutes: 240
+    timeout-minutes: 15
     steps:
       - uses: actions/checkout@v4
-      - name: River flow (Water Data Online)
+      - name: Download and extract river mouths
         run: |
-          mkdir -p out; : > out/rivers_log.txt
-          python3 - <<'PY'
-          import datetime, json, math, time, urllib.parse, urllib.request
-          B = "http://www.bom.gov.au/waterdata/services?"
-          H = {"User-Agent": "Mozilla/5.0 (19-degrees.org open data)"}
-          log = open("out/rivers_log.txt", "a")
-          def q(**p):
-              p = {"service": "kisters", "type": "queryServices", "format": "json", **p}
-              for a in range(4):
-                  try: return json.load(urllib.request.urlopen(urllib.request.Request(B + urllib.parse.urlencode(p), headers=H), timeout=300))
-                  except Exception as e: err = e; time.sleep(20 * (a + 1))
-              raise err
-          # gauges with discharge between Eden and K'gari, east of the ranges
-          try:
-              st = q(request="getStationList", parametertype_name="Water Course Discharge",
-                     returnfields="station_no,station_name,station_latitude,station_longitude", bBox="149.8,-37.6,153.7,-24.5")
-          except Exception as e:
-              log.write(f"station list failed: {e}\n"); raise SystemExit(0)
-          head, rows = st[0], st[1:]
-          stations = [dict(zip(head, r)) for r in rows]
-          # keep gauges within about 60 km of the coast: east of a line from (150.0,-37.5) to (152.8,-24.5)
-          def coastal(s):
-              la, lo = float(s["station_latitude"]), float(s["station_longitude"])
-              west = 150.0 + (la + 37.5) / 13.0 * 2.8 - 0.55
-              return lo > west
-          stations = [s for s in stations if coastal(s)]
-          log.write(f"{len(rows)} discharge gauges in the box, {len(stations)} near the coast\n")
-          end = datetime.date.today().isoformat(); n_ok = 0
-          with open("out/river_flow_daily.csv", "w") as f, open("out/river_gauges.csv", "w") as g:
-              f.write("station_no,date,flow_m3s\n"); g.write("station_no,station_name,lat,lon,first,last,days\n")
-              for s in stations:
-                  try:
-                      ts = q(request="getTimeseriesList", station_no=s["station_no"], parametertype_name="Water Course Discharge",
-                             ts_name="DMQaQc.Merged.DailyMean.24HR", returnfields="ts_id")
-                      if len(ts) < 2: continue
-                      v = q(request="getTimeseriesValues", ts_id=ts[1][0], **{"from": "1970-01-01", "to": end}, returnfields="Timestamp,Value")
-                      data = v[0]["data"] if isinstance(v, list) else v["data"]
-                      good = [(t[:10], x) for t, x in data if x is not None and not (isinstance(x, float) and math.isnan(x))]
-                      if len(good) < 3650: continue
-                      for t, x in good: f.write(f"{s['station_no']},{t},{x}\n")
-                      g.write(f"{s['station_no']},{s['station_name'].replace(',', ' ')},{s['station_latitude']},{s['station_longitude']},{good[0][0]},{good[-1][0]},{len(good)}\n")
-                      n_ok += 1
-                  except Exception as e:
-                      log.write(f"{s['station_no']} failed: {e}\n")
-                  time.sleep(2)
-          log.write(f"{n_ok} gauges with 10+ years of daily flow\n")
-          PY
-          gzip -f out/river_flow_daily.csv 2>/dev/null || true
-          printf "Daily mean river flow (m3/s) at coastal gauges from Eden to K'gari, Water Data Online, Bureau of Meteorology, with data from the NSW and Queensland water agencies, CC BY 3.0 AU, https://www.bom.gov.au/waterdata/ . Retrieved %s.\n" "$(date -u +%Y-%m-%d)" > out/README_rivers_flow.txt
-          cat out/rivers_log.txt | tail -20
+          mkdir -p tmp out
+          c=$(curl -sL -A "19-degrees/1.0 (+https://19-degrees.org)" -H "Accept: application/json" -o tmp/osm.json -w "%{http_code} %{size_download}" --data-urlencode 'data=[out:json][timeout:240];way["waterway"="river"](-36.5,149.5,-23.5,154.0);out geom;' https://overpass-api.de/api/interpreter || true); echo "overpass $c" > out/rivers_log.txt
+          c=$(curl -sL -o tmp/ne.geojson -w "%{http_code} %{size_download}" https://raw.githubusercontent.com/nvkelso/natural-earth-vector/master/geojson/ne_10m_coastline.geojson || true); echo "coastline $c" >> out/rivers_log.txt
+          python3 src/river_mouths.py tmp/osm.json tmp/ne.geojson out/river_mouths_east.csv 2>&1 | tail -3 >> out/rivers_log.txt || true
+          printf "River mouths on Australia's east coast, 23.5-36.5 S: ends of OpenStreetMap rivers within 3 km of the Natural Earth coastline.\nData: (c) OpenStreetMap contributors, ODbL 1.0 (https://www.openstreetmap.org/copyright); Natural Earth coastline, public domain.\n" > out/README_rivers.txt
+          cat out/rivers_log.txt
       - name: Add to the ocean-data branch
         if: always()
         run: |
           git clone -q --depth 1 --branch ocean-data "https://x-access-token:${{ github.token }}@github.com/${{ github.repository }}.git" br
-          [ -s out/river_gauges.csv ] && [ $(wc -l < out/river_gauges.csv) -gt 1 ] || rm -f out/river_gauges.csv out/river_flow_daily.csv.gz out/README_rivers_flow.txt
           cp out/* br/ 2>/dev/null || true; cd br; git add -A
-          git -c user.name="github-actions[bot]" -c user.email="41898900+github-actions[bot]@users.noreply.github.com" commit -qm "River flow, $(date -u +%Y-%m-%d)" || exit 0
+          git -c user.name="github-actions[bot]" -c user.email="41898900+github-actions[bot]@users.noreply.github.com" commit -qm "River mouths, $(date -u +%Y-%m-%d)" || exit 0
           git push -q "https://x-access-token:${{ github.token }}@github.com/${{ github.repository }}.git" HEAD:ocean-data
