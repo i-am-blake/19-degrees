@@ -9,12 +9,13 @@ OFFS = [(0, 0), (0, 1), (0, -1), (-1, 0), (1, 0), (-1, 1), (-1, -1), (1, 1), (1,
 
 def get(lat, lon):
     url = f"{BASE}%5B(1900-01-16):1:(last)%5D%5B({lat})%5D%5B({lon})%5D"
-    for attempt in range(6):  # NOAA ERDDAP sometimes answers 503 when busy; wait and try again
+    for attempt in range(9):  # NOAA ERDDAP answers 503 when busy and 403 for a while after heavy use; wait and try again
         try:
             txt = urllib.request.urlopen(url, timeout=120).read().decode(); break
-        except Exception:
-            if attempt == 5: raise
-            time.sleep(15 * (attempt + 1))
+        except Exception as e:
+            if attempt == 8: raise
+            blocked = getattr(e, "code", None) == 403
+            time.sleep((90 if blocked else 15) * (attempt + 1))  # a 403 block can last half an hour or more
     return [(r[0][:7], r[3]) for r in list(csv.reader(io.StringIO(txt)))[2:]]
 
 def fetch(region):
