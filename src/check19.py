@@ -177,6 +177,12 @@ if "tides" in D:
     for m in find("C24 tides", r"Of (\d+) bites with a known time in California and Hawaii, (\d+)% came around low water, (\d+)% on the rising tide, (\d+)% around high water and (\d+)% on the falling tide, close to a quarter each \(" + P + r"\)"):
         check("C24 tides", m.groups(), tuple(str(x) for x in (t["n"], *t["pct"], _pf(t["p"]))))
 
+if "rivers" in D and "harbour" in D:
+    b, w, t, hb = D["rivers"]["bull"], D["rivers"]["white"], D["rivers"]["tiger"], D["harbour"]
+    for m in find("C6 rivers and harbour", r"of (\d+) NSW and Queensland bull shark bites since 1970 with a river gauge within 60 km, (\d+) \((\d+)%\) came in a month when nearby rivers ran in their highest quarter for the time of year, against 25% by chance and (\d+) of (\d+) white shark bites \((\d+)%\); using only the biggest river near each bite gives the same\. Tiger sharks lean toward high flow: (\d+) of (\d+) \((\d+)%\)\. Sydney Harbour, (\d+) tagged bull sharks: no more of them were around after the harbor tested dirtier than usual \(([\d.]+) times as many over the following fortnight, compared within the same month; " + P + r"\), and west of the Harbour Bridge they were picked up for fewer hours \(([\d.]+) times; " + P + r"\)"):
+        check("C6 rivers and harbour", m.groups(), tuple(str(x) for x in (b["n"], b["high_quarter"], b["pct"], w["high_quarter"], w["n"], w["pct"], t["high_quarter"], t["n"], t["pct"],
+              hb["animals"], hb["sharks"]["ratio"], _pf(hb["sharks"]["p"]), hb["hours_west"]["ratio"], _pf(hb["hours_west"]["p"]))))
+
 # Claim C23 (california19.py), when present
 if "california" in D:
     ca = D["california"]; e0, e3, t = ca["eras"][0], ca["eras"][-1], ca["test"]

@@ -195,6 +195,16 @@
      "readme": [
       "ocean-data/README_beachwatch.txt"
      ]
+    },
+    {
+     "name": "Water Data Online river flow",
+     "url": "https://www.bom.gov.au/waterdata/",
+     "from": "Bureau of Meteorology, with data from the NSW and Queensland water agencies",
+     "used_for": "Daily river flow at coastal gauges; claim C6",
+     "license": "CC BY 3.0 AU",
+     "readme": [
+      "ocean-data/README_rivers_flow.txt"
+     ]
     }
    ]
   },

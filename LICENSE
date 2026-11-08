@@ -44,6 +44,7 @@ Credit: "19 Degrees", with a link to the page.
 - Chlorophyll: MODIS Aqua monthly chlorophyll-a, NASA Ocean Biology Processing Group, NASA open data, via NOAA CoastWatch ERDDAP.
 - Humpback whale records off NSW: OBIS, https://obis.org ; each dataset keeps its own license.
 - Public holidays: the open-source 'holidays' Python package (MIT), https://github.com/vacanza/holidays .
+- River flow: Water Data Online, Bureau of Meteorology, with data from the NSW and Queensland water agencies, CC BY 3.0 AU, https://www.bom.gov.au/waterdata/ .
 - Coastal drownings: Surf Life Saving Australia, National Coastal Safety Report 2025 (figures cited, © Surf Life Saving Australia). Population by decade: Australian Bureau of Statistics (figures cited).
 - Figures quoted from published studies remain the work of their authors; see the page's source list.
 

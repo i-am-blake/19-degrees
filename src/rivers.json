@@ -1,0 +1,39 @@
+{
+ "all": {
+  "n": 280,
+  "high_quarter": 72,
+  "pct": 26,
+  "mean_rank": 0.53,
+  "p": 0.414
+ },
+ "other": {
+  "n": 99,
+  "high_quarter": 29,
+  "pct": 29,
+  "mean_rank": 0.54,
+  "p": 0.191
+ },
+ "white": {
+  "n": 108,
+  "high_quarter": 24,
+  "pct": 22,
+  "mean_rank": 0.51,
+  "p": 0.779
+ },
+ "tiger": {
+  "n": 21,
+  "high_quarter": 8,
+  "pct": 38,
+  "mean_rank": 0.61,
+  "p": 0.13
+ },
+ "bull": {
+  "n": 52,
+  "high_quarter": 11,
+  "pct": 21,
+  "mean_rank": 0.52,
+  "p": 0.785
+ },
+ "bull_vs_white_p": 1.0,
+ "gauges": 525
+}
