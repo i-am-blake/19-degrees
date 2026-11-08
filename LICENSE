@@ -45,6 +45,7 @@ Credit: "19 Degrees", with a link to the page.
 - Humpback whale records off NSW: OBIS, https://obis.org ; each dataset keeps its own license.
 - Public holidays: the open-source 'holidays' Python package (MIT), https://github.com/vacanza/holidays .
 - River flow: Water Data Online, Bureau of Meteorology, with data from the NSW and Queensland water agencies, CC BY 3.0 AU, https://www.bom.gov.au/waterdata/ .
+- Upwelling: Coastal Upwelling Transport Index (CUTI), NOAA Southwest Fisheries Science Center, free to use and redistribute. Cite Jacox, M.G. et al. (2018), J. Geophys. Res. Oceans 123, 7332-7350, doi:10.1029/2018JC014187.
 - Coastal drownings: Surf Life Saving Australia, National Coastal Safety Report 2025 (figures cited, © Surf Life Saving Australia). Population by decade: Australian Bureau of Statistics (figures cited).
 - Figures quoted from published studies remain the work of their authors; see the page's source list.
 

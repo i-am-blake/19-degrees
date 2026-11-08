@@ -1,0 +1,10 @@
+{
+ "n": 128,
+ "strongest_quarter": 22,
+ "strongest_pct": 17,
+ "p": 0.987,
+ "weakest_quarter": 36,
+ "weakest_pct": 28,
+ "p_weak": 0.235,
+ "mean_rank": 0.45
+}

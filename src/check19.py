@@ -197,6 +197,11 @@ if "whitecool" in D:
         check("C5 Queensland white catches", m.groups(), tuple(str(x) for x in (w["total"], w["trend_pct_per_year"], _pf(w["trend_p"]), w["first_half"], w["second_half"],
               f"{w['cooler']['per_month']:.3f}", f"{w['warmer']['per_month']:.3f}", w["cool_ratio"], _pf(w["cool_p"]))))
 
+if "upwelling" in D:
+    u = D["upwelling"]
+    for m in find("C29 upwelling", r"Of (\d+) California white shark incidents since 1988, (\d+) \((\d+)%\) followed a week in the strongest-upwelling quarter for the latitude and season, below the quarter chance gives; (\d+) \((\d+)%\) followed the weakest \(" + P + r"\)"):
+        check("C29 upwelling", m.groups(), tuple(str(x) for x in (u["n"], u["strongest_quarter"], u["strongest_pct"], u["weakest_quarter"], u["weakest_pct"], _pf(u["p_weak"]))))
+
 # Claim C23 (california19.py), when present
 if "california" in D:
     ca = D["california"]; e0, e3, t = ca["eras"][0], ca["eras"][-1], ca["test"]
