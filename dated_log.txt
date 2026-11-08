@@ -1,5 +1,1 @@
-weather hawaii_oahu_south: 28063 days
-weather hawaii_oahu_north: 28063 days
-weather hawaii_maui: 28063 days
-weather hawaii_kauai: 28063 days
-weather hawaii_big_island: 28063 days
+upwelling download failed

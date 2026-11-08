@@ -1,0 +1,1 @@
+Coastal Upwelling Transport Index (CUTI), daily, 31-47N, 1988 on, NOAA Southwest Fisheries Science Center, via NOAA ERDDAP (erdCUTIdaily); free to use and redistribute. Cite Jacox, M.G., Edwards, C.A., Hazen, E.L. and Bograd, S.J. (2018), J. Geophys. Res. Oceans 123, 7332-7350, doi:10.1029/2018JC014187. Retrieved 2026-11-08.
