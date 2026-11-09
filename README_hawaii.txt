@@ -1,1 +1,1 @@
-Hawaii shark incidents since 1995, Hawaii Department of Land and Natural Resources, https://dlnr.hawaii.gov/sharks/shark-incidents/incidents/ . Facts only (date and time, location, activity, water clarity and depth, shark); see the source for the full record. Retrieved 2026-11-07.
+Hawaii shark incidents since 1995, Hawaii Department of Land and Natural Resources, https://dlnr.hawaii.gov/sharks/shark-incidents/incidents/ . Facts only (date and time, location, activity, water clarity and depth, shark); see the source for the full record. Retrieved 2026-11-09.
