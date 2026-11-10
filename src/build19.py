@@ -358,6 +358,8 @@ if os.path.exists(_isl):
     d["islands"] = json.load(open(_isl)); print("islands", d["islands"]["c6"]["bull"], {k: v["sea_min"] for k, v in d["islands"]["islands"].items()})
 blob = json.dumps(d, separators=(",", ":")).replace("</", "<\\/")
 html = open(PAGE).read()
+import results19  # result sentences from the monthly-refreshed tests, written from the data
+html = results19.fill(html, json.loads(blob))
 pat = re.compile(r'(<script type="application/json" id="n19-data">)(.*?)(</script>)', re.S)
 assert pat.search(html), "data block not found"
 open(OUT, "w").write(pat.sub(lambda m: m.group(1) + blob + m.group(3), html, count=1))
