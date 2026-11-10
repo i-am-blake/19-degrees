@@ -142,10 +142,11 @@ for pid, (fn, need) in results19.PARAS.items():
 for pat, fn, need in results19.SENTENCES:
     if not all(k in D for k in need) or (need == ("lunar",) and "hawaii_all" not in D["lunar"]): continue
     m = pat.search(page); check(fn.__name__, bool(m) and m[0] == fn(D), True)
-for cid, (need, fn) in results19.BADGES.items():
-    if not all(k in D for k in need) or not results19.ready(fn, D): continue
-    m = re.search(rf'id="{cid}"[^>]*>.{{0,200}}?<span class="cstat early">Early result: ([^<]*)</span>', page, re.S)
-    check(f"{cid} status", m and m[1], fn(D))
+import grades19
+for a in re.finditer(r'<article class="claim" id="(c\d+)" data-status="(\w+)">.{0,240}?<span class="(cstat[^"]*)">([^<]*)</span>', page, re.S):
+    try: want = grades19.grade(a[1], D)
+    except (KeyError, TypeError): continue
+    check(f"{a[1].upper()} grade", (a[2], a[4], a[3]), (want[0], want[1], results19.CLS[want[0]]))
 
 # Claim C23 (california19.py), when present
 if "california" in D:
@@ -183,10 +184,10 @@ if not pm[max(pm, key=int)] / pm["1900"] > 6: bad.append("population: page says 
 
 # Counts
 cards = page.count('class="claim"')
-early = page.count('data-status="early"')
+early = sum(page.count(f'data-status="{s}"') for s in ("early", "ruled", "supported", "strong"))
 for lab, pat, want in (("claims", r"See the (\d+) claims", cards), ("claims", r"Testable claims (\d+)", cards),
                        ("claims", r"Pick one of (\d+) claims", cards),
-                       ("early results", r"Early results (\d+)", early)):
+                       ("claims tested", r"Tested so far (\d+)", early)):
     for m in find(lab, pat, True): check(f"number of {lab} ('{m[0]}')", int(m[1]), want)
 # Every claim card names the decision it informs
 for c in re.finditer(r'<article class="claim" id="(c\d+)"([\s\S]*?)</article>', page):

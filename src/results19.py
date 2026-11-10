@@ -3,6 +3,7 @@ build19.py calls fill(html, D) after loading the results, so a new OBIS download
 text instead of blocking the weekly publish. check19.py then checks the same sentences against the data as before.
 Each paragraph is replaced whole (by its id); two Hawaii sentences inside older paragraphs are replaced in place."""
 import re
+import grades19 as G
 
 def pf(p):
     return "p &lt; 0.001" if p < 0.001 else f"p = {p:.3f}" if p < 0.01 else f"p = {p:.2f}"
@@ -22,7 +23,8 @@ def mhwC19(D):
         if sig(x): return "are more common during heatwaves" if up(x) else "are less common during heatwaves"
         return "lean that way" if up(x) else "lean the other way" if x["pct"] < x["expected_pct"] else "show no difference"
     link = A("https://www.ncei.noaa.gov/products/optimum-interpolation-sst", "marine heatwaves")
-    lead = (f"bites are more common during {link}." if up(a) else f"bites are less common during {link}.") if sig(a) else f"no clear link with {link} yet."
+    lead = {"supports": f"bites are more common during {link}.", "leans": f"bites lean toward {link}, not settled.",
+            "none": f"no clear link with {link} yet.", "other": f"bites are less common during {link}."}[G.V(up(a), a["p"])]
     dc, dh = d(c), d(h)
     haw = (f'and so {"are" if dc.startswith("are") else "do"} Hawaii\'s' if dh == dc else f"while Hawaii's {dh}")
     if not up(ib) and not up(it):
@@ -96,7 +98,8 @@ def whaleC5(D):
     w = D["whales"]; mm = w["migration_months"]
     months = ", ".join(MON[m - 1] for m in mm[:-1]) + " and " + MON[mm[-1] - 1]
     up = w["white_pct"] > w["other_pct"]
-    lead = ("white shark bites follow the whale season." if sig(w) else "leans that way, not settled.") if up else "not supported so far."
+    lead = {"supports": "white shark bites follow the whale season.", "leans": "leans that way, not settled.",
+            "none": "no clear link.", "other": "points the other way."}[G.V(up, w["p"])]
     return (f'Early result: {lead} Off NSW, {w["humpback_records"]:,} humpback whale records on ' + A("https://obis.org", "OBIS") + f' peak in {months}. '
             f'{w["white_in"]} of {w["white_n"]} NSW white shark bites since 1980 ({w["white_pct"]}%) came in those months, against {w["other_in"]} of {w["other_n"]} bull, tiger and whaler shark bites ({w["other_pct"]}%; {pf(w["p"])}). '
             'Comparing species keeps the season\'s beach crowds out of it. Whale records also depend on when people look.')
@@ -119,9 +122,10 @@ def whitecoolC5(D):
 
 def chlC4(D):
     c = D["chlorophyll"]; a = c["all"]
-    link = sig(a) and a["pct"] > 25
-    lead = "bites lean toward greener water." if link else "no clear link with greener water."
-    return (f'First look: {lead} NASA ' + A("https://oceancolor.gsfc.nasa.gov/", "MODIS") + ' chlorophyll (plankton, the base of the baitfish food chain), 2003 to 2022: '
+    v = G.V(a["pct"] > 25, a["p"]); link = v == "supports"
+    lead = {"supports": "bites follow greener water.", "leans": "bites lean toward greener water, not settled.",
+            "none": "no clear link with greener water.", "other": "bites come in clearer water."}[v]
+    return (f'Early result: {lead} NASA ' + A("https://oceancolor.gsfc.nasa.gov/", "MODIS") + ' chlorophyll (plankton, the base of the baitfish food chain), 2003 to 2022: '
             f'{a["greenest_quarter"]} of {a["n"]} Australian bites ({a["pct"]}%) came in a month in the greenest quarter for that place and time of year, against 25% by chance ({pf(a["p"])}); '
             f'white sharks {c["white"]["pct"]}%, bull sharks {c["bull"]["pct"]}%.' + (" Monthly satellite averages may be too coarse to see a bait run." if not link else ""))
 
@@ -139,7 +143,7 @@ def c28_ok(D):
 def tigerC28(D):
     q, qb, ta = D["tigerqld"]["tiger"], D["tigerqld"]["bull"], D["tigerrain"]["all"]["tiger"]
     a, b = c28_ok(D)
-    lead = "supported so far." if a and b else "mixed so far." if a or b else "not supported so far."
+    lead = {"supports": "supports it so far.", "leans": "leans toward it so far.", "none": "no clear link so far.", "other": "points the other way so far."}[G.g_c28(D)]
     tests = "Two stronger tests agree." if a and b else "Two stronger tests disagree." if a or b else "Two stronger tests don't."
     qx = ("the quarter chance gives" if not sig(ta) else "more than the quarter chance gives" if ta["pct"] > 25 else "fewer than the quarter chance gives")
     rate = ("at the same rate" if not sig(q) else "more often" if q["ratio"] > 1 else "less often")
@@ -150,16 +154,14 @@ def tigerC28(D):
             f'And Queensland\'s shark-control gear, Gold Coast to Bundaberg since 1996, caught tiger sharks {rate} in high-river months as in others ({q["per_month_high"]:.2f} against {q["per_month_other"]:.2f} a month; {q["ratio"]} times, {pf(q["p"])}), '
             f'{bull} (<a href="#c6">C6</a>). (Rain: ' + A("https://open-meteo.com/", "Open-Meteo") + '; river flow: ' + WDO + '; catches: ' + QLD + '.)')
 
-def c29_ok(D):
-    u = D["upwelling"]; return sig(u) and u["strongest_pct"] > 25
-
 def upC29(D):
-    u = D["upwelling"]; ok = c29_ok(D)
-    pos = "below the quarter chance gives" if u["strongest_pct"] < 25 else "above the quarter chance gives" if u["strongest_pct"] > 25 else "the quarter chance gives"
-    end = ("This agrees with Ryan et al.'s cooler-water finding from Australia. " if ok else
+    u = D["upwelling"]; v = G.g_c29(D); p2 = G.binom2(u["strongest_quarter"], u["n"], 0.25)
+    pos = "fewer than the quarter chance gives" if u["strongest_pct"] < 25 else "more than the quarter chance gives" if u["strongest_pct"] > 25 else "the quarter chance gives"
+    lead = {"supports": "supports it so far.", "leans": "leans toward it so far.", "none": "no clear link so far.", "other": "points the other way."}[v]
+    end = ("This agrees with Ryan et al.'s cooler-water finding from Australia. " if v == "supports" else
            "Ryan et al.'s cooler-water finding came from Australia and compared places, not days, so this doesn't rule it out there. ")
-    return (f'Early result: {"supported so far" if ok else "not supported so far"}. Of {u["n"]} California white shark incidents since 1988, {u["strongest_quarter"]} ({u["strongest_pct"]}%) followed a week in the strongest-upwelling quarter for the latitude and season, '
-            f'{pos}' + (f' ({pf(u["p"])})' if ok else "") + f'; {u["weakest_quarter"]} ({u["weakest_pct"]}%) followed the weakest ({pf(u["p_weak"])}). ' + end
+    return (f'Early result: {lead} Of {u["n"]} California white shark incidents since 1988, {u["strongest_quarter"]} ({u["strongest_pct"]}%) followed a week in the strongest-upwelling quarter for the latitude and season, '
+            f'{pos} ({pf(p2)}); {u["weakest_quarter"]} ({u["weakest_pct"]}%) followed the weakest. ' + end
             + '(' + A("https://upwell.pfeg.noaa.gov/erddap/info/erdCUTIdaily/index.html", "NOAA upwelling index") + '; California Department of Fish and Wildlife.)')
 
 def stationsC16(D):
@@ -183,15 +185,28 @@ def juvC30(D):
             f'on {j["days"]} days across {j["years"]} years between {j["y0"]} and {j["y1"]}: too few to compare warm and cool years. '
             'The nursery tagging at Port Stephens and Stockton Beach isn\'t in the public data, and that is what would make this testable.')
 
-def c16_badge(D):
-    c = D["imos"]["c16"]; main = sig(c) and c["slope"] > 0; r = c["long_run"]
-    return "leaving later" if main and sig(r) and r["slope"] > 0 else "leaning later, not settled" if main else "not supported so far"
+def ruledC24(D):
+    a = D["lunar"]["all"]; lo, hi = G.wilson(a["near"], a["n"])
+    if G.g_c24(D) != "ruled": return ""
+    return (f'Why ruled out: {a["near"]} of {a["n"]} bites ({a["near_pct"]}%) came within 3.7 days of a full or new moon, where chance gives half. '
+            f'The 95% range, {100 * lo:.0f}% to {100 * hi:.0f}%, stops short of the 60% that a 1.5-times effect would give, so a moon effect worth acting on would have shown up.')
+
+def ruledC5(D):
+    if G.g_c5(D) != "ruled": return ""
+    import math
+    from statistics import NormalDist
+    w = D["whitecool"]; b = math.log(1 + w["trend_pct_per_year"] / 100); z = NormalDist().inv_cdf(1 - w["trend_p"] / 2)
+    yrs = len(w["per_year"]) - 1; most = math.exp((b + 1.96 * abs(b) / z) * yrs)
+    return ('Why ruled out: the card\'s own test is whether the peak matches white sharks\' own winter move north, regardless of whales. '
+            f'East Australian humpbacks grew roughly tenfold since the 1990s, but Queensland\'s winter white shark catches did not: at most {most:.2f} times over {yrs} years on the 95% range, '
+            'short of the 1.5 times a whale-driven rise would need. The bite peak still falls in the migration months; the whales don\'t explain it.')
 
 PARAS = {"mhwC19": (mhwC19, ("mhw",)), "bwC6": (bwC6, ("beachwatch",)), "plumeC6": (plumeC6, ("rivers", "harbour")),
          "qldC6": (qldC6, ("tigerqld",)), "wkC18": (wkC18, ("exposure", "beachday")), "whaleC5": (whaleC5, ("whales",)),
          "whitecoolC5": (whitecoolC5, ("whitecool",)), "chlC4": (chlC4, ("chlorophyll",)), "tideC24": (tideC24, ("tides",)),
          "tigerC28": (tigerC28, ("tigerqld", "tigerrain")), "upC29": (upC29, ("upwelling",)),
-         "stationsC16": (stationsC16, ("imos",)), "juvC30": (juvC30, ("imos",))}
+         "stationsC16": (stationsC16, ("imos",)), "juvC30": (juvC30, ("imos",)),
+         "ruledC24": (ruledC24, ("lunar",)), "ruledC5": (ruledC5, ("whitecool",))}
 
 def hawaiiC6(D):
     h = D["hawaii"]
@@ -207,18 +222,23 @@ def hawaiiC24(D):
 SENTENCES = [(re.compile(r"Hawaii \(\d{4}–\d{4}\): the water was turbid or muddy at .*?(?:so murky water isn't special to tiger sharks there|so murky water does stand out for tiger sharks there|so tiger shark bites come in clearer water there)\."), hawaiiC6, ("hawaii",)),
              (re.compile(r"Hawaii (?:agrees|differs): \d+ of \d+ bites \(\d+%; p = [\d.]+\), and \d+ of \d+ tiger shark bites"), hawaiiC24, ("lunar",))]
 
-BADGES = {"c28": (("tigerqld", "tigerrain"), lambda D: (lambda a, b: "supported so far" if a and b else "mixed so far" if a or b else "not supported so far")(*c28_ok(D))),
-          "c29": (("upwelling",), lambda D: "supported so far" if c29_ok(D) else "not supported so far"),
-          "c16": (("imos",), c16_badge)}
+CLS = {"early": "cstat early", "ruled": "cstat ruled", "look": "cstat look", "nt": "cstat nt", "open": "cstat",
+       "supported": "cstat early", "strong": "cstat early"}
+
+def apply_grades(html, D):
+    def one(m):
+        cid = m[1]
+        try: st, lab = G.grade(cid, D)
+        except (KeyError, TypeError): return m[0]  # data for this claim not built yet: keep the page as it is
+        return f'<article class="claim" id="{cid}" data-status="{st}">' + m[2] + f'<span class="{CLS[st]}">{lab}</span>'
+    return re.sub(r'<article class="claim" id="(c\d+)" data-status="\w+">(.{0,240}?)<span class="cstat[^"]*">[^<]*</span>', one, html, flags=re.S)
 
 def ready(fn, D):  # a result file from before a test was added lacks its fields until the next run
     try: fn(D); return True
     except (KeyError, TypeError): return False
 
 def fill(html, D):
-    for cid, (need, fn) in BADGES.items():
-        if all(k in D for k in need) and ready(fn, D):
-            html = re.sub(rf'(id="{cid}"[^>]*>.{{0,200}}?<span class="cstat early">Early result: )[^<]*(</span>)', lambda m: m.group(1) + fn(D) + m.group(2), html, count=1, flags=re.S)
+    html = apply_grades(html, D)
     for pid, (fn, need) in PARAS.items():
         if all(k in D for k in need) and ready(fn, D):
             html = re.sub(rf'(<p class="agres" id="{pid}">).*?(</p>)', lambda m: m.group(1) + fn(D) + m.group(2), html, count=1, flags=re.S)
