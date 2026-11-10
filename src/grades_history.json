@@ -1,22 +1,12 @@
 {
  "c2": [
   {
-   "date": "2026-11-09",
-   "label": "Early result: suggestive, not settled",
-   "why": "Earlier wording, before every claim was graded on the same scale."
-  },
-  {
    "date": "2026-11-10",
    "label": "First look",
    "why": "No test yet separates more sharks from more listening stations, so it is described rather than tested."
   }
  ],
  "c7": [
-  {
-   "date": "2026-11-09",
-   "label": "Open",
-   "why": "Earlier wording, before every claim was graded on the same scale."
-  },
   {
    "date": "2026-11-10",
    "label": "First look",
@@ -32,22 +22,12 @@
  ],
  "c9": [
   {
-   "date": "2026-11-09",
-   "label": "Early result: half were limb wounds",
-   "why": "Earlier wording, before every claim was graded on the same scale."
-  },
-  {
    "date": "2026-11-10",
    "label": "First look",
    "why": "The records can describe the wounds but not the time to stop bleeding."
   }
  ],
  "c20": [
-  {
-   "date": "2026-11-09",
-   "label": "Open",
-   "why": "Earlier wording, before every claim was graded on the same scale."
-  },
   {
    "date": "2026-11-10",
    "label": "First look",
@@ -56,22 +36,12 @@
  ],
  "c22": [
   {
-   "date": "2026-11-09",
-   "label": "Open",
-   "why": "Earlier wording, before every claim was graded on the same scale."
-  },
-  {
    "date": "2026-11-10",
    "label": "First look",
    "why": "The island coasts never cool below 19°C, so they can't test the line."
   }
  ],
  "c30": [
-  {
-   "date": "2026-11-09",
-   "label": "Open",
-   "why": "Earlier wording, before every claim was graded on the same scale."
-  },
   {
    "date": "2026-11-10",
    "label": "First look",
@@ -143,22 +113,12 @@
  ],
  "c1": [
   {
-   "date": "2026-11-09",
-   "label": "Early result: holds in Queensland",
-   "why": "Earlier wording, before every claim was graded on the same scale."
-  },
-  {
    "date": "2026-11-10",
    "label": "Early result: leans toward it",
    "why": "Share of catch stands in for catch per net or drumline, which isn't published, so it can reach \"leans toward it\" at most."
   }
  ],
  "c3": [
-  {
-   "date": "2026-11-09",
-   "label": "Early result: reaches Eden, border unclear",
-   "why": "Earlier wording, before every claim was graded on the same scale."
-  },
   {
    "date": "2026-11-10",
    "label": "Early result: leans toward it",
@@ -167,22 +127,12 @@
  ],
  "c4": [
   {
-   "date": "2026-11-09",
-   "label": "Open",
-   "why": "Earlier wording, before every claim was graded on the same scale."
-  },
-  {
    "date": "2026-11-10",
    "label": "Early result: leans toward it",
    "why": "Satellite chlorophyll, a stand-in for baitfish, leans the predicted way."
   }
  ],
  "c5": [
-  {
-   "date": "2026-11-09",
-   "label": "Early result: timing holds",
-   "why": "Earlier wording, before every claim was graded on the same scale."
-  },
   {
    "date": "2026-11-10",
    "label": "Ruled out",
@@ -191,22 +141,12 @@
  ],
  "c6": [
   {
-   "date": "2026-11-09",
-   "label": "Early result: leans wetter, not settled",
-   "why": "Earlier wording, before every claim was graded on the same scale."
-  },
-  {
    "date": "2026-11-10",
    "label": "Early result: leans toward it",
    "why": "The main rain test passed, but river flow didn't agree and bite dates are monthly."
   }
  ],
  "c16": [
-  {
-   "date": "2026-11-09",
-   "label": "Early result: leaving later",
-   "why": "Earlier wording, before every claim was graded on the same scale."
-  },
   {
    "date": "2026-11-10",
    "label": "Early result: leans toward it",
@@ -215,22 +155,12 @@
  ],
  "c18": [
   {
-   "date": "2026-11-09",
-   "label": "Early result: leans yes",
-   "why": "Earlier wording, before every claim was graded on the same scale."
-  },
-  {
    "date": "2026-11-10",
    "label": "Early result: leans toward it",
    "why": "People living on the coast stand in for people on the beach."
   }
  ],
  "c19": [
-  {
-   "date": "2026-11-09",
-   "label": "Early result: white and tiger, not bull",
-   "why": "Earlier wording, before every claim was graded on the same scale."
-  },
   {
    "date": "2026-11-10",
    "label": "Early result: leans toward it",
@@ -239,22 +169,12 @@
  ],
  "c21": [
   {
-   "date": "2026-11-09",
-   "label": "Open",
-   "why": "Earlier wording, before every claim was graded on the same scale."
-  },
-  {
    "date": "2026-11-10",
    "label": "Early result: leans toward it",
    "why": "Bites by species stand in for catches by hour."
   }
  ],
  "c23": [
-  {
-   "date": "2026-11-09",
-   "label": "Early result: moved south instead",
-   "why": "Earlier wording, before every claim was graded on the same scale."
-  },
   {
    "date": "2026-11-10",
    "label": "Early result: points the other way",
@@ -263,22 +183,12 @@
  ],
  "c24": [
   {
-   "date": "2026-11-09",
-   "label": "Early result: no moon effect",
-   "why": "Earlier wording, before every claim was graded on the same scale."
-  },
-  {
    "date": "2026-11-10",
    "label": "Ruled out",
    "why": "The 95% range rules out a moon effect worth acting on."
   }
  ],
  "c25": [
-  {
-   "date": "2026-11-09",
-   "label": "Early result: holds off Africa and the US",
-   "why": "Earlier wording, before every claim was graded on the same scale."
-  },
   {
    "date": "2026-11-10",
    "label": "Early result: supports it",
@@ -287,11 +197,6 @@
  ],
  "c26": [
   {
-   "date": "2026-11-09",
-   "label": "Early result: no, once trends are removed",
-   "why": "Earlier wording, before every claim was graded on the same scale."
-  },
-  {
    "date": "2026-11-10",
    "label": "Early result: no clear link",
    "why": "Comparing like with like removed the link."
@@ -299,22 +204,12 @@
  ],
  "c28": [
   {
-   "date": "2026-11-09",
-   "label": "Early result: not supported so far",
-   "why": "Earlier wording, before every claim was graded on the same scale."
-  },
-  {
    "date": "2026-11-10",
    "label": "Early result: no clear link",
    "why": "Both tests came out where chance puts them."
   }
  ],
  "c29": [
-  {
-   "date": "2026-11-09",
-   "label": "Early result: not supported so far",
-   "why": "Earlier wording, before every claim was graded on the same scale."
-  },
   {
    "date": "2026-11-10",
    "label": "Early result: points the other way",
