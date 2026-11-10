@@ -49,14 +49,31 @@ cards = {
    f"If the sea keeps warming at its pace since 1980, the water bull sharks need would last almost all year off Sydney, and the half-year 19°C line would pass the Victorian border."),
 }
 cards_html = {k: (1080, 1350, v) for k, v in cards.items()}
-cards_html["link-card.png"] = (1200, 630, f"""<style>:root{{--s:150px}}body{{width:1200px;height:630px}}{CSS}
-.logo{{left:56px;top:30px;width:150px}}.p{{position:absolute;inset:176px 56px 40px 56px;display:flex;flex-direction:column;gap:18px}}
-h1{{font-size:64px}}p{{font-size:26px;color:#C9DCE4}}
-.mk{{font-family:"Martian Mono",monospace;font-size:15px;letter-spacing:.16em;text-transform:uppercase;color:#F5B061}}
-.ft{{margin-top:auto;display:flex;justify-content:space-between;align-items:flex-end;font-family:"Martian Mono",monospace;font-size:17px;letter-spacing:.06em;color:#9FC3D3}}.ft b{{color:#E8F1F2;font-weight:500}}</style>{WAVE}<div class="logo">{logo}</div>
-<div class="p"><div class="mk">Advancing shark and climate research worldwide</div><h1>A warming ocean is redrawing where <em>sharks</em> and <em>people</em> meet.</h1><p>Free, open research on where it's headed.</p><div class="ft"><b>19-degrees.org</b><span>Open data · Open source · Updated weekly</span></div></div>""")
+# Link preview (1200 x 630): a giant 19 sinking into a wave, with a shark fin where the degree sign would be.
+FIN = ('<path d="M0,410 C100,384 200,384 300,404 S500,436 600,410 S800,378 900,400 S1100,436 1200,404 L1200,630 L0,630Z" fill="#0A3552" opacity=".92"/>'
+       '<path d="M0,410 C100,384 200,384 300,404 S500,436 600,410 S800,378 900,400 S1100,436 1200,404" fill="none" stroke="#E8F6FC" stroke-width="4" stroke-linecap="round" opacity=".9"/>'
+       '<path d="M0,436 C120,418 220,420 330,434 S520,456 620,438 S820,414 930,430 S1110,452 1200,432" fill="none" stroke="#E8F6FC" stroke-width="2" opacity=".35"/>'
+       '<path d="M0,410 C100,384 200,384 300,404 S500,436 600,410 S800,378 900,400 S1100,436 1200,404 L1200,418 C1100,446 1000,414 900,412 S700,436 600,422 S400,414 300,416 S100,394 0,422Z" fill="#E8F6FC" opacity=".12"/>'
+       '<g transform="translate(846,58) scale(.62)"><path d="M0,150 C30,110 70,40 120,0 C126,-4 132,0 130,8 C120,60 122,110 140,150Z" fill="#0B1D27"/>'
+       '<path d="M-40,150 C30,138 120,162 200,150" stroke="#E8F6FC" stroke-width="6" fill="none" stroke-linecap="round"/>'
+       '<path d="M-80,170 C10,160 150,180 250,168" stroke="#E8F6FC" stroke-width="4" fill="none" stroke-linecap="round" opacity=".55"/>'
+       '<path d="M-110,190 C0,182 170,198 290,188" stroke="#E8F6FC" stroke-width="3" fill="none" stroke-linecap="round" opacity=".28"/></g>'
+       '<filter id="grain"><feTurbulence type="fractalNoise" baseFrequency=".85" numOctaves="2" seed="5"/><feColorMatrix values="0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 .06 0"/></filter>'
+       '<rect width="1200" height="630" filter="url(#grain)"/>')
+cards_html["link-card.png"] = (1200, 630, f"""<style>body{{margin:0;width:1200px;height:630px;overflow:hidden;background:radial-gradient(ellipse at 50% 28%,#2C8DB8 0,#16628A 50%,#0A3552 100%)}}
+.big{{position:absolute;left:250px;top:-40px;font-family:'Bricolage Grotesque';font-weight:800;font-size:560px;line-height:1;letter-spacing:-.06em;color:#F4EFE4}}
+.st{{position:absolute;left:0;right:0;bottom:44px;text-align:center;font-family:'Bricolage Grotesque';font-weight:800;font-size:42px;letter-spacing:-.03em;color:#fff;margin:0}}.st span{{color:#FFC27A}}</style>
+<div class="big">19</div><svg width="1200" height="630" style="position:absolute;inset:0">{FIN}</svg>
+<p class="st">Bull sharks stop at 19°C. <span>The ocean doesn't.</span></p>""")
 
+# Load the page fonts by file too, so cards render the same wherever Chromium doesn't pick up installed .woff fonts
+_fd = next((d for d in (os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "fonts"), os.path.expanduser("~/.local/share/fonts"))
+            if os.path.exists(os.path.join(d, "bricolage.woff"))), None)
+FONTFACE = "" if not _fd else "<style>" + "".join(
+    f"@font-face{{font-family:'{n}';{w}src:local('{n}'),url(file://{os.path.abspath(os.path.join(_fd, f))})}}"
+    for n, w, f in (("Bricolage Grotesque", "font-weight:800;", "bricolage.woff"), ("Figtree", "", "figtree.woff"), ("Martian Mono", "", "martian-mono.woff"))) + "</style>"
 for name, (w, h, body) in cards_html.items():
+    body = FONTFACE + body
     tmp = tempfile.NamedTemporaryFile("w", suffix=".html", delete=False); tmp.write('<!doctype html><meta charset="utf-8">' + body); tmp.close()
     out = os.path.abspath(os.path.join(outdir, name))
     js = f"""const {{chromium}}=require('playwright');(async()=>{{const b=await chromium.launch();const p=await b.newPage({{viewport:{{width:{w},height:{h}}}}});
