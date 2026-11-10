@@ -1,0 +1,324 @@
+{
+ "c2": [
+  {
+   "date": "2026-11-09",
+   "label": "Early result: suggestive, not settled",
+   "why": "Label written by hand, before one scale was used for every claim."
+  },
+  {
+   "date": "2026-11-10",
+   "label": "First look",
+   "why": "No test yet separates more sharks from more listening stations, so it is described rather than tested."
+  }
+ ],
+ "c7": [
+  {
+   "date": "2026-11-09",
+   "label": "Open",
+   "why": "Label written by hand, before one scale was used for every claim."
+  },
+  {
+   "date": "2026-11-10",
+   "label": "First look",
+   "why": "Too few recent bites to test."
+  }
+ ],
+ "c8": [
+  {
+   "date": "2026-11-10",
+   "label": "Not testable yet",
+   "why": "First graded."
+  }
+ ],
+ "c9": [
+  {
+   "date": "2026-11-09",
+   "label": "Early result: half were limb wounds",
+   "why": "Label written by hand, before one scale was used for every claim."
+  },
+  {
+   "date": "2026-11-10",
+   "label": "First look",
+   "why": "The records can describe the wounds but not the time to stop bleeding."
+  }
+ ],
+ "c20": [
+  {
+   "date": "2026-11-09",
+   "label": "Open",
+   "why": "Label written by hand, before one scale was used for every claim."
+  },
+  {
+   "date": "2026-11-10",
+   "label": "First look",
+   "why": "Without past gear locations it can only describe counts."
+  }
+ ],
+ "c22": [
+  {
+   "date": "2026-11-09",
+   "label": "Open",
+   "why": "Label written by hand, before one scale was used for every claim."
+  },
+  {
+   "date": "2026-11-10",
+   "label": "First look",
+   "why": "The island coasts never cool below 19°C, so they can't test the line."
+  }
+ ],
+ "c30": [
+  {
+   "date": "2026-11-09",
+   "label": "Open",
+   "why": "Label written by hand, before one scale was used for every claim."
+  },
+  {
+   "date": "2026-11-10",
+   "label": "First look",
+   "why": "First look at public tagging data for young white sharks."
+  }
+ ],
+ "c10": [
+  {
+   "date": "2026-11-10",
+   "label": "Open",
+   "why": "First graded."
+  }
+ ],
+ "c11": [
+  {
+   "date": "2026-11-10",
+   "label": "Open",
+   "why": "First graded."
+  }
+ ],
+ "c12": [
+  {
+   "date": "2026-11-10",
+   "label": "Open",
+   "why": "First graded."
+  }
+ ],
+ "c13": [
+  {
+   "date": "2026-11-10",
+   "label": "Open",
+   "why": "First graded."
+  }
+ ],
+ "c14": [
+  {
+   "date": "2026-11-10",
+   "label": "Open",
+   "why": "First graded."
+  }
+ ],
+ "c15": [
+  {
+   "date": "2026-11-10",
+   "label": "Open",
+   "why": "First graded."
+  }
+ ],
+ "c17": [
+  {
+   "date": "2026-11-10",
+   "label": "Open",
+   "why": "First graded."
+  }
+ ],
+ "c27": [
+  {
+   "date": "2026-11-10",
+   "label": "Open",
+   "why": "First graded."
+  }
+ ],
+ "c31": [
+  {
+   "date": "2026-11-10",
+   "label": "Open",
+   "why": "First graded."
+  }
+ ],
+ "c1": [
+  {
+   "date": "2026-11-09",
+   "label": "Early result: holds in Queensland",
+   "why": "Label written by hand, before one scale was used for every claim."
+  },
+  {
+   "date": "2026-11-10",
+   "label": "Early result: leans toward it",
+   "why": "Share of catch stands in for catch per net or drumline, which isn't published, so it can reach \"leans toward it\" at most."
+  }
+ ],
+ "c3": [
+  {
+   "date": "2026-11-09",
+   "label": "Early result: reaches Eden, border unclear",
+   "why": "Label written by hand, before one scale was used for every claim."
+  },
+  {
+   "date": "2026-11-10",
+   "label": "Early result: leans toward it",
+   "why": "Most climate models take the line to Eden but not past the border the claim names."
+  }
+ ],
+ "c4": [
+  {
+   "date": "2026-11-09",
+   "label": "Open",
+   "why": "Label written by hand, before one scale was used for every claim."
+  },
+  {
+   "date": "2026-11-10",
+   "label": "Early result: leans toward it",
+   "why": "Satellite chlorophyll, a stand-in for baitfish, leans the predicted way."
+  }
+ ],
+ "c5": [
+  {
+   "date": "2026-11-09",
+   "label": "Early result: timing holds",
+   "why": "Label written by hand, before one scale was used for every claim."
+  },
+  {
+   "date": "2026-11-10",
+   "label": "Ruled out",
+   "why": "Its own rules-out condition was met: Queensland's white shark catches didn't grow with the whales."
+  }
+ ],
+ "c6": [
+  {
+   "date": "2026-11-09",
+   "label": "Early result: leans wetter, not settled",
+   "why": "Label written by hand, before one scale was used for every claim."
+  },
+  {
+   "date": "2026-11-10",
+   "label": "Early result: leans toward it",
+   "why": "The main rain test passed, but river flow didn't agree and bite dates are monthly."
+  }
+ ],
+ "c16": [
+  {
+   "date": "2026-11-09",
+   "label": "Early result: leaving later",
+   "why": "Label written by hand, before one scale was used for every claim."
+  },
+  {
+   "date": "2026-11-10",
+   "label": "Early result: leans toward it",
+   "why": "Holding the listening stations fixed weakened the trend."
+  }
+ ],
+ "c18": [
+  {
+   "date": "2026-11-09",
+   "label": "Early result: leans yes",
+   "why": "Label written by hand, before one scale was used for every claim."
+  },
+  {
+   "date": "2026-11-10",
+   "label": "Early result: leans toward it",
+   "why": "People living on the coast stand in for people on the beach."
+  }
+ ],
+ "c19": [
+  {
+   "date": "2026-11-09",
+   "label": "Early result: white and tiger, not bull",
+   "why": "Label written by hand, before one scale was used for every claim."
+  },
+  {
+   "date": "2026-11-10",
+   "label": "Early result: leans toward it",
+   "why": "The day-by-day heatwave check didn't clearly agree with the monthly test."
+  }
+ ],
+ "c21": [
+  {
+   "date": "2026-11-09",
+   "label": "Open",
+   "why": "Label written by hand, before one scale was used for every claim."
+  },
+  {
+   "date": "2026-11-10",
+   "label": "Early result: leans toward it",
+   "why": "Bites by species stand in for catches by hour."
+  }
+ ],
+ "c23": [
+  {
+   "date": "2026-11-09",
+   "label": "Early result: moved south instead",
+   "why": "Label written by hand, before one scale was used for every claim."
+  },
+  {
+   "date": "2026-11-10",
+   "label": "Early result: points the other way",
+   "why": "A clear shift in the opposite direction to the claim."
+  }
+ ],
+ "c24": [
+  {
+   "date": "2026-11-09",
+   "label": "Early result: no moon effect",
+   "why": "Label written by hand, before one scale was used for every claim."
+  },
+  {
+   "date": "2026-11-10",
+   "label": "Ruled out",
+   "why": "The 95% range rules out a moon effect worth acting on."
+  }
+ ],
+ "c25": [
+  {
+   "date": "2026-11-09",
+   "label": "Early result: holds off Africa and the US",
+   "why": "Label written by hand, before one scale was used for every claim."
+  },
+  {
+   "date": "2026-11-10",
+   "label": "Early result: supports it",
+   "why": "Tested on its own measure on two coasts, in the predicted direction."
+  }
+ ],
+ "c26": [
+  {
+   "date": "2026-11-09",
+   "label": "Early result: no, once trends are removed",
+   "why": "Label written by hand, before one scale was used for every claim."
+  },
+  {
+   "date": "2026-11-10",
+   "label": "Early result: no clear link",
+   "why": "Comparing like with like removed the link."
+  }
+ ],
+ "c28": [
+  {
+   "date": "2026-11-09",
+   "label": "Early result: not supported so far",
+   "why": "Label written by hand, before one scale was used for every claim."
+  },
+  {
+   "date": "2026-11-10",
+   "label": "Early result: no clear link",
+   "why": "Both tests came out where chance puts them."
+  }
+ ],
+ "c29": [
+  {
+   "date": "2026-11-09",
+   "label": "Early result: not supported so far",
+   "why": "Label written by hand, before one scale was used for every claim."
+  },
+  {
+   "date": "2026-11-10",
+   "label": "Early result: points the other way",
+   "why": "An exact two-sided test shows fewer incidents than chance after strong upwelling."
+  }
+ ]
+}

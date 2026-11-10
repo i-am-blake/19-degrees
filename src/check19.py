@@ -147,6 +147,12 @@ for a in re.finditer(r'<article class="claim" id="(c\d+)" data-status="(\w+)">.{
     try: want = grades19.grade(a[1], D)
     except (KeyError, TypeError): continue
     check(f"{a[1].upper()} grade", (a[2], a[4], a[3]), (want[0], want[1], results19.CLS[want[0]]))
+import explain19
+H = explain19.load_history()
+for a in re.finditer(r'<section class="wts" id="wts-(c\d+)"([^>]*)>(.*?)</section>', page, re.S):
+    try: body = explain19.block(a[1], D, H)
+    except (KeyError, TypeError): continue
+    check(f"{a[1].upper()} summary", a[3] == (f"<h5>Where this stands</h5><dl>{body}</dl>" if body else ""), True)
 
 # Claim C23 (california19.py), when present
 if "california" in D:

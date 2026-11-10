@@ -42,7 +42,7 @@ sig = lambda x, k="p": x.get(k) is not None and x[k] < 0.05
 STATIC = {"c1": dict(ok=True, p=0.0005),          # southern Queensland bull share of catch 6.1% -> 12.6%, p < 0.001
           "c3": dict(eden_reached=True, border_80=False)}  # median CMIP6 model reaches six months at Eden; border not in 80% of models
 
-def g_c1(D): return V(**STATIC["c1"])
+def g_c1(D): return cap(V(**STATIC["c1"]))  # share of catch stands in for catch per unit of effort, which isn't published
 def g_c3(D):  # projection: model agreement instead of p
     s = STATIC["c3"]; return "supports" if s["border_80"] else "leans" if s["eden_reached"] else "ruled"
 def g_c4(D): c = D["chlorophyll"]["all"]; return cap(V(c["pct"] > 25, c["p"]))

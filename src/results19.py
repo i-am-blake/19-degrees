@@ -4,6 +4,7 @@ text instead of blocking the weekly publish. check19.py then checks the same sen
 Each paragraph is replaced whole (by its id); two Hawaii sentences inside older paragraphs are replaced in place."""
 import re
 import grades19 as G
+import explain19 as X
 
 def pf(p):
     return "p &lt; 0.001" if p < 0.001 else f"p = {p:.3f}" if p < 0.01 else f"p = {p:.2f}"
@@ -205,8 +206,7 @@ PARAS = {"mhwC19": (mhwC19, ("mhw",)), "bwC6": (bwC6, ("beachwatch",)), "plumeC6
          "qldC6": (qldC6, ("tigerqld",)), "wkC18": (wkC18, ("exposure", "beachday")), "whaleC5": (whaleC5, ("whales",)),
          "whitecoolC5": (whitecoolC5, ("whitecool",)), "chlC4": (chlC4, ("chlorophyll",)), "tideC24": (tideC24, ("tides",)),
          "tigerC28": (tigerC28, ("tigerqld", "tigerrain")), "upC29": (upC29, ("upwelling",)),
-         "stationsC16": (stationsC16, ("imos",)), "juvC30": (juvC30, ("imos",)),
-         "ruledC24": (ruledC24, ("lunar",)), "ruledC5": (ruledC5, ("whitecool",))}
+         "stationsC16": (stationsC16, ("imos",)), "juvC30": (juvC30, ("imos",))}
 
 def hawaiiC6(D):
     h = D["hawaii"]
@@ -237,8 +237,14 @@ def ready(fn, D):  # a result file from before a test was added lacks its fields
     try: fn(D); return True
     except (KeyError, TypeError): return False
 
-def fill(html, D):
+def fill(html, D, history=None):
     html = apply_grades(html, D)
+    H = X.load_history() if history is None else history
+    def wts(m):
+        try: body = X.block(m[1], D, H)
+        except (KeyError, TypeError): return m[0]
+        return f'<section class="wts" id="wts-{m[1]}"' + (f'><h5>Where this stands</h5><dl>{body}</dl></section>' if body else ' hidden></section>')
+    html = re.sub(r'<section class="wts" id="wts-(c\d+)"[^>]*>.*?</section>', wts, html, flags=re.S)
     for pid, (fn, need) in PARAS.items():
         if all(k in D for k in need) and ready(fn, D):
             html = re.sub(rf'(<p class="agres" id="{pid}">).*?(</p>)', lambda m: m.group(1) + fn(D) + m.group(2), html, count=1, flags=re.S)

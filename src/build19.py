@@ -359,7 +359,10 @@ if os.path.exists(_isl):
 blob = json.dumps(d, separators=(",", ":")).replace("</", "<\\/")
 html = open(PAGE).read()
 import results19  # result sentences from the monthly-refreshed tests, written from the data
-html = results19.fill(html, json.loads(blob))
+import explain19, datetime  # grade history: add an entry whenever a claim's grade changes
+_H = explain19.load_history()
+if explain19.update_history(_H, json.loads(blob), datetime.date.today().isoformat()): json.dump(_H, open(explain19.HIST, "w"), indent=1, ensure_ascii=False)
+html = results19.fill(html, json.loads(blob), _H)
 pat = re.compile(r'(<script type="application/json" id="n19-data">)(.*?)(</script>)', re.S)
 assert pat.search(html), "data block not found"
 open(OUT, "w").write(pat.sub(lambda m: m.group(1) + blob + m.group(3), html, count=1))

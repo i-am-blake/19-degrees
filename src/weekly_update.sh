@@ -91,5 +91,5 @@ python3 -I make_site.py 19-degrees.html pub site
 
 # 7. Copy back
 cp -r site/. "$R/"
-cp heat.json asid_version.txt "$R/src/"; [ -f rain.json ] && cp rain.json "$R/src/"; [ -f imos.json ] && cp imos.json "$R/src/"; [ -f leeuwin.json ] && cp leeuwin.json "$R/src/"; [ -f california.json ] && cp california.json "$R/src/"; for j in fieldnotes lunar obis iod coastpop mhw beachwatch hawaii exposure beachday tides whales chlorophyll rivers harbour tigerqld tigerrain whitecool upwelling; do [ -f $j.json ] && cp $j.json "$R/src/"; done
+cp heat.json asid_version.txt "$R/src/"; [ -f rain.json ] && cp rain.json "$R/src/"; [ -f imos.json ] && cp imos.json "$R/src/"; [ -f leeuwin.json ] && cp leeuwin.json "$R/src/"; [ -f california.json ] && cp california.json "$R/src/"; [ -f grades_history.json ] && cp grades_history.json "$R/src/"; for j in fieldnotes lunar obis iod coastpop mhw beachwatch hawaii exposure beachday tides whales chlorophyll rivers harbour tigerqld tigerrain whitecool upwelling; do [ -f $j.json ] && cp $j.json "$R/src/"; done
 echo "built OK (new database version: $NEWDB)"
