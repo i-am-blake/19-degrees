@@ -1,10 +1,10 @@
 {
  "all": {
-  "n": 273,
-  "greenest_quarter": 80,
+  "n": 270,
+  "greenest_quarter": 79,
   "pct": 29,
   "mean_rank": 0.52,
-  "p": 0.06
+  "p": 0.063
  },
  "other": {
   "n": 98,
@@ -14,11 +14,11 @@
   "p": 0.083
  },
  "white": {
-  "n": 139,
-  "greenest_quarter": 39,
+  "n": 136,
+  "greenest_quarter": 38,
   "pct": 28,
   "mean_rank": 0.51,
-  "p": 0.229
+  "p": 0.241
  },
  "bull": {
   "n": 25,

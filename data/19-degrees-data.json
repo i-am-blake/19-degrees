@@ -3260,13 +3260,9 @@
     153.5
    ],
    "today": {
-    "time": "2026-11-10T11:30",
+    "time": "2026-11-11T07:15",
     "sst": 22.7,
     "week": [
-     [
-      "2026-11-04",
-      23.2
-     ],
      [
       "2026-11-05",
       23.1
@@ -3289,7 +3285,11 @@
      ],
      [
       "2026-11-10",
-      22.9
+      23.0
+     ],
+     [
+      "2026-11-11",
+      23.3
      ]
     ]
    },
@@ -4218,13 +4218,9 @@
     154.5
    ],
    "today": {
-    "time": "2026-11-10T11:30",
-    "sst": 21.8,
+    "time": "2026-11-11T07:15",
+    "sst": 21.7,
     "week": [
-     [
-      "2026-11-04",
-      22.1
-     ],
      [
       "2026-11-05",
       21.3
@@ -4247,6 +4243,10 @@
      ],
      [
       "2026-11-10",
+      22.0
+     ],
+     [
+      "2026-11-11",
       21.9
      ]
     ]
@@ -5176,13 +5176,9 @@
     152.5
    ],
    "today": {
-    "time": "2026-11-10T11:30",
+    "time": "2026-11-11T07:15",
     "sst": 20.0,
     "week": [
-     [
-      "2026-11-04",
-      21.0
-     ],
      [
       "2026-11-05",
       20.6
@@ -5206,6 +5202,10 @@
      [
       "2026-11-10",
       20.2
+     ],
+     [
+      "2026-11-11",
+      20.5
      ]
     ]
    },
@@ -6134,13 +6134,9 @@
     151.5
    ],
    "today": {
-    "time": "2026-11-10T11:30",
+    "time": "2026-11-11T07:15",
     "sst": 20.0,
     "week": [
-     [
-      "2026-11-04",
-      20.8
-     ],
      [
       "2026-11-05",
       20.5
@@ -6164,6 +6160,10 @@
      [
       "2026-11-10",
       20.1
+     ],
+     [
+      "2026-11-11",
+      20.6
      ]
     ]
    },
@@ -7092,13 +7092,9 @@
     151.5
    ],
    "today": {
-    "time": "2026-11-10T11:30",
+    "time": "2026-11-11T07:15",
     "sst": 19.6,
     "week": [
-     [
-      "2026-11-04",
-      20.4
-     ],
      [
       "2026-11-05",
       20.1
@@ -7122,6 +7118,10 @@
      [
       "2026-11-10",
       19.9
+     ],
+     [
+      "2026-11-11",
+      20.3
      ]
     ]
    },
@@ -8050,13 +8050,9 @@
     150.5
    ],
    "today": {
-    "time": "2026-11-10T11:30",
-    "sst": 17.5,
+    "time": "2026-11-11T07:15",
+    "sst": 17.4,
     "week": [
-     [
-      "2026-11-04",
-      18.1
-     ],
      [
       "2026-11-05",
       17.7
@@ -8080,6 +8076,10 @@
      [
       "2026-11-10",
       17.8
+     ],
+     [
+      "2026-11-11",
+      18.1
      ]
     ]
    },
@@ -9008,13 +9008,9 @@
     113.5
    ],
    "today": {
-    "time": "2026-11-10T11:30",
-    "sst": 23.1,
+    "time": "2026-11-11T07:15",
+    "sst": 23.3,
     "week": [
-     [
-      "2026-11-04",
-      23.5
-     ],
      [
       "2026-11-05",
       23.6
@@ -9038,6 +9034,10 @@
      [
       "2026-11-10",
       23.7
+     ],
+     [
+      "2026-11-11",
+      24.2
      ]
     ]
    },
@@ -9966,13 +9966,9 @@
     113.5
    ],
    "today": {
-    "time": "2026-11-10T11:30",
-    "sst": 20.9,
+    "time": "2026-11-11T07:15",
+    "sst": 21.0,
     "week": [
-     [
-      "2026-11-04",
-      21.1
-     ],
      [
       "2026-11-05",
       21.2
@@ -9996,6 +9992,10 @@
      [
       "2026-11-10",
       21.2
+     ],
+     [
+      "2026-11-11",
+      21.3
      ]
     ]
    },
@@ -10924,13 +10924,9 @@
     115.5
    ],
    "today": {
-    "time": "2026-11-10T11:30",
+    "time": "2026-11-11T07:15",
     "sst": 20.0,
     "week": [
-     [
-      "2026-11-04",
-      20.2
-     ],
      [
       "2026-11-05",
       20.3
@@ -10953,7 +10949,11 @@
      ],
      [
       "2026-11-10",
-      20.4
+      20.3
+     ],
+     [
+      "2026-11-11",
+      20.5
      ]
     ]
    },
@@ -11882,13 +11882,9 @@
     115.5
    ],
    "today": {
-    "time": "2026-11-10T11:30",
-    "sst": 19.5,
+    "time": "2026-11-11T07:15",
+    "sst": 19.6,
     "week": [
-     [
-      "2026-11-04",
-      19.8
-     ],
      [
       "2026-11-05",
       19.8
@@ -11911,6 +11907,10 @@
      ],
      [
       "2026-11-10",
+      20.0
+     ],
+     [
+      "2026-11-11",
       20.1
      ]
     ]
@@ -12840,13 +12840,9 @@
     114.5
    ],
    "today": {
-    "time": "2026-11-10T11:30",
-    "sst": 18.2,
+    "time": "2026-11-11T07:15",
+    "sst": 18.1,
     "week": [
-     [
-      "2026-11-04",
-      19.1
-     ],
      [
       "2026-11-05",
       18.7
@@ -12870,6 +12866,10 @@
      [
       "2026-11-10",
       18.3
+     ],
+     [
+      "2026-11-11",
+      18.4
      ]
     ]
    },
@@ -13798,13 +13798,9 @@
     117.5
    ],
    "today": {
-    "time": "2026-11-10T11:30",
+    "time": "2026-11-11T07:15",
     "sst": 17.9,
     "week": [
-     [
-      "2026-11-04",
-      18.6
-     ],
      [
       "2026-11-05",
       18.6
@@ -13827,6 +13823,10 @@
      ],
      [
       "2026-11-10",
+      18.2
+     ],
+     [
+      "2026-11-11",
       18.2
      ]
     ]
@@ -16883,6 +16883,22 @@
    "new": 23,
    "p": 0.239
   },
+  "hawaii_all": {
+   "n": 174,
+   "near": 80,
+   "near_pct": 46,
+   "full": 44,
+   "new": 36,
+   "p": 0.324
+  },
+  "hawaii_tiger": {
+   "n": 80,
+   "near": 38,
+   "near_pct": 48,
+   "full": 22,
+   "new": 16,
+   "p": 0.738
+  },
   "all": {
    "n": 303,
    "near": 146,
@@ -17058,6 +17074,837 @@
   "pop_growth": 1.37,
   "rate_growth": 4.9,
   "bull_growth": 2.9
+ },
+ "mhw": {
+  "california_white": {
+   "n": 124,
+   "in_heatwave": 21,
+   "pct": 17,
+   "expected_pct": 12,
+   "ratio": 1.46,
+   "p": 0.057,
+   "first": 1981,
+   "last": 2022
+  },
+  "islands_bull": {
+   "n": 33,
+   "in_heatwave": 3,
+   "pct": 9,
+   "expected_pct": 13,
+   "ratio": 0.69,
+   "p": 0.601,
+   "first": 1985,
+   "last": 2019
+  },
+  "islands_tiger": {
+   "n": 28,
+   "in_heatwave": 0,
+   "pct": 0,
+   "expected_pct": 11,
+   "ratio": 0.0,
+   "p": 0.058,
+   "first": 1983,
+   "last": 2021
+  },
+  "hawaii_tiger": {
+   "n": 79,
+   "in_heatwave": 23,
+   "pct": 29,
+   "expected_pct": 24,
+   "ratio": 1.21,
+   "p": 0.251,
+   "first": 1996,
+   "last": 2026
+  },
+  "hawaii_all": {
+   "n": 170,
+   "in_heatwave": 52,
+   "pct": 31,
+   "expected_pct": 26,
+   "ratio": 1.18,
+   "p": 0.126,
+   "first": 1996,
+   "last": 2026
+  },
+  "all": {
+   "n": 355,
+   "in_heatwave": 76,
+   "pct": 21,
+   "expected_pct": 19,
+   "ratio": 1.16,
+   "p": 0.136,
+   "first": 1981,
+   "last": 2026
+  },
+  "points": {
+   "california_monterey": {
+    "days": 14999,
+    "heatwave_days": 1554,
+    "first": "1981-09-01",
+    "last": "2025-12-31"
+   },
+   "hawaii_oahu_south": {
+    "days": 13709,
+    "heatwave_days": 2414,
+    "first": "1986-01-01",
+    "last": "2026-10-22"
+   },
+   "california_santa_barbara": {
+    "days": 15291,
+    "heatwave_days": 1766,
+    "first": "1981-09-01",
+    "last": "2026-10-21"
+   },
+   "hawaii_big_island": {
+    "days": 15293,
+    "heatwave_days": 2257,
+    "first": "1981-09-01",
+    "last": "2026-10-23"
+   },
+   "new_caledonia_noumea": {
+    "days": 15292,
+    "heatwave_days": 1667,
+    "first": "1981-09-01",
+    "last": "2026-10-22"
+   },
+   "hawaii_kauai": {
+    "days": 15293,
+    "heatwave_days": 2493,
+    "first": "1981-09-01",
+    "last": "2026-10-23"
+   },
+   "hawaii_oahu_north": {
+    "days": 13709,
+    "heatwave_days": 2310,
+    "first": "1986-01-01",
+    "last": "2026-10-22"
+   },
+   "california_humboldt": {
+    "days": 11640,
+    "heatwave_days": 859,
+    "first": "1981-09-01",
+    "last": "2026-10-22"
+   },
+   "california_san_diego": {
+    "days": 10055,
+    "heatwave_days": 1444,
+    "first": "1991-01-01",
+    "last": "2026-10-21"
+   },
+   "california_san_francisco": {
+    "days": 15292,
+    "heatwave_days": 2011,
+    "first": "1981-09-01",
+    "last": "2026-10-22"
+   },
+   "reunion_west": {
+    "days": 13709,
+    "heatwave_days": 1800,
+    "first": "1986-01-01",
+    "last": "2026-10-22"
+   },
+   "hawaii_maui": {
+    "days": 15292,
+    "heatwave_days": 2738,
+    "first": "1981-09-01",
+    "last": "2026-10-22"
+   }
+  }
+ },
+ "beachwatch": {
+  "all": {
+   "n": 37,
+   "dirtiest_quarter": 15,
+   "pct": 41,
+   "mean_rank": 0.56,
+   "p": 0.027
+  },
+  "bull": {
+   "n": 9,
+   "dirtiest_quarter": 7,
+   "pct": 78,
+   "mean_rank": 0.81,
+   "p": 0.001
+  },
+  "other": {
+   "n": 19,
+   "dirtiest_quarter": 6,
+   "pct": 32,
+   "mean_rank": 0.54,
+   "p": 0.332
+  },
+  "white": {
+   "n": 9,
+   "dirtiest_quarter": 2,
+   "pct": 22,
+   "mean_rank": 0.33,
+   "p": 0.7
+  },
+  "sites": 79
+ },
+ "hawaii": {
+  "n": 174,
+  "first": 1995,
+  "last": 2026,
+  "tiger": 80,
+  "tiger_murky": 48,
+  "tiger_clarity_n": 78,
+  "tiger_murky_pct": 62,
+  "other_murky": 16,
+  "other_clarity_n": 32,
+  "other_murky_pct": 50,
+  "p_murky": 0.29,
+  "by_month": [
+   11,
+   8,
+   16,
+   12,
+   14,
+   11,
+   9,
+   12,
+   16,
+   32,
+   16,
+   17
+  ],
+  "activity": [
+   [
+    "surfing",
+    65
+   ],
+   [
+    "swimming",
+    32
+   ],
+   [
+    "snorkeling",
+    21
+   ],
+   [
+    "stand-up paddleboarding",
+    13
+   ],
+   [
+    "spearfishing",
+    10
+   ]
+  ]
+ },
+ "exposure": {
+  "weekend": {
+   "california": {
+    "n": 211,
+    "busy": 103,
+    "pct": 49,
+    "expected_pct": 29,
+    "ratio": 2.38,
+    "p": 0.0
+   },
+   "reunion": {
+    "n": 60,
+    "busy": 21,
+    "pct": 35,
+    "expected_pct": 29,
+    "ratio": 1.35,
+    "p": 0.317
+   },
+   "new_caledonia": {
+    "n": 62,
+    "busy": 26,
+    "pct": 42,
+    "expected_pct": 29,
+    "ratio": 1.81,
+    "p": 0.024
+   },
+   "hawaii": {
+    "n": 174,
+    "busy": 48,
+    "pct": 28,
+    "expected_pct": 29,
+    "ratio": 0.95,
+    "p": 0.867
+   },
+   "all": {
+    "n": 507,
+    "busy": 198,
+    "pct": 39,
+    "expected_pct": 29,
+    "ratio": 1.6,
+    "p": 0.0
+   }
+  },
+  "weekend_or_holiday": {
+   "california": {
+    "n": 211,
+    "busy": 115,
+    "pct": 55,
+    "expected_pct": 31,
+    "ratio": 2.62,
+    "p": 0.0
+   },
+   "reunion": {
+    "n": 60,
+    "busy": 23,
+    "pct": 38,
+    "expected_pct": 31,
+    "ratio": 1.38,
+    "p": 0.264
+   },
+   "new_caledonia": {
+    "n": 62,
+    "busy": 29,
+    "pct": 47,
+    "expected_pct": 31,
+    "ratio": 1.95,
+    "p": 0.013
+   },
+   "hawaii": {
+    "n": 174,
+    "busy": 52,
+    "pct": 30,
+    "expected_pct": 32,
+    "ratio": 0.91,
+    "p": 0.626
+   },
+   "all": {
+    "n": 507,
+    "busy": 219,
+    "pct": 43,
+    "expected_pct": 32,
+    "ratio": 1.65,
+    "p": 0.0
+   }
+  }
+ },
+ "beachday": {
+  "hot": {
+   "california": {
+    "n": 205,
+    "k": 62,
+    "pct": 30,
+    "mean_rank": 0.54,
+    "p": 0.051
+   },
+   "reunion": {
+    "n": 60,
+    "k": 17,
+    "pct": 28,
+    "mean_rank": 0.54,
+    "p": 0.32
+   },
+   "new_caledonia": {
+    "n": 62,
+    "k": 15,
+    "pct": 24,
+    "mean_rank": 0.54,
+    "p": 0.606
+   },
+   "hawaii": {
+    "n": 174,
+    "k": 46,
+    "pct": 26,
+    "mean_rank": 0.52,
+    "p": 0.358
+   },
+   "all": {
+    "n": 501,
+    "k": 140,
+    "pct": 28,
+    "mean_rank": 0.53,
+    "p": 0.072
+   }
+  },
+  "calm": {
+   "california": {
+    "n": 205,
+    "k": 62,
+    "pct": 30,
+    "mean_rank": 0.44,
+    "p": 0.051
+   },
+   "reunion": {
+    "n": 60,
+    "k": 16,
+    "pct": 27,
+    "mean_rank": 0.52,
+    "p": 0.431
+   },
+   "new_caledonia": {
+    "n": 62,
+    "k": 12,
+    "pct": 19,
+    "mean_rank": 0.44,
+    "p": 0.882
+   },
+   "hawaii": {
+    "n": 174,
+    "k": 51,
+    "pct": 29,
+    "mean_rank": 0.48,
+    "p": 0.111
+   },
+   "all": {
+    "n": 501,
+    "k": 141,
+    "pct": 28,
+    "mean_rank": 0.46,
+    "p": 0.059
+   }
+  },
+  "big_waves": {
+   "california": {
+    "n": 162,
+    "k": 32,
+    "pct": 20,
+    "mean_rank": 0.41,
+    "p": 0.952
+   },
+   "reunion": {
+    "n": 60,
+    "k": 18,
+    "pct": 30,
+    "mean_rank": 0.55,
+    "p": 0.225
+   },
+   "new_caledonia": {
+    "n": 62,
+    "k": 7,
+    "pct": 11,
+    "mean_rank": 0.43,
+    "p": 0.998
+   },
+   "hawaii": {
+    "n": 174,
+    "k": 46,
+    "pct": 26,
+    "mean_rank": 0.53,
+    "p": 0.358
+   },
+   "all": {
+    "n": 458,
+    "k": 103,
+    "pct": 22,
+    "mean_rank": 0.48,
+    "p": 0.903
+   },
+   "surfers": {
+    "n": 223,
+    "k": 63,
+    "pct": 28,
+    "mean_rank": 0.52,
+    "p": 0.148
+   },
+   "not_surfing": {
+    "n": 235,
+    "k": 40,
+    "pct": 17,
+    "mean_rank": 0.43,
+    "p": 0.999
+   }
+  }
+ },
+ "tides": {
+  "california": {
+   "n": 148,
+   "low": 35,
+   "rising": 35,
+   "high": 39,
+   "falling": 39,
+   "pct": [
+    24,
+    24,
+    26,
+    26
+   ],
+   "chi2": 0.43,
+   "p": 0.933
+  },
+  "hawaii": {
+   "n": 157,
+   "low": 33,
+   "rising": 43,
+   "high": 46,
+   "falling": 35,
+   "pct": [
+    21,
+    27,
+    29,
+    22
+   ],
+   "chi2": 2.97,
+   "p": 0.396
+  },
+  "all": {
+   "n": 305,
+   "low": 68,
+   "rising": 78,
+   "high": 85,
+   "falling": 74,
+   "pct": [
+    22,
+    26,
+    28,
+    24
+   ],
+   "chi2": 2.0,
+   "p": 0.572
+  }
+ },
+ "whales": {
+  "humpback_records": 14983,
+  "by_month": [
+   14,
+   3,
+   2,
+   6,
+   218,
+   3170,
+   2840,
+   1695,
+   2906,
+   3595,
+   529,
+   5
+  ],
+  "migration_months": [
+   6,
+   7,
+   9,
+   10
+  ],
+  "white_n": 98,
+  "white_in": 32,
+  "white_pct": 33,
+  "other_n": 51,
+  "other_in": 10,
+  "other_pct": 20,
+  "p": 0.125,
+  "white_by_month": [
+   10,
+   16,
+   10,
+   3,
+   4,
+   7,
+   10,
+   9,
+   7,
+   8,
+   5,
+   9
+  ],
+  "other_by_month": [
+   11,
+   6,
+   7,
+   6,
+   1,
+   4,
+   2,
+   1,
+   3,
+   1,
+   4,
+   5
+  ]
+ },
+ "chlorophyll": {
+  "all": {
+   "n": 270,
+   "greenest_quarter": 79,
+   "pct": 29,
+   "mean_rank": 0.52,
+   "p": 0.063
+  },
+  "other": {
+   "n": 98,
+   "greenest_quarter": 31,
+   "pct": 32,
+   "mean_rank": 0.54,
+   "p": 0.083
+  },
+  "white": {
+   "n": 136,
+   "greenest_quarter": 38,
+   "pct": 28,
+   "mean_rank": 0.51,
+   "p": 0.241
+  },
+  "bull": {
+   "n": 25,
+   "greenest_quarter": 8,
+   "pct": 32,
+   "mean_rank": 0.53,
+   "p": 0.273
+  },
+  "tiger": {
+   "n": 11,
+   "greenest_quarter": 2,
+   "pct": 18,
+   "mean_rank": 0.55,
+   "p": 0.803
+  }
+ },
+ "rivers": {
+  "all": {
+   "n": 280,
+   "high_quarter": 72,
+   "pct": 26,
+   "mean_rank": 0.53,
+   "p": 0.414
+  },
+  "other": {
+   "n": 99,
+   "high_quarter": 29,
+   "pct": 29,
+   "mean_rank": 0.54,
+   "p": 0.191
+  },
+  "white": {
+   "n": 108,
+   "high_quarter": 24,
+   "pct": 22,
+   "mean_rank": 0.51,
+   "p": 0.779
+  },
+  "tiger": {
+   "n": 21,
+   "high_quarter": 8,
+   "pct": 38,
+   "mean_rank": 0.61,
+   "p": 0.13
+  },
+  "bull": {
+   "n": 52,
+   "high_quarter": 11,
+   "pct": 21,
+   "mean_rank": 0.52,
+   "p": 0.785
+  },
+  "bull_vs_white_p": 1.0,
+  "gauges": 525
+ },
+ "harbour": {
+  "first": "1994-10-03",
+  "last": "2025-04-28",
+  "animals": 97,
+  "sharks": {
+   "months": 95,
+   "weeks_dirtier": 180,
+   "weeks_cleaner": 180,
+   "after_dirtier": 12.8,
+   "after_cleaner": 13.4,
+   "ratio": 0.96,
+   "p": 0.231
+  },
+  "hours": {
+   "months": 95,
+   "weeks_dirtier": 180,
+   "weeks_cleaner": 180,
+   "after_dirtier": 472.1,
+   "after_cleaner": 516.7,
+   "ratio": 0.91,
+   "p": 0.165
+  },
+  "hours_west": {
+   "months": 43,
+   "weeks_dirtier": 83,
+   "weeks_cleaner": 83,
+   "after_dirtier": 199.0,
+   "after_cleaner": 253.4,
+   "ratio": 0.79,
+   "p": 0.01
+  }
+ },
+ "tigerqld": {
+  "areas": [
+   "Gold Coast",
+   "Nth Stradbroke Is.",
+   "Bribie Island",
+   "Sunshine Coast South",
+   "Sunshine Coast North",
+   "Rainbow Beach",
+   "Bundaberg"
+  ],
+  "months": 2520,
+  "tiger": {
+   "ratio": 1.03,
+   "caught_high": 645,
+   "months_high": 520,
+   "caught_other": 2420,
+   "months_other": 2000,
+   "per_month_high": 1.24,
+   "per_month_other": 1.21,
+   "p": 0.977
+  },
+  "bull": {
+   "ratio": 2.29,
+   "caught_high": 310,
+   "months_high": 520,
+   "caught_other": 520,
+   "months_other": 2000,
+   "per_month_high": 0.6,
+   "per_month_other": 0.26,
+   "p": 0.0
+  },
+  "other_sharks": {
+   "ratio": 1.1,
+   "caught_high": 1039,
+   "months_high": 520,
+   "caught_other": 3637,
+   "months_other": 2000,
+   "per_month_high": 2.0,
+   "per_month_other": 1.82,
+   "p": 0.738
+  }
+ },
+ "tigerrain": {
+  "hawaii": {
+   "tiger": {
+    "n": 80,
+    "wettest_quarter": 21,
+    "pct": 26,
+    "p": 0.44
+   },
+   "bull": {
+    "n": 0,
+    "wettest_quarter": 0,
+    "pct": null,
+    "p": null
+   },
+   "other": {
+    "n": 94,
+    "wettest_quarter": 23,
+    "pct": 24,
+    "p": 0.587
+   },
+   "tiger_vs_rest_p": 0.862
+  },
+  "reunion": {
+   "tiger": {
+    "n": 10,
+    "wettest_quarter": 2,
+    "pct": 20,
+    "p": 0.756
+   },
+   "bull": {
+    "n": 25,
+    "wettest_quarter": 3,
+    "pct": 12,
+    "p": 0.968
+   },
+   "other": {
+    "n": 25,
+    "wettest_quarter": 4,
+    "pct": 16,
+    "p": 0.904
+   },
+   "tiger_vs_rest_p": 0.637
+  },
+  "new_caledonia": {
+   "tiger": {
+    "n": 20,
+    "wettest_quarter": 4,
+    "pct": 20,
+    "p": 0.775
+   },
+   "bull": {
+    "n": 11,
+    "wettest_quarter": 2,
+    "pct": 18,
+    "p": 0.803
+   },
+   "other": {
+    "n": 31,
+    "wettest_quarter": 8,
+    "pct": 26,
+    "p": 0.527
+   },
+   "tiger_vs_rest_p": 1.0
+  },
+  "all": {
+   "tiger": {
+    "n": 110,
+    "wettest_quarter": 27,
+    "pct": 25,
+    "p": 0.58
+   },
+   "bull": {
+    "n": 36,
+    "wettest_quarter": 5,
+    "pct": 14,
+    "p": 0.966
+   },
+   "other": {
+    "n": 150,
+    "wettest_quarter": 35,
+    "pct": 23,
+    "p": 0.71
+   },
+   "tiger_vs_rest_p": 0.567
+  }
+ },
+ "whitecool": {
+  "total": 191,
+  "per_year": {
+   "1996": 2,
+   "1997": 13,
+   "1998": 9,
+   "1999": 8,
+   "2000": 9,
+   "2001": 4,
+   "2002": 9,
+   "2003": 3,
+   "2004": 0,
+   "2005": 3,
+   "2006": 3,
+   "2007": 7,
+   "2008": 6,
+   "2009": 14,
+   "2010": 6,
+   "2011": 5,
+   "2012": 12,
+   "2013": 6,
+   "2014": 6,
+   "2015": 11,
+   "2016": 6,
+   "2017": 5,
+   "2018": 10,
+   "2019": 4,
+   "2020": 6,
+   "2021": 11,
+   "2022": 2,
+   "2023": 5,
+   "2024": 3,
+   "2025": 3
+  },
+  "trend_pct_per_year": -0.8,
+  "trend_p": 0.351,
+  "first_half": 96,
+  "second_half": 95,
+  "cooler": {
+   "caught": 93,
+   "months": 735,
+   "per_month": 0.127
+  },
+  "warmer": {
+   "caught": 91,
+   "months": 686,
+   "per_month": 0.133
+  },
+  "cool_ratio": 0.95,
+  "cool_p": 0.7789
+ },
+ "upwelling": {
+  "n": 128,
+  "strongest_quarter": 22,
+  "strongest_pct": 17,
+  "p": 0.987,
+  "weakest_quarter": 36,
+  "weakest_pct": 28,
+  "p_weak": 0.235,
+  "mean_rank": 0.45
  },
  "california": {
   "y0": 1950,

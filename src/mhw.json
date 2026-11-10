@@ -60,12 +60,6 @@
   "last": 2026
  },
  "points": {
-  "hawaii_big_island": {
-   "days": 15293,
-   "heatwave_days": 2257,
-   "first": "1981-09-01",
-   "last": "2026-10-23"
-  },
   "california_monterey": {
    "days": 14999,
    "heatwave_days": 1554,
@@ -78,39 +72,21 @@
    "first": "1986-01-01",
    "last": "2026-10-22"
   },
-  "hawaii_maui": {
-   "days": 15292,
-   "heatwave_days": 2738,
+  "california_santa_barbara": {
+   "days": 15291,
+   "heatwave_days": 1766,
    "first": "1981-09-01",
-   "last": "2026-10-22"
-  },
-  "hawaii_oahu_north": {
-   "days": 13709,
-   "heatwave_days": 2310,
-   "first": "1986-01-01",
-   "last": "2026-10-22"
-  },
-  "reunion_west": {
-   "days": 13709,
-   "heatwave_days": 1800,
-   "first": "1986-01-01",
-   "last": "2026-10-22"
-  },
-  "california_san_diego": {
-   "days": 10055,
-   "heatwave_days": 1444,
-   "first": "1991-01-01",
    "last": "2026-10-21"
+  },
+  "hawaii_big_island": {
+   "days": 15293,
+   "heatwave_days": 2257,
+   "first": "1981-09-01",
+   "last": "2026-10-23"
   },
   "new_caledonia_noumea": {
    "days": 15292,
    "heatwave_days": 1667,
-   "first": "1981-09-01",
-   "last": "2026-10-22"
-  },
-  "california_humboldt": {
-   "days": 11640,
-   "heatwave_days": 859,
    "first": "1981-09-01",
    "last": "2026-10-22"
   },
@@ -120,15 +96,39 @@
    "first": "1981-09-01",
    "last": "2026-10-23"
   },
-  "california_santa_barbara": {
-   "days": 15291,
-   "heatwave_days": 1766,
+  "hawaii_oahu_north": {
+   "days": 13709,
+   "heatwave_days": 2310,
+   "first": "1986-01-01",
+   "last": "2026-10-22"
+  },
+  "california_humboldt": {
+   "days": 11640,
+   "heatwave_days": 859,
    "first": "1981-09-01",
+   "last": "2026-10-22"
+  },
+  "california_san_diego": {
+   "days": 10055,
+   "heatwave_days": 1444,
+   "first": "1991-01-01",
    "last": "2026-10-21"
   },
   "california_san_francisco": {
    "days": 15292,
    "heatwave_days": 2011,
+   "first": "1981-09-01",
+   "last": "2026-10-22"
+  },
+  "reunion_west": {
+   "days": 13709,
+   "heatwave_days": 1800,
+   "first": "1986-01-01",
+   "last": "2026-10-22"
+  },
+  "hawaii_maui": {
+   "days": 15292,
+   "heatwave_days": 2738,
    "first": "1981-09-01",
    "last": "2026-10-22"
   }
