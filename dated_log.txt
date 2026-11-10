@@ -1,1 +1,55 @@
+weather california_san_diego: 28066 days
+waves california_san_diego: 17109 days
+weather california_santa_barbara: 28066 days
+waves california_santa_barbara: 17109 days
+weather california_monterey: 28066 days
+waves california_monterey: 17109 days
+weather california_san_francisco: 28066 days
+waves california_san_francisco: 17109 days
+weather california_humboldt: 28066 days
+waves california_humboldt: 17109 days
+weather reunion_west failed: HTTP Error 429: Too Many Requests
+waves reunion_west: 17109 days
+weather new_caledonia_noumea: 28066 days
+waves new_caledonia_noumea: 17109 days
+weather hawaii_oahu_south: 28066 days
+waves hawaii_oahu_south: 17109 days
+weather hawaii_oahu_north: 28066 days
+waves hawaii_oahu_north: 17109 days
+weather hawaii_maui: 28066 days
+waves hawaii_maui: 17109 days
+weather hawaii_kauai: 28066 days
+waves hawaii_kauai: 17109 days
+weather hawaii_big_island: 28066 days
+waves hawaii_big_island: 17109 days
+tides 9410170 San Diego: 65695 highs and lows
+tides 9410840 Santa Monica: 65529 highs and lows
+tides 9411340 Santa Barbara: 65636 highs and lows
+tides 9413450 Monterey: 66181 highs and lows
+tides 9414290 San Francisco: 66343 highs and lows
+tides 9418767 Humboldt Bay: 66343 highs and lows
+tides 1612340 Honolulu: 66040 highs and lows
+tides 1612480 Mokuoloe (Oahu windward): 60142 highs and lows
+tides 1615680 Kahului (Maui): 62389 highs and lows
+tides 1611400 Nawiliwili (Kauai): 63936 highs and lows
+tides 1617760 Hilo (Big Island): 65080 highs and lows
+tides 1617433 Kawaihae (Big Island): 66114 highs and lows
+humpback NSW: 14987 records
+chlorophyll NSW North Coast: 14720 cells
+chlorophyll Mid North Coast & Hunter: 14720 cells
+chlorophyll Sydney & Central Coast: 16560 cells
+chlorophyll NSW South Coast: 14720 cells
+chlorophyll Gold Coast: 14720 cells
+chlorophyll Sunshine Coast & Moreton Bay: 16560 cells
+chlorophyll Central QLD & Whitsundays: 14720 cells
+chlorophyll Far North Queensland: 14720 cells
+chlorophyll Perth & Rottnest: 14720 cells
+chlorophyll WA South West: 14720 cells
+chlorophyll WA South Coast: 14720 cells
+chlorophyll WA Mid West & North: 14720 cells
+chlorophyll SA Gulfs & Yorke Peninsula: 14720 cells
+chlorophyll SA Eyre Peninsula & Bight: 14720 cells
+chlorophyll Victoria: 14720 cells
+chlorophyll Tasmania failed: HTTP Error 404: 
+chlorophyll Northern Territory failed: HTTP Error 404: 
 upwelling: 240552 lines
