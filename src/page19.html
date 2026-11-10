@@ -99,6 +99,7 @@ h2{font-family:var(--f-display);font-weight:700;font-size:clamp(26px,4.4vw,44px)
 
 /* beach picker + map + season grid */
 .picker,.coastsw{display:flex;flex-wrap:wrap;gap:6px}
+@media (max-width:640px){.dtable.nomob{display:none}}
 .coastsw{margin-bottom:4px}
 .picker button,.coastsw button{font:inherit;font-size:15px;font-weight:600;color:var(--ink);background:transparent;border:1.5px solid var(--rule);padding:10px 14px;min-height:44px;cursor:pointer}
 .picker button:hover,.coastsw button:hover{border-color:var(--muted)}
@@ -702,7 +703,7 @@ section[aria-labelledby="h-q"] .cards.qs{grid-template-columns:repeat(2,minmax(0
     <nav class="tabs" aria-label="Sections for different readers"><button type="button" class="menubtn" aria-expanded="false" aria-controls="menupanel"><span class="mcur">Home</span><svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path class="ham" d="M3 6h18M3 12h18M3 18h18" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" fill="none"/><path class="cls" d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" fill="none"/></svg><span class="vh">Open the section menu</span></button><div class="menupanel" id="menupanel"><div class="tablist" role="tablist" id="tablist">
     <button type="button" role="tab" id="tab-home" aria-controls="panel-home" aria-selected="true">Home</button>
     <button type="button" role="tab" id="tab-story" aria-controls="panel-story" aria-selected="false" tabindex="-1">The story</button>
-    <button type="button" role="tab" id="tab-students" aria-controls="panel-students" aria-selected="false" tabindex="-1">Students and schools</button>
+    <button type="button" role="tab" id="tab-students" aria-controls="panel-students" aria-selected="false" tabindex="-1">Schools</button>
     <button type="button" role="tab" id="tab-research" aria-controls="panel-research" aria-selected="false" tabindex="-1">Researchers</button>
     <button type="button" role="tab" id="tab-media" aria-controls="panel-media" aria-selected="false" tabindex="-1">News and media</button>
   </div><div class="menuextra"><a class="donatelink" data-from="menu" href="https://ko-fi.com/19degrees" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M12 20.5s-7.5-4.4-7.5-10.2A4.3 4.3 0 0 1 12 7.6a4.3 4.3 0 0 1 7.5 2.7c0 5.8-7.5 10.2-7.5 10.2z"/></svg>Donate</a></div></div></nav><a class="supporttop donatelink" data-from="nav" href="https://ko-fi.com/19degrees" target="_blank" rel="noopener" aria-label="Donate to 19 Degrees on Ko-fi (opens in a new tab)"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M12 20.5s-7.5-4.4-7.5-10.2A4.3 4.3 0 0 1 12 7.6a4.3 4.3 0 0 1 7.5 2.7c0 5.8-7.5 10.2-7.5 10.2z"/></svg><span class="stl">Donate</span></a><div class="sharetop"><button type="button" class="sharetopbtn" aria-expanded="false" aria-controls="shareTopGrid" aria-label="Share this page"><svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="18" cy="5" r="2.6"/><circle cx="6" cy="12" r="2.6"/><circle cx="18" cy="19" r="2.6"/><path d="M8.3 10.8l7.4-4.4M8.3 13.2l7.4 4.4"/></svg><span class="stl">Share</span></button><div class="sharegrid drop" id="shareTopGrid" hidden role="group" aria-label="Share on"><p class="sgh">Share 19 Degrees</p><a data-net="linkedin">LinkedIn</a><a data-net="x">X</a><a data-net="facebook">Facebook</a><a data-net="whatsapp">WhatsApp</a><button type="button" class="sgcopy">Copy link</button></div></div>
@@ -797,7 +798,7 @@ section[aria-labelledby="h-q"] .cards.qs{grid-template-columns:repeat(2,minmax(0
     <div class="live" role="region" aria-labelledby="h-now">
       <h2 class="blockh" id="h-now">Right now</h2>
       <p class="sub" id="nowSub"></p>
-      <div class="controls"><div class="coastsw" role="group" aria-label="Coast"><button type="button" data-coast="west">West coast</button><button type="button" data-coast="east">East coast</button></div></div>
+      <div class="controls"><div class="coastsw" role="group" aria-label="Coast"><button type="button" data-coast="east">East coast</button><button type="button" data-coast="west">West coast</button></div></div>
       <div class="today" id="today"></div>
       <p class="note">19°C is 66°F. Today's readings are at the beach. The 19°C line comes from monthly averages for the open sea offshore, so treat today's numbers as a guide.</p>
     </div>
@@ -810,7 +811,7 @@ section[aria-labelledby="h-q"] .cards.qs{grid-template-columns:repeat(2,minmax(0
     <div class="controls"><div class="coastsw evsw" role="group" aria-label="Which bites"><button type="button" data-ev="all" aria-pressed="true">All bites</button><button type="button" data-ev="conf" aria-pressed="false">Species confirmed</button></div></div>
     <div class="rows" id="rows"></div>
     <div class="legend"><span><i class="sw" style="background:var(--cold)"></i>Below 19°C</span><span><i class="sw" style="background:var(--warm)"></i>19°C or warmer</span></div>
-    <details class="dtable"><summary>View as a table</summary><div id="tbLine"></div></details>
+    <details class="dtable nomob"><summary>View as a table</summary><div id="tbLine"></div></details>
     <p class="note" id="evNote"></p>
     <p class="note" id="imosNote"><b>Tagged sharks agree.</b> Of 20,105 days that 132 tagged bull sharks were detected off NSW from 2009 to 2026, 99.5% fell in months when the sea was 19°C or warmer, and none in a month below 18.1°C. That is not because cool months are rare: south of Sydney, 43% of months in that time were below 19°C. Listening stations stayed in the water through winter; the sharks had gone. (<a href="https://researchdata.edu.au/imos-animal-tracking-2007-ongoing/3961802" target="_blank" rel="noopener">IMOS Animal Tracking</a> data, this page's analysis.) Bull sharks leave Sydney once the water falls to about 19–20.5°C, and they have been leaving later each year as the sea warms (<a href="https://doi.org/10.1016/j.scitotenv.2025.179966" target="_blank" rel="noopener">Lubitz et al., 2025</a>).</p><p class="note" id="waterNote"><b>So does the water on the day.</b> Where a water temperature was recorded at the bite, all 16 bull shark bites were in water of 20°C or warmer. For comparison, 2 of 10 tiger shark bites and 9 of 41 white shark bites were below 19°C, the coldest at 8°C. (<a href="https://zenodo.org/records/18752301" target="_blank" rel="noopener">Australian Shark-Incident Database</a>, temperatures reported at the scene.) In Western Australia, a 2012 state study found about two-thirds of white shark bites since the mid-1990s were in water below 20°C, and only one above 22°C; it doesn't say how many bites had a recorded temperature (<a href="https://library.dpird.wa.gov.au/cgi/viewcontent.cgi?article=1027&amp;context=fr_fop" target="_blank" rel="noopener">Fisheries Occasional Publication 109, 2012</a>).</p>
   </section>
@@ -819,7 +820,7 @@ section[aria-labelledby="h-q"] .cards.qs{grid-template-columns:repeat(2,minmax(0
     <div class="kicker">The season</div>
     <h2 id="h-season">The warm season is getting longer. So is the bite season.</h2>
     <p class="sub">Seasons are southern hemisphere: summer is December to February, autumn March to May. The grid shows how often each month's sea temperature averaged 19°C (66°F) or more, by decade, at the beach you pick; months run July to June so summer sits in the middle. Below it: in which season bull shark bites happened, then and now.</p>
-    <div class="controls"><div class="coastsw" role="group" aria-label="Coast"><button type="button" data-coast="west">West coast</button><button type="button" data-coast="east">East coast</button></div><div class="picker" id="picker" role="group" aria-label="Beach"></div></div>
+    <div class="controls"><div class="coastsw" role="group" aria-label="Coast"><button type="button" data-coast="east">East coast</button><button type="button" data-coast="west">West coast</button></div><div class="picker" id="picker" role="group" aria-label="Beach"></div></div>
     <div class="seasonwrap">
       <div style="min-width:0">
         <div class="stat" id="stat" aria-live="polite"></div>
@@ -859,7 +860,7 @@ section[aria-labelledby="h-q"] .cards.qs{grid-template-columns:repeat(2,minmax(0
       <div class="recblock">
       <h3 class="blockh" id="h-hist">Bull shark bites by decade. They have been here before, and they are climbing again.</h3>
       <p class="sub" id="histSub"></p>
-      <div class="controls"><div class="coastsw" role="group" aria-label="Coast"><button type="button" data-coast="west">West coast</button><button type="button" data-coast="east">East coast</button></div><div class="coastsw" id="unitsw" role="group" aria-label="Show"><button type="button" data-unit="count" aria-pressed="true">Number of bites</button><button type="button" data-unit="rate" aria-pressed="false">Per 10 million people</button></div></div>
+      <div class="controls"><div class="coastsw" role="group" aria-label="Coast"><button type="button" data-coast="east">East coast</button><button type="button" data-coast="west">West coast</button></div><div class="coastsw" id="unitsw" role="group" aria-label="Show"><button type="button" data-unit="count" aria-pressed="true">Number of bites</button><button type="button" data-unit="rate" aria-pressed="false">Per 10 million people</button></div></div>
       <div class="fig" id="hist"></div>
       <div class="legend"><span><i class="sw" style="background:var(--ink);border-radius:2px"></i>Coastal waters</span><span><i class="sw" style="background:var(--muted);opacity:.55;border-radius:2px"></i>Estuary, harbor or river</span></div>
       <p class="note" id="histNote"></p>
@@ -965,7 +966,7 @@ section[aria-labelledby="h-q"] .cards.qs{grid-template-columns:repeat(2,minmax(0
     <div class="kicker">Looking ahead: what it means</div>
     <h2 id="h-ahead">If nothing changes: 2050.</h2>
     <p class="sub">If each beach keeps warming at its pace since 1980, this is what the 19°C line would mean around 2050 for where bull sharks can be, how long they stay, and how often they bite. It extends the trend; it is not a climate model.</p>
-    <div class="controls"><div class="coastsw" role="group" aria-label="Coast"><button type="button" data-coast="west">West coast</button><button type="button" data-coast="east">East coast</button></div></div>
+    <div class="controls"><div class="coastsw" role="group" aria-label="Coast"><button type="button" data-coast="east">East coast</button><button type="button" data-coast="west">West coast</button></div></div>
     <div class="ahead3" aria-live="polite">
       <div class="atile"><span class="lab">Range</span><div id="aRange"></div></div>
       <div class="atile"><span class="lab">Season</span><div id="aSeason"></div></div>
@@ -1796,7 +1797,8 @@ try{
     const rNow=a.line_now==null?`past ${a.south_name}`:`near ${near(c,a.line_now)}`;
     const rThen=a.line_2050==null?(c==="east"?"past the Victorian border":`past ${a.south_name}`):`near ${near(c,a.line_2050)}`;
     const km=(a.line_now!=null&&a.line_2050!=null)?Math.round((a.line_now-a.line_2050)*111):null;
-    document.getElementById("aRange").innerHTML=`<span class="big">${rNow.replace(/^near /,"")} <span aria-hidden="true">→</span> <span class="w">${rThen.replace(/^near /,"")}</span></span><span class="cap">How far south the sea is 19°C or more for at least half the year: ${rNow} now, ${rThen} by about 2050${km!=null&&Math.abs(km)<60?` (it barely moves here, about ${Math.abs(km)} km)`:""}.</span>`;
+    const same=rNow===rThen, mv=km==null?"":Math.abs(km)<5?"no change":`about ${Math.abs(km)} km further ${km>0?"south":"north"}`;
+    document.getElementById("aRange").innerHTML=`<span class="big">${rNow.replace(/^near /,"")} <span aria-hidden="true">→</span> <span class="w">${same&&mv?mv:rThen.replace(/^near /,"")}</span></span><span class="cap">How far south the sea is 19°C or more for at least half the year: ${rNow} now, ${rThen} by about 2050${km!=null&&Math.abs(km)<60?` (it barely moves here, about ${Math.abs(km)} km)`:""}.</span>`;
     document.getElementById("aSeason").innerHTML=`<span class="big">${kb.now} <span aria-hidden="true">→</span> <span class="w">${kb.y2050}</span> <small>months</small></span><span class="cap">Months a year at 19°C or more off ${key} in an average year: now, and around 2050 at its warming pace of ${kb.trend.toFixed(2)}°C a decade.</span>`;
     const up=Math.round((B.scale-1)*100);
     document.getElementById("aBites").innerHTML=`<span class="big"><span class="w">${up>=0?"+":""}${up}%</span> <small>bites a year: ${B.rate.toFixed(1)} → ${B.rate_2050.toFixed(1)}</small></span><span class="cap">Bull shark bites a year on the ${c==="east"?"NSW coast south of Port Macquarie":"WA coast south of Shark Bay"} (${B.n} in the ${B.years} years since 2015), if bites per warm month stay the same as warm months grow at ${B.beaches.join(", ")}. Likely range ${B.lo_2050.toFixed(1)} to ${B.hi_2050.toFixed(1)}.</span>`;
@@ -1946,7 +1948,7 @@ try{
   /* logo: back to the top of the story, with a clean address */
   document.querySelector(".lockup").addEventListener("click",e=>{e.preventDefault();show("home");scrollTo0(0);setHash("");const n=document.querySelector(".tabs");if(n&&n.classList.contains("open")){n.classList.remove("open");document.querySelector(".menubtn").setAttribute("aria-expanded","false");}});
   tabs.forEach((t,i)=>{
-    t.addEventListener("click",()=>{show(key(t));setHash(key(t));});
+    t.addEventListener("click",()=>{if(key(t)==="story"&&typeof COAST!=="undefined"&&COAST.cur!=="east")COAST.set("east");show(key(t));setHash(key(t));});
     t.addEventListener("keydown",e=>{let j=null;if(e.key==="ArrowRight")j=(i+1)%tabs.length;if(e.key==="ArrowLeft")j=(i-1+tabs.length)%tabs.length;if(e.key==="Home")j=0;if(e.key==="End")j=tabs.length-1;
       if(j!=null){e.preventDefault();show(key(tabs[j]),true);setHash(key(tabs[j]));}});
   });

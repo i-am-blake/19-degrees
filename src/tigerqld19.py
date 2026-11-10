@@ -81,7 +81,10 @@ for grp in ("tiger", "bull", "other sharks"):
         sh = {k: list(zip(random.sample([s for s, _ in v], len(v)), [c for _, c in v])) for k, v in strata.items()}
         r_ = ratio(sh, grp)[0]
         more += r_ is not None and abs(math.log(r_)) >= abs(math.log(obs)) - 1e-12
+    by_area = {a: ratio({k: v for k, v in strata.items() if k[0] == a}, grp)[0] for a in AREAS}
     out[grp.replace(" ", "_")] = dict(ratio=round(obs, 2), caught_high=hi, months_high=nh, caught_other=lo, months_other=nl,
-                                       per_month_high=round(hi / nh, 2), per_month_other=round(lo / nl, 2), p=round((more + 1) / (R + 1), 3))
+                                       per_month_high=round(hi / nh, 2), per_month_other=round(lo / nl, 2), p=round((more + 1) / (R + 1), 3),
+                                       areas_higher=sum(r is not None and r > 1 for r in by_area.values()),
+                                       areas_tested=sum(r is not None for r in by_area.values()))
 json.dump(out, open(OUT, "w"), indent=1)
 print("tigerqld", json.dumps(out))

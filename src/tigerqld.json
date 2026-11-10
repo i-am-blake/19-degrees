@@ -17,7 +17,9 @@
   "months_other": 2000,
   "per_month_high": 1.24,
   "per_month_other": 1.21,
-  "p": 0.977
+  "p": 0.977,
+  "areas_higher": 2,
+  "areas_tested": 7
  },
  "bull": {
   "ratio": 2.29,
@@ -27,7 +29,9 @@
   "months_other": 2000,
   "per_month_high": 0.6,
   "per_month_other": 0.26,
-  "p": 0.0
+  "p": 0.0,
+  "areas_higher": 6,
+  "areas_tested": 7
  },
  "other_sharks": {
   "ratio": 1.1,
@@ -37,6 +41,8 @@
   "months_other": 2000,
   "per_month_high": 2.0,
   "per_month_other": 1.82,
-  "p": 0.738
+  "p": 0.738,
+  "areas_higher": 4,
+  "areas_tested": 7
  }
 }
