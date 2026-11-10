@@ -43,4 +43,37 @@ md = lambda a, b: (pd.Timestamp("2021-01-01") + pd.Timedelta(days=float(last[(la
 R["c16"] = dict(early=md(2010, 2013), recent=md(y1 - 4, y1), recent_from=y1 - 4, recent_to=y1, slope=round(lr.slope, 1), lo=round(lr.slope - 1.96 * lr.stderr, 1), hi=round(lr.slope + 1.96 * lr.stderr, 1),
                 p=float(lr.pvalue), n=int(len(last)), sharks=int(last.animal_id.nunique()))
 print("C16 leaving Sydney:", R["c16"])
+# C16 held to listening stations: a later "last detection" could just mean receivers stayed in the water longer. Each
+# station's deployments come from every species file on the imos-data branch (a station shows up once anything was heard).
+dcols = ["station_name", "receiver_deployment_datetime_UTC", "receiver_recovery_datetime_UTC", lat, lon]
+files = [f for f in os.listdir(imos_dir) if f.endswith(".csv.gz")]
+dep = pd.concat([pd.read_csv(os.path.join(imos_dir, f), usecols=dcols, low_memory=False) for f in files]).drop_duplicates()
+dep = dep[(dep[lon] > 150) & (dep[lat] < -33.6) & (dep[lat] > -34.2)]
+dep["a"] = pd.to_datetime(dep.receiver_deployment_datetime_UTC).dt.tz_localize(None)
+dep["b"] = pd.to_datetime(dep.receiver_recovery_datetime_UTC, errors="coerce").dt.tz_localize(None).fillna(d.t.max().tz_localize(None))
+yrs = range(2010, y1 + 1); win = {}
+for st, x in dep.groupby("station_name"):
+    win[st] = {y for y in yrs if ((x.a <= pd.Timestamp(y, 3, 1)) & (x.b >= pd.Timestamp(y, 8, 31))).any()}  # listening March to August
+def fit(sub):
+    l2 = sub.groupby([sub.t.dt.year.rename("yr"), "animal_id"]).t.max().reset_index(); l2["doy"] = l2.t.dt.dayofyear
+    r = stats.linregress(l2.yr, l2.doy)
+    return dict(slope=round(r.slope, 1), lo=round(r.slope - 1.96 * r.stderr, 1), hi=round(r.slope + 1.96 * r.stderr, 1), p=float(r.pvalue), n=int(len(l2)), sharks=int(l2.animal_id.nunique()))
+on = sy[[y in win.get(s, ()) for s, y in zip(sy.station_name, sy.t.dt.year)]]
+long_run = [s for s, w in win.items() if len(w) >= 8]
+R["c16"]["listening"] = fit(on)
+R["c16"]["long_run"] = dict(fit(sy[sy.station_name.isin(long_run)]), stations=len(long_run), years=len(yrs))
+print("C16 held to stations:", R["c16"]["listening"], R["c16"]["long_run"])
+# C30: how much the public data says about young white sharks (under 3 m total length) off the Central Coast and Newcastle
+w = pd.read_csv(os.path.join(imos_dir, "WhiteShark_Carcharodoncarcharias.csv.gz"), low_memory=False); w["t"] = pd.to_datetime(w.date_hour_UTC)
+def tl(m):
+    import re
+    x = re.search(r"TOTAL LENGTH = ([\d.]+) (mm|cm|m)", str(m)) or re.search(r"LENGTH = ([\d.]+) (mm|cm|m)", str(m))
+    if not x: return np.nan
+    v = float(x[1]) / {"mm": 1000, "cm": 100, "m": 1}[x[2]]
+    return v * 10 if v < 1 else v  # a few lengths are entered in mm by mistake (e.g. "188 mm" for 188 cm)
+w["tl"] = w.measurement.map(tl)
+j = w[(w.tl < 3) & (w[lon] > 150) & (w[lat] < -32.3) & (w[lat] > -34.2)]
+R["c30"] = dict(sharks=int(j.animal_id.nunique()), days=int(j.t.dt.date.nunique()), y0=int(j.t.dt.year.min()), y1=int(j.t.dt.year.max()),
+                years=int(j.t.dt.year.nunique()), all_white=int(w.animal_id.nunique()))
+print("C30 young white sharks:", R["c30"])
 if out: json.dump(R, open(out, "w"), indent=1); print("wrote", out)

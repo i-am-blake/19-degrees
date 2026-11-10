@@ -135,7 +135,7 @@ if "lunar" in D:
 # included. Here they are rebuilt from the page's own data block and must match the page word for word.
 import os; sys.path.insert(0, os.path.dirname(os.path.abspath(__file__))); import results19
 for pid, (fn, need) in results19.PARAS.items():
-    if not all(k in D for k in need): continue
+    if not all(k in D for k in need) or not results19.ready(fn, D): continue
     m = re.search(rf'<p class="agres" id="{pid}">(.*?)</p>', page, re.S)
     if not m: bad.append(f"{pid}: paragraph not found"); continue
     check(pid, m[1] == fn(D), True)
@@ -143,7 +143,7 @@ for pat, fn, need in results19.SENTENCES:
     if not all(k in D for k in need) or (need == ("lunar",) and "hawaii_all" not in D["lunar"]): continue
     m = pat.search(page); check(fn.__name__, bool(m) and m[0] == fn(D), True)
 for cid, (need, fn) in results19.BADGES.items():
-    if not all(k in D for k in need): continue
+    if not all(k in D for k in need) or not results19.ready(fn, D): continue
     m = re.search(rf'id="{cid}"[^>]*>.{{0,200}}?<span class="cstat early">Early result: ([^<]*)</span>', page, re.S)
     check(f"{cid} status", m and m[1], fn(D))
 

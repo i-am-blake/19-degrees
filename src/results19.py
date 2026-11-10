@@ -162,10 +162,36 @@ def upC29(D):
             f'{pos}' + (f' ({pf(u["p"])})' if ok else "") + f'; {u["weakest_quarter"]} ({u["weakest_pct"]}%) followed the weakest ({pf(u["p_weak"])}). ' + end
             + '(' + A("https://upwell.pfeg.noaa.gov/erddap/info/erdCUTIdaily/index.html", "NOAA upwelling index") + '; California Department of Fish and Wildlife.)')
 
+def stationsC16(D):
+    c = D["imos"]["c16"]; l, r = c["listening"], c["long_run"]
+    m = lambda v: str(v).replace("-", "−")
+    ci = lambda x: f'{m(x["slope"])} days a year; 95% CI {m(x["lo"])} to {m(x["hi"])}'
+    s1 = (f'counting only stations that were in the water from March to August of that year, departures still moved later ({ci(l)})' if sig(l) and l["slope"] > 0
+          else f'counting only stations that were in the water from March to August of that year, there\'s no clear trend ({ci(l)})')
+    if sig(r) and r["slope"] > 0:
+        s2 = f'At the {r["stations"]} stations that listened in at least 8 of the {r["years"]} years, it holds too ({ci(r)}; {r["n"]} shark-years).'
+        end = ""
+    else:
+        s2 = f'At the {r["stations"]} stations that listened in at least 8 of the {r["years"]} years, there\'s no clear trend ({ci(r)}; {r["n"]} shark-years).'
+        end = " So part of the shift may come from where receivers sat, not when sharks left. A full deployment history would settle it."
+    return f'Holding the listening stations fixed: {s1}. {s2}{end}'
+
+def juvC30(D):
+    j = D["imos"]["c30"]
+    return ('First look: the public data can\'t test this yet. ' + A("https://researchdata.edu.au/imos-animal-tracking-2007-ongoing/3961802", "IMOS Animal Tracking")
+            + f' has {j["all_white"]} tagged white sharks in all. {j["sharks"]} young ones (under 3 m) were picked up off the Central Coast and Newcastle, '
+            f'on {j["days"]} days across {j["years"]} years between {j["y0"]} and {j["y1"]}: too few to compare warm and cool years. '
+            'The nursery tagging at Port Stephens and Stockton Beach isn\'t in the public data, and that is what would make this testable.')
+
+def c16_badge(D):
+    c = D["imos"]["c16"]; main = sig(c) and c["slope"] > 0; r = c["long_run"]
+    return "leaving later" if main and sig(r) and r["slope"] > 0 else "leaning later, not settled" if main else "not supported so far"
+
 PARAS = {"mhwC19": (mhwC19, ("mhw",)), "bwC6": (bwC6, ("beachwatch",)), "plumeC6": (plumeC6, ("rivers", "harbour")),
          "qldC6": (qldC6, ("tigerqld",)), "wkC18": (wkC18, ("exposure", "beachday")), "whaleC5": (whaleC5, ("whales",)),
          "whitecoolC5": (whitecoolC5, ("whitecool",)), "chlC4": (chlC4, ("chlorophyll",)), "tideC24": (tideC24, ("tides",)),
-         "tigerC28": (tigerC28, ("tigerqld", "tigerrain")), "upC29": (upC29, ("upwelling",))}
+         "tigerC28": (tigerC28, ("tigerqld", "tigerrain")), "upC29": (upC29, ("upwelling",)),
+         "stationsC16": (stationsC16, ("imos",)), "juvC30": (juvC30, ("imos",))}
 
 def hawaiiC6(D):
     h = D["hawaii"]
@@ -182,14 +208,19 @@ SENTENCES = [(re.compile(r"Hawaii \(\d{4}–\d{4}\): the water was turbid or mud
              (re.compile(r"Hawaii (?:agrees|differs): \d+ of \d+ bites \(\d+%; p = [\d.]+\), and \d+ of \d+ tiger shark bites"), hawaiiC24, ("lunar",))]
 
 BADGES = {"c28": (("tigerqld", "tigerrain"), lambda D: (lambda a, b: "supported so far" if a and b else "mixed so far" if a or b else "not supported so far")(*c28_ok(D))),
-          "c29": (("upwelling",), lambda D: "supported so far" if c29_ok(D) else "not supported so far")}
+          "c29": (("upwelling",), lambda D: "supported so far" if c29_ok(D) else "not supported so far"),
+          "c16": (("imos",), c16_badge)}
+
+def ready(fn, D):  # a result file from before a test was added lacks its fields until the next run
+    try: fn(D); return True
+    except (KeyError, TypeError): return False
 
 def fill(html, D):
     for cid, (need, fn) in BADGES.items():
-        if all(k in D for k in need):
+        if all(k in D for k in need) and ready(fn, D):
             html = re.sub(rf'(id="{cid}"[^>]*>.{{0,200}}?<span class="cstat early">Early result: )[^<]*(</span>)', lambda m: m.group(1) + fn(D) + m.group(2), html, count=1, flags=re.S)
     for pid, (fn, need) in PARAS.items():
-        if all(k in D for k in need):
+        if all(k in D for k in need) and ready(fn, D):
             html = re.sub(rf'(<p class="agres" id="{pid}">).*?(</p>)', lambda m: m.group(1) + fn(D) + m.group(2), html, count=1, flags=re.S)
     for pat, fn, need in SENTENCES:
         if all(k in D for k in need) and (need != ("lunar",) or "hawaii_all" in D["lunar"]):
