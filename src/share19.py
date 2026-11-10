@@ -72,6 +72,11 @@ _fd = next((d for d in (os.path.join(os.path.dirname(os.path.abspath(__file__)),
 FONTFACE = "" if not _fd else "<style>" + "".join(
     f"@font-face{{font-family:'{n}';{w}src:local('{n}'),url(file://{os.path.abspath(os.path.join(_fd, f))})}}"
     for n, w, f in (("Bricolage Grotesque", "font-weight:800;", "bricolage.woff"), ("Figtree", "", "figtree.woff"), ("Martian Mono", "", "martian-mono.woff"))) + "</style>"
+# Designed images in share_static/ (the link preview and its other formats) are published as they are, in place of drawn ones
+import shutil
+STATIC = os.path.join(os.path.dirname(os.path.abspath(__file__)), "share_static")
+for f in (sorted(os.listdir(STATIC)) if os.path.isdir(STATIC) else []):
+    shutil.copy(os.path.join(STATIC, f), os.path.join(outdir, f)); cards_html.pop(f, None); print("copied", f)
 for name, (w, h, body) in cards_html.items():
     body = FONTFACE + body
     tmp = tempfile.NamedTemporaryFile("w", suffix=".html", delete=False); tmp.write('<!doctype html><meta charset="utf-8">' + body); tmp.close()
