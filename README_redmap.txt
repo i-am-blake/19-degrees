@@ -1,1 +1,0 @@
-Redmap sightings of range-shifting marine species, Institute for Marine and Antarctic Studies, University of Tasmania, https://www.redmap.org.au/ (CC BY-NC 2.5 AU; sightings from the last 3 years are embargoed and locations are reduced in precision). Retrieved 2026-11-09.
