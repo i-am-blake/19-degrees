@@ -17,12 +17,15 @@ def chance(p): return f"If there were no real effect, a result at least this str
 def t(tested, found, why, nxt): return dict(tested=tested, found=found, why=why, next=nxt)
 
 def e_c1(D):
-    c = D["catchshare"]; s, n = c["south"], c["north"]; f, l = c["first_years"], c["last_years"]
-    return t("Whether bull sharks make up a growing share of what Queensland's shark-control gear catches at its southern beaches.",
-             f'Bull sharks rose from {s["first"]["pct"]}% of sharks caught in {f[0]}–{f[1]} to {s["last"]["pct"]}% in {l[0]}–{l[1]} (Rainbow Beach to the Gold Coast), while their share '
-             + ("fell" if n["diff_pts"] < 0 else "rose less" if n["diff_pts"] < s["diff_pts"] else "rose") + " further north. " + chance(s["p"]),
-             "The claim is about catch per net or drumline, which isn't published, so share of catch stands in for it. A stand-in can reach \"leans toward it\" at most, however strong the result.",
-             "Catch per unit of fishing effort from Queensland, and NSW catch records to extend it south.")
+    c = D["catchshare"]; s, n = c["south"], c["north"]; f, l = c["first_years"], c["last_years"]; b = D["literature"]["banaghan2025"]
+    flat = not ((b["south_drumline_r"] > 0 and b["south_drumline_sig"]) or (b["south_gillnet_r"] > 0 and b["south_gillnet_sig"]))
+    return t("Whether bull shark catch rates in Queensland's shark-control gear are rising at its southern beaches.",
+             f'A published study that allowed for fishing effort (catch per net or drumline per day, {b["years"]}) found '
+             + ("no clear rise in the south overall: catches rose in the Sunshine Coast nets, fell on North Stradbroke Island's drumlines and were flat on the Gold Coast. " if flat else "a rise in the south. ")
+             + f'This page\'s own measure, bull sharks\' share of all sharks caught, rose from {s["first"]["pct"]}% in {f[0]}–{f[1]} to {s["last"]["pct"]}% in {l[0]}–{l[1]} ({pv(s["p"])}).',
+             ("Catch per unit of effort is the claim's own measure, and it shows no clear trend, so \"no clear link\". The rising share may come from other sharks falling, or from more frequent servicing of the gear in recent years, rather than more bull sharks."
+              if flat else "Share of catch only stands in for catch per unit of effort, so the most it can reach is \"leans toward it\"."),
+             "Effort-standardised catch rates for 2023 on, once gear has been serviced daily, and the southeast Queensland tagging data due next year.")
 def e_c3(D):
     e = D["proj"]["eden"]
     return t(f'Where {e["models"]} global climate models put the line south of which the sea is 19°C or warmer for at least half the year, around 2050.',

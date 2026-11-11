@@ -40,7 +40,10 @@ sig = lambda x, k="p": x.get(k) is not None and x[k] < 0.05
 
 # claims whose numbers sit in the card text rather than the data block; the rule still applies to them
 
-def g_c1(D):  # share of catch stands in for catch per unit of effort, which isn't published
+def g_c1(D):  # share of catch stands in for catch per unit of effort; the published effort-standardised test comes first
+    b = D["literature"]["banaghan2025"]
+    if not ((b["south_drumline_r"] > 0 and b["south_drumline_sig"]) or (b["south_gillnet_r"] > 0 and b["south_gillnet_sig"])):
+        return "none"  # catch per unit of effort in the south shows no clear rise (Banaghan et al. 2025)
     s = D["catchshare"]["south"]; return cap(V(s["diff_pts"] > 0, s["p"]))
 def g_c3(D):  # projection: model agreement instead of p. "Supports" needs 80% of models past the border (about 37.5°S);
     e = D["proj"]["eden"]  # the projected beaches stop at Eden (37.1°S), so for now the best it can reach is "leans"

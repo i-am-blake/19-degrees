@@ -1,0 +1,16 @@
+{
+ "banaghan2025": {
+  "cite": "Banaghan, Levengood and Holmes (2025), Marine and Freshwater Research 76, MF24256",
+  "doi": "https://doi.org/10.1071/MF24256",
+  "years": "1996–2022",
+  "south_drumline_r": -0.019,
+  "south_drumline_sig": false,
+  "south_gillnet_r": 0.017,
+  "south_gillnet_sig": false,
+  "note": "Effort-standardised CPUE (sharks per gear per day). Subtropics = Sunshine Coast to Gold Coast; Rainbow Beach excluded. Sunshine Coast gill-nets rose (r=+0.032, significant); Point Lookout drumlines fell (r=-0.062, significant); Gold Coast flat."
+ },
+ "banaghan2026": {
+  "cite": "Banaghan, Levengood and Holmes (2026), Fisheries Research 303, 107882",
+  "doi": "https://doi.org/10.1016/j.fishres.2026.107882"
+ }
+}
