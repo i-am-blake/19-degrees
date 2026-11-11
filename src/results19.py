@@ -210,7 +210,7 @@ def shareC1(D):
             f'bull sharks {"rose" if s["diff_pts"] > 0 else "fell"} from {s["first"]["pct"]}% of all sharks caught in {f[0]}–{f[1]} ({s["first"]["bull"]:,} of {s["first"]["sharks"]:,}) '
             f'to {s["last"]["pct"]}% in {l[0]}–{l[1]} ({s["last"]["bull"]:,} of {s["last"]["sharks"]:,}): a {"rise" if s["diff_pts"] > 0 else "fall"} of {abs(s["diff_pts"])} percentage points '
             f'(95% CI {sg(s["ci"][0])} to {sg(s["ci"][1])}; {pf(s["p"])}). In the north their share {"fell" if fall else "rose"} from {n["first"]["pct"]}% to {n["last"]["pct"]}% '
-            f'({sg(n["diff_pts"])} points, 95% CI {sg(n["ci"][0])} to {sg(n["ci"][1])}). This is share of catch, not catch per unit of effort, which isn\'t published. '
+            f'({sg(n["diff_pts"])} points, 95% CI {sg(n["ci"][0])} to {sg(n["ci"][1])}). This is share of catch, not catch per unit of effort; the effort-based test is under "Already known". '
             f'NSW data would extend it south. ' + A("https://www.data.qld.gov.au/dataset/fisheries-queensland-s-shark-control-program-information-and-data", "Queensland Shark Control Program data"))
 
 def projC3(D):
