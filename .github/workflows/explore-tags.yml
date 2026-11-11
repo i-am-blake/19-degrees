@@ -1,0 +1,25 @@
+name: Explore new tag data
+# One-off exploration on the explore-tags branch: downloads public tag data that can't be reached from the
+# author's workspace, writes small summaries back to this branch. Never runs on main.
+on:
+  push:
+    branches: [explore-tags]
+    paths: [".github/workflows/explore-tags.yml", "src/explore_tags.py"]
+permissions:
+  contents: write
+jobs:
+  explore:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: "3.12" }
+      - run: pip install -q pandas
+      - name: Download and summarize
+        run: python3 src/explore_tags.py explore
+      - name: Save summaries to this branch
+        run: |
+          git add explore
+          git -c user.name="github-actions[bot]" -c user.email="41898900+github-actions[bot]@users.noreply.github.com" commit -qm "Tag data exploration, $(date -u +%Y-%m-%d)" || exit 0
+          git push -q origin HEAD:explore-tags
