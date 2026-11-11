@@ -195,6 +195,15 @@ for lab, pat, want in (("claims", r"See the (\d+) claims", cards), ("claims", r"
                        ("claims", r"Pick one of (\d+) claims", cards),
                        ("claims tested", r"Tested so far (\d+)", early)):
     for m in find(lab, pat, True): check(f"number of {lab} ('{m[0]}')", int(m[1]), want)
+# The same count written out in words ("Forty-three claims")
+_ONES = "zero one two three four five six seven eight nine ten eleven twelve thirteen fourteen fifteen sixteen seventeen eighteen nineteen".split()
+_TENS = {"twenty": 20, "thirty": 30, "forty": 40, "fifty": 50, "sixty": 60, "seventy": 70, "eighty": 80, "ninety": 90}
+def words(w):
+    t, _, o = w.lower().partition("-")
+    return _TENS[t] + (_ONES.index(o) if o else 0) if t in _TENS else _ONES.index(t) if t in _ONES else None
+for m in re.finditer(r"\b([A-Za-z]+(?:-[a-z]+)?) (?:specific |testable )?claims\b", T):
+    n = words(m[1])
+    if n is not None and n > 9: check(f"number of claims in words ('{m[0]}')", n, cards)
 # Every claim card names the decision it informs
 for c in re.finditer(r'<article class="claim" id="(c\d+)"([\s\S]*?)</article>', page):
     check(f"{c[1].upper()} has a 'Decision it informs' line", "<dt>Decision it informs</dt>" in c[2], True)
