@@ -35,8 +35,10 @@ jobs:
         run: bash src/weekly_update.sh
       - name: Keep a preview of the built pages (dry runs only)
         if: inputs.dry_run == '1'
-        uses: actions/upload-artifact@v4
-        with: { name: preview, path: "*.html", retention-days: 3 }
+        run: |
+          mkdir -p /tmp/pv && cp *.html /tmp/pv/ && cd /tmp/pv && git init -q && git checkout -q -b preview && git add -A
+          git -c user.name="github-actions[bot]" -c user.email="41898900+github-actions[bot]@users.noreply.github.com" commit -qm "Preview of ${{ github.ref_name }}"
+          git push -qf "https://x-access-token:${{ github.token }}@github.com/${{ github.repository }}.git" HEAD:preview
       - name: Publish
         if: inputs.dry_run != '1'
         run: |
