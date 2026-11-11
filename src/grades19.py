@@ -28,7 +28,7 @@ def V(ok, p):
     return "none"
 def down(v, check_ok):  # a failed check lowers "supports" to "leans"
     return "leans" if v == "supports" and not check_ok else v
-cap = lambda v: "leans" if v == "supports" else v  # stand-in measure
+cap = lambda v: "leans" if v == "supports" else v  # stand-in measure, or a count with no fair "per"
 
 from scipy.stats import binomtest, fisher_exact
 def binom2(k, n, q): return float(binomtest(k, n, q).pvalue)  # two-sided exact

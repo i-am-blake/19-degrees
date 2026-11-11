@@ -198,6 +198,7 @@ for lab, pat, want in (("claims", r"See the (\d+) claims", cards), ("claims", r"
 # Every claim card names the decision it informs
 for c in re.finditer(r'<article class="claim" id="(c\d+)"([\s\S]*?)</article>', page):
     check(f"{c[1].upper()} has a 'Decision it informs' line", "<dt>Decision it informs</dt>" in c[2], True)
+    check(f"{c[1].upper()} has a 'Measured per' line", "<dt>Measured per</dt>" in c[2], True)
 i = page.find("Products and the evidence"); seg = page[i:page.find("</section>", i)]
 prods = seg.count('<td class="psrc">')
 for pat in (r"Products checked (\d+)", r"See all (\d+) products", r"(\d+) products we checked"):
