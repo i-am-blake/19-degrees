@@ -202,11 +202,34 @@ def ruledC5(D):
             f'East Australian humpbacks grew roughly tenfold since the 1990s, but Queensland\'s winter white shark catches did not: at most {most:.2f} times over {yrs} years on the 95% range, '
             'short of the 1.5 times a whale-driven rise would need. The bite peak still falls in the migration months; the whales don\'t explain it.')
 
+def shareC1(D):
+    c = D["catchshare"]; s, n = c["south"], c["north"]; f, l = c["first_years"], c["last_years"]
+    sg = lambda x: f"{x:.1f}".replace("-", "−")
+    fall = n["diff_pts"] < 0
+    return (f'Early result (exploratory, not specified in advance): in southern Queensland\'s shark-control gear (Rainbow Beach to the Gold Coast), '
+            f'bull sharks {"rose" if s["diff_pts"] > 0 else "fell"} from {s["first"]["pct"]}% of all sharks caught in {f[0]}–{f[1]} ({s["first"]["bull"]:,} of {s["first"]["sharks"]:,}) '
+            f'to {s["last"]["pct"]}% in {l[0]}–{l[1]} ({s["last"]["bull"]:,} of {s["last"]["sharks"]:,}): a {"rise" if s["diff_pts"] > 0 else "fall"} of {abs(s["diff_pts"])} percentage points '
+            f'(95% CI {sg(s["ci"][0])} to {sg(s["ci"][1])}; {pf(s["p"])}). In the north their share {"fell" if fall else "rose"} from {n["first"]["pct"]}% to {n["last"]["pct"]}% '
+            f'({sg(n["diff_pts"])} points, 95% CI {sg(n["ci"][0])} to {sg(n["ci"][1])}). This is share of catch, not catch per unit of effort, which isn\'t published. '
+            f'NSW data would extend it south. ' + A("https://www.data.qld.gov.au/dataset/fisheries-queensland-s-shark-control-program-information-and-data", "Queensland Shark Control Program data"))
+
+def projC3(D):
+    P = D["proj"]; e, sy, wo, al = P["eden"], P["sydney"], P["wollongong"], P["albany"]
+    rng = f'{e["lo"]} to {e["hi"]}' if e["lo"] != e["hi"] else f'all {e["lo"]}'
+    reach = (f'So the half-year line reaches Eden, about 50 km short of the Victorian border; whether it crosses the border needs finer, downscaled projections.'
+             if e["median"] >= 6 else "So the half-year line stays north of Eden.")
+    return (f'Early result (global climate models, not yet downscaled): we took {e["models"]} CMIP6 models under a middle emissions path (SSP2-4.5), measured each one\'s warming from 2016–2025 to 2040–2059 '
+            f'at each beach\'s sea patch, and added it to the temperatures observed there in 2016–2025. Off Eden (37.1°S), the median model gives {e["median"]} months a year at 19°C or more by about 2050, '
+            f'up from {e["now"]} now (the middle 80% of models: {rng}). {reach} Further north, Sydney reaches about {sy["median"]} months and Wollongong about {wo["median"]}. '
+            f'On the west coast Albany stays near {al["median"]}. These broadly match the simple trend used in "Looking ahead". Models: '
+            + A("https://wcrp-cmip.org/cmip-phase-6-cmip6/", "CMIP6") + ', via the Pangeo public archive.')
+
 PARAS = {"mhwC19": (mhwC19, ("mhw",)), "bwC6": (bwC6, ("beachwatch",)), "plumeC6": (plumeC6, ("rivers", "harbour")),
          "qldC6": (qldC6, ("tigerqld",)), "wkC18": (wkC18, ("exposure", "beachday")), "whaleC5": (whaleC5, ("whales",)),
          "whitecoolC5": (whitecoolC5, ("whitecool",)), "chlC4": (chlC4, ("chlorophyll",)), "tideC24": (tideC24, ("tides",)),
          "tigerC28": (tigerC28, ("tigerqld", "tigerrain")), "upC29": (upC29, ("upwelling",)),
-         "stationsC16": (stationsC16, ("imos",)), "juvC30": (juvC30, ("imos",))}
+         "stationsC16": (stationsC16, ("imos",)), "juvC30": (juvC30, ("imos",)),
+         "shareC1": (shareC1, ("catchshare",)), "projC3": (projC3, ("proj",))}
 
 def hawaiiC6(D):
     h = D["hawaii"]

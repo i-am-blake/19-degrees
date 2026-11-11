@@ -39,12 +39,12 @@ def fisher2(a, b, c, d): return float(fisher_exact([[a, b], [c, d]])[1])
 sig = lambda x, k="p": x.get(k) is not None and x[k] < 0.05
 
 # claims whose numbers sit in the card text rather than the data block; the rule still applies to them
-STATIC = {"c1": dict(ok=True, p=0.0005),          # southern Queensland bull share of catch 6.1% -> 12.6%, p < 0.001
-          "c3": dict(eden_reached=True, border_80=False)}  # median CMIP6 model reaches six months at Eden; border not in 80% of models
 
-def g_c1(D): return cap(V(**STATIC["c1"]))  # share of catch stands in for catch per unit of effort, which isn't published
-def g_c3(D):  # projection: model agreement instead of p
-    s = STATIC["c3"]; return "supports" if s["border_80"] else "leans" if s["eden_reached"] else "ruled"
+def g_c1(D):  # share of catch stands in for catch per unit of effort, which isn't published
+    s = D["catchshare"]["south"]; return cap(V(s["diff_pts"] > 0, s["p"]))
+def g_c3(D):  # projection: model agreement instead of p. "Supports" needs 80% of models past the border (about 37.5°S);
+    e = D["proj"]["eden"]  # the projected beaches stop at Eden (37.1°S), so for now the best it can reach is "leans"
+    return "leans" if e["median"] >= 6 else "ruled"
 def g_c4(D): c = D["chlorophyll"]["all"]; return cap(V(c["pct"] > 25, c["p"]))
 def g_c5(D):
     w = D["whitecool"]; b = math.log(1 + w["trend_pct_per_year"] / 100)

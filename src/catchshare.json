@@ -1,0 +1,46 @@
+{
+ "first_years": [
+  1996,
+  2005
+ ],
+ "last_years": [
+  2016,
+  2025
+ ],
+ "south": {
+  "first": {
+   "bull": 147,
+   "sharks": 2423,
+   "pct": 6.1
+  },
+  "last": {
+   "bull": 308,
+   "sharks": 2450,
+   "pct": 12.6
+  },
+  "diff_pts": 6.5,
+  "ci": [
+   4.9,
+   8.1
+  ],
+  "p": 6e-15
+ },
+ "north": {
+  "first": {
+   "bull": 823,
+   "sharks": 4477,
+   "pct": 18.4
+  },
+  "last": {
+   "bull": 1113,
+   "sharks": 7605,
+   "pct": 14.6
+  },
+  "diff_pts": -3.7,
+  "ci": [
+   -5.1,
+   -2.4
+  ],
+  "p": 5.8e-08
+ }
+}

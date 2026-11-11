@@ -17,14 +17,20 @@ def chance(p): return f"If there were no real effect, a result at least this str
 def t(tested, found, why, nxt): return dict(tested=tested, found=found, why=why, next=nxt)
 
 def e_c1(D):
+    c = D["catchshare"]; s, n = c["south"], c["north"]; f, l = c["first_years"], c["last_years"]
     return t("Whether bull sharks make up a growing share of what Queensland's shark-control gear catches at its southern beaches.",
-             "Bull sharks rose from 6.1% of sharks caught in 1996–2005 to 12.6% in 2016–2025 (Rainbow Beach to the Gold Coast), while their share fell further north. " + chance(0.0005),
+             f'Bull sharks rose from {s["first"]["pct"]}% of sharks caught in {f[0]}–{f[1]} to {s["last"]["pct"]}% in {l[0]}–{l[1]} (Rainbow Beach to the Gold Coast), while their share '
+             + ("fell" if n["diff_pts"] < 0 else "rose less" if n["diff_pts"] < s["diff_pts"] else "rose") + " further north. " + chance(s["p"]),
              "The claim is about catch per net or drumline, which isn't published, so share of catch stands in for it. A stand-in can reach \"leans toward it\" at most, however strong the result.",
              "Catch per unit of fishing effort from Queensland, and NSW catch records to extend it south.")
 def e_c3(D):
-    return t("Where 27 global climate models put the line south of which the sea is 19°C or warmer for at least half the year, around 2050.",
-             "The middle model reaches Eden, about 50 km short of the Victorian border; most models don't take it past the border.",
-             "This is a projection, so it is graded by how many models agree rather than by a p-value. The line reaching Eden in most models leans toward the claim; the claim itself needs the border, which fewer than 80% of models reach.",
+    e = D["proj"]["eden"]
+    return t(f'Where {e["models"]} global climate models put the line south of which the sea is 19°C or warmer for at least half the year, around 2050.',
+             ("The middle model reaches Eden, about 50 km short of the Victorian border. The projected beaches stop at Eden, so they can't yet show whether the line crosses the border."
+              if e["median"] >= 6 else f'The middle model stops short of Eden ({e["median"]} months a year there), so the line stays north of the border.'),
+             "This is a projection, so it is graded by how many models agree rather than by a p-value. " +
+             ("The line reaching Eden in most models leans toward the claim. To support it, at least 80% of models would need to take the line past the border."
+              if e["median"] >= 6 else "The projected line staying north of Eden is what the card said would rule the claim out."),
              "Downscaled ocean projections for southeast Australia, which resolve the coast far better than global models.")
 def e_c4(D):
     c = D["chlorophyll"]["all"]
