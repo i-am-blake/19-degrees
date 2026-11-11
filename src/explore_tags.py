@@ -1,14 +1,17 @@
 """Explore two public tag datasets and write small summaries (run on GitHub; the hosts aren't reachable elsewhere).
 1. Lubitz (2024) bull shark tags, Dryad doi:10.5061/dryad.xd2547dn1 (Agulhas and East Australian currents).
 2. U.S. Animal Telemetry Network satellite positions (IOOS ERDDAP atn_collection): which shark species are there."""
-import io, json, os, sys, urllib.request, urllib.parse, gzip
+import io, json, os, sys, urllib.request, urllib.parse, urllib.error, gzip
 import pandas as pd
 
 OUT = sys.argv[1]; os.makedirs(OUT, exist_ok=True)
 log = open(os.path.join(OUT, "log.txt"), "w")
 def get(url, timeout=600):
     req = urllib.request.Request(url, headers={"User-Agent": "19-degrees.org open data"})
-    return urllib.request.urlopen(req, timeout=timeout).read()
+    try:
+        return urllib.request.urlopen(req, timeout=timeout).read()
+    except urllib.error.HTTPError as e:
+        log.write(f"HTTP {e.code} for {url}: {e.read()[:400]!r}\n"); log.flush(); raise
 
 # 1. Dryad
 try:
@@ -21,7 +24,8 @@ try:
     json.dump(files, open(os.path.join(OUT, "dryad_files.json"), "w"), indent=1)
     summ = {}
     for f in files["_embedded"]["stash:files"]:
-        name = f["path"]; dl = base + f["_links"]["stash:download"]["href"]
+        name = f["path"]; fid = f["_links"]["self"]["href"].rstrip("/").split("/")[-1]
+        dl = f"{base}/downloads/file_stream/{fid}"
         log.write(f"dryad file {name} {f.get('size')}\n"); log.flush()
         raw = get(dl, timeout=1800)
         if name.lower().endswith((".md", ".txt")):
@@ -45,7 +49,8 @@ except Exception as e:
 # 2. ATN
 try:
     E = "https://erddap.ioos.us/erddap/tabledap/atn_collection"
-    taxa = get(E + ".csv?taxon_name&distinct()").decode()
+    try: taxa = get(E + ".csv?taxon_name&distinct()").decode()
+    except Exception: taxa = get(E + ".csv?taxon_name&time>=2007-01-01&time<=2007-12-31").decode() + get(E + ".das").decode()
     open(os.path.join(OUT, "atn_taxa.csv"), "w").write(taxa)
     for sp in ("Carcharhinus leucas", "Galeocerdo cuvier", "Carcharodon carcharias"):
         if sp not in taxa: log.write(f"atn: no {sp}\n"); continue
