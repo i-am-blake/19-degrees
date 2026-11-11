@@ -119,38 +119,40 @@ def fig_season():
 
 
 def fig_rivers():
-    """Queensland shark-control catches per month, high-river months against others."""
+    """Queensland shark-control catches per area-month: months when rivers ran high against other months."""
     q = json.load(open(os.path.join(ROOT, "src", "tigerqld.json")))
     groups = [("bull", "Bull sharks"), ("tiger", "Tiger sharks"), ("other_sharks", "All other sharks")]
-    vmax = 2.4
-    x0, x1 = L + 300, W - R - 120
+    vmax = 2.8
+    x0, x1 = L + 290, W - R - 170
     sx = lambda v: x0 + v / vmax * (x1 - x0)
-    band = (H - T - B) / 3
+    top0, bh, gap, band = T - 20, 48, 6, 170
     out = []
+    bottom = top0 + 2 * band + 2 * bh + gap + 10
     for v in (0, 0.5, 1, 1.5, 2):
-        out.append(f'<line x1="{sx(v):.1f}" x2="{sx(v):.1f}" y1="{T - 10}" y2="{H - B}" stroke="{GRID}" stroke-width="1"/>')
-        out.append(f'<text x="{sx(v):.1f}" y="{H - B + 40}" class="ax" text-anchor="middle">{v:g}</text>')
-    out.append(f'<text x="{x1 + 110}" y="{H - B + 40}" class="ax" text-anchor="end">a month</text>')
+        out.append(f'<line x1="{sx(v):.1f}" x2="{sx(v):.1f}" y1="{top0 - 10}" y2="{bottom}" stroke="{GRID}" stroke-width="1"/>')
+        out.append(f'<text x="{sx(v):.1f}" y="{bottom + 34}" class="ax" text-anchor="middle">{v:g}</text>')
+    out.append(f'<text x="{x0}" y="{bottom + 68}" class="note">Sharks caught per area per month (average)</text>')
+    out.append(f'<text x="{x1 + 170}" y="{top0 - 22}" class="note" text-anchor="end">change</text>')
     for i, (k, name) in enumerate(groups):
         g = q[k]
-        top = T + i * band + 10
-        bh = 46
-        for j, (val, col, lab) in enumerate([(g["per_month_other"], BLUE, "other months"), (g["per_month_high"], ORANGE, "rivers running high")]):
-            y = top + j * (bh + 4)
-            w = sx(val) - x0
-            out.append(f'<path d="M{x0},{y} H{x0 + w - 4:.1f} Q{x0 + w:.1f},{y} {x0 + w:.1f},{y + 4} V{y + bh - 4} Q{x0 + w:.1f},{y + bh} {x0 + w - 4:.1f},{y + bh} H{x0} Z" fill="{col}"><title>{name}, {lab}: {val:.2f} a month</title></path>')
+        top = top0 + i * band
+        rows = [(g["per_month_other"], BLUE, "Normal river flow"), (g["per_month_high"], ORANGE, "Rivers running high")]
+        for j, (val, col, lab) in enumerate(rows):
+            y = top + j * (bh + gap)
+            w = max(sx(val) - x0, 8)
+            out.append(f'<path d="M{x0},{y} H{x0 + w - 4:.1f} Q{x0 + w:.1f},{y} {x0 + w:.1f},{y + 4} V{y + bh - 4} Q{x0 + w:.1f},{y + bh} {x0 + w - 4:.1f},{y + bh} H{x0} Z" fill="{col}"><title>{name}, {lab.lower()}: {val:.2f} a month</title></path>')
             out.append(f'<text x="{x0 + w + 14:.1f}" y="{y + bh / 2 + 9:.1f}" class="val">{val:.2f}</text>')
-        out.append(f'<text x="{L}" y="{top + 40}" class="lab">{name}</text>')
-        out.append(f'<text x="{L}" y="{top + 78}" class="note">{g["ratio"]:.2f} times as many</text>')
-    # legend
-    lx = L
-    for col, lab in [(ORANGE, "Months when nearby rivers ran in their highest quarter"), (BLUE, "Other months, same calendar month and place")]:
-        out.append(f'<rect x="{lx}" y="{T - 62}" width="22" height="22" rx="4" fill="{col}"/>')
-        out.append(f'<text x="{lx + 34}" y="{T - 43}" class="note">{lab}</text>')
-        lx += 720
+            out.append(f'<text x="{x0 + w + 80:.1f}" y="{y + bh / 2 + 9:.1f}" class="note">{lab}</text>')
+        out.append(f'<text x="{L}" y="{top + bh + gap / 2 + 10}" class="lab">{name}</text>')
+        r = g["ratio"]; strong = k == "bull"
+        out.append(f'<text x="{x1 + 170}" y="{top + bh + gap / 2 + 14}" class="{"big" if strong else "lab"}" text-anchor="end">{r:.1f}×</text>')
     b = q["bull"]
+    note = ("Rivers running high: months when nearby rivers were in their top quarter for that time of year. "
+            "Each is compared with the same calendar month, area and five-year span.")
+    out.append(f'<text x="{L}" y="{bottom + 112}" class="note">{esc(note[:note.index(". ") + 1])}</text>')
+    out.append(f'<text x="{L}" y="{bottom + 142}" class="note">{esc(note[note.index(". ") + 2:])}</text>')
     return frame(f"When rivers run high, {b['ratio']:.1f} times as many bull sharks",
-                 f"Queensland shark-control catches, Gold Coast to Bundaberg, 1996–2025 ({b['caught_high'] + b['caught_other']} bull sharks); higher in {b['areas_higher']} of {b['areas_tested']} areas",
+                 f"Queensland shark-control catches, Gold Coast to Bundaberg, 1996–2025 ({b['caught_high'] + b['caught_other']} bull sharks). Higher in {b['areas_higher']} of {b['areas_tested']} areas.",
                  "Queensland Shark Control Program · Water Data Online (Bureau of Meteorology) river gauges", "\n".join(out))
 
 
@@ -161,6 +163,7 @@ CSS = """
 svg .t{font:700 54px Bricolage,sans-serif;fill:#0b2a40;letter-spacing:-1px}
 svg .s{font:400 28px Figtree,sans-serif;fill:#3d5566}
 svg .lab{font:700 30px Figtree,sans-serif;fill:#0b2a40}
+svg .big{font:800 44px Bricolage,sans-serif;fill:#c4620f}
 svg .val{font:700 28px Figtree,sans-serif;fill:#0b2a40}
 svg .note{font:400 24px Figtree,sans-serif;fill:#3d5566}
 svg .ax{font:400 22px Martian,monospace;fill:#6b7f8c}
