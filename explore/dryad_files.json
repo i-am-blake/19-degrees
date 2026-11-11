@@ -1,0 +1,243 @@
+{
+ "_links": {
+  "self": {
+   "href": "/api/v2/versions/281136/files"
+  },
+  "first": {
+   "href": "/api/v2/versions/281136/files"
+  },
+  "last": {
+   "href": "/api/v2/versions/281136/files?page=1"
+  }
+ },
+ "count": 7,
+ "total": 7,
+ "_embedded": {
+  "stash:files": [
+   {
+    "_links": {
+     "self": {
+      "href": "/api/v2/files/2961858"
+     },
+     "stash:dataset": {
+      "href": "/api/v2/datasets/doi%3A10.5061%2Fdryad.xd2547dn1"
+     },
+     "stash:version": {
+      "href": "/api/v2/versions/281136"
+     },
+     "stash:files": {
+      "href": "/api/v2/versions/281136/files"
+     },
+     "stash:download": {
+      "href": "/api/v2/files/2961858/download"
+     },
+     "curies": [
+      {
+       "name": "stash",
+       "href": "https://github.com/datadryad/dryad-app/blob/main/documentation/apis/link_relations.md#{rel}",
+       "templated": "true"
+      }
+     ]
+    },
+    "path": "OSSTIA_PA_MID.nc",
+    "size": 94184,
+    "mimeType": "",
+    "status": "copied",
+    "digest": "0949bdd0d849c46402e07f74969181ccd6ffe05a11b209a563e10a8fd45ed32f",
+    "digestType": "sha-256"
+   },
+   {
+    "_links": {
+     "self": {
+      "href": "/api/v2/files/2961878"
+     },
+     "stash:dataset": {
+      "href": "/api/v2/datasets/doi%3A10.5061%2Fdryad.xd2547dn1"
+     },
+     "stash:version": {
+      "href": "/api/v2/versions/281136"
+     },
+     "stash:files": {
+      "href": "/api/v2/versions/281136/files"
+     },
+     "stash:download": {
+      "href": "/api/v2/files/2961878/download"
+     },
+     "curies": [
+      {
+       "name": "stash",
+       "href": "https://github.com/datadryad/dryad-app/blob/main/documentation/apis/link_relations.md#{rel}",
+       "templated": "true"
+      }
+     ]
+    },
+    "path": "README.md",
+    "size": 4904,
+    "mimeType": "text/markdown",
+    "status": "created",
+    "digest": "779a26d9dbf02cadf60bfda9a35e1fbc28c0af4cbdba6c26ee1f6a2b42651a8d",
+    "digestType": "sha-256"
+   },
+   {
+    "_links": {
+     "self": {
+      "href": "/api/v2/files/2961859"
+     },
+     "stash:dataset": {
+      "href": "/api/v2/datasets/doi%3A10.5061%2Fdryad.xd2547dn1"
+     },
+     "stash:version": {
+      "href": "/api/v2/versions/281136"
+     },
+     "stash:files": {
+      "href": "/api/v2/versions/281136/files"
+     },
+     "stash:download": {
+      "href": "/api/v2/files/2961859/download"
+     },
+     "curies": [
+      {
+       "name": "stash",
+       "href": "https://github.com/datadryad/dryad-app/blob/main/documentation/apis/link_relations.md#{rel}",
+       "templated": "true"
+      }
+     ]
+    },
+    "path": "SharkID1.csv",
+    "size": 370486,
+    "mimeType": "text/csv",
+    "status": "copied",
+    "digest": "07b0b2ef617643f8c721fe21b926509b33e1c1b742dd652f4693f345a8f9884b",
+    "digestType": "sha-256"
+   },
+   {
+    "_links": {
+     "self": {
+      "href": "/api/v2/files/2961860"
+     },
+     "stash:dataset": {
+      "href": "/api/v2/datasets/doi%3A10.5061%2Fdryad.xd2547dn1"
+     },
+     "stash:version": {
+      "href": "/api/v2/versions/281136"
+     },
+     "stash:files": {
+      "href": "/api/v2/versions/281136/files"
+     },
+     "stash:download": {
+      "href": "/api/v2/files/2961860/download"
+     },
+     "curies": [
+      {
+       "name": "stash",
+       "href": "https://github.com/datadryad/dryad-app/blob/main/documentation/apis/link_relations.md#{rel}",
+       "templated": "true"
+      }
+     ]
+    },
+    "path": "SharkID2.csv",
+    "size": 1191623,
+    "mimeType": "text/csv",
+    "status": "copied",
+    "digest": "530c816f6ede5b6bb693c29f50035eee5f5b0fca5adcbf51215dc92a9f00914a",
+    "digestType": "sha-256"
+   },
+   {
+    "_links": {
+     "self": {
+      "href": "/api/v2/files/2961861"
+     },
+     "stash:dataset": {
+      "href": "/api/v2/datasets/doi%3A10.5061%2Fdryad.xd2547dn1"
+     },
+     "stash:version": {
+      "href": "/api/v2/versions/281136"
+     },
+     "stash:files": {
+      "href": "/api/v2/versions/281136/files"
+     },
+     "stash:download": {
+      "href": "/api/v2/files/2961861/download"
+     },
+     "curies": [
+      {
+       "name": "stash",
+       "href": "https://github.com/datadryad/dryad-app/blob/main/documentation/apis/link_relations.md#{rel}",
+       "templated": "true"
+      }
+     ]
+    },
+    "path": "SharkID3.csv",
+    "size": 334885472,
+    "mimeType": "text/csv",
+    "status": "copied",
+    "digest": "6ba93922bc49964d8542b0183930e595a0a334d1abad934405fb4615d3e727c8",
+    "digestType": "sha-256"
+   },
+   {
+    "_links": {
+     "self": {
+      "href": "/api/v2/files/2961862"
+     },
+     "stash:dataset": {
+      "href": "/api/v2/datasets/doi%3A10.5061%2Fdryad.xd2547dn1"
+     },
+     "stash:version": {
+      "href": "/api/v2/versions/281136"
+     },
+     "stash:files": {
+      "href": "/api/v2/versions/281136/files"
+     },
+     "stash:download": {
+      "href": "/api/v2/files/2961862/download"
+     },
+     "curies": [
+      {
+       "name": "stash",
+       "href": "https://github.com/datadryad/dryad-app/blob/main/documentation/apis/link_relations.md#{rel}",
+       "templated": "true"
+      }
+     ]
+    },
+    "path": "SharkID4.csv",
+    "size": 238637,
+    "mimeType": "text/csv",
+    "status": "copied",
+    "digest": "74749c92416509170604be931da7e873dd6ebdc845364db66ac548ff56d30047",
+    "digestType": "sha-256"
+   },
+   {
+    "_links": {
+     "self": {
+      "href": "/api/v2/files/2961863"
+     },
+     "stash:dataset": {
+      "href": "/api/v2/datasets/doi%3A10.5061%2Fdryad.xd2547dn1"
+     },
+     "stash:version": {
+      "href": "/api/v2/versions/281136"
+     },
+     "stash:files": {
+      "href": "/api/v2/versions/281136/files"
+     },
+     "stash:download": {
+      "href": "/api/v2/files/2961863/download"
+     },
+     "curies": [
+      {
+       "name": "stash",
+       "href": "https://github.com/datadryad/dryad-app/blob/main/documentation/apis/link_relations.md#{rel}",
+       "templated": "true"
+      }
+     ]
+    },
+    "path": "SharkID5.csv",
+    "size": 150038,
+    "mimeType": "text/csv",
+    "status": "copied",
+    "digest": "0a050df632dc5c93723307d8b3c9b53c5f6f0207f87f25be110f13cef067dee6",
+    "digestType": "sha-256"
+   }
+  ]
+ }
+}
