@@ -224,12 +224,22 @@ def projC3(D):
             f'On the west coast Albany stays near {al["median"]}. These broadly match the simple trend used in "Looking ahead". Models: '
             + A("https://wcrp-cmip.org/cmip-phase-6-cmip6/", "CMIP6") + ', via the Pangeo public archive.')
 
+def tagsC25(D):
+    t = D["tags_sa"]
+    return (f'Measured on the sharks themselves: {t["sharks"]} bull sharks tagged in South Africa\'s Breede River, near the southern edge of their range, '
+            f'carried temperature tags for {t["days_range"][0]} to {t["days_range"][1]} days each in {t["years"]}. They spent {t["pct_time_19_or_warmer"]}% of their time in water at 19°C or warmer. '
+            f'On {t["days_mean_below19"]} of {t["shark_days"]} shark-days the day\'s average fell below 19°C, '
+            + (f'{t["cold_week"]}; ' if t.get("cold_week") else "")
+            + f'the coldest reading was {t["coldest"]}°C. The tags don\'t record where each shark was. ('
+            + A("https://doi.org/10.1038/s41558-024-01966-8", "Lubitz et al. 2024") + "; data on " + A("https://doi.org/10.5061/dryad.xd2547dn1", "Dryad") + ", CC0.)")
+
 PARAS = {"mhwC19": (mhwC19, ("mhw",)), "bwC6": (bwC6, ("beachwatch",)), "plumeC6": (plumeC6, ("rivers", "harbour")),
          "qldC6": (qldC6, ("tigerqld",)), "wkC18": (wkC18, ("exposure", "beachday")), "whaleC5": (whaleC5, ("whales",)),
          "whitecoolC5": (whitecoolC5, ("whitecool",)), "chlC4": (chlC4, ("chlorophyll",)), "tideC24": (tideC24, ("tides",)),
          "tigerC28": (tigerC28, ("tigerqld", "tigerrain")), "upC29": (upC29, ("upwelling",)),
          "stationsC16": (stationsC16, ("imos",)), "juvC30": (juvC30, ("imos",)),
-         "shareC1": (shareC1, ("catchshare",)), "projC3": (projC3, ("proj",))}
+         "shareC1": (shareC1, ("catchshare",)), "projC3": (projC3, ("proj",)),
+         "tagsC25": (tagsC25, ("tags_sa",))}
 
 def hawaiiC6(D):
     h = D["hawaii"]

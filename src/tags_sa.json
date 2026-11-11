@@ -1,0 +1,41 @@
+{
+ "sharks": 5,
+ "years": "2019–2020",
+ "bins_10min": 47420,
+ "pct_time_19_or_warmer": 97.3,
+ "shark_days": 418,
+ "days_mean_below19": 9,
+ "coldest": 10.0,
+ "days_range": [
+  17,
+  216
+ ],
+ "per_shark": {
+  "shark1": {
+   "days": 36,
+   "pct_below19": 0.2,
+   "min": 18.2
+  },
+  "shark2": {
+   "days": 121,
+   "pct_below19": 4.6,
+   "min": 12.3
+  },
+  "shark3": {
+   "days": 216,
+   "pct_below19": 2.2,
+   "min": 13.6
+  },
+  "shark4": {
+   "days": 28,
+   "pct_below19": 4.2,
+   "min": 10.0
+  },
+  "shark5": {
+   "days": 17,
+   "pct_below19": 5.7,
+   "min": 13.9
+  }
+ },
+ "cold_week": "8 of them between 19 March and 4 April 2019"
+}

@@ -90,7 +90,7 @@ def g_c29(D):
     u = D["upwelling"]; return V(u["strongest_pct"] > 25, binom2(u["strongest_quarter"], u["n"], 0.25))
 
 FIXED = {"c2": "look", "c7": "look", "c8": "nt", "c9": "look", "c20": "look", "c22": "look", "c30": "look",
-         **{c: "open" for c in ("c10", "c11", "c12", "c13", "c14", "c15", "c17", "c27", "c31")}}
+         **{c: "open" for c in ("c10", "c11", "c12", "c13", "c14", "c15", "c17", "c27", "c31", "c32", "c33", "c34", "c35", "c36")}}
 TESTS = {"c1": g_c1, "c3": g_c3, "c4": g_c4, "c5": g_c5, "c6": g_c6, "c16": g_c16, "c18": g_c18, "c19": g_c19, "c21": g_c21,
          "c23": g_c23, "c24": g_c24, "c25": g_c25, "c26": g_c26, "c28": g_c28, "c29": g_c29}
 

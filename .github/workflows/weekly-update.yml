@@ -33,6 +33,10 @@ jobs:
       - name: Build and check
         env: { NODE_PATH: "${{ runner.temp }}/node_modules", RERUN_RAIN: "${{ inputs.rerun_rain }}" }
         run: bash src/weekly_update.sh
+      - name: Keep a preview of the built pages (dry runs only)
+        if: inputs.dry_run == '1'
+        uses: actions/upload-artifact@v4
+        with: { name: preview, path: "*.html", retention-days: 3 }
       - name: Publish
         if: inputs.dry_run != '1'
         run: |
