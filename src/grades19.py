@@ -88,6 +88,10 @@ def g_c25(D):
     if "daily" in D:  # the stricter daily test, with its rule set in advance: under 5% of US shark-days below 19°C
         v = down(v, D["daily"]["us"]["bull"]["below19_pct"] < D["daily"]["rule"]["supports_below_pct"])
     return v
+def g_c43(D):
+    m = D["size"]["main"]; sm, lg = m["by_shark"]["small"], m["by_shark"]["large"]
+    v = V(sm["winter_sharks"] / sm["sharks"] > lg["winter_sharks"] / lg["sharks"], m["p"])
+    return down(v, D["size"]["checks"]["without_clarence"]["by_day"]["small"]["days"] >= 100)  # small sharks tracked in a second river
 def g_c26(D): i = D["iod"]["all"]; return V(i["ratio"] > 1, i["p"])
 def g_c28(D):
     t = D["tigerrain"]["all"]["tiger"]; q = D["tigerqld"]["tiger"]
@@ -98,7 +102,7 @@ def g_c29(D):
 FIXED = {"c2": "look", "c7": "look", "c8": "nt", "c9": "look", "c20": "look", "c22": "look", "c30": "look",
          **{c: "open" for c in ("c10", "c11", "c12", "c13", "c14", "c15", "c17", "c27", "c31", "c32", "c33", "c34", "c35", "c36", "c37", "c38", "c39", "c40", "c41", "c42")}}
 TESTS = {"c1": g_c1, "c3": g_c3, "c4": g_c4, "c5": g_c5, "c6": g_c6, "c16": g_c16, "c18": g_c18, "c19": g_c19, "c21": g_c21,
-         "c23": g_c23, "c24": g_c24, "c25": g_c25, "c26": g_c26, "c28": g_c28, "c29": g_c29}
+         "c23": g_c23, "c24": g_c24, "c25": g_c25, "c26": g_c26, "c28": g_c28, "c29": g_c29, "c43": g_c43}
 
 def grade(cid, D):
     """(data-status, label) for a claim card."""

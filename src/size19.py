@@ -1,5 +1,5 @@
 """Does a bull shark's size decide whether it stays in NSW through winter? (bears on claims C25, C16 and C38)
-Usage: python3 -I size19.py <imos_dir> <out size.json>
+Usage: python3 -I size19.py <imos_dir> <out size.json>   (claim C43; refreshed by the weekly rebuild)
 Data: BullShark_Carcharhinusleucas.csv.gz from the imos-data branch (IMOS Animal Tracking, CC BY 4.0).
 Written down before the numbers were run:
 - Scope: receivers in NSW (south of 28.2°S); tagged bull sharks with a length at tagging. A shark-day is one shark on one date.

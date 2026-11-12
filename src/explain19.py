@@ -116,6 +116,14 @@ def e_c25(D):
              f'Off Mozambique and South Africa, {a["below"]} of {a["days"]:,} tagged bull shark days came in a month below 19°C, though {a["cell_months_below_pct"]}% of months there were that cool. Off the US, {u["below"]} of {u["days"]:,} record-days ({100 - u["pct_warm"]:.1f}%), against {u["cell_months_below_pct"]}% of months. ' + chance(max(G.binom2(a["below"], a["days"], a["cell_months_below_pct"] / 100), G.binom2(u["below"], u["days"], u["cell_months_below_pct"] / 100))),
              "Tested on the claim's own measure, in the predicted direction, on two separate coasts: \"supports it\". It stays \"early\" because the test was chosen after seeing the data.",
              "A test set in advance on a third coast (Brazil or the Gulf of Mexico) would move it to Supported.")
+def e_c43(D):
+    z = D["size"]; m = z["main"]; sm, md, lg = (m["by_shark"][k] for k in ("small", "mid", "large")); dy = m["by_day"]; wc = z["checks"]["without_clarence"]["by_day"]["small"]["days"]
+    return t("Whether a bull shark's size decides if it is detected in NSW in winter, with each shark aged forward from its length at tagging using a published growth curve for Australian bull sharks.",
+             f'<b>For the claim.</b> {sm["winter_sharks"]} of {sm["sharks"]} sharks tagged under 150 cm were detected in NSW in winter, against {lg["winter_sharks"]} of {lg["sharks"]} tagged at 200 cm or more ({pv(m["p"])}). '
+             f'Winter makes up {dy["small"]["winter_pct"]}% of small sharks\' days, {dy["mid"]["winter_pct"]}% for mid-sized sharks and {dy["large"]["winter_pct"]}% for large ones. A second growth curve, and a version with no growth curve, give the same answer.'
+             f'<br><b>Against it.</b> Away from the Clarence River there {"is" if wc == 1 else "are"} {wc} shark-day{"" if wc == 1 else "s"} for a shark still under 150 cm, so what small sharks do in winter is known from one river. Large sharks are not absent in winter: {lg["winter_sharks"]} of {lg["sharks"]} were detected at least once.',
+             'The result is strong and the checks agree, but it rests on one river, and the test was chosen after seeing that river\'s data. That holds it at "leans toward it".',
+             "Winter tracking of small bull sharks in a second river, with sizes recorded. Lengths for the Manatee River sharks in Florida (claim C25) would test it on another continent.")
 def e_c26(D):
     i = D["iod"]["all"]
     return t("Whether Western Australia's bites come more often when the Indian Ocean Dipole is positive.",

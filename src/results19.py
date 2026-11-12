@@ -257,13 +257,23 @@ def tagtempC25(D):
             f'Length is recorded once, at tagging, so a shark tracked for years has grown. {T["left_out_pct"]}% of the temperature readings had no calibration and were left out. ('
             + A("https://researchdata.edu.au/imos-animal-tracking-2007-ongoing/3961802", "IMOS Animal Tracking") + ", CC BY 4.0.)")
 
+def sizeC43(D):
+    z = D["size"]; ag = z["aging"]; g = z["checks"]["first_two_years_no_curve"]["by_shark"]
+    first = [w["winter_days"] for a in ag for w in a["winters"][:1]]; late = [w["winter_days"] for a in ag for w in a["winters"] if w["est_cm"] >= 220]
+    return (f'{z["sharks_with_length"]} bull sharks tracked in NSW had a length at tagging ({z["sharks_without_length"]} had none and are left out). Each was aged forward to the day of every detection with a growth curve from the Northern Territory ('
+            + A("https://doi.org/10.1071/MF10271", "Tillett et al. 2011") + '). '
+            f'Aging out: {len(ag)} sharks tagged small were detected in two or more winters. In their first winter they were detected on {min(first)} to {max(first)} winter days; once they reached an estimated 220 cm or more, on {min(late)} to {max(late)}. They taper off; they don\'t stop. '
+            f'Counting each shark only for its first two years after tagging, with no growth curve, {g["small"]["winter_sharks"]} of {g["small"]["sharks"]} small sharks and {g["large"]["winter_sharks"]} of {g["large"]["sharks"]} large ones were detected in winter. '
+            'Winter here means June to August in NSW, not cold water: the temperatures are on the ' + '<a href="#c25">C25</a> card. Winter days also depend on where receivers were; the Clarence River array ran mainly from 2010 to 2014. ('
+            + A("https://researchdata.edu.au/imos-animal-tracking-2007-ongoing/3961802", "IMOS Animal Tracking") + ", CC BY 4.0.)")
+
 PARAS = {"mhwC19": (mhwC19, ("mhw",)), "bwC6": (bwC6, ("beachwatch",)), "plumeC6": (plumeC6, ("rivers", "harbour")),
          "qldC6": (qldC6, ("tigerqld",)), "wkC18": (wkC18, ("exposure", "beachday")), "whaleC5": (whaleC5, ("whales",)),
          "whitecoolC5": (whitecoolC5, ("whitecool",)), "chlC4": (chlC4, ("chlorophyll",)), "tideC24": (tideC24, ("tides",)),
          "tigerC28": (tigerC28, ("tigerqld", "tigerrain")), "upC29": (upC29, ("upwelling",)),
          "stationsC16": (stationsC16, ("imos",)), "juvC30": (juvC30, ("imos",)),
          "shareC1": (shareC1, ("catchshare",)), "projC3": (projC3, ("proj",)),
-         "tagsC25": (tagsC25, ("tags_sa",)), "dailyC25": (dailyC25, ("daily",)), "tagtempC25": (tagtempC25, ("tagtemp",))}
+         "tagsC25": (tagsC25, ("tags_sa",)), "dailyC25": (dailyC25, ("daily",)), "tagtempC25": (tagtempC25, ("tagtemp",)), "sizeC43": (sizeC43, ("size",))}
 
 def hawaiiC6(D):
     h = D["hawaii"]
