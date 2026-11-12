@@ -240,6 +240,27 @@
      "license": "CC BY 4.0"
     },
     {
+     "name": "Bull shark temperature tags, Breede River",
+     "url": "https://doi.org/10.5061/dryad.xd2547dn1",
+     "from": "Lubitz et al. (2024), Nature Climate Change, via Dryad",
+     "used_for": "Water temperature measured by tags on five bull sharks in South Africa; claim C25",
+     "license": "CC0 1.0"
+    },
+    {
+     "name": "Tagged sharks in the Manatee River, Florida",
+     "url": "https://members.oceantrack.org/project?ccode=FACT.BTSNP",
+     "from": "FACT Network and Havenworth Coastal Conservation (J. Gardiner), via the Ocean Tracking Network and OBIS",
+     "used_for": "Bull sharks detected through winter in water below 19°C; claim C25",
+     "license": "CC BY 4.0"
+    },
+    {
+     "name": "Water temperature at Tampa Bay tide gauges",
+     "url": "https://tidesandcurrents.noaa.gov/stationhome.html?id=8726384",
+     "from": "NOAA Center for Operational Oceanographic Products and Services (CO-OPS)",
+     "used_for": "Checks the satellite sea temperature against water measured in the bay; claim C25",
+     "license": "Public domain (US Government work)"
+    },
+    {
      "name": "Shark occurrence records",
      "url": "https://obis.org",
      "from": "Ocean Biodiversity Information System (OBIS)",

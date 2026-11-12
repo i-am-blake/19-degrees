@@ -1,0 +1,164 @@
+{
+ "note": "Results of daily19.py (every dated bull and tiger shark record matched to that day's NOAA OISST temperature for its own 0.25° cell) and tampa19.py (the Manatee River tracking dataset and tide-gauge water temperature). Run by hand on 12 Nov 2026 (UTC); not part of the weekly rebuild. The rule was written into daily19.py before the data was fetched.",
+ "rule": {
+  "supports_below_pct": 5,
+  "baseline_at_least_pct": 10
+ },
+ "africa": {
+  "bull": {
+   "shark_days": 2317,
+   "no_temperature": 2,
+   "below19": 1,
+   "below19_pct": 0.04,
+   "min": 18.66,
+   "p01": 21.65,
+   "median": 26.12,
+   "cells": 38,
+   "y0": "1983",
+   "y1": "2026",
+   "baseline_cell_months": 1194,
+   "baseline_below19_pct": 7.2,
+   "cold_by_month": {
+    "12": 1
+   },
+   "cold_lat": [
+    -33.75,
+    -33.75
+   ]
+  },
+  "tiger": {
+   "shark_days": 844,
+   "no_temperature": 0,
+   "below19": 3,
+   "below19_pct": 0.36,
+   "min": 17.16,
+   "p01": 21.23,
+   "median": 24.5,
+   "cells": 27,
+   "y0": "1988",
+   "y1": "2025",
+   "baseline_cell_months": 864,
+   "baseline_below19_pct": 2.0,
+   "cold_by_month": {
+    "02": 1,
+    "03": 1,
+    "10": 1
+   },
+   "cold_lat": [
+    -33.75,
+    -33.5
+   ]
+  }
+ },
+ "us": {
+  "bull": {
+   "shark_days": 4458,
+   "no_temperature": 0,
+   "below19": 474,
+   "below19_pct": 10.63,
+   "min": 13.15,
+   "p01": 16.0,
+   "median": 25.67,
+   "cells": 222,
+   "y0": "1981",
+   "y1": "2026",
+   "baseline_cell_months": 9076,
+   "baseline_below19_pct": 18.4,
+   "cold_by_month": {
+    "01": 249,
+    "02": 113,
+    "03": 5,
+    "04": 7,
+    "05": 1,
+    "06": 1,
+    "12": 98
+   },
+   "cold_lat": [
+    25.25,
+    39.5
+   ]
+  },
+  "tiger": {
+   "shark_days": 853,
+   "no_temperature": 0,
+   "below19": 47,
+   "below19_pct": 5.51,
+   "min": 14.37,
+   "p01": 15.88,
+   "median": 24.93,
+   "cells": 462,
+   "y0": "1981",
+   "y1": "2026",
+   "baseline_cell_months": 8266,
+   "baseline_below19_pct": 14.6,
+   "cold_by_month": {
+    "01": 4,
+    "02": 14,
+    "03": 2,
+    "06": 6,
+    "08": 2,
+    "09": 2,
+    "10": 8,
+    "11": 8,
+    "12": 1
+   },
+   "cold_lat": [
+    31.0,
+    40.0
+   ]
+  }
+ },
+ "us_bull_split": {
+  "river_dataset": {
+   "days": 2529,
+   "below19": 441
+  },
+  "elsewhere": {
+   "days": 1929,
+   "below19": 33
+  },
+  "before_2015": {
+   "days": 1597,
+   "below19": 8
+  }
+ },
+ "manatee_river": {
+  "animals": 52,
+  "winter_animals": 34,
+  "two_winters": 21,
+  "y0": 2018,
+  "y1": 2025,
+  "detection_days": 1694,
+  "gauge": {
+   "name": "Port Manatee",
+   "days": 1530,
+   "below19": 328,
+   "below15": 47,
+   "min": 9.6,
+   "satellite_minus_gauge": 0.1
+  },
+  "nov_mar": {
+   "cold_days": 317,
+   "cold_detected": 309,
+   "warm_days": 489,
+   "warm_detected": 408
+  },
+  "dataset": {
+   "id": "c5e06e5d-7775-4df2-a24f-18babe51fc28",
+   "title": "BTSNP Tags and Array- Natal philopatry in blacktip sharks",
+   "source": "FACT Network and Havenworth Coastal Conservation, via the Ocean Tracking Network OBIS IPT",
+   "license": "CC BY 4.0",
+   "citation": "Gardiner, J. 2012. Natal philopatry in blacktip sharks.",
+   "species_records": {
+    "Carcharhinus leucas": 131170,
+    "Carcharhinus limbatus": 58188,
+    "Rhinoptera bonasus": 15099,
+    "Carcharhinus acronotus": 13367,
+    "Sphyrna mokarran": 4227,
+    "Sphyrna tiburo": 212,
+    "Pristis pectinata": 12,
+    "Sphyrna lewini": 2
+   }
+  }
+ }
+}

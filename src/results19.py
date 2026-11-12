@@ -126,7 +126,7 @@ def chlC4(D):
     v = G.V(a["pct"] > 25, a["p"]); link = v == "supports"
     lead = {"supports": "bites follow greener water.", "leans": "bites lean toward greener water, not settled.",
             "none": "no clear link with greener water.", "other": "bites come in clearer water."}[v]
-    return (f'Early result: {lead} NASA ' + A("https://oceancolor.gsfc.nasa.gov/", "MODIS") + ' chlorophyll (plankton, the base of the baitfish food chain), 2003 to 2022: '
+    return (f'First look, on a related question (do bites fall in greener months?): {lead} NASA ' + A("https://oceancolor.gsfc.nasa.gov/", "MODIS") + ' chlorophyll (plankton, the base of the baitfish food chain), 2003 to 2022: '
             f'{a["greenest_quarter"]} of {a["n"]} Australian bites ({a["pct"]}%) came in a month in the greenest quarter for that place and time of year, against 25% by chance ({pf(a["p"])}); '
             f'white sharks {c["white"]["pct"]}%, bull sharks {c["bull"]["pct"]}%.' + (" Monthly satellite averages may be too coarse to see a bait run." if not link else ""))
 
@@ -158,7 +158,7 @@ def tigerC28(D):
 def upC29(D):
     u = D["upwelling"]; v = G.g_c29(D); p2 = G.binom2(u["strongest_quarter"], u["n"], 0.25)
     pos = "fewer than the quarter chance gives" if u["strongest_pct"] < 25 else "more than the quarter chance gives" if u["strongest_pct"] > 25 else "the quarter chance gives"
-    lead = {"supports": "supports it so far.", "leans": "leans toward it so far.", "none": "no clear link so far.", "other": "points the other way."}[v]
+    lead = {"supports": "supports it so far.", "leans": "leans toward it so far.", "none": "no clear link so far.", "other": "leans the other way."}[v]
     end = ("This agrees with Ryan et al.'s cooler-water finding from Australia. " if v == "supports" else
            "Ryan et al.'s cooler-water finding came from Australia and compared places, not days, so this doesn't rule it out there. ")
     return (f'Early result: {lead} Of {u["n"]} California white shark incidents since 1988, {u["strongest_quarter"]} ({u["strongest_pct"]}%) followed a week in the strongest-upwelling quarter for the latitude and season, '
@@ -210,7 +210,7 @@ def shareC1(D):
             f'bull sharks {"rose" if s["diff_pts"] > 0 else "fell"} from {s["first"]["pct"]}% of all sharks caught in {f[0]}–{f[1]} ({s["first"]["bull"]:,} of {s["first"]["sharks"]:,}) '
             f'to {s["last"]["pct"]}% in {l[0]}–{l[1]} ({s["last"]["bull"]:,} of {s["last"]["sharks"]:,}): a {"rise" if s["diff_pts"] > 0 else "fall"} of {abs(s["diff_pts"])} percentage points '
             f'(95% CI {sg(s["ci"][0])} to {sg(s["ci"][1])}; {pf(s["p"])}). In the north their share {"fell" if fall else "rose"} from {n["first"]["pct"]}% to {n["last"]["pct"]}% '
-            f'({sg(n["diff_pts"])} points, 95% CI {sg(n["ci"][0])} to {sg(n["ci"][1])}). This is share of catch, not catch per unit of effort, which isn\'t published. '
+            f'({sg(n["diff_pts"])} points, 95% CI {sg(n["ci"][0])} to {sg(n["ci"][1])}). This is share of catch, not catch per unit of effort; the effort-based test is under "Already known". '
             f'NSW data would extend it south. ' + A("https://www.data.qld.gov.au/dataset/fisheries-queensland-s-shark-control-program-information-and-data", "Queensland Shark Control Program data"))
 
 def projC3(D):
@@ -224,12 +224,56 @@ def projC3(D):
             f'On the west coast Albany stays near {al["median"]}. These broadly match the simple trend used in "Looking ahead". Models: '
             + A("https://wcrp-cmip.org/cmip-phase-6-cmip6/", "CMIP6") + ', via the Pangeo public archive.')
 
+def tagsC25(D):
+    t = D["tags_sa"]
+    return (f'Measured on the sharks themselves: {t["sharks"]} bull sharks tagged in South Africa\'s Breede River, near the southern edge of their range, '
+            f'carried temperature tags for {t["days_range"][0]} to {t["days_range"][1]} days each in {t["years"]}. They spent {t["pct_time_19_or_warmer"]}% of their time in water at 19°C or warmer. '
+            f'On {t["days_mean_below19"]} of {t["shark_days"]} shark-days the day\'s average fell below 19°C, '
+            + (f'{t["cold_week"]}; ' if t.get("cold_week") else "")
+            + f'the coldest reading was {t["coldest"]}°C. The tags don\'t record where each shark was. ('
+            + A("https://doi.org/10.1038/s41558-024-01966-8", "Lubitz et al. 2024") + "; data on " + A("https://doi.org/10.5061/dryad.xd2547dn1", "Dryad") + ", CC0.)")
+
+def dailyC25(D):
+    d = D["daily"]; u, sp, m = d["us"]["bull"], d["us_bull_split"], d["manatee_river"]; n = m["nov_mar"]
+    return (f'Matched to the day: this test replaces monthly averages over a 1° square with daily satellite temperature for each record\'s own 0.25° cell (about 25 km, 1981 on). '
+            f'Off the US, {u["below19"]:,} of {u["shark_days"]:,} bull shark days ({u["below19_pct"]:.1f}%) fell on a day below 19°C, and one population accounts for {sp["river_dataset"]["below19"]} of them. '
+            f'In the Manatee River at Bradenton, Florida, {m["animals"]} tagged bull sharks were detected from {m["y0"]} to {m["y1"]}, {m["winter_animals"]} of them in winter and {m["two_winters"]} in two or more winters. '
+            f'From November to March they were detected on {100 * n["cold_detected"] / n["cold_days"]:.0f}% of days below 19°C and {100 * n["warm_detected"] / n["warm_days"]:.0f}% of warmer days, so they did not leave when it got cold. '
+            f'A tide gauge in the bay agrees with the satellite to within {abs(m["gauge"]["satellite_minus_gauge"])}°C on average; its coldest day with a detection was {m["gauge"]["min"]}°C. '
+            f'The sharks\' ages aren\'t recorded; young bull sharks commonly use rivers like this as nurseries. Elsewhere the pattern holds ({sp["elsewhere"]["below19"]} of {sp["elsewhere"]["days"]:,} days below 19°C), with two limits: the Texas surveys recorded almost no winter days, and sightings follow when people are in the water. '
+            f'The Australian bite result (claim C22) is not affected. (Tags: '
+            + A("https://members.oceantrack.org/project?ccode=FACT.BTSNP", "FACT Network and Havenworth Coastal Conservation") + ", via the Ocean Tracking Network and " + A("https://obis.org", "OBIS") + ", CC BY 4.0; sea temperature "
+            + A("https://www.ncei.noaa.gov/products/optimum-interpolation-sst", "NOAA OISST v2.1") + "; water temperature " + A("https://tidesandcurrents.noaa.gov/stationhome.html?id=8726384", "NOAA tide gauges") + " at Port Manatee and St. Petersburg.)")
+
+def tagtempC25(D):
+    T = D["tagtemp"]; sy, cl, cs = T["sydney"], T["clarence"], T["clarence_size"]
+    return (f'Measured on Australian sharks: {T["sharks"]} tagged bull sharks carried tags that record water temperature ({T["y0"]}–{T["y1"]}). '
+            f'In Sydney Harbour, {sy["sharks"]} sharks with a median length of {sy["median_length_cm"]} cm logged {sy["shark_days"]:,} shark-days, {sy["below19"]} of them below 19°C, and none in June to August. '
+            f'In the Clarence River in northern NSW, {cl["sharks"]} sharks with a median length of {cl["median_length_cm"]} cm logged {cl["shark_days"]:,} shark-days, {cl["below19"]} of them below 19°C; '
+            f'{cl["sharks_in_winter"]} sharks had winter days and {cl["sharks_80_winter_days"]} had 80 or more'
+            + (f' ({cl["identical_records"]} of them have identical records and may be one shark)' if cl["identical_records"] else "") + ". "
+            f'Size separates them within the one river: across all tags there, {cs["small"]["with_winter_day"]} of {cs["small"]["sharks"]} sharks under 150 cm at tagging were detected in winter, '
+            f'against none of {cs["large"]["sharks"]} sharks of 200 cm or more, which were detected on only {cs["large"]["days"]} days in all. '
+            f'Length is recorded once, at tagging, so a shark tracked for years has grown. {T["left_out_pct"]}% of the temperature readings had no calibration and were left out. ('
+            + A("https://researchdata.edu.au/imos-animal-tracking-2007-ongoing/3961802", "IMOS Animal Tracking") + ", CC BY 4.0.)")
+
+def sizeC43(D):
+    z = D["size"]; ag = z["aging"]; g = z["checks"]["first_two_years_no_curve"]["by_shark"]
+    first = [w["winter_days"] for a in ag for w in a["winters"][:1]]; late = [w["winter_days"] for a in ag for w in a["winters"] if w["est_cm"] >= 220]
+    return (f'{z["sharks_with_length"]} bull sharks tracked in NSW had a length at tagging ({z["sharks_without_length"]} had none and are left out). Each was aged forward to the day of every detection with a growth curve from the Northern Territory ('
+            + A("https://doi.org/10.1071/MF10271", "Tillett et al. 2011") + '). '
+            f'Aging out: {len(ag)} sharks tagged small were detected in two or more winters. In their first winter they were detected on {min(first)} to {max(first)} winter days; once they reached an estimated 220 cm or more, on {min(late)} to {max(late)}. They taper off; they don\'t stop. '
+            f'Counting each shark only for its first two years after tagging, with no growth curve, {g["small"]["winter_sharks"]} of {g["small"]["sharks"]} small sharks and {g["large"]["winter_sharks"]} of {g["large"]["sharks"]} large ones were detected in winter. '
+            'Winter here means June to August in NSW, not cold water: the temperatures are on the ' + '<a href="#c25">C25</a> card. Winter days also depend on where receivers were; the Clarence River array ran mainly from 2010 to 2014. ('
+            + A("https://researchdata.edu.au/imos-animal-tracking-2007-ongoing/3961802", "IMOS Animal Tracking") + ", CC BY 4.0.)")
+
 PARAS = {"mhwC19": (mhwC19, ("mhw",)), "bwC6": (bwC6, ("beachwatch",)), "plumeC6": (plumeC6, ("rivers", "harbour")),
          "qldC6": (qldC6, ("tigerqld",)), "wkC18": (wkC18, ("exposure", "beachday")), "whaleC5": (whaleC5, ("whales",)),
          "whitecoolC5": (whitecoolC5, ("whitecool",)), "chlC4": (chlC4, ("chlorophyll",)), "tideC24": (tideC24, ("tides",)),
          "tigerC28": (tigerC28, ("tigerqld", "tigerrain")), "upC29": (upC29, ("upwelling",)),
          "stationsC16": (stationsC16, ("imos",)), "juvC30": (juvC30, ("imos",)),
-         "shareC1": (shareC1, ("catchshare",)), "projC3": (projC3, ("proj",))}
+         "shareC1": (shareC1, ("catchshare",)), "projC3": (projC3, ("proj",)),
+         "tagsC25": (tagsC25, ("tags_sa",)), "dailyC25": (dailyC25, ("daily",)), "tagtempC25": (tagtempC25, ("tagtemp",)), "sizeC43": (sizeC43, ("size",))}
 
 def hawaiiC6(D):
     h = D["hawaii"]
@@ -253,15 +297,62 @@ def apply_grades(html, D):
         cid = m[1]
         try: st, lab = G.grade(cid, D)
         except (KeyError, TypeError): return m[0]  # data for this claim not built yet: keep the page as it is
-        return f'<article class="claim" id="{cid}" data-status="{st}">' + m[2] + f'<span class="{CLS[st]}">{lab}</span>'
+        return f'<article class="claim" id="{cid}" data-status="{st}">' + m[2] + f'<span class="{G.css(st, lab)}">{G.show(lab)}</span>'
     return re.sub(r'<article class="claim" id="(c\d+)" data-status="\w+">(.{0,240}?)<span class="cstat[^"]*">[^<]*</span>', one, html, flags=re.S)
+
+NEXT = ("open", "nt")
+def split_claims(html):
+    """Claims with a result come first, in their groups; claims still waiting for data follow, in the same groups."""
+    a = html.find('<h3 class="cgroup">')
+    if a < 0 or 'id="h-next"' in html: return html
+    end = html.index("\n  </section>", a)
+    region = html[a:end]
+    parts = re.split(r'(<h3 class="cgroup">.*?</h3>)', region, flags=re.S)[1:]
+    groups = [(parts[i], re.findall(r'<article class="claim" id="c\d+" data-status="(\w+)">.*?</article>', parts[i + 1], re.S),
+               re.findall(r'(<article class="claim" id="c\d+" data-status="\w+">.*?</article>)', parts[i + 1], re.S)) for i in range(0, len(parts), 2)]
+    def block(head, arts, cls):
+        return f'    {head}\n    <div class="{cls}">\n      ' + "\n      ".join(arts) + "\n    </div>\n" if arts else ""
+    done = "".join(block(h, [x for st, x in zip(sts, arts) if st not in NEXT], "claims") for h, sts, arts in groups)
+    wait = "".join(block(h, [x for st, x in zip(sts, arts) if st in NEXT], "claims next") for h, sts, arts in groups)
+    n_done = sum(st not in NEXT for _, sts, _ in groups for st in sts); n_wait = sum(st in NEXT for _, sts, _ in groups for st in sts)
+    out = (f'<h3 class="splith" id="h-results">Results so far</h3>\n    <p class="sub">{n_done} claims with a first look or a result.</p>\n' + done +
+           f'    <h3 class="splith" id="h-next">Next to test</h3>\n    <p class="sub">{n_wait} claims written down, with what would prove each one wrong, and waiting for data. Open one to see what it needs.</p>\n' + wait)
+    return html[:a] + out.rstrip("\n") + html[end:]
+
+def _n(x): return f"{x:,}"
+def what_we_know(D):
+    """Home panel: a few results per kind of evidence, strongest evidence first. Every number comes from the data files."""
+    def row(cid, text):
+        st, lab = G.grade(cid, D)
+        return f'<li><a href="#{cid}"><span class="wk-t">{text}</span><span class="{G.css(st, lab)}">{G.show(lab)}</span></a></li>'
+    sy = D["tagtemp"]["sydney"]; z = D["size"]["main"]["by_shark"]; c16 = D["imos"]["c16"]; q = D["tigerqld"]["bull"]
+    cols = [
+        ("top", "Measured or tracked on sharks", "From tags", [
+            ("c25", f'Large bull sharks leave Sydney Harbour before winter. Their tags recorded {sy["below19"]} {"day" if sy["below19"] == 1 else "days"} below 19°C in {_n(sy["shark_days"])}.'),
+            ("c43", f'Small bull sharks stay in rivers through winter: {z["small"]["winter_sharks"]} of {z["small"]["sharks"]} small tagged sharks were detected then, against {z["large"]["winter_sharks"]} of {z["large"]["sharks"]} large ones.'),
+            ("c16", f'Tagged bull sharks now leave Sydney around {c16["recent"]}, against {c16["early"]} in 2010–2013. The shift fades at long-running stations.')]),
+        ("", "Catch with the effort recorded", "From shark-control catches", [
+            ("c6", f'When rivers run high, shark-control gear catches {q["ratio"]:.2f} times as many bull sharks.'),
+            ("c1", "Bull shark catch rates at Queensland's southern beaches show no clear rise."),
+            ("c5", "White shark bites on the NSW north coast don't peak when humpbacks migrate past.")]),
+        ("", "Bite records, stand-ins, models", "From bite records", [
+            ("c19", "More bites come in unusually warm months, though a day-by-day check did not clearly agree."),
+            ("c24", "Bites don't cluster around the full or new moon."),
+            ("c29", "Cold upwelling doesn't appear to bring more white shark incidents. People also avoid that water.")])]
+    body = "".join(f'<section class="wk-col {c}"><span class="wk-k">{k}</span><h3>{h}</h3><ul>{"".join(row(*r) for r in rows)}</ul></section>' for c, k, h, rows in cols)
+    return ('<h3 class="blockh wk-h">What we know so far</h3><p class="sub" style="margin:0">Strongest evidence first. '
+            'Each line links to its claim, with the test, the numbers and what would change it.</p>'
+            f'<div class="wk">{body}</div><p class="hcta" style="margin-top:18px"><a class="ghbtn" href="#h-agenda">See all the claims</a></p>')
+WK_NEED = ("tagtemp", "size", "imos", "tigerqld")
 
 def ready(fn, D):  # a result file from before a test was added lacks its fields until the next run
     try: fn(D); return True
     except (KeyError, TypeError): return False
 
 def fill(html, D, history=None):
-    html = apply_grades(html, D)
+    html = split_claims(apply_grades(html, D))
+    if all(k in D for k in WK_NEED) and ready(what_we_know, D):
+        html = re.sub(r'(<div id="wk" class="wkwrap">).*?(</div>)', lambda m: m.group(1) + what_we_know(D) + m.group(2), html, count=1, flags=re.S)
     H = X.load_history() if history is None else history
     def wts(m):
         try: body = X.block(m[1], D, H)

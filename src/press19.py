@@ -145,13 +145,13 @@ def fig_rivers():
             out.append(f'<text x="{x0 + w + 80:.1f}" y="{y + bh / 2 + 9:.1f}" class="note">{lab}</text>')
         out.append(f'<text x="{L}" y="{top + bh + gap / 2 + 10}" class="lab">{name}</text>')
         r = g["ratio"]; strong = k == "bull"
-        out.append(f'<text x="{x1 + 170}" y="{top + bh + gap / 2 + 14}" class="{"big" if strong else "lab"}" text-anchor="end">{r:.1f}×</text>')
+        out.append(f'<text x="{x1 + 170}" y="{top + bh + gap / 2 + 14}" class="{"big" if strong else "lab"}" text-anchor="end">{r:.2f}×</text>')
     b = q["bull"]
     note = ("Rivers running high: months when nearby rivers were in their top quarter for that time of year. "
             "Each is compared with the same calendar month, area and five-year span.")
     out.append(f'<text x="{L}" y="{bottom + 112}" class="note">{esc(note[:note.index(". ") + 1])}</text>')
     out.append(f'<text x="{L}" y="{bottom + 142}" class="note">{esc(note[note.index(". ") + 2:])}</text>')
-    return frame(f"When rivers run high, {b['ratio']:.1f} times as many bull sharks",
+    return frame(f"When rivers run high, {b["ratio"]:.2f} times as many bull sharks",
                  f"Queensland shark-control catches, Gold Coast to Bundaberg, 1996–2025 ({b['caught_high'] + b['caught_other']} bull sharks). Higher in {b['areas_higher']} of {b['areas_tested']} areas.",
                  "Queensland Shark Control Program · Water Data Online (Bureau of Meteorology) river gauges", "\n".join(out))
 

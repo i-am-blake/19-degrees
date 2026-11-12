@@ -34,6 +34,8 @@ sp, im, hb, rn = D["species"], D["imos"], D["heat"], D["rain"]
 # Headline: bull shark bites and the 19°C line
 for m in find("bull bites (hero)", r"(\d+) bull shark bites\. Not one below 19", True):
     check("bull bites (hero)", int(m[1]), sp["bull"]["n"])
+for m in find("bull bites (home)", r"(\d+) bull shark bites in Australia since 1900\. Not one in a month when the sea was below 19", True):
+    check("bull bites (home)", int(m[1]), sp["bull"]["n"])
 for m in find("bull bites (notebook)", r"(\d+) of (\d+) bull shark bites below 19", True):
     check("bull bites below 19°C (notebook)", (int(m[1]), int(m[2])), (sp["bull"]["below"], sp["bull"]["n"]))
 if sp["bull"]["below"]: bad.append("the page says no bull shark bite was below 19°C, but the data has one")
@@ -146,13 +148,21 @@ import grades19
 for a in re.finditer(r'<article class="claim" id="(c\d+)" data-status="(\w+)">.{0,240}?<span class="(cstat[^"]*)">([^<]*)</span>', page, re.S):
     try: want = grades19.grade(a[1], D)
     except (KeyError, TypeError): continue
-    check(f"{a[1].upper()} grade", (a[2], a[4], a[3]), (want[0], want[1], results19.CLS[want[0]]))
+    check(f"{a[1].upper()} grade", (a[2], a[4], a[3]), (want[0], grades19.show(want[1]), grades19.css(*want)))
 import explain19
 H = explain19.load_history()
 for a in re.finditer(r'<section class="wts" id="wts-(c\d+)"([^>]*)>(.*?)</section>', page, re.S):
     try: body = explain19.block(a[1], D, H)
     except (KeyError, TypeError): continue
     check(f"{a[1].upper()} summary", a[3] == (f"<h5>Where this stands</h5><dl>{body}</dl>" if body else ""), True)
+
+# Every tested claim names its evidence tier, and no grade sits above what that tier allows
+import grades19 as _G
+for cid in _G.TESTS:
+    check(f"{cid.upper()} has an evidence tier", cid in _G.EVID, True)
+    try: st, lab = _G.grade(cid, D)
+    except (KeyError, TypeError): continue
+    if cid in _G.EVID and min(_G.EVID[cid][0]) >= 4: check(f"{cid.upper()} grade is within its evidence tier", lab != _G.LABEL["supports"] and st not in ("supported", "strong"), True)
 
 # Claim C23 (california19.py), when present
 if "california" in D:
@@ -188,6 +198,15 @@ if not w["post"] > w["pre"]: bad.append(f"WA: page says more bull shark bites si
 pm = D["pop_mid"]
 if not pm[max(pm, key=int)] / pm["1900"] > 6: bad.append("population: page says more than sixfold since 1900")
 
+# Home: "What we know so far" is built from the data files
+if all(k in D for k in results19.WK_NEED) and results19.ready(results19.what_we_know, D):
+    check("Home: what we know so far", results19.what_we_know(D) in page, True)
+# Claims: results first, then the claims waiting for data
+_r, _n = page.find('id="h-results"'), page.find('id="h-next"')
+check("claims split into results and next to test", 0 < _r < _n, True)
+for _a in re.finditer(r'<article class="claim" id="(c\d+)" data-status="(\w+)">', page):
+    check(f"{_a[1].upper()} sits in the right list", (_a[2] in ("open", "nt")) == (_a.start() > _n), True)
+
 # Counts
 cards = page.count('class="claim"')
 early = sum(page.count(f'data-status="{s}"') for s in ("early", "ruled", "supported", "strong"))
@@ -195,9 +214,19 @@ for lab, pat, want in (("claims", r"See the (\d+) claims", cards), ("claims", r"
                        ("claims", r"Pick one of (\d+) claims", cards),
                        ("claims tested", r"Tested so far (\d+)", early)):
     for m in find(lab, pat, True): check(f"number of {lab} ('{m[0]}')", int(m[1]), want)
+# The same count written out in words ("Forty-three claims")
+_ONES = "zero one two three four five six seven eight nine ten eleven twelve thirteen fourteen fifteen sixteen seventeen eighteen nineteen".split()
+_TENS = {"twenty": 20, "thirty": 30, "forty": 40, "fifty": 50, "sixty": 60, "seventy": 70, "eighty": 80, "ninety": 90}
+def words(w):
+    t, _, o = w.lower().partition("-")
+    return _TENS[t] + (_ONES.index(o) if o else 0) if t in _TENS else _ONES.index(t) if t in _ONES else None
+for m in re.finditer(r"\b([A-Za-z]+(?:-[a-z]+)?) (?:specific |testable )?claims\b", T):
+    n = words(m[1])
+    if n is not None and n > 9: check(f"number of claims in words ('{m[0]}')", n, cards)
 # Every claim card names the decision it informs
 for c in re.finditer(r'<article class="claim" id="(c\d+)"([\s\S]*?)</article>', page):
     check(f"{c[1].upper()} has a 'Decision it informs' line", "<dt>Decision it informs</dt>" in c[2], True)
+    check(f"{c[1].upper()} has a 'Measured per' line", "<dt>Measured per</dt>" in c[2], True)
 i = page.find("Products and the evidence"); seg = page[i:page.find("</section>", i)]
 prods = seg.count('<td class="psrc">')
 for pat in (r"Products checked (\d+)", r"See all (\d+) products", r"(\d+) products we checked"):
