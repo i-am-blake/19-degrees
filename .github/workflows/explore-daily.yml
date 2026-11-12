@@ -2,7 +2,7 @@ name: Explore daily sea temperature (C25)
 on:
   push:
     branches: [daily-sst]
-    paths: ["src/explore_daily.py", ".github/workflows/explore-daily.yml"]
+    paths: ["src/explore_tampa.py"]
 permissions:
   contents: read
 jobs:
@@ -12,9 +12,5 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with: { fetch-depth: 0 }
-      - name: Records from the ocean-data branch
-        run: |
-          git fetch -q origin ocean-data
-          mkdir -p ocean && git archive origin/ocean-data | tar -x -C ocean
-      - name: Match each record to that day's sea temperature
-        run: python3 -I src/explore_daily.py ocean daily.json
+      - name: Tampa Bay checks
+        run: python3 -I src/explore_tampa.py
