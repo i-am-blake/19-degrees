@@ -84,7 +84,10 @@ def g_c25(D):
     for g in ("africa", "us"):
         x = D["obis"]["groups"][g]["bull"]; q = x["cell_months_below_pct"] / 100
         ps.append(binom2(x["below"], x["days"], q))
-    return V(True, max(ps))
+    v = V(True, max(ps))
+    if "daily" in D:  # the stricter daily test, with its rule set in advance: under 5% of US shark-days below 19°C
+        v = down(v, D["daily"]["us"]["bull"]["below19_pct"] < D["daily"]["rule"]["supports_below_pct"])
+    return v
 def g_c26(D): i = D["iod"]["all"]; return V(i["ratio"] > 1, i["p"])
 def g_c28(D):
     t = D["tigerrain"]["all"]["tiger"]; q = D["tigerqld"]["tiger"]

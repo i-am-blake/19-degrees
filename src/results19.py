@@ -233,13 +233,25 @@ def tagsC25(D):
             + f'the coldest reading was {t["coldest"]}°C. The tags don\'t record where each shark was. ('
             + A("https://doi.org/10.1038/s41558-024-01966-8", "Lubitz et al. 2024") + "; data on " + A("https://doi.org/10.5061/dryad.xd2547dn1", "Dryad") + ", CC0.)")
 
+def dailyC25(D):
+    d = D["daily"]; u, sp, m = d["us"]["bull"], d["us_bull_split"], d["manatee_river"]; n = m["nov_mar"]
+    return (f'Matched to the day: this test replaces monthly averages over a 1° square with daily satellite temperature for each record\'s own 0.25° cell (about 25 km, 1981 on). '
+            f'Off the US, {u["below19"]:,} of {u["shark_days"]:,} bull shark days ({u["below19_pct"]:.1f}%) fell on a day below 19°C, and one population accounts for {sp["river_dataset"]["below19"]} of them. '
+            f'In the Manatee River at Bradenton, Florida, {m["animals"]} tagged bull sharks were detected from {m["y0"]} to {m["y1"]}, {m["winter_animals"]} of them in winter and {m["two_winters"]} in two or more winters. '
+            f'From November to March they were detected on {100 * n["cold_detected"] / n["cold_days"]:.0f}% of days below 19°C and {100 * n["warm_detected"] / n["warm_days"]:.0f}% of warmer days, so they did not leave when it got cold. '
+            f'A tide gauge in the bay agrees with the satellite to within {abs(m["gauge"]["satellite_minus_gauge"])}°C on average; its coldest day with a detection was {m["gauge"]["min"]}°C. '
+            f'The sharks\' ages aren\'t recorded; young bull sharks commonly use rivers like this as nurseries. Elsewhere the pattern holds ({sp["elsewhere"]["below19"]} of {sp["elsewhere"]["days"]:,} days below 19°C), with two limits: the Texas surveys recorded almost no winter days, and sightings follow when people are in the water. '
+            f'The Australian bite result (claim C22) is not affected. (Tags: '
+            + A("https://members.oceantrack.org/project?ccode=FACT.BTSNP", "FACT Network and Havenworth Coastal Conservation") + ", via the Ocean Tracking Network and " + A("https://obis.org", "OBIS") + ", CC BY 4.0; sea temperature "
+            + A("https://www.ncei.noaa.gov/products/optimum-interpolation-sst", "NOAA OISST v2.1") + "; water temperature " + A("https://tidesandcurrents.noaa.gov/stationhome.html?id=8726384", "NOAA tide gauges") + " at Port Manatee and St. Petersburg.)")
+
 PARAS = {"mhwC19": (mhwC19, ("mhw",)), "bwC6": (bwC6, ("beachwatch",)), "plumeC6": (plumeC6, ("rivers", "harbour")),
          "qldC6": (qldC6, ("tigerqld",)), "wkC18": (wkC18, ("exposure", "beachday")), "whaleC5": (whaleC5, ("whales",)),
          "whitecoolC5": (whitecoolC5, ("whitecool",)), "chlC4": (chlC4, ("chlorophyll",)), "tideC24": (tideC24, ("tides",)),
          "tigerC28": (tigerC28, ("tigerqld", "tigerrain")), "upC29": (upC29, ("upwelling",)),
          "stationsC16": (stationsC16, ("imos",)), "juvC30": (juvC30, ("imos",)),
          "shareC1": (shareC1, ("catchshare",)), "projC3": (projC3, ("proj",)),
-         "tagsC25": (tagsC25, ("tags_sa",))}
+         "tagsC25": (tagsC25, ("tags_sa",)), "dailyC25": (dailyC25, ("daily",))}
 
 def hawaiiC6(D):
     h = D["hawaii"]

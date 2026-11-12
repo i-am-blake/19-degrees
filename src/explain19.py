@@ -100,6 +100,14 @@ def e_c24(D):
              "A much larger set of dated bites showing a clear cluster.")
 def e_c25(D):
     a, u = D["obis"]["groups"]["africa"]["bull"], D["obis"]["groups"]["us"]["bull"]
+    if "daily" in D:
+        d = D["daily"]; da, du, sp, m = d["africa"]["bull"], d["us"]["bull"], d["us_bull_split"], d["manatee_river"]
+        return t("Whether bull sharks outside Australia stay in water of 19°C or warmer, now matched to the sea temperature on the day of each record, not the monthly average.",
+                 f'Off Mozambique and South Africa, {da["below19"]} of {da["shark_days"]:,} bull shark days fell on a day below 19°C. Off the US, {du["below19"]:,} of {du["shark_days"]:,} did ({du["below19_pct"]:.1f}%), against {du["baseline_below19_pct"]}% of days in the same places. '
+                 f'Nearly all of those cold days ({sp["river_dataset"]["below19"]}) come from one group: {m["animals"]} tagged bull sharks in Florida\'s Manatee River, which stayed through winter in water as cold as {m["gauge"]["min"]}°C at the nearest gauge. '
+                 f'Everywhere else in the US records, {sp["elsewhere"]["below19"]} of {sp["elsewhere"]["days"]:,} days ({100 * sp["elsewhere"]["below19"] / sp["elsewhere"]["days"]:.1f}%) were below 19°C.',
+                 f'The daily test was written down before the data came back: fewer than {d["rule"]["supports_below_pct"]}% of shark-days below 19°C would support the claim. The US result misses that, because of one river. It is an isolated case so far, but a real one: the records are bull sharks, and tide gauges confirm the cold. So the claim holds as a pattern and fails as a rule, and the grade drops from "supports it" to "leans toward it".',
+                 'Winter tracking from more rivers and bays. If other sites show bull sharks leaving in the cold, the Manatee River stays an exception and the grade goes back up. If more populations overwinter in cold water, it drops to "no clear link".')
     return t("Whether bull sharks outside Australia also stay in water of 19°C or warmer.",
              f'Off Mozambique and South Africa, {a["below"]} of {a["days"]:,} tagged bull shark days came in a month below 19°C, though {a["cell_months_below_pct"]}% of months there were that cool. Off the US, {u["below"]} of {u["days"]:,} record-days ({100 - u["pct_warm"]:.1f}%), against {u["cell_months_below_pct"]}% of months. ' + chance(max(G.binom2(a["below"], a["days"], a["cell_months_below_pct"] / 100), G.binom2(u["below"], u["days"], u["cell_months_below_pct"] / 100))),
              "Tested on the claim's own measure, in the predicted direction, on two separate coasts: \"supports it\". It stays \"early\" because the test was chosen after seeing the data.",
