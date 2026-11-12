@@ -1,6 +1,6 @@
-"""Press charts: three figures journalists can reuse, built from the site's own data files.
+"""Press charts: five figures journalists can reuse, built from the site's own data files.
 
-Writes press/index.html (all three charts, the numbers behind them and the credits) and,
+Writes press/index.html (all five charts, the numbers behind them and the credits) and,
 with --png, press/*.png at 1600 x 1000 for print and web. Run from the repo root.
 """
 import csv, json, os, sys, html
@@ -156,6 +156,49 @@ def fig_rivers():
                  "Queensland Shark Control Program · Water Data Online (Bureau of Meteorology) river gauges", "\n".join(out))
 
 
+def hbars(rows, vmax, ticks, unit, x0=L + 430, top0=T + 10, bh=84, gap=58):
+    """Horizontal bars with a name and a detail line on the left and the value on the right. rows: (name, detail, value, label, color)."""
+    x1 = W - R - 260; sx = lambda v: x0 + v / vmax * (x1 - x0); out = []
+    bottom = top0 + len(rows) * (bh + gap) - gap + 14
+    for v in ticks:
+        out.append(f'<line x1="{sx(v):.1f}" x2="{sx(v):.1f}" y1="{top0 - 14}" y2="{bottom}" stroke="{GRID}" stroke-width="1"/>')
+        out.append(f'<text x="{sx(v):.1f}" y="{bottom + 34}" class="ax" text-anchor="middle">{v:g}{unit}</text>')
+    for i, (name, detail, val, lab, col) in enumerate(rows):
+        y = top0 + i * (bh + gap); w = max(sx(val) - x0, 8)
+        out.append(f'<path d="M{x0},{y} H{x0 + w - 4:.1f} Q{x0 + w:.1f},{y} {x0 + w:.1f},{y + 4} V{y + bh - 4} Q{x0 + w:.1f},{y + bh} {x0 + w - 4:.1f},{y + bh} H{x0} Z" fill="{col}"><title>{esc(name)}: {esc(lab)}</title></path>')
+        out.append(f'<text x="{x0 + w + 16:.1f}" y="{y + bh / 2 + 10:.1f}" class="val">{esc(lab)}</text>')
+        out.append(f'<text x="{L}" y="{y + bh / 2 - 4:.1f}" class="lab">{esc(name)}</text>')
+        out.append(f'<text x="{L}" y="{y + bh / 2 + 30:.1f}" class="note">{esc(detail)}</text>')
+    return out, bottom
+
+
+def fig_size():
+    """Claim C43: share of tagged NSW bull sharks ever detected there in winter, by length at tagging."""
+    z = json.load(open(os.path.join(ROOT, "src", "size.json"))); b = z["main"]["by_shark"]
+    rows = [(n, d, 100 * b[k]["winter_sharks"] / b[k]["sharks"], f'{b[k]["winter_sharks"]} of {b[k]["sharks"]} sharks', c)
+            for k, n, d, c in (("small", "Small", "under 150 cm", ORANGE), ("mid", "Mid-sized", "150 to 200 cm", BLUE), ("large", "Large", "200 cm or more", BLUE))]
+    out, bottom = hbars(rows, 100, (0, 25, 50, 75, 100), "%", top0=T + 20, bh=100, gap=64)
+    out.append(f'<text x="{L + 430}" y="{bottom + 70}" class="note">Share of tagged sharks detected in NSW at least once in winter (June to August)</text>')
+    out.append(f'<text x="{L}" y="{bottom + 118}" class="note">Length is at tagging. Small sharks were tracked through winter in one river, the Clarence, so this is an early result.</text>')
+    return frame("Small bull sharks stay for winter. Large ones leave.",
+                 f'{z["sharks_with_length"]} tagged bull sharks tracked on listening stations in NSW, by their length when tagged.',
+                 "IMOS Animal Tracking, acoustic detections (CC BY 4.0)", "\n".join(out))
+
+
+def fig_tagtemp():
+    """Claim C25: days below 19°C recorded by temperature tags on bull sharks, Sydney Harbour against the Clarence River."""
+    t = json.load(open(os.path.join(ROOT, "src", "tagtemp.json"))); sy, cl = t["sydney"], t["clarence"]
+    pc = lambda x: 100 * x["below19"] / x["shark_days"]
+    rows = [("Sydney Harbour", f'{sy["sharks"]} sharks, typically {sy["median_length_cm"]} cm', pc(sy), f'{sy["below19"]} of {sy["shark_days"]:,} days', BLUE),
+            ("Clarence River", f'{cl["sharks"]} sharks, typically {cl["median_length_cm"]} cm', pc(cl), f'{cl["below19"]} of {cl["shark_days"]:,} days', ORANGE)]
+    out, bottom = hbars(rows, 20, (0, 5, 10, 15, 20), "%", top0=T + 30, bh=120, gap=110)
+    out.append(f'<text x="{L + 430}" y="{bottom + 70}" class="note">Share of shark-days when the tag measured water below 19°C</text>')
+    out.append(f'<text x="{L}" y="{bottom + 118}" class="note">The harbor sharks were never detected there in June to August. In the river, {cl["sharks_in_winter"]} sharks stayed into winter.</text>')
+    return frame("Harbor sharks avoid cold water. River sharks don't.",
+                 f'Measured at the shark: tags that record water temperature on {sy["sharks"] + cl["sharks"]} bull sharks in NSW, {t["y0"]}–{t["y1"]}.',
+                 "IMOS Animal Tracking, acoustic detections with temperature sensors (CC BY 4.0)", "\n".join(out))
+
+
 CSS = """
 @font-face{font-family:Bricolage;src:url(FONTS/bricolage.woff) format('woff')}
 @font-face{font-family:Figtree;src:url(FONTS/figtree.woff) format('woff')}
@@ -194,7 +237,8 @@ a{{color:#1d63a3}}
 
 if __name__ == "__main__":
     os.makedirs(OUT, exist_ok=True)
-    figs = [("bites-by-temperature", fig_line()), ("season-length-nsw", fig_season()), ("rivers-and-bull-sharks", fig_rivers())]
+    figs = [("bites-by-temperature", fig_line()), ("season-length-nsw", fig_season()), ("rivers-and-bull-sharks", fig_rivers()),
+            ("bull-sharks-by-size", fig_size()), ("measured-at-the-shark", fig_tagtemp())]
     open(os.path.join(OUT, "index.html"), "w").write(page(figs, "../fonts"))
     if "--png" in sys.argv:
         from playwright.sync_api import sync_playwright
