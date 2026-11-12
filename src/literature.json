@@ -12,5 +12,19 @@
  "banaghan2026": {
   "cite": "Banaghan, Levengood and Holmes (2026), Fisheries Research 303, 107882",
   "doi": "https://doi.org/10.1016/j.fishres.2026.107882"
+ },
+ "lubitz2025": {
+  "cite": "Lubitz et al. (2025), Science of the Total Environment, 179966",
+  "doi": "https://doi.org/10.1016/j.scitotenv.2025.179966",
+  "claim": "c16",
+  "sharks": 92,
+  "years": "2009–2024",
+  "arrays": [
+   "Sydney Harbour gate",
+   "Bondi line"
+  ],
+  "receivers_continuous": true,
+  "some_detections_embargoed": true,
+  "note": "Population-level analysis of combined detections; not every shark was detected for the whole period, and new sharks were tagged throughout (some were detected for nearly 10 years). All receivers used were permanently installed 2009–2024, listening winter and summer with no gaps. Some sharks' detections are embargoed in the IMOS database and not public. Study details confirmed by the lead author, November 2026."
  }
 }
