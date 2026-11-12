@@ -617,7 +617,9 @@ table.dt thead th{color:var(--muted);font-weight:600}
 .ctier + .cstat{margin-left:0}
 .cfcount{margin:8px 0 0;font-size:14px;color:var(--muted);min-height:1.4em}
 @media (pointer:coarse){.cfilter button{min-height:44px;padding:9px 14px}}
-.cfilter button[aria-pressed="true"]{border-color:#3395BE;background:rgba(51,149,190,.24)}
+.cfilter button{border-color:rgba(232,241,242,.45)}
+.cfilter button[aria-pressed="true"]{border-color:#6CC3E6;background:rgba(51,149,190,.3)}
+.cfilter button[aria-pressed="true"]::before{content:"\2713";margin-right:6px;font-weight:700}
 .cfilter button{transition:border-color .15s,background-color .15s}
 .cfilter button:hover{border-color:#3395BE}
 .cfilter button[aria-pressed="true"]:hover{background:rgba(51,149,190,.26)}
