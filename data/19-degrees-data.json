@@ -1,5 +1,5 @@
 {
- "built": "2026-11-11",
+ "built": "2026-11-12",
  "sst_last": "2026-06",
  "asid_last": {
   "year": 2026,
@@ -3260,13 +3260,9 @@
     153.5
    ],
    "today": {
-    "time": "2026-11-12T06:45",
-    "sst": 22.9,
+    "time": "2026-11-13T09:30",
+    "sst": 23.3,
     "week": [
-     [
-      "2026-11-06",
-      22.7
-     ],
      [
       "2026-11-07",
       22.9
@@ -3289,7 +3285,11 @@
      ],
      [
       "2026-11-12",
-      23.7
+      23.4
+     ],
+     [
+      "2026-11-13",
+      23.6
      ]
     ]
    },
@@ -4218,13 +4218,9 @@
     154.5
    ],
    "today": {
-    "time": "2026-11-12T06:45",
-    "sst": 21.9,
+    "time": "2026-11-13T09:30",
+    "sst": 21.8,
     "week": [
-     [
-      "2026-11-06",
-      21.0
-     ],
      [
       "2026-11-07",
       20.9
@@ -4247,6 +4243,10 @@
      ],
      [
       "2026-11-12",
+      21.7
+     ],
+     [
+      "2026-11-13",
       22.4
      ]
     ]
@@ -5176,13 +5176,9 @@
     152.5
    ],
    "today": {
-    "time": "2026-11-12T06:45",
-    "sst": 20.2,
+    "time": "2026-11-13T09:30",
+    "sst": 20.7,
     "week": [
-     [
-      "2026-11-06",
-      20.8
-     ],
      [
       "2026-11-07",
       21.1
@@ -5201,11 +5197,15 @@
      ],
      [
       "2026-11-11",
-      20.6
+      20.9
      ],
      [
       "2026-11-12",
-      20.5
+      20.7
+     ],
+     [
+      "2026-11-13",
+      20.9
      ]
     ]
    },
@@ -6134,13 +6134,9 @@
     151.5
    ],
    "today": {
-    "time": "2026-11-12T06:45",
-    "sst": 20.0,
+    "time": "2026-11-13T09:30",
+    "sst": 20.7,
     "week": [
-     [
-      "2026-11-06",
-      20.7
-     ],
      [
       "2026-11-07",
       20.8
@@ -6159,11 +6155,15 @@
      ],
      [
       "2026-11-11",
-      20.3
+      20.9
      ],
      [
       "2026-11-12",
-      20.4
+      20.8
+     ],
+     [
+      "2026-11-13",
+      20.8
      ]
     ]
    },
@@ -7092,13 +7092,9 @@
     151.5
    ],
    "today": {
-    "time": "2026-11-12T06:45",
-    "sst": 19.6,
+    "time": "2026-11-13T09:30",
+    "sst": 20.3,
     "week": [
-     [
-      "2026-11-06",
-      20.0
-     ],
      [
       "2026-11-07",
       20.2
@@ -7117,11 +7113,15 @@
      ],
      [
       "2026-11-11",
-      20.2
+      20.3
      ],
      [
       "2026-11-12",
-      20.2
+      20.6
+     ],
+     [
+      "2026-11-13",
+      20.5
      ]
     ]
    },
@@ -8050,13 +8050,9 @@
     150.5
    ],
    "today": {
-    "time": "2026-11-12T06:45",
-    "sst": 17.6,
+    "time": "2026-11-13T09:30",
+    "sst": 18.0,
     "week": [
-     [
-      "2026-11-06",
-      17.9
-     ],
      [
       "2026-11-07",
       17.7
@@ -8075,11 +8071,15 @@
      ],
      [
       "2026-11-11",
-      18.1
+      18.3
      ],
      [
       "2026-11-12",
-      18.2
+      18.4
+     ],
+     [
+      "2026-11-13",
+      18.3
      ]
     ]
    },
@@ -9008,13 +9008,9 @@
     113.5
    ],
    "today": {
-    "time": "2026-11-12T06:45",
-    "sst": 23.4,
+    "time": "2026-11-13T09:30",
+    "sst": 23.6,
     "week": [
-     [
-      "2026-11-06",
-      23.4
-     ],
      [
       "2026-11-07",
       23.5
@@ -9037,7 +9033,11 @@
      ],
      [
       "2026-11-12",
-      24.2
+      24.3
+     ],
+     [
+      "2026-11-13",
+      24.6
      ]
     ]
    },
@@ -9966,13 +9966,9 @@
     113.5
    ],
    "today": {
-    "time": "2026-11-12T06:45",
-    "sst": 21.1,
+    "time": "2026-11-13T09:30",
+    "sst": 21.2,
     "week": [
-     [
-      "2026-11-06",
-      21.3
-     ],
      [
       "2026-11-07",
       21.3
@@ -9995,6 +9991,10 @@
      ],
      [
       "2026-11-12",
+      21.7
+     ],
+     [
+      "2026-11-13",
       21.6
      ]
     ]
@@ -10924,13 +10924,9 @@
     115.5
    ],
    "today": {
-    "time": "2026-11-12T06:45",
+    "time": "2026-11-13T09:30",
     "sst": 20.3,
     "week": [
-     [
-      "2026-11-06",
-      20.6
-     ],
      [
       "2026-11-07",
       20.7
@@ -10949,11 +10945,15 @@
      ],
      [
       "2026-11-11",
-      20.5
+      20.4
      ],
      [
       "2026-11-12",
       20.6
+     ],
+     [
+      "2026-11-13",
+      20.8
      ]
     ]
    },
@@ -11882,13 +11882,9 @@
     115.5
    ],
    "today": {
-    "time": "2026-11-12T06:45",
-    "sst": 19.9,
+    "time": "2026-11-13T09:45",
+    "sst": 20.1,
     "week": [
-     [
-      "2026-11-06",
-      20.0
-     ],
      [
       "2026-11-07",
       20.2
@@ -11907,11 +11903,15 @@
      ],
      [
       "2026-11-11",
-      20.1
+      20.0
      ],
      [
       "2026-11-12",
       20.4
+     ],
+     [
+      "2026-11-13",
+      20.7
      ]
     ]
    },
@@ -12840,13 +12840,9 @@
     114.5
    ],
    "today": {
-    "time": "2026-11-12T06:45",
-    "sst": 18.1,
+    "time": "2026-11-13T09:45",
+    "sst": 18.2,
     "week": [
-     [
-      "2026-11-06",
-      18.5
-     ],
      [
       "2026-11-07",
       18.7
@@ -12869,7 +12865,11 @@
      ],
      [
       "2026-11-12",
-      18.3
+      18.4
+     ],
+     [
+      "2026-11-13",
+      18.4
      ]
     ]
    },
@@ -13798,13 +13798,9 @@
     117.5
    ],
    "today": {
-    "time": "2026-11-12T06:45",
-    "sst": 18.2,
+    "time": "2026-11-13T09:45",
+    "sst": 18.4,
     "week": [
-     [
-      "2026-11-06",
-      18.6
-     ],
      [
       "2026-11-07",
       18.3
@@ -13827,7 +13823,11 @@
      ],
      [
       "2026-11-12",
-      18.4
+      18.5
+     ],
+     [
+      "2026-11-13",
+      18.7
      ]
     ]
    },
@@ -18080,6 +18080,657 @@
    "hi": 12,
    "models": 27,
    "warming_c": 0.63
+  }
+ },
+ "tags_sa": {
+  "sharks": 5,
+  "years": "2019\u20132020",
+  "bins_10min": 47420,
+  "pct_time_19_or_warmer": 97.3,
+  "shark_days": 418,
+  "days_mean_below19": 9,
+  "coldest": 10.0,
+  "days_range": [
+   17,
+   216
+  ],
+  "per_shark": {
+   "shark1": {
+    "days": 36,
+    "pct_below19": 0.2,
+    "min": 18.2
+   },
+   "shark2": {
+    "days": 121,
+    "pct_below19": 4.6,
+    "min": 12.3
+   },
+   "shark3": {
+    "days": 216,
+    "pct_below19": 2.2,
+    "min": 13.6
+   },
+   "shark4": {
+    "days": 28,
+    "pct_below19": 4.2,
+    "min": 10.0
+   },
+   "shark5": {
+    "days": 17,
+    "pct_below19": 5.7,
+    "min": 13.9
+   }
+  },
+  "cold_week": "8 of them between 19 March and 4 April 2019"
+ },
+ "literature": {
+  "banaghan2025": {
+   "cite": "Banaghan, Levengood and Holmes (2025), Marine and Freshwater Research 76, MF24256",
+   "doi": "https://doi.org/10.1071/MF24256",
+   "years": "1996\u20132022",
+   "south_drumline_r": -0.019,
+   "south_drumline_sig": false,
+   "south_gillnet_r": 0.017,
+   "south_gillnet_sig": false,
+   "note": "Effort-standardised CPUE (sharks per gear per day). Subtropics = Sunshine Coast to Gold Coast; Rainbow Beach excluded. Sunshine Coast gill-nets rose (r=+0.032, significant); Point Lookout drumlines fell (r=-0.062, significant); Gold Coast flat."
+  },
+  "banaghan2026": {
+   "cite": "Banaghan, Levengood and Holmes (2026), Fisheries Research 303, 107882",
+   "doi": "https://doi.org/10.1016/j.fishres.2026.107882"
+  },
+  "lubitz2025": {
+   "cite": "Lubitz et al. (2025), Science of the Total Environment, 179966",
+   "doi": "https://doi.org/10.1016/j.scitotenv.2025.179966",
+   "claim": "c16",
+   "sharks": 92,
+   "years": "2009\u20132024",
+   "arrays": [
+    "Sydney Harbour gate",
+    "Bondi line"
+   ],
+   "receivers_continuous": true,
+   "some_detections_embargoed": true,
+   "note": "Population-level analysis of combined detections; not every shark was detected for the whole period, and new sharks were tagged throughout (some were detected for nearly 10 years). All receivers used were permanently installed 2009\u20132024, listening winter and summer with no gaps. Some sharks' detections are embargoed in the IMOS database and not public. Study details confirmed by the lead author, November 2026."
+  }
+ },
+ "daily": {
+  "note": "Results of daily19.py (every dated bull and tiger shark record matched to that day's NOAA OISST temperature for its own 0.25\u00b0 cell) and tampa19.py (the Manatee River tracking dataset and tide-gauge water temperature). Run by hand on 12 Nov 2026 (UTC); not part of the weekly rebuild. The rule was written into daily19.py before the data was fetched.",
+  "rule": {
+   "supports_below_pct": 5,
+   "baseline_at_least_pct": 10
+  },
+  "africa": {
+   "bull": {
+    "shark_days": 2317,
+    "no_temperature": 2,
+    "below19": 1,
+    "below19_pct": 0.04,
+    "min": 18.66,
+    "p01": 21.65,
+    "median": 26.12,
+    "cells": 38,
+    "y0": "1983",
+    "y1": "2026",
+    "baseline_cell_months": 1194,
+    "baseline_below19_pct": 7.2,
+    "cold_by_month": {
+     "12": 1
+    },
+    "cold_lat": [
+     -33.75,
+     -33.75
+    ]
+   },
+   "tiger": {
+    "shark_days": 844,
+    "no_temperature": 0,
+    "below19": 3,
+    "below19_pct": 0.36,
+    "min": 17.16,
+    "p01": 21.23,
+    "median": 24.5,
+    "cells": 27,
+    "y0": "1988",
+    "y1": "2025",
+    "baseline_cell_months": 864,
+    "baseline_below19_pct": 2.0,
+    "cold_by_month": {
+     "02": 1,
+     "03": 1,
+     "10": 1
+    },
+    "cold_lat": [
+     -33.75,
+     -33.5
+    ]
+   }
+  },
+  "us": {
+   "bull": {
+    "shark_days": 4458,
+    "no_temperature": 0,
+    "below19": 474,
+    "below19_pct": 10.63,
+    "min": 13.15,
+    "p01": 16.0,
+    "median": 25.67,
+    "cells": 222,
+    "y0": "1981",
+    "y1": "2026",
+    "baseline_cell_months": 9076,
+    "baseline_below19_pct": 18.4,
+    "cold_by_month": {
+     "01": 249,
+     "02": 113,
+     "03": 5,
+     "04": 7,
+     "05": 1,
+     "06": 1,
+     "12": 98
+    },
+    "cold_lat": [
+     25.25,
+     39.5
+    ]
+   },
+   "tiger": {
+    "shark_days": 853,
+    "no_temperature": 0,
+    "below19": 47,
+    "below19_pct": 5.51,
+    "min": 14.37,
+    "p01": 15.88,
+    "median": 24.93,
+    "cells": 462,
+    "y0": "1981",
+    "y1": "2026",
+    "baseline_cell_months": 8266,
+    "baseline_below19_pct": 14.6,
+    "cold_by_month": {
+     "01": 4,
+     "02": 14,
+     "03": 2,
+     "06": 6,
+     "08": 2,
+     "09": 2,
+     "10": 8,
+     "11": 8,
+     "12": 1
+    },
+    "cold_lat": [
+     31.0,
+     40.0
+    ]
+   }
+  },
+  "us_bull_split": {
+   "river_dataset": {
+    "days": 2529,
+    "below19": 441
+   },
+   "elsewhere": {
+    "days": 1929,
+    "below19": 33
+   },
+   "before_2015": {
+    "days": 1597,
+    "below19": 8
+   }
+  },
+  "manatee_river": {
+   "animals": 52,
+   "winter_animals": 34,
+   "two_winters": 21,
+   "y0": 2018,
+   "y1": 2025,
+   "detection_days": 1694,
+   "gauge": {
+    "name": "Port Manatee",
+    "days": 1530,
+    "below19": 328,
+    "below15": 47,
+    "min": 9.6,
+    "satellite_minus_gauge": 0.1
+   },
+   "nov_mar": {
+    "cold_days": 317,
+    "cold_detected": 309,
+    "warm_days": 489,
+    "warm_detected": 408
+   },
+   "dataset": {
+    "id": "c5e06e5d-7775-4df2-a24f-18babe51fc28",
+    "title": "BTSNP Tags and Array- Natal philopatry in blacktip sharks",
+    "source": "FACT Network and Havenworth Coastal Conservation, via the Ocean Tracking Network OBIS IPT",
+    "license": "CC BY 4.0",
+    "citation": "Gardiner, J. 2012. Natal philopatry in blacktip sharks.",
+    "species_records": {
+     "Carcharhinus leucas": 131170,
+     "Carcharhinus limbatus": 58188,
+     "Rhinoptera bonasus": 15099,
+     "Carcharhinus acronotus": 13367,
+     "Sphyrna mokarran": 4227,
+     "Sphyrna tiburo": 212,
+     "Pristis pectinata": 12,
+     "Sphyrna lewini": 2
+    }
+   }
+  }
+ },
+ "tagtemp": {
+  "sharks": 56,
+  "shark_days": 9508,
+  "readings_used": 58528,
+  "readings_left_out": 17491,
+  "left_out_pct": 23,
+  "y0": 2010,
+  "y1": 2024,
+  "sydney": {
+   "sharks": 24,
+   "shark_days": 3091,
+   "below19": 1,
+   "coldest_day": 18.5,
+   "median_length_cm": 275,
+   "with_length": 16,
+   "winter_days": 0,
+   "winter_below19": 0,
+   "winter_median": null,
+   "sharks_in_winter": 0,
+   "sharks_80_winter_days": 0,
+   "identical_records": 0,
+   "y0": 2010,
+   "y1": 2018
+  },
+  "clarence": {
+   "sharks": 23,
+   "shark_days": 1938,
+   "below19": 257,
+   "coldest_day": 16.2,
+   "median_length_cm": 180,
+   "with_length": 20,
+   "winter_days": 360,
+   "winter_below19": 231,
+   "winter_median": 18.6,
+   "sharks_in_winter": 7,
+   "sharks_80_winter_days": 4,
+   "identical_records": 2,
+   "y0": 2010,
+   "y1": 2014
+  },
+  "clarence_size": {
+   "small": {
+    "sharks": 13,
+    "with_winter_day": 8,
+    "with_20_winter_days": 7,
+    "days": 3006,
+    "winter_days": 615
+   },
+   "large": {
+    "sharks": 15,
+    "with_winter_day": 0,
+    "with_20_winter_days": 0,
+    "days": 45,
+    "winter_days": 0
+   }
+  }
+ },
+ "size": {
+  "sharks_with_length": 114,
+  "sharks_without_length": 18,
+  "main": {
+   "by_shark": {
+    "small": {
+     "sharks": 14,
+     "winter_sharks": 9
+    },
+    "mid": {
+     "sharks": 11,
+     "winter_sharks": 7
+    },
+    "large": {
+     "sharks": 89,
+     "winter_sharks": 12
+    }
+   },
+   "by_day": {
+    "small": {
+     "days": 1862,
+     "winter_days": 387,
+     "winter_pct": 20.8
+    },
+    "mid": {
+     "days": 1790,
+     "winter_days": 236,
+     "winter_pct": 13.2
+    },
+    "large": {
+     "days": 14449,
+     "winter_days": 231,
+     "winter_pct": 1.6
+    }
+   },
+   "p": 0.00013
+  },
+  "checks": {
+   "gulf_curve": {
+    "by_shark": {
+     "small": {
+      "sharks": 14,
+      "winter_sharks": 9
+     },
+     "mid": {
+      "sharks": 11,
+      "winter_sharks": 7
+     },
+     "large": {
+      "sharks": 89,
+      "winter_sharks": 12
+     }
+    },
+    "by_day": {
+     "small": {
+      "days": 2273,
+      "winter_days": 435,
+      "winter_pct": 19.1
+     },
+     "mid": {
+      "days": 1906,
+      "winter_days": 268,
+      "winter_pct": 14.1
+     },
+     "large": {
+      "days": 13922,
+      "winter_days": 151,
+      "winter_pct": 1.1
+     }
+    },
+    "p": 0.00013
+   },
+   "first_two_years_no_curve": {
+    "by_shark": {
+     "small": {
+      "sharks": 13,
+      "winter_sharks": 8
+     },
+     "mid": {
+      "sharks": 11,
+      "winter_sharks": 7
+     },
+     "large": {
+      "sharks": 81,
+      "winter_sharks": 6
+     }
+    },
+    "by_day": {
+     "small": {
+      "days": 2426,
+      "winter_days": 465,
+      "winter_pct": 19.2
+     },
+     "mid": {
+      "days": 653,
+      "winter_days": 33,
+      "winter_pct": 5.1
+     },
+     "large": {
+      "days": 5100,
+      "winter_days": 99,
+      "winter_pct": 1.9
+     }
+    },
+    "p": 2.5e-05
+   },
+   "without_clarence": {
+    "by_shark": {
+     "small": {
+      "sharks": 6,
+      "winter_sharks": 4
+     },
+     "mid": {
+      "sharks": 11,
+      "winter_sharks": 5
+     },
+     "large": {
+      "sharks": 88,
+      "winter_sharks": 12
+     }
+    },
+    "by_day": {
+     "small": {
+      "days": 1,
+      "winter_days": 0,
+      "winter_pct": 0.0
+     },
+     "mid": {
+      "days": 473,
+      "winter_days": 26,
+      "winter_pct": 5.5
+     },
+     "large": {
+      "days": 14136,
+      "winter_days": 206,
+      "winter_pct": 1.5
+     }
+    },
+    "p": 0.0071
+   }
+  },
+  "aging": [
+   {
+    "tagged_cm": 82.0,
+    "winters": [
+     {
+      "year": 2011,
+      "winter_days": 66,
+      "est_cm": 103
+     },
+     {
+      "year": 2012,
+      "winter_days": 23,
+      "est_cm": 133
+     }
+    ],
+    "last_seen": "2012-09-05",
+    "est_cm_last": 137
+   },
+   {
+    "tagged_cm": 88.0,
+    "winters": [
+     {
+      "year": 2011,
+      "winter_days": 72,
+      "est_cm": 108
+     },
+     {
+      "year": 2012,
+      "winter_days": 35,
+      "est_cm": 138
+     }
+    ],
+    "last_seen": "2012-11-01",
+    "est_cm_last": 146
+   },
+   {
+    "tagged_cm": 91.0,
+    "winters": [
+     {
+      "year": 2011,
+      "winter_days": 64,
+      "est_cm": 111
+     },
+     {
+      "year": 2012,
+      "winter_days": 22,
+      "est_cm": 140
+     }
+    ],
+    "last_seen": "2012-09-05",
+    "est_cm_last": 144
+   },
+   {
+    "tagged_cm": 101.0,
+    "winters": [
+     {
+      "year": 2011,
+      "winter_days": 43,
+      "est_cm": 123
+     },
+     {
+      "year": 2012,
+      "winter_days": 17,
+      "est_cm": 150
+     },
+     {
+      "year": 2013,
+      "winter_days": 48,
+      "est_cm": 174
+     },
+     {
+      "year": 2016,
+      "winter_days": 5,
+      "est_cm": 226
+     },
+     {
+      "year": 2017,
+      "winter_days": 9,
+      "est_cm": 239
+     },
+     {
+      "year": 2018,
+      "winter_days": 2,
+      "est_cm": 249
+     }
+    ],
+    "last_seen": "2019-11-19",
+    "est_cm_last": 261
+   },
+   {
+    "tagged_cm": 128.0,
+    "winters": [
+     {
+      "year": 2011,
+      "winter_days": 48,
+      "est_cm": 147
+     },
+     {
+      "year": 2012,
+      "winter_days": 1,
+      "est_cm": 171
+     },
+     {
+      "year": 2013,
+      "winter_days": 53,
+      "est_cm": 192
+     },
+     {
+      "year": 2016,
+      "winter_days": 7,
+      "est_cm": 237
+     },
+     {
+      "year": 2017,
+      "winter_days": 5,
+      "est_cm": 248
+     }
+    ],
+    "last_seen": "2019-03-15",
+    "est_cm_last": 263
+   },
+   {
+    "tagged_cm": 140.0,
+    "winters": [
+     {
+      "year": 2011,
+      "winter_days": 39,
+      "est_cm": 158
+     },
+     {
+      "year": 2012,
+      "winter_days": 8,
+      "est_cm": 180
+     },
+     {
+      "year": 2013,
+      "winter_days": 35,
+      "est_cm": 200
+     },
+     {
+      "year": 2016,
+      "winter_days": 7,
+      "est_cm": 242
+     },
+     {
+      "year": 2017,
+      "winter_days": 8,
+      "est_cm": 252
+     }
+    ],
+    "last_seen": "2018-05-29",
+    "est_cm_last": 260
+   },
+   {
+    "tagged_cm": 144.0,
+    "winters": [
+     {
+      "year": 2011,
+      "winter_days": 16,
+      "est_cm": 159
+     },
+     {
+      "year": 2012,
+      "winter_days": 1,
+      "est_cm": 181
+     },
+     {
+      "year": 2013,
+      "winter_days": 14,
+      "est_cm": 201
+     }
+    ],
+    "last_seen": "2020-03-10",
+    "est_cm_last": 273
+   }
+  ],
+  "sites": {
+   "IMOS-ATF Sydney Gate": {
+    "large": 73,
+    "mid": 1
+   },
+   "IMOS-ATF Coffs Harbour line": {
+    "large": 66,
+    "small": 3,
+    "mid": 5
+   },
+   "NSW DPIRD (Tagged shark listening stations)": {
+    "small": 2,
+    "large": 47,
+    "mid": 6
+   },
+   "IMOS-ATF Bondi Line": {
+    "large": 54
+   },
+   "IMOS-ATF CTBAR": {
+    "large": 48
+   },
+   "Sydney Harbour": {
+    "large": 47
+   },
+   "NSW DPI VR4G (Shark listening Stations)": {
+    "small": 5,
+    "large": 27,
+    "mid": 5
+   },
+   "IMOS-ATF Seal Rocks Line": {
+    "large": 30
+   },
+   "Clarence River": {
+    "large": 10,
+    "small": 13,
+    "mid": 6
+   },
+   "OAR (Sydney)": {
+    "large": 28
+   }
   }
  },
  "california": {
