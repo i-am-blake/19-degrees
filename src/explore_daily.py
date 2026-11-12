@@ -13,9 +13,13 @@ Tiger sharks are run the same way as a comparison."""
 import csv, gzip, io, json, os, sys, time, urllib.request, collections
 from concurrent.futures import ThreadPoolExecutor
 SRC, OUT = sys.argv[1:3]
-GROUPS = {"africa": ["obis_ponta_do_ouro.csv.gz", "obis_south_africa_bull.csv.gz", "obis_mozambique_bull.csv.gz", "obis_south_africa_tiger.csv.gz", "obis_mozambique_tiger.csv.gz"],
-          "us": ["obis_us_east_gulf_bull.csv.gz", "obis_us_east_gulf_tiger.csv.gz"]}
-SPECIES = {"Carcharhinus leucas": "bull", "Galeocerdo cuvier": "tiger"}
+# White sharks: do they keep to the same band of water temperature as they move with the seasons?
+# Written down before the data was fetched: if they follow temperature, the water at their records should change far less
+# between summer and winter than the water at a fixed place does. Compare the summer-to-winter gap in median temperature at
+# the records with the gap in the baseline (the same cells, mid-month, the same years). Supports it if the records' gap is
+# under half the baseline's gap.
+GROUPS = {"us_east": ["obis_us_east_gulf_white.csv.gz"], "us_west": ["obis_us_west_white.csv.gz"], "africa": ["obis_south_africa_white.csv.gz", "obis_mozambique_white.csv.gz"]}
+SPECIES = {"Carcharodon carcharias": "white"}
 E_ = "https://coastwatch.pfeg.noaa.gov/erddap/griddap/ncdcOisst21Agg_LonPM180.csv?sst"
 q = lambda v: round(float(v) * 4) / 4
 
