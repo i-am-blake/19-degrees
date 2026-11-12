@@ -33,12 +33,12 @@ def grid(date, la0, la1, lo0, lo1):
 NEAR = [(0, 0), (0, .25), (0, -.25), (.25, 0), (-.25, 0), (.25, .25), (-.25, .25), (.25, -.25), (-.25, -.25), (0, .5), (0, -.5), (.5, 0), (-.5, 0)]
 def at(g, c):
     """Temperature at the cell, or the nearest ocean cell within 0.5 degrees. OISST cell centres sit on .125/.375/.625/.875."""
-    for dl, dn in NEAR:
+    for i, (dl, dn) in enumerate(NEAR):
         for k in ((c[0] + dl + .125, c[1] + dn + .125), (c[0] + dl - .125, c[1] + dn - .125), (c[0] + dl + .125, c[1] + dn - .125), (c[0] + dl - .125, c[1] + dn + .125)):
-            if k in g: return g[k]
+            if k in g: return g[k], i
     return None
 
-res = {}
+res = {}; META = {}
 for g, fs in GROUPS.items():
     days = collections.defaultdict(set)   # species -> {(cell, date)}
     for f in fs:
@@ -47,8 +47,9 @@ for g, fs in GROUPS.items():
         for x in csv.DictReader(gzip.open(p, "rt", encoding="utf-8")):
             sp = SPECIES.get(x["scientificName"].strip()); d = (x.get("eventDate") or "")[:10]
             if not sp or len(d) != 10 or d < "1981-09-01" or not x.get("decimalLatitude") or not x.get("decimalLongitude"): continue
-            try: days[sp].add(((q(x["decimalLatitude"]), q(x["decimalLongitude"])), d))
-            except ValueError: pass
+            try: k = ((q(x["decimalLatitude"]), q(x["decimalLongitude"])), d)
+            except ValueError: continue
+            days[sp].add(k); m = META.setdefault((sp,) + k, [0, set(), set()]); m[0] += 1; m[1].add(x.get("dataset_id") or ""); m[2].add(x.get("basisOfRecord") or "")
     bydate = collections.defaultdict(set)
     for sp in days:
         for c, d in days[sp]: bydate[d].add(c)
@@ -67,6 +68,8 @@ for g, fs in GROUPS.items():
         for c, d in sd:
             v = at(got[d], c) if got.get(d) else None
             if v is None: nodata += 1; continue
+            v, hop = v; m = META[(sp, c, d)]
+            print("ROW", g, sp, c[0], c[1], d, v, hop, m[0], "|".join(sorted(m[1])), "|".join(sorted(m[2])), sep=",")
             temps.append(v)
             if v < 19: cold.append((v, d, c))
         cy = collections.defaultdict(set)
@@ -77,7 +80,8 @@ for g, fs in GROUPS.items():
             for c, ys in cy.items():
                 if d[:4] in ys:
                     v = at(gr, c)
-                    if v is not None: avail += 1; below += v < 19
+                    if v is not None:
+                        avail += 1; below += v[0] < 19; print("BASE", g, sp, c[0], c[1], d, v[0], sep=",")
         temps.sort(); n = len(temps)
         res[g][sp] = dict(shark_days=n, no_temperature=nodata, below19=len(cold), below19_pct=round(100 * len(cold) / n, 2) if n else None,
                           min=temps[0] if n else None, p01=temps[int(n * .01)] if n else None, median=temps[n // 2] if n else None,
@@ -89,3 +93,10 @@ for g, fs in GROUPS.items():
     print("PART " + json.dumps({g: res[g]}), flush=True)
 json.dump(res, open(OUT, "w"), indent=1)
 print("RESULT " + json.dumps(res))
+
+ids = sorted({i for m in META.values() for i in m[1] if i})
+for i in ids:
+    try:
+        t = json.load(urllib.request.urlopen(f"https://api.obis.org/v3/dataset/{i}", timeout=60))["results"][0]
+        print("DATASET", i, (t.get("title") or "")[:160], "|", (t.get("node_name") or ""), sep=",")
+    except Exception as e: print("DATASET", i, "lookup failed", str(e)[:60], sep=",")
