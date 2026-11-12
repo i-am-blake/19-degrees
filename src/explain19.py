@@ -177,7 +177,7 @@ def block(cid, D, H):
         rows = [("Grade", lab), ("Why a first look", why + " A first look describes the data; it doesn't test the claim."), ("What would change it", nxt)]
     else:
         e = EXPLAIN[cid](D)
-        rows = [("Grade", lab), ("What was tested", e["tested"]), ("What came out", e["found"]), ("Why this grade", e["why"]), ("What would change it", e["next"])]
+        rows = [("Grade", lab), ("Evidence", G.evidence(cid, D)), ("What was tested", e["tested"]), ("What came out", e["found"]), ("Why this grade", e["why"]), ("What would change it", e["next"])]
     hist = H.get(cid, [])
     if len(hist) > 1:
         rows.append(("How it has changed", '<ul class="hist">' + "".join(f'<li><b>{fmt_date(x["date"])}: {x["label"]}.</b> {x["why"]}</li>' for x in hist) + "</ul>"))

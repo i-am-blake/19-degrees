@@ -154,6 +154,14 @@ for a in re.finditer(r'<section class="wts" id="wts-(c\d+)"([^>]*)>(.*?)</sectio
     except (KeyError, TypeError): continue
     check(f"{a[1].upper()} summary", a[3] == (f"<h5>Where this stands</h5><dl>{body}</dl>" if body else ""), True)
 
+# Every tested claim names its evidence tier, and no grade sits above what that tier allows
+import grades19 as _G
+for cid in _G.TESTS:
+    check(f"{cid.upper()} has an evidence tier", cid in _G.EVID, True)
+    try: st, lab = _G.grade(cid, D)
+    except (KeyError, TypeError): continue
+    if cid in _G.EVID and min(_G.EVID[cid][0]) >= 4: check(f"{cid.upper()} grade is within its evidence tier", lab != _G.LABEL["supports"] and st not in ("supported", "strong"), True)
+
 # Claim C23 (california19.py), when present
 if "california" in D:
     ca = D["california"]; e0, e3, t = ca["eras"][0], ca["eras"][-1], ca["test"]
