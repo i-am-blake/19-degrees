@@ -611,9 +611,6 @@ table.dt thead th{color:var(--muted);font-weight:600}
 .cfilter button{font:inherit;font-size:14px;font-weight:600;color:var(--ink);background:transparent;border:1px solid var(--rule);border-radius:999px;padding:7px 12px;cursor:pointer}
 .cfilter button b{font-weight:500;color:var(--muted);margin-left:4px}
 /* evidence tier marker on a tested card: filled for evidence from tags, outlined for the rest */
-.ctier{margin-left:auto;font-family:var(--f-data);font-size:12px;letter-spacing:.06em;text-transform:uppercase;border:1px solid var(--rule);color:var(--muted);padding:3px 8px}
-.ctier[data-t="1"],.ctier[data-t="2"]{border-color:var(--warm);color:var(--warm)}
-.ctier + .cstat{margin-left:0}
 .cfcount{margin:8px 0 0;font-size:14px;color:var(--muted);min-height:1.4em}
 @media (pointer:coarse){.cfilter button{min-height:44px;padding:9px 14px}}
 .cfilter button{border-color:rgba(232,241,242,.45)}
@@ -2188,11 +2185,6 @@ try{const R=D.rain, el=document.getElementById("rainC6");
 <script>
 /* researchers tab: claim filters, open a claim from a link, highlight the jump bar */
 try{const cl=[...document.querySelectorAll("article.claim")], fb=[...document.querySelectorAll(".cfilter button[data-f]")];
-  // evidence tier: read from each tested card's "Evidence" line, shown as a marker in the card header
-  const TN={1:"measured at the shark",2:"tracked by tag",3:"catch or survey with effort recorded",4:"stand-in",5:"records with no count of people",6:"projection"};
-  cl.forEach(c=>{const dt=[...c.querySelectorAll(".wts dt")].find(d=>d.textContent==="Evidence"),m=dt&&dt.nextElementSibling.textContent.match(/tier (\d)/i);if(!m)return;
-    c.dataset.tier=m[1];const s=document.createElement("span");s.className="ctier";s.dataset.t=m[1];s.textContent="Tier "+m[1];s.setAttribute("aria-label","Evidence tier "+m[1]+" of 6, "+TN[m[1]]);
-    const st=c.querySelector(".chead .cstat");if(st)st.before(s);});
   let F="all";
   const cnt=document.querySelector(".cfcount");
   const apply=()=>{cl.forEach(c=>c.hidden=!(F==="all"||c.dataset.status===F));
