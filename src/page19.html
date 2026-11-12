@@ -35,9 +35,9 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--warm);outline-offse
 .num{font-family:var(--f-data);font-variant-numeric:tabular-nums}
 
 /* mark bar: fin-over-19 mark, today's reading on the right */
-.bar{position:sticky;top:0;z-index:6;display:flex;align-items:center;justify-content:space-between;gap:16px;padding:var(--lpad) calc(var(--lpad) + env(safe-area-inset-right,0px)) var(--lpad) calc(var(--lpad) + env(safe-area-inset-left,0px));margin:0 calc(50% - 50vw);background:#0A2F4E;transition:background .25s}
+.bar{position:sticky;top:0;z-index:6;display:flex;align-items:center;justify-content:space-between;gap:16px;padding:var(--lpad) calc(var(--lpad) + env(safe-area-inset-right,0px)) var(--lpad) calc(var(--lpad) + env(safe-area-inset-left,0px));margin:0 calc(50% - 50vw);background:linear-gradient(180deg,#3395BE,#2A86AE);transition:background .25s}
 /* on Home, at the top of the page, the nav sits over the photo: no fill, no wave, until the page scrolls */
-.wrap:has(#panel-home:not([hidden])) .bar:not(.stuck){background:linear-gradient(180deg,rgba(7,36,60,.55),rgba(7,36,60,0))}
+.wrap:has(#panel-home:not([hidden])) .bar:not(.stuck){background:linear-gradient(180deg,rgba(7,36,60,.55),rgba(7,36,60,0));background-color:transparent}
 .barwave{transition:opacity .25s}
 .wrap:has(#panel-home:not([hidden])) .bar:not(.stuck) .barwave{opacity:0}
 .barwave{position:absolute;left:0;right:0;top:100%;height:28px;overflow:hidden;pointer-events:none}
@@ -53,9 +53,17 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--warm);outline-offse
 
 /* hero: the hook (near the surface the water is lighter, so secondary text is lighter too) */
 .hero{--muted:#B4CDD8;--cold:#7CC7F0;--warm:#F5B061}
-.cardhero{position:relative;left:50%;transform:translateX(-50%);width:100vw;line-height:0;margin:calc(-1 * var(--barh,var(--surf-h))) 0 0;-webkit-mask-image:linear-gradient(to bottom,#000 82%,transparent);mask-image:linear-gradient(to bottom,#000 82%,transparent)}
+.cardhero{position:relative;left:50%;transform:translateX(-50%);width:100vw;line-height:0;overflow:hidden;margin:calc(-1 * var(--barh,var(--surf-h))) 0 0;-webkit-mask-image:linear-gradient(to bottom,#000 80%,transparent);mask-image:linear-gradient(to bottom,#000 80%,transparent)}
 .cardhero img{display:block;width:100%;height:auto;max-width:none}
-.cardhero + .hero{padding-top:8px}
+/* on short screens, trim some sky so the headline and buttons stay on the first screen */
+@media (min-width:641px){.cardhero img{margin-top:calc(-1 * clamp(0px,44.2vw + 230px - 100svh,7.5vw))}}
+.cardhero + .hero{position:relative;margin-top:-17.5vw;padding-top:0}
+/* */.cardhero + .hero .state,.cardhero + .hero .hcta{text-align:center;justify-content:center}
+.cardhero + .hero .state{font-size:clamp(32px,4.7vw,60px);text-shadow:0 2px 18px rgba(3,22,40,.5)}
+.cardhero + .hero .state span{display:block;color:#F7941D}
+.cardhero + .hero .hcta{margin:0 0 36px}
+@media (min-width:641px) and (max-height:700px){.cardhero img{margin-top:calc(-1 * clamp(0px,44.2vw + 230px - 100svh,8.5vw))}.cardhero + .hero{margin-top:-20vw}.cardhero + .hero .state{font-size:clamp(30px,3.9vw,50px)}}
+@media (max-width:640px){.cardhero + .hero{margin-top:-41vw}.cardhero + .hero .state{font-size:clamp(30px,9.4vw,40px)}}
 .hero{padding-block:44px 44px;display:grid;gap:20px;border-bottom:1px solid var(--rule)}
 .state{font-family:var(--f-display);font-weight:800;font-size:clamp(38px,5.6vw,68px);line-height:.96;letter-spacing:-.035em;margin:0;text-wrap:balance}
 .lede{font-size:clamp(20px,2.8vw,28px);line-height:1.35;margin:0;text-wrap:pretty}
@@ -174,7 +182,7 @@ h2{font-family:var(--f-display);font-weight:700;font-size:clamp(26px,4.4vw,44px)
 
 /* the ocean surface at the top of the page */
 .surface{position:absolute;inset:0 0 auto 0;height:var(--surf-h);pointer-events:none;z-index:0;overflow:hidden;
-  background:#0A2F4E}
+  background:linear-gradient(180deg,#3395BE 0,#2F8FB8 45%,#2A86AE 100%)}
 .surface svg{position:absolute;left:0;bottom:-1px;width:100%;height:36px}
 /* the logo sits with equal space above it, to its left, and below it to the waterline (the wave crest is ~18px above the band's bottom) */
 :root{--lpad:24px;--logo-h:clamp(31px,1.06vw + 25.5px,39px);--surf-h:calc(var(--lpad) * 2 + var(--logo-h) + 18px)}
@@ -727,19 +735,19 @@ section[aria-labelledby="h-q"] .cards.qs{grid-template-columns:repeat(2,minmax(0
     <button type="button" role="tab" id="tab-research" aria-controls="panel-research" aria-selected="false" tabindex="-1">Researchers</button>
     <button type="button" role="tab" id="tab-media" aria-controls="panel-media" aria-selected="false" tabindex="-1">News and media</button>
   </div><div class="menuextra"><a class="donatelink" data-from="menu" href="https://ko-fi.com/19degrees" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M12 20.5s-7.5-4.4-7.5-10.2A4.3 4.3 0 0 1 12 7.6a4.3 4.3 0 0 1 7.5 2.7c0 5.8-7.5 10.2-7.5 10.2z"/></svg>Donate</a></div></div></nav><a class="supporttop donatelink" data-from="nav" href="https://ko-fi.com/19degrees" target="_blank" rel="noopener" aria-label="Donate to 19 Degrees on Ko-fi (opens in a new tab)"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M12 20.5s-7.5-4.4-7.5-10.2A4.3 4.3 0 0 1 12 7.6a4.3 4.3 0 0 1 7.5 2.7c0 5.8-7.5 10.2-7.5 10.2z"/></svg><span class="stl">Donate</span></a><div class="sharetop"><button type="button" class="sharetopbtn" aria-expanded="false" aria-controls="shareTopGrid" aria-label="Share this page"><svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="18" cy="5" r="2.6"/><circle cx="6" cy="12" r="2.6"/><circle cx="18" cy="19" r="2.6"/><path d="M8.3 10.8l7.4-4.4M8.3 13.2l7.4 4.4"/></svg><span class="stl">Share</span></button><div class="sharegrid drop" id="shareTopGrid" hidden role="group" aria-label="Share on"><p class="sgh">Share 19 Degrees</p><a data-net="linkedin">LinkedIn</a><a data-net="x">X</a><a data-net="facebook">Facebook</a><a data-net="whatsapp">WhatsApp</a><button type="button" class="sgcopy">Copy link</button></div></div>
-    <div class="barwave" aria-hidden="true"><svg viewBox="0 0 1200 12" preserveAspectRatio="none"><path d="M0,6 Q75,0.5 150,6 T300,6 T450,6 T600,6 T750,6 T900,6 T1050,6 T1200,6 L1200,0 L0,0 Z" fill="#0A2F4E"/><path d="M0,6 Q75,0.5 150,6 T300,6 T450,6 T600,6 T750,6 T900,6 T1050,6 T1200,6" fill="none" stroke="#FFFFFF" stroke-width="1.5" vector-effect="non-scaling-stroke"/></svg></div>
+    <div class="barwave" aria-hidden="true"><svg viewBox="0 0 1200 12" preserveAspectRatio="none"><path d="M0,6 Q75,0.5 150,6 T300,6 T450,6 T600,6 T750,6 T900,6 T1050,6 T1200,6 L1200,0 L0,0 Z" fill="#2A86AE"/><path d="M0,6 Q75,0.5 150,6 T300,6 T450,6 T600,6 T750,6 T900,6 T1050,6 T1200,6" fill="none" stroke="#FFFFFF" stroke-width="1.5" vector-effect="non-scaling-stroke"/></svg></div>
   </div>
 
 
 
   <div role="tabpanel" id="panel-home" aria-labelledby="tab-home">
-  <div class="cardhero"><picture><source media="(max-width:640px)" srcset="share/hero-tall.jpg" width="1080" height="1199"><img src="share/hero-wide.jpg" width="1200" height="740" alt="A large 19 half under the sea surface beside a shark fin. Bull sharks stop at 19°C. The ocean doesn't." fetchpriority="high"></picture></div>
+  <div class="cardhero"><picture><source media="(max-width:640px)" srcset="share/hero-tall.jpg" width="1080" height="1199"><img src="share/hero-wide.jpg" srcset="share/hero-wide.jpg 1200w, share/hero-wide-2400.jpg 2400w" sizes="100vw" width="1200" height="740" alt="A large 19 standing half under the sea surface, with a shark fin cutting the water beside it." fetchpriority="high"></picture></div>
   <header class="hero" id="home-top">
+    <h1 class="state">A warming ocean is redrawing <span>where sharks and people meet.</span></h1>
+    <p class="hcta"><a class="ctabtn" href="#story" data-tab="story">Read the story →</a> <a class="ghbtn" href="#h-agenda" data-tab="research">See the 42 claims</a></p>
     <div class="kicker">Advancing shark and climate research worldwide</div>
-    <h1 class="state">A warming ocean is redrawing where sharks and people meet.</h1>
     <p class="lede">Seas are warming on every coast. Sharks are turning up in new places and new seasons, and more people are in the water than ever.</p>
     <p class="sub">The evidence that could keep both safe is scattered across agencies, labs and countries. 19 Degrees brings it into one open harbor, tests every claim in public, and gives it away free. It starts on Australia's coast and is built to run on any coast in the world.</p>
-    <p class="hcta"><a class="ctabtn" href="#story" data-tab="story">Read the story →</a> <a class="ghbtn" href="#h-agenda" data-tab="research">See the 42 claims</a></p>
   </header>
 
   <section id="evidence" aria-labelledby="h-evidence">

@@ -64,7 +64,7 @@ cards_html["link-card.png"] = (1200, 630, f"""<style>body{{margin:0;width:1200px
 .big{{position:absolute;left:250px;top:-40px;font-family:'Bricolage Grotesque';font-weight:800;font-size:560px;line-height:1;letter-spacing:-.06em;color:#F4EFE4}}
 .st{{position:absolute;left:0;right:0;bottom:44px;text-align:center;font-family:'Bricolage Grotesque';font-weight:800;font-size:42px;letter-spacing:-.03em;color:#fff;margin:0}}.st span{{color:#FFC27A}}</style>
 <div class="big">19</div><svg width="1200" height="630" style="position:absolute;inset:0">{FIN}</svg>
-<p class="st">Bull sharks stop at 19°C. <span>The ocean doesn't.</span></p>""")
+<p class="st">A warming ocean is redrawing <span>where sharks and people meet.</span></p>""")
 
 # Load the page fonts by file too, so cards render the same wherever Chromium doesn't pick up installed .woff fonts
 _fd = next((d for d in (os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "fonts"), os.path.expanduser("~/.local/share/fonts"))
