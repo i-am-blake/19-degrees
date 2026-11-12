@@ -126,7 +126,7 @@ def chlC4(D):
     v = G.V(a["pct"] > 25, a["p"]); link = v == "supports"
     lead = {"supports": "bites follow greener water.", "leans": "bites lean toward greener water, not settled.",
             "none": "no clear link with greener water.", "other": "bites come in clearer water."}[v]
-    return (f'Early result: {lead} NASA ' + A("https://oceancolor.gsfc.nasa.gov/", "MODIS") + ' chlorophyll (plankton, the base of the baitfish food chain), 2003 to 2022: '
+    return (f'First look, on a related question (do bites fall in greener months?): {lead} NASA ' + A("https://oceancolor.gsfc.nasa.gov/", "MODIS") + ' chlorophyll (plankton, the base of the baitfish food chain), 2003 to 2022: '
             f'{a["greenest_quarter"]} of {a["n"]} Australian bites ({a["pct"]}%) came in a month in the greenest quarter for that place and time of year, against 25% by chance ({pf(a["p"])}); '
             f'white sharks {c["white"]["pct"]}%, bull sharks {c["bull"]["pct"]}%.' + (" Monthly satellite averages may be too coarse to see a bait run." if not link else ""))
 
@@ -158,7 +158,7 @@ def tigerC28(D):
 def upC29(D):
     u = D["upwelling"]; v = G.g_c29(D); p2 = G.binom2(u["strongest_quarter"], u["n"], 0.25)
     pos = "fewer than the quarter chance gives" if u["strongest_pct"] < 25 else "more than the quarter chance gives" if u["strongest_pct"] > 25 else "the quarter chance gives"
-    lead = {"supports": "supports it so far.", "leans": "leans toward it so far.", "none": "no clear link so far.", "other": "points the other way."}[v]
+    lead = {"supports": "supports it so far.", "leans": "leans toward it so far.", "none": "no clear link so far.", "other": "leans the other way."}[v]
     end = ("This agrees with Ryan et al.'s cooler-water finding from Australia. " if v == "supports" else
            "Ryan et al.'s cooler-water finding came from Australia and compared places, not days, so this doesn't rule it out there. ")
     return (f'Early result: {lead} Of {u["n"]} California white shark incidents since 1988, {u["strongest_quarter"]} ({u["strongest_pct"]}%) followed a week in the strongest-upwelling quarter for the latitude and season, '

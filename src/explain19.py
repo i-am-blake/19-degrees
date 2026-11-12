@@ -95,7 +95,8 @@ def e_c23(D):
 def e_c24(D):
     a = D["lunar"]["all"]; lo, hi = G.wilson(a["near"], a["n"])
     return t("Whether bites cluster around the full or new moon.",
-             f'{a["near"]} of {a["n"]} bites ({a["near_pct"]}%) came within 3.7 days of a full or new moon, where chance gives half. Tides showed no pattern either.',
+             f'{a["near"]} of {a["n"]} bites ({a["near_pct"]}%) came within 3.7 days of a full or new moon, where chance gives half. Tides showed no pattern either. '
+             + (lambda b: f'One group stands apart: of {b["n"]} bull shark bites at Réunion and New Caledonia, {b["near"]} ({b["near_pct"]}%) came near a full or new moon, so most fell around the quarter moons ({pv(b["p"])}). It is one of six groups looked at and a small one, so it is noted here as something to test, not as a finding.')(D["lunar"]["islands_bull"]),
              f'The card\'s own "rules it out" condition (bites spread evenly across the month) is met, and the 95% range, {100 * lo:.0f}% to {100 * hi:.0f}%, stops short of the 60% a 1.5-times effect would give. With this many bites, a moon effect worth acting on would have shown up.',
              "A much larger set of dated bites showing a clear cluster.")
 def e_c25(D):
@@ -141,10 +142,12 @@ def e_c29(D):
     u = D["upwelling"]; p = G.binom2(u["strongest_quarter"], u["n"], 0.25)
     return t("Whether cold upwelling brings white sharks close to shore in California.",
              f'{u["strongest_quarter"]} of {u["n"]} white shark incidents ({u["strongest_pct"]}%) followed a week of the strongest upwelling for the place and season, where chance gives 25%. ' + chance(p),
-             "Fewer incidents than chance, the opposite of the claim: \"points the other way\". It doesn't rule out the Australian finding, which compared places rather than days.",
+             "Fewer incidents than chance, the opposite of the claim. But strong upwelling off California means cold, windy water, so fewer people go in, and incident records can't tell fewer sharks from fewer people. Evidence of this kind reaches \"leans the other way\" at most. It doesn't rule out the Australian finding, which compared places rather than days.",
              "The same test on Australian coasts with upwelling records.")
 
-LOOK = {"c2": ("The number of tagged bull sharks heard south of Sydney rose, but so did the number of listening stations, and the public data shows only stations that heard something.", "The full listening-station history from NSW."),
+LOOK = {"c4": ("The claim is that the baitfish run has shifted later in autumn, and nothing here measures when the run happens. The chlorophyll result below asks a different question: whether bites fall in greener months.", "Monthly catch records for mullet and other baitfish off NSW over several decades."),
+        "c21": ("The result below rests on a handful of night-time bull shark bites, too few to test, and bites by hour are not catches by hour.", "Catch times from SMART drumlines, or a trial with lines set at dawn, dusk and overnight."),
+        "c2": ("The number of tagged bull sharks heard south of Sydney rose, but so did the number of listening stations, and the public data shows only stations that heard something.", "The full listening-station history from NSW."),
         "c7": ("Only 5 recent WA bites can be checked against the current's strength, too few for a test.", "More bites, or tag detections from WA's receivers."),
         "c9": ("The records show where the wounds were, not how long it took to stop the bleeding, so this can only describe the deaths.", "Coroner findings and ambulance timelines, through a university partner."),
         "c20": ("Without past net and drumline locations, any comparison would be against today's gear. This describes the counts only.", "Queensland's gear locations by year since 1962."),

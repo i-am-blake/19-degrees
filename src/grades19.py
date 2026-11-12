@@ -6,8 +6,9 @@ Stages: Open -> Not testable yet -> First look -> Early result -> Supported -> S
                         p < 0.20), no clear link (p >= 0.20 or tests disagree), points the other way (opposite, p < 0.05).
   Main test and checks  the claim's main test sets the verdict; further tests can lower it (supports -> leans) but never raise it.
   Evidence tiers        each tested claim names the kind of data it rests on (EVID below): 1 measured at the shark,
-                        2 continuous listening, 3 catch or survey with effort recorded, 4 stand-in, 5 no denominator
-                        (bites, incidents, sightings), 6 projection. Tiers 4 to 6 reach "leans toward it" at most.
+                        2 tracked by tag (detections on fixed receivers), 3 catch or survey with effort recorded, 4 stand-in, 5 no denominator
+                        (bites, incidents, sightings), 6 projection. Tiers 4 to 6 reach "leans toward it" at most, and
+                        "leans the other way" at most when the claim is about sharks rather than the records themselves.
   Stand-ins             a test on a stand-in for the claim's measure (residents for beach visits, chlorophyll for baitfish)
                         reaches "leans toward it" at most.
   Supported / Strong    need a test set in advance plus a second dataset, region or method (Supported), or two or more
@@ -20,7 +21,8 @@ import math
 from statistics import NormalDist
 
 LABEL = {"supports": "Early result: supports it", "leans": "Early result: leans toward it",
-         "none": "Early result: no clear link", "other": "Early result: points the other way"}
+         "none": "Early result: no clear link", "other": "Early result: points the other way",
+         "leansother": "Early result: leans the other way"}
 STAGE = {"open": "Open", "nt": "Not testable yet", "look": "First look", "supported": "Supported", "strong": "Strong", "ruled": "Ruled out"}
 
 def V(ok, p):
@@ -102,27 +104,25 @@ def g_c28(D):
 def g_c29(D):
     u = D["upwelling"]; return V(u["strongest_pct"] > 25, binom2(u["strongest_quarter"], u["n"], 0.25))
 
-FIXED = {"c2": "look", "c7": "look", "c8": "nt", "c9": "look", "c20": "look", "c22": "look", "c30": "look",
+FIXED = {"c2": "look", "c4": "look", "c7": "look", "c8": "nt", "c9": "look", "c20": "look", "c21": "look", "c22": "look", "c30": "look",
          **{c: "open" for c in ("c10", "c11", "c12", "c13", "c14", "c15", "c17", "c27", "c31", "c32", "c33", "c34", "c35", "c36", "c37", "c38", "c39", "c40", "c41", "c42")}}
-TESTS = {"c1": g_c1, "c3": g_c3, "c4": g_c4, "c5": g_c5, "c6": g_c6, "c16": g_c16, "c18": g_c18, "c19": g_c19, "c21": g_c21,
+TESTS = {"c1": g_c1, "c3": g_c3, "c5": g_c5, "c6": g_c6, "c16": g_c16, "c18": g_c18, "c19": g_c19,
          "c23": g_c23, "c24": g_c24, "c25": g_c25, "c26": g_c26, "c28": g_c28, "c29": g_c29, "c43": g_c43}
 
 # Evidence tiers: what kind of data a result rests on, strongest first. The strongest tier a claim has sets how high its
 # grade can go: tiers 1 and 2 up to Strong, tier 3 up to Supported, tiers 4 to 6 no higher than "leans toward it".
-TIER = {1: "measured at the shark", 2: "continuous listening", 3: "catch or survey with effort recorded",
+TIER = {1: "measured at the shark", 2: "tracked by tag", 3: "catch or survey with effort recorded",
         4: "stand-in", 5: "no denominator", 6: "projection"}
 CEILING = {1: "Strong", 2: "Strong", 3: "Supported", 4: 'Early result: leans toward it', 5: 'Early result: leans toward it', 6: 'Early result: leans toward it'}
 BITES = "Bite records, which follow where and when people are in the water"
 EVID = {
  "c1": ((3, 4), lambda D: "Published catch per unit of effort (Banaghan et al. 2025). This site's own figure is share of catch, a stand-in."),
  "c3": ((6,), lambda D: "Climate model projections. The grade follows the share of models that agree."),
- "c4": ((4, 5), lambda D: BITES + ", against satellite chlorophyll, a stand-in for baitfish."),
  "c5": ((3, 5), lambda D: "White sharks caught in Queensland shark-control gear, where the gear in the water is known, and bite records."),
  "c6": ((3, 5), lambda D: BITES + ", against rainfall (main test). Queensland shark-control catches against river flow (check)."),
  "c16": ((2,), lambda D: f'{D["imos"]["c16"]["sharks"]} tagged sharks, 2010 to {D["imos"]["c16"]["recent_to"]}. Receivers changed over the period, and the trend fades at long-running stations.'),
  "c18": ((5,), lambda D: "Bite records per coastal resident, a stand-in for beach visits."),
  "c19": ((5,), lambda D: BITES + ", against hot days and marine heatwaves."),
- "c21": ((5,), lambda D: "Time of day in bite records, bull sharks against other species. No drumline catch by hour is public."),
  "c23": ((5,), lambda D: "Incident records by period, with no count of beach visits."),
  "c24": ((5,), lambda D: BITES + ", against the moon's cycle."),
  "c25": ((1, 4), lambda D: f'Temperature tags on {D["tagtemp"]["sharks"]} bull sharks in Australia and {D["tags_sa"]["sharks"]} in South Africa. Satellite temperature at {D["daily"]["us"]["bull"]["shark_days"] + D["daily"]["africa"]["bull"]["shark_days"]:,} record-days on two more coasts, a stand-in for the water at the shark.'),
@@ -131,6 +131,9 @@ EVID = {
  "c29": ((5,), lambda D: "Incident records against upwelling strength."),
  "c43": ((2,), lambda D: f'{D["size"]["sharks_with_length"]} tagged sharks with a length at tagging. Small sharks were tracked through winter in one river only.'),
 }
+# Claims that are about the bite or incident records themselves (where incidents are, when bites fall), not about what
+# sharks do. For these, records with no count of people are the right measure, so a clear opposite result stands.
+ABOUT_RECORDS = {"c19", "c23", "c24"}
 def evidence(cid, D):
     """The 'Evidence' line on a tested card: tier, what it rests on, and how high this kind of evidence can go."""
     tiers, rests = EVID[cid]; names = " and ".join(f"tier {t} ({TIER[t]})" for t in tiers)
@@ -141,4 +144,5 @@ def grade(cid, D):
     if cid in FIXED: s = FIXED[cid]; return s, STAGE[s]
     v = TESTS[cid](D)
     if v == "supports" and min(EVID[cid][0]) >= 4: v = "leans"   # the evidence tier caps the grade
+    if v == "other" and min(EVID[cid][0]) >= 4 and cid not in ABOUT_RECORDS: v = "leansother"   # and caps it the other way too
     return ("ruled", STAGE["ruled"]) if v == "ruled" else ("early", LABEL[v])
