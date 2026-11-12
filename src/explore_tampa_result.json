@@ -1,0 +1,9 @@
+{
+ "dataset": {"id": "c5e06e5d-7775-4df2-a24f-18babe51fc28", "title": "BTSNP Tags and Array- Natal philopatry in blacktip sharks", "source": "FACT Network and Havenworth Coastal Conservation, via the Ocean Tracking Network OBIS IPT", "license": "CC BY 4.0", "citation": "Gardiner, J. 2012. Natal philopatry in blacktip sharks.",
+  "species_records": {"Carcharhinus leucas": 131170, "Carcharhinus limbatus": 58188, "Rhinoptera bonasus": 15099, "Carcharhinus acronotus": 13367, "Sphyrna mokarran": 4227, "Sphyrna tiburo": 212, "Pristis pectinata": 12, "Sphyrna lewini": 2}},
+ "bull_sharks": {"tagged_animals": 52, "with_a_winter_day": 34, "with_30_or_more_winter_days": 23, "seen_in_2_or_more_winters": 21, "where": "receivers in the Manatee River at Bradenton, Florida (27.51-27.53N, 82.43-82.59W)", "detection_days": 1694, "first": "2018-09-25", "last": "2025-12-06"},
+ "gauges": {"Port Manatee (8726384)": {"days": 1530, "below19": 328, "below17": 153, "below15": 47, "min": 9.6, "satellite_minus_gauge_mean": 0.1},
+            "St Petersburg (8726520)": {"days": 1601, "below19": 275, "below17": 98, "below15": 19, "min": 12.08, "satellite_minus_gauge_mean": 0.0}},
+ "nov_to_mar_days_with_a_detection_by_port_manatee_temperature": {"<15": [46, 48], "15-17": [103, 104], "17-19": [160, 165], "19-21": [156, 185], "21+": [252, 304]},
+ "note": "Gauges are in the bay, not in the river beside the receivers. Water temperature: NOAA CO-OPS, daily mean of hourly readings."
+}
