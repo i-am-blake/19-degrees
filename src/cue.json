@@ -1,0 +1,228 @@
+{
+ "water": {
+  "sites": "Sydney Harbour",
+  "first": "1994-10-29",
+  "last": "2025-04-28",
+  "sample_days": 1392,
+  "cooling_c_per_day": 0.063
+ },
+ "main": {
+  "departures": 318,
+  "sharks": 82,
+  "years": 15,
+  "y0": 2010,
+  "y1": 2024,
+  "raw": {
+   "days_per_degree": -7.5,
+   "r": -0.51,
+   "p": 0.052,
+   "spearman": -0.26,
+   "spearman_p": 0.34
+  },
+  "detrended": {
+   "days_per_degree": -3.7,
+   "lo": -11.9,
+   "hi": 4.5,
+   "r": -0.24,
+   "p": 0.39
+  },
+  "spread": {
+   "with_temperature": 206,
+   "date_sd_days": 16.8,
+   "temp_sd_c": 1.16,
+   "temp_sd_as_days": 18.3,
+   "median_temp_at_departure": 21.6,
+   "median_date": "6 April"
+  },
+  "by_year": [
+   {
+    "year": 2010,
+    "n": 6,
+    "median_day": 67.5,
+    "autumn_c": 22.07
+   },
+   {
+    "year": 2011,
+    "n": 19,
+    "median_day": 87.0,
+    "autumn_c": 22.25
+   },
+   {
+    "year": 2012,
+    "n": 17,
+    "median_day": 101.0,
+    "autumn_c": 20.99
+   },
+   {
+    "year": 2013,
+    "n": 23,
+    "median_day": 107.0,
+    "autumn_c": 21.31
+   },
+   {
+    "year": 2014,
+    "n": 14,
+    "median_day": 106.5,
+    "autumn_c": 20.78
+   },
+   {
+    "year": 2015,
+    "n": 11,
+    "median_day": 95.0,
+    "autumn_c": 19.77
+   },
+   {
+    "year": 2016,
+    "n": 14,
+    "median_day": 97.0,
+    "autumn_c": 21.24
+   },
+   {
+    "year": 2017,
+    "n": 16,
+    "median_day": 105.0,
+    "autumn_c": 20.91
+   },
+   {
+    "year": 2018,
+    "n": 24,
+    "median_day": 101.5,
+    "autumn_c": 21.49
+   },
+   {
+    "year": 2019,
+    "n": 31,
+    "median_day": 95.0,
+    "autumn_c": 20.79
+   },
+   {
+    "year": 2020,
+    "n": 26,
+    "median_day": 102.0,
+    "autumn_c": 19.59
+   },
+   {
+    "year": 2021,
+    "n": 22,
+    "median_day": 96.0,
+    "autumn_c": 20.45
+   },
+   {
+    "year": 2022,
+    "n": 21,
+    "median_day": 106.0,
+    "autumn_c": 20.63
+   },
+   {
+    "year": 2023,
+    "n": 18,
+    "median_day": 101.5,
+    "autumn_c": 20.36
+   },
+   {
+    "year": 2024,
+    "n": 21,
+    "median_day": 114.0,
+    "autumn_c": 20.47
+   }
+  ]
+ },
+ "long_run": {
+  "departures": 189,
+  "sharks": 60,
+  "years": 11,
+  "y0": 2013,
+  "y1": 2024,
+  "raw": {
+   "days_per_degree": -0.4,
+   "r": -0.03,
+   "p": 0.94,
+   "spearman": -0.01,
+   "spearman_p": 0.98
+  },
+  "detrended": {
+   "days_per_degree": 1.9,
+   "lo": -8.8,
+   "hi": 12.7,
+   "r": 0.12,
+   "p": 0.73
+  },
+  "spread": {
+   "with_temperature": 130,
+   "date_sd_days": 17.7,
+   "temp_sd_c": 1.06,
+   "temp_sd_as_days": 16.8,
+   "median_temp_at_departure": 21.3,
+   "median_date": "7 April"
+  },
+  "by_year": [
+   {
+    "year": 2013,
+    "n": 12,
+    "median_day": 106.5,
+    "autumn_c": 21.31
+   },
+   {
+    "year": 2014,
+    "n": 11,
+    "median_day": 105.0,
+    "autumn_c": 20.78
+   },
+   {
+    "year": 2016,
+    "n": 9,
+    "median_day": 92.0,
+    "autumn_c": 21.24
+   },
+   {
+    "year": 2017,
+    "n": 12,
+    "median_day": 106.5,
+    "autumn_c": 20.91
+   },
+   {
+    "year": 2018,
+    "n": 17,
+    "median_day": 99.0,
+    "autumn_c": 21.49
+   },
+   {
+    "year": 2019,
+    "n": 23,
+    "median_day": 92.0,
+    "autumn_c": 20.79
+   },
+   {
+    "year": 2020,
+    "n": 18,
+    "median_day": 95.5,
+    "autumn_c": 19.59
+   },
+   {
+    "year": 2021,
+    "n": 18,
+    "median_day": 99.0,
+    "autumn_c": 20.45
+   },
+   {
+    "year": 2022,
+    "n": 15,
+    "median_day": 102.0,
+    "autumn_c": 20.63
+   },
+   {
+    "year": 2023,
+    "n": 14,
+    "median_day": 105.0,
+    "autumn_c": 20.36
+   },
+   {
+    "year": 2024,
+    "n": 16,
+    "median_day": 116.5,
+    "autumn_c": 20.47
+   }
+  ],
+  "stations": 9
+ }
+}
