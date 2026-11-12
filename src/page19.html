@@ -610,7 +610,6 @@ table.dt thead th{color:var(--muted);font-weight:600}
 .cfilter{display:flex;flex-wrap:wrap;gap:8px;margin:14px 0 4px}
 .cfilter button{font:inherit;font-size:14px;font-weight:600;color:var(--ink);background:transparent;border:1px solid var(--rule);border-radius:999px;padding:7px 12px;cursor:pointer}
 .cfilter button b{font-weight:500;color:var(--muted);margin-left:4px}
-.cfilter.efilter{margin-top:6px;align-items:center}.cfilter .flab{font-family:var(--f-data);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
 /* evidence tier marker on a tested card: filled for evidence from tags, outlined for the rest */
 .ctier{margin-left:auto;font-family:var(--f-data);font-size:12px;letter-spacing:.06em;text-transform:uppercase;border:1px solid var(--rule);color:var(--muted);padding:3px 8px}
 .ctier[data-t="1"],.ctier[data-t="2"]{border-color:var(--warm);color:var(--warm)}
@@ -1104,7 +1103,6 @@ section[aria-labelledby="h-q"] .cards.qs{grid-template-columns:repeat(2,minmax(0
 <tr><td>Ruled out</td><td>The card's own "rules it out" condition is met, and the 95% range excludes an effect worth acting on (a 1.5-times rise).</td></tr>
 </tbody></table><p><b>Reading a p-value.</b> It says how often chance alone would give a result at least this strong if there were no real effect: p = 0.05 is about 1 time in 20, p = 0.01 about 1 time in 100. Each card says it in those words too. Because this page runs many tests, a few with no real effect will pass p &lt; 0.05 by luck. That is why one pass earns only an "Early result", and why further checks can lower a grade.</p><p><b>What counts as a claim here.</b> Every claim has to pass three tests. It is about where, when or how often sharks and people meet, or what happens when they do. It names a decision someone actually makes. And it names what it is measured per. Good ocean science that fails the first test belongs to another project.</p><p><b>Measured per what.</b> Every card names what its test counts per: per drumline per day, per tagged shark, per beach visit, per month at the same place. A bare count over time can't tell more sharks from more fishing, more people in the water or more listening stations, so a test without a fair "per" can reach "leans toward it" at most.</p><p><b>Evidence tiers.</b> Results here rest on very different kinds of data, so each tested card has an "Evidence" line that names its tier and what it rests on. The strongest tier a claim has sets how high its grade can go.</p><table><thead><tr><th>Tier</th><th>Kind of evidence</th><th>Highest grade</th></tr></thead><tbody><tr><td>1</td><td>Measured at the shark: sensors on the tag</td><td>Strong</td></tr><tr><td>2</td><td>Tracked by tag: detections on fixed receivers, strongest when the receivers ran the whole period</td><td>Strong</td></tr><tr><td>3</td><td>Catch or survey with the effort recorded</td><td>Supported</td></tr><tr><td>4</td><td>Stand-in: satellite or monthly temperature at a record, share of catch, residents for beach visits</td><td>Leans toward it</td></tr><tr><td>5</td><td>No denominator: bites, incidents and sightings, which follow where people are</td><td>Leans toward it</td></tr><tr><td>6</td><td>Projection: climate models</td><td>Leans toward it</td></tr></tbody></table><p>Reaching Supported or Strong still needs a test set in advance and a second dataset, region or method, as above. A claim that is itself about bites, such as the moon, can still be ruled out on bite records.</p><p><b>Stand-ins.</b> When the data the claim names isn't public, a test may use a stand-in (share of catch for catch per drumline, people living on the coast for people on the beach). A stand-in can reach "leans toward it" at most.</p><p>The claim's main test sets the label; further tests can lower it but never raise it. "Early" means the test was chosen after seeing the data, which is true of every result so far, so none can be Supported or Strong yet. Records like these can't prove what causes what, so the top grade is Strong, never Proven.</p></div></details>
     <div class="cfilter" role="group" aria-label="Filter claims"><button type="button" data-f="all" aria-pressed="true">All <b></b></button><button type="button" data-f="early" aria-pressed="false">Early results <b></b></button><button type="button" data-f="ruled" aria-pressed="false">Ruled out <b></b></button><button type="button" data-f="look" aria-pressed="false">First look <b></b></button><button type="button" data-f="open" aria-pressed="false">Open <b></b></button><button type="button" data-f="nt" aria-pressed="false">Not testable yet <b></b></button></div>
-    <div class="cfilter efilter" role="group" aria-label="Filter tested claims by evidence"><span class="flab">Evidence</span><button type="button" data-t="all" aria-pressed="true">Any</button><button type="button" data-t="tag" aria-pressed="false">From tags<span class="vh">, tiers 1 and 2</span> <b></b></button><button type="button" data-t="effort" aria-pressed="false">Catch with effort<span class="vh">, tier 3</span> <b></b></button><button type="button" data-t="weak" aria-pressed="false">Stand-ins and records<span class="vh">, tiers 4 to 6</span> <b></b></button></div>
     <p class="cfcount" role="status" aria-live="polite"></p>
     <h3 class="cgroup">1. Where and when sharks are<span>Range and season</span></h3>
     <div class="claims">
@@ -2189,22 +2187,19 @@ try{const R=D.rain, el=document.getElementById("rainC6");
 
 <script>
 /* researchers tab: claim filters, open a claim from a link, highlight the jump bar */
-try{const cl=[...document.querySelectorAll("article.claim")], fb=[...document.querySelectorAll(".cfilter button[data-f]")], tb=[...document.querySelectorAll(".cfilter button[data-t]")];
+try{const cl=[...document.querySelectorAll("article.claim")], fb=[...document.querySelectorAll(".cfilter button[data-f]")];
   // evidence tier: read from each tested card's "Evidence" line, shown as a marker in the card header
   const TN={1:"measured at the shark",2:"tracked by tag",3:"catch or survey with effort recorded",4:"stand-in",5:"records with no count of people",6:"projection"};
   cl.forEach(c=>{const dt=[...c.querySelectorAll(".wts dt")].find(d=>d.textContent==="Evidence"),m=dt&&dt.nextElementSibling.textContent.match(/tier (\d)/i);if(!m)return;
     c.dataset.tier=m[1];const s=document.createElement("span");s.className="ctier";s.dataset.t=m[1];s.textContent="Tier "+m[1];s.setAttribute("aria-label","Evidence tier "+m[1]+" of 6, "+TN[m[1]]);
     const st=c.querySelector(".chead .cstat");if(st)st.before(s);});
-  const tgrp=c=>!c.dataset.tier?"":c.dataset.tier<3?"tag":c.dataset.tier==3?"effort":"weak";
-  let F="all",T="all";
+  let F="all";
   const cnt=document.querySelector(".cfcount");
-  const apply=()=>{cl.forEach(c=>c.hidden=!((F==="all"||c.dataset.status===F)&&(T==="all"||tgrp(c)===T)));
-    const n=cl.filter(c=>!c.hidden).length;if(cnt)cnt.textContent=F==="all"&&T==="all"?"":n?"Showing "+n+" of "+cl.length+" claims.":"No claims match both filters. Only tested claims have an evidence tier.";
+  const apply=()=>{cl.forEach(c=>c.hidden=!(F==="all"||c.dataset.status===F));
+    const n=cl.filter(c=>!c.hidden).length;if(cnt)cnt.textContent=F==="all"?"":"Showing "+n+" of "+cl.length+" claims.";
     document.querySelectorAll("#panel-research h3.cgroup").forEach(h=>{const g=h.nextElementSibling;h.hidden=g&&!g.querySelector("article.claim:not([hidden])");});};
   fb.forEach(b=>{const f=b.dataset.f;b.querySelector("b").textContent=f==="all"?cl.length:cl.filter(c=>c.dataset.status===f).length;
     b.addEventListener("click",()=>{fb.forEach(x=>x.setAttribute("aria-pressed",x===b?"true":"false"));F=f;apply();});});
-  tb.forEach(b=>{const t=b.dataset.t,n=b.querySelector("b");if(n)n.innerHTML=cl.filter(c=>tgrp(c)===t).length+'<span class="vh"> claims</span>';
-    b.addEventListener("click",()=>{tb.forEach(x=>x.setAttribute("aria-pressed",x===b?"true":"false"));T=t;apply();});});
   const openClaim=()=>{const h=(location.hash||"").slice(1),c=h&&document.getElementById(h);if(c&&c.matches("article.claim")){c.hidden=false;c.querySelector("details").open=true;}};
   openClaim();addEventListener("hashchange",openClaim);
   document.addEventListener("click",e=>{const a=e.target.closest('a[href^="#c"]');if(a){const c=document.getElementById(a.getAttribute("href").slice(1));if(c&&c.matches("article.claim"))setTimeout(()=>{c.hidden=false;c.querySelector("details").open=true;},0);}});
