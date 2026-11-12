@@ -297,15 +297,62 @@ def apply_grades(html, D):
         cid = m[1]
         try: st, lab = G.grade(cid, D)
         except (KeyError, TypeError): return m[0]  # data for this claim not built yet: keep the page as it is
-        return f'<article class="claim" id="{cid}" data-status="{st}">' + m[2] + f'<span class="{CLS[st]}">{lab}</span>'
+        return f'<article class="claim" id="{cid}" data-status="{st}">' + m[2] + f'<span class="{G.css(st, lab)}">{G.show(lab)}</span>'
     return re.sub(r'<article class="claim" id="(c\d+)" data-status="\w+">(.{0,240}?)<span class="cstat[^"]*">[^<]*</span>', one, html, flags=re.S)
+
+NEXT = ("open", "nt")
+def split_claims(html):
+    """Claims with a result come first, in their groups; claims still waiting for data follow, in the same groups."""
+    a = html.find('<h3 class="cgroup">')
+    if a < 0 or 'id="h-next"' in html: return html
+    end = html.index("\n  </section>", a)
+    region = html[a:end]
+    parts = re.split(r'(<h3 class="cgroup">.*?</h3>)', region, flags=re.S)[1:]
+    groups = [(parts[i], re.findall(r'<article class="claim" id="c\d+" data-status="(\w+)">.*?</article>', parts[i + 1], re.S),
+               re.findall(r'(<article class="claim" id="c\d+" data-status="\w+">.*?</article>)', parts[i + 1], re.S)) for i in range(0, len(parts), 2)]
+    def block(head, arts, cls):
+        return f'    {head}\n    <div class="{cls}">\n      ' + "\n      ".join(arts) + "\n    </div>\n" if arts else ""
+    done = "".join(block(h, [x for st, x in zip(sts, arts) if st not in NEXT], "claims") for h, sts, arts in groups)
+    wait = "".join(block(h, [x for st, x in zip(sts, arts) if st in NEXT], "claims next") for h, sts, arts in groups)
+    n_done = sum(st not in NEXT for _, sts, _ in groups for st in sts); n_wait = sum(st in NEXT for _, sts, _ in groups for st in sts)
+    out = (f'<h3 class="splith" id="h-results">Results so far</h3>\n    <p class="sub">{n_done} claims with a first look or a result.</p>\n' + done +
+           f'    <h3 class="splith" id="h-next">Next to test</h3>\n    <p class="sub">{n_wait} claims written down, with what would prove each one wrong, and waiting for data. Open one to see what it needs.</p>\n' + wait)
+    return html[:a] + out.rstrip("\n") + html[end:]
+
+def _n(x): return f"{x:,}"
+def what_we_know(D):
+    """Home panel: a few results per kind of evidence, strongest evidence first. Every number comes from the data files."""
+    def row(cid, text):
+        st, lab = G.grade(cid, D)
+        return f'<li><a href="#{cid}"><span class="wk-t">{text}</span><span class="{G.css(st, lab)}">{G.show(lab)}</span></a></li>'
+    sy = D["tagtemp"]["sydney"]; z = D["size"]["main"]["by_shark"]; c16 = D["imos"]["c16"]; q = D["tigerqld"]["bull"]
+    cols = [
+        ("top", "Measured or tracked on sharks", "From tags", [
+            ("c25", f'Large bull sharks leave Sydney Harbour before winter. Their tags recorded {sy["below19"]} {"day" if sy["below19"] == 1 else "days"} below 19°C in {_n(sy["shark_days"])}.'),
+            ("c43", f'Small bull sharks stay in rivers through winter: {z["small"]["winter_sharks"]} of {z["small"]["sharks"]} small tagged sharks were detected then, against {z["large"]["winter_sharks"]} of {z["large"]["sharks"]} large ones.'),
+            ("c16", f'Tagged bull sharks now leave Sydney around {c16["recent"]}, against {c16["early"]} in 2010–2013. The shift fades at long-running stations.')]),
+        ("", "Catch with the effort recorded", "From shark-control catches", [
+            ("c6", f'When rivers run high, shark-control gear catches {q["ratio"]:.2f} times as many bull sharks.'),
+            ("c1", "Bull shark catch rates at Queensland's southern beaches show no clear rise."),
+            ("c5", "White shark bites on the NSW north coast don't peak when humpbacks migrate past.")]),
+        ("", "Bite records, stand-ins, models", "From bite records", [
+            ("c19", "More bites come in unusually warm months, though a day-by-day check did not clearly agree."),
+            ("c24", "Bites don't cluster around the full or new moon."),
+            ("c29", "Cold upwelling doesn't appear to bring more white shark incidents. People also avoid that water.")])]
+    body = "".join(f'<section class="wk-col {c}"><span class="wk-k">{k}</span><h3>{h}</h3><ul>{"".join(row(*r) for r in rows)}</ul></section>' for c, k, h, rows in cols)
+    return ('<h3 class="blockh wk-h">What we know so far</h3><p class="sub" style="margin:0">Strongest evidence first. '
+            'Each line links to its claim, with the test, the numbers and what would change it.</p>'
+            f'<div class="wk">{body}</div><p class="hcta" style="margin-top:18px"><a class="ghbtn" href="#h-agenda">See all the claims</a></p>')
+WK_NEED = ("tagtemp", "size", "imos", "tigerqld")
 
 def ready(fn, D):  # a result file from before a test was added lacks its fields until the next run
     try: fn(D); return True
     except (KeyError, TypeError): return False
 
 def fill(html, D, history=None):
-    html = apply_grades(html, D)
+    html = split_claims(apply_grades(html, D))
+    if all(k in D for k in WK_NEED) and ready(what_we_know, D):
+        html = re.sub(r'(<div id="wk" class="wkwrap">).*?(</div>)', lambda m: m.group(1) + what_we_know(D) + m.group(2), html, count=1, flags=re.S)
     H = X.load_history() if history is None else history
     def wts(m):
         try: body = X.block(m[1], D, H)

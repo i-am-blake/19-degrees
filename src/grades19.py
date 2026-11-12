@@ -24,6 +24,14 @@ LABEL = {"supports": "Early result: supports it", "leans": "Early result: leans 
          "none": "Early result: no clear link", "other": "Early result: points the other way",
          "leansother": "Early result: leans the other way"}
 STAGE = {"open": "Open", "nt": "Not testable yet", "look": "First look", "supported": "Supported", "strong": "Strong", "ruled": "Ruled out"}
+# Words shown on the site. The full labels above stay in grades_history.json, so renaming never looks like a new result.
+SHORT = {LABEL["supports"]: "Early: yes", LABEL["leans"]: "Leans yes", LABEL["none"]: "Unclear", LABEL["other"]: "Early: no",
+         LABEL["leansother"]: "Leans no", "Open": "Not yet tested", "Not testable yet": "Can't test yet"}
+def show(label): return SHORT.get(label, label)
+def css(st, label):  # badge color follows the direction of the result
+    s = show(label)
+    return {"Early: yes": "cstat early", "Leans yes": "cstat early", "Leans no": "cstat no", "Early: no": "cstat no", "Unclear": "cstat"}.get(s,
+        {"ruled": "cstat ruled", "look": "cstat look", "nt": "cstat nt", "supported": "cstat early", "strong": "cstat early"}.get(st, "cstat"))
 
 def V(ok, p):
     if p is None: return "none"
@@ -137,7 +145,7 @@ ABOUT_RECORDS = {"c19", "c23", "c24"}
 def evidence(cid, D):
     """The 'Evidence' line on a tested card: tier, what it rests on, and how high this kind of evidence can go."""
     tiers, rests = EVID[cid]; names = " and ".join(f"tier {t} ({TIER[t]})" for t in tiers)
-    return f"{names[0].upper()}{names[1:]}. {rests(D)} Highest grade this evidence can reach: {CEILING[min(tiers)]}."
+    return f"{names[0].upper()}{names[1:]}. {rests(D)} Highest grade this evidence can reach: {show(CEILING[min(tiers)])}."
 
 def grade(cid, D):
     """(data-status, label) for a claim card."""

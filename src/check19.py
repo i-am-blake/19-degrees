@@ -34,6 +34,8 @@ sp, im, hb, rn = D["species"], D["imos"], D["heat"], D["rain"]
 # Headline: bull shark bites and the 19°C line
 for m in find("bull bites (hero)", r"(\d+) bull shark bites\. Not one below 19", True):
     check("bull bites (hero)", int(m[1]), sp["bull"]["n"])
+for m in find("bull bites (home)", r"(\d+) bull shark bites in Australia since 1900\. Not one in a month when the sea was below 19", True):
+    check("bull bites (home)", int(m[1]), sp["bull"]["n"])
 for m in find("bull bites (notebook)", r"(\d+) of (\d+) bull shark bites below 19", True):
     check("bull bites below 19°C (notebook)", (int(m[1]), int(m[2])), (sp["bull"]["below"], sp["bull"]["n"]))
 if sp["bull"]["below"]: bad.append("the page says no bull shark bite was below 19°C, but the data has one")
@@ -146,7 +148,7 @@ import grades19
 for a in re.finditer(r'<article class="claim" id="(c\d+)" data-status="(\w+)">.{0,240}?<span class="(cstat[^"]*)">([^<]*)</span>', page, re.S):
     try: want = grades19.grade(a[1], D)
     except (KeyError, TypeError): continue
-    check(f"{a[1].upper()} grade", (a[2], a[4], a[3]), (want[0], want[1], results19.CLS[want[0]]))
+    check(f"{a[1].upper()} grade", (a[2], a[4], a[3]), (want[0], grades19.show(want[1]), grades19.css(*want)))
 import explain19
 H = explain19.load_history()
 for a in re.finditer(r'<section class="wts" id="wts-(c\d+)"([^>]*)>(.*?)</section>', page, re.S):
@@ -195,6 +197,15 @@ w = D["wa_spike"]
 if not w["post"] > w["pre"]: bad.append(f"WA: page says more bull shark bites since 2020 than in the 120 years before, data has {w['post']} vs {w['pre']}")
 pm = D["pop_mid"]
 if not pm[max(pm, key=int)] / pm["1900"] > 6: bad.append("population: page says more than sixfold since 1900")
+
+# Home: "What we know so far" is built from the data files
+if all(k in D for k in results19.WK_NEED) and results19.ready(results19.what_we_know, D):
+    check("Home: what we know so far", results19.what_we_know(D) in page, True)
+# Claims: results first, then the claims waiting for data
+_r, _n = page.find('id="h-results"'), page.find('id="h-next"')
+check("claims split into results and next to test", 0 < _r < _n, True)
+for _a in re.finditer(r'<article class="claim" id="(c\d+)" data-status="(\w+)">', page):
+    check(f"{_a[1].upper()} sits in the right list", (_a[2] in ("open", "nt")) == (_a.start() > _n), True)
 
 # Counts
 cards = page.count('class="claim"')
