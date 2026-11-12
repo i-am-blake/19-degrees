@@ -22,7 +22,7 @@ NEWDB=0; cmp -s asid_version.txt "$R/src/asid_version.txt" 2>/dev/null || NEWDB=
 mkdir -p sst beach_sst; python3 -I fetch_sst.py sst; python3 -I fetch_nino34.py sst; python3 -I fetch_beaches.py beach_sst
 
 # 3. Tagging, warm spells, rain (rain only when the database is new; the page keeps its last numbers otherwise)
-if git -C "$R" fetch -q origin imos-data 2>/dev/null; then mkdir -p imos && git -C "$R" archive origin/imos-data | tar -x -C imos && python3 -I imos19.py imos sst imos.json || warn "IMOS step failed, page keeps last numbers"; else warn "no imos-data branch"; fi
+if git -C "$R" fetch -q origin imos-data 2>/dev/null; then mkdir -p imos && git -C "$R" archive origin/imos-data | tar -x -C imos && python3 -I imos19.py imos sst imos.json || warn "IMOS step failed, page keeps last numbers"; python3 -I tagtemp19.py imos tagtemp.json || warn "C25 tag temperature step failed, page keeps last numbers"; else warn "no imos-data branch"; fi
 python3 -I heat19.py asid.csv sst heat.json
 # Warm current off WA (claim C7), from the Fremantle sea-level files the monthly fetch saves to ocean-data
 ( git -C "$R" fetch -q origin ocean-data && mkdir -p ocean && git -C "$R" archive origin/ocean-data | tar -x -C ocean \
@@ -92,5 +92,5 @@ python3 -I make_site.py 19-degrees.html pub site
 
 # 7. Copy back
 cp -r site/. "$R/"
-cp heat.json asid_version.txt "$R/src/"; [ -f rain.json ] && cp rain.json "$R/src/"; [ -f imos.json ] && cp imos.json "$R/src/"; [ -f leeuwin.json ] && cp leeuwin.json "$R/src/"; [ -f california.json ] && cp california.json "$R/src/"; [ -f grades_history.json ] && cp grades_history.json "$R/src/"; for j in fieldnotes lunar obis iod coastpop mhw beachwatch hawaii exposure beachday tides whales chlorophyll rivers harbour tigerqld tigerrain whitecool upwelling catchshare; do [ -f $j.json ] && cp $j.json "$R/src/"; done
+cp heat.json asid_version.txt "$R/src/"; [ -f rain.json ] && cp rain.json "$R/src/"; [ -f imos.json ] && cp imos.json "$R/src/"; [ -f leeuwin.json ] && cp leeuwin.json "$R/src/"; [ -f california.json ] && cp california.json "$R/src/"; [ -f grades_history.json ] && cp grades_history.json "$R/src/"; for j in fieldnotes lunar obis iod coastpop mhw beachwatch hawaii exposure beachday tides whales chlorophyll rivers harbour tigerqld tigerrain whitecool upwelling catchshare tagtemp; do [ -f $j.json ] && cp $j.json "$R/src/"; done
 echo "built OK (new database version: $NEWDB)"

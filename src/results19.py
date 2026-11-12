@@ -245,13 +245,25 @@ def dailyC25(D):
             + A("https://members.oceantrack.org/project?ccode=FACT.BTSNP", "FACT Network and Havenworth Coastal Conservation") + ", via the Ocean Tracking Network and " + A("https://obis.org", "OBIS") + ", CC BY 4.0; sea temperature "
             + A("https://www.ncei.noaa.gov/products/optimum-interpolation-sst", "NOAA OISST v2.1") + "; water temperature " + A("https://tidesandcurrents.noaa.gov/stationhome.html?id=8726384", "NOAA tide gauges") + " at Port Manatee and St. Petersburg.)")
 
+def tagtempC25(D):
+    T = D["tagtemp"]; sy, cl, cs = T["sydney"], T["clarence"], T["clarence_size"]
+    return (f'Measured on Australian sharks: {T["sharks"]} tagged bull sharks carried tags that record water temperature ({T["y0"]}–{T["y1"]}). '
+            f'In Sydney Harbour, {sy["sharks"]} sharks with a median length of {sy["median_length_cm"]} cm logged {sy["shark_days"]:,} shark-days, {sy["below19"]} of them below 19°C, and none in June to August. '
+            f'In the Clarence River in northern NSW, {cl["sharks"]} sharks with a median length of {cl["median_length_cm"]} cm logged {cl["shark_days"]:,} shark-days, {cl["below19"]} of them below 19°C; '
+            f'{cl["sharks_in_winter"]} sharks had winter days and {cl["sharks_80_winter_days"]} had 80 or more'
+            + (f' ({cl["identical_records"]} of them have identical records and may be one shark)' if cl["identical_records"] else "") + ". "
+            f'Size separates them within the one river: across all tags there, {cs["small"]["with_winter_day"]} of {cs["small"]["sharks"]} sharks under 150 cm at tagging were detected in winter, '
+            f'against none of {cs["large"]["sharks"]} sharks of 200 cm or more, which were detected on only {cs["large"]["days"]} days in all. '
+            f'Length is recorded once, at tagging, so a shark tracked for years has grown. {T["left_out_pct"]}% of the temperature readings had no calibration and were left out. ('
+            + A("https://imos.org.au/facility/animal-tracking", "IMOS Animal Tracking") + ", CC BY 4.0.)")
+
 PARAS = {"mhwC19": (mhwC19, ("mhw",)), "bwC6": (bwC6, ("beachwatch",)), "plumeC6": (plumeC6, ("rivers", "harbour")),
          "qldC6": (qldC6, ("tigerqld",)), "wkC18": (wkC18, ("exposure", "beachday")), "whaleC5": (whaleC5, ("whales",)),
          "whitecoolC5": (whitecoolC5, ("whitecool",)), "chlC4": (chlC4, ("chlorophyll",)), "tideC24": (tideC24, ("tides",)),
          "tigerC28": (tigerC28, ("tigerqld", "tigerrain")), "upC29": (upC29, ("upwelling",)),
          "stationsC16": (stationsC16, ("imos",)), "juvC30": (juvC30, ("imos",)),
          "shareC1": (shareC1, ("catchshare",)), "projC3": (projC3, ("proj",)),
-         "tagsC25": (tagsC25, ("tags_sa",)), "dailyC25": (dailyC25, ("daily",))}
+         "tagsC25": (tagsC25, ("tags_sa",)), "dailyC25": (dailyC25, ("daily",)), "tagtempC25": (tagtempC25, ("tagtemp",))}
 
 def hawaiiC6(D):
     h = D["hawaii"]

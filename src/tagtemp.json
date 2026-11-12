@@ -1,0 +1,57 @@
+{
+ "sharks": 56,
+ "shark_days": 9508,
+ "readings_used": 58528,
+ "readings_left_out": 17491,
+ "left_out_pct": 23,
+ "y0": 2010,
+ "y1": 2024,
+ "sydney": {
+  "sharks": 24,
+  "shark_days": 3091,
+  "below19": 1,
+  "coldest_day": 18.5,
+  "median_length_cm": 275,
+  "with_length": 16,
+  "winter_days": 0,
+  "winter_below19": 0,
+  "winter_median": null,
+  "sharks_in_winter": 0,
+  "sharks_80_winter_days": 0,
+  "identical_records": 0,
+  "y0": 2010,
+  "y1": 2018
+ },
+ "clarence": {
+  "sharks": 23,
+  "shark_days": 1938,
+  "below19": 257,
+  "coldest_day": 16.2,
+  "median_length_cm": 180,
+  "with_length": 20,
+  "winter_days": 360,
+  "winter_below19": 231,
+  "winter_median": 18.6,
+  "sharks_in_winter": 7,
+  "sharks_80_winter_days": 4,
+  "identical_records": 2,
+  "y0": 2010,
+  "y1": 2014
+ },
+ "clarence_size": {
+  "small": {
+   "sharks": 13,
+   "with_winter_day": 8,
+   "with_20_winter_days": 7,
+   "days": 3006,
+   "winter_days": 615
+  },
+  "large": {
+   "sharks": 15,
+   "with_winter_day": 0,
+   "with_20_winter_days": 0,
+   "days": 45,
+   "winter_days": 0
+  }
+ }
+}
