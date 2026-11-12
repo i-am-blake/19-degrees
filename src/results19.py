@@ -255,7 +255,7 @@ def tagtempC25(D):
             f'Size separates them within the one river: across all tags there, {cs["small"]["with_winter_day"]} of {cs["small"]["sharks"]} sharks under 150 cm at tagging were detected in winter, '
             f'against none of {cs["large"]["sharks"]} sharks of 200 cm or more, which were detected on only {cs["large"]["days"]} days in all. '
             f'Length is recorded once, at tagging, so a shark tracked for years has grown. {T["left_out_pct"]}% of the temperature readings had no calibration and were left out. ('
-            + A("https://imos.org.au/facility/animal-tracking", "IMOS Animal Tracking") + ", CC BY 4.0.)")
+            + A("https://researchdata.edu.au/imos-animal-tracking-2007-ongoing/3961802", "IMOS Animal Tracking") + ", CC BY 4.0.)")
 
 PARAS = {"mhwC19": (mhwC19, ("mhw",)), "bwC6": (bwC6, ("beachwatch",)), "plumeC6": (plumeC6, ("rivers", "harbour")),
          "qldC6": (qldC6, ("tigerqld",)), "wkC18": (wkC18, ("exposure", "beachday")), "whaleC5": (whaleC5, ("whales",)),
