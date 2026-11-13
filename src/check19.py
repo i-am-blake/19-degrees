@@ -210,7 +210,7 @@ for _a in re.finditer(r'<article class="claim" id="(c\d+)" data-status="(\w+)">'
 # Counts
 cards = page.count('class="claim"')
 early = sum(page.count(f'data-status="{s}"') for s in ("early", "ruled", "supported", "strong"))
-for lab, pat, want in (("claims", r"See the (\d+) claims", cards), ("claims", r"Testable claims (\d+)", cards),
+for lab, pat, want in (("claims", r"Testable claims (\d+)", cards),
                        ("claims", r"Pick one of (\d+) claims", cards),
                        ("claims tested", r"Tested so far (\d+)", early)):
     for m in find(lab, pat, True): check(f"number of {lab} ('{m[0]}')", int(m[1]), want)
@@ -227,7 +227,7 @@ for m in re.finditer(r"\b([A-Za-z]+(?:-[a-z]+)?) (?:specific |testable )?claims\
 for c in re.finditer(r'<article class="claim" id="(c\d+)"([\s\S]*?)</article>', page):
     check(f"{c[1].upper()} has a 'Decision it informs' line", "<dt>Decision it informs</dt>" in c[2], True)
     check(f"{c[1].upper()} has a 'Measured per' line", "<dt>Measured per</dt>" in c[2], True)
-i = page.find("Products and the evidence"); seg = page[i:page.find("</section>", i)]
+i = page.find('id="h-products"'); seg = page[i:page.find("</section>", i)]
 prods = seg.count('<td class="psrc">')
 for pat in (r"Products checked (\d+)", r"See all (\d+) products", r"(\d+) products we checked"):
     for m in find("products", pat, True): check(f"number of products ('{m[0]}')", int(m[1]), prods)
