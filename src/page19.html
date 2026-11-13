@@ -777,6 +777,10 @@ h3.splith + p.sub{margin:0 0 6px}
 /* outlined button: same hover as the site's other outlined controls */
 .ghbtn{display:inline-flex;align-items:center;min-height:44px;color:var(--ink);transition:border-color .15s,background-color .15s}
 .ghbtn:hover{border-color:#3395BE;background:rgba(51,149,190,.14)}
+#panel-home .hero .hcta .ghbtn{transition:background-color .15s,color .15s,border-color .15s,transform .15s}
+#panel-home .hero .hcta .ghbtn:hover,#panel-home .hero .hcta .ghbtn:focus-visible{background:#fff;color:#041A2C;border-color:#fff;transform:translateY(-1px)}
+#panel-home .hero .hcta .ghbtn:focus-visible{outline:2px solid #F7941D;outline-offset:3px}
+@media (prefers-reduced-motion:reduce){#panel-home .hero .hcta .ghbtn{transition:none}#panel-home .hero .hcta .ghbtn:hover{transform:none}}
 @media (prefers-reduced-motion:reduce){.ghbtn{transition:none}}
 
 /* Ko-fi tip panel: opens on the page when someone clicks Donate; Ko-fi only loads after that click.
@@ -813,7 +817,7 @@ h3.splith + p.sub{margin:0 0 6px}
   <div class="cardhero"><picture><source media="(max-width:640px)" srcset="share/hero-tall.jpg" width="1080" height="1349"><img src="share/hero-wide.jpg" srcset="share/hero-wide.jpg 1200w, share/hero-wide-2400.jpg 2400w" sizes="100vw" width="1200" height="740" alt="A large 19 standing half under the sea surface, with a shark fin cutting the water beside it." fetchpriority="high"></picture></div>
   <header class="hero" id="home-top">
     <h1 class="state">A warming ocean is redrawing <span>where sharks and people meet.</span></h1>
-    <p class="hcta"><a class="ctabtn" href="#story" data-tab="story">Read the story →</a> <a class="ghbtn" href="#h-agenda" data-tab="research">See the 43 claims</a></p>
+    <p class="hcta"><a class="ctabtn" href="#story" data-tab="story">Read the story →</a> <a class="ghbtn" href="#h-agenda" data-tab="research">Explore the research</a></p>
     <div class="kicker">An open science platform for a changing ocean</div>
     <p class="lede">Seas are warming on every coast. Sharks are turning up in new places and new seasons, and more people are in the water than ever.</p>
     <p class="sub">The evidence that could keep both safe is scattered across agencies, labs and countries. 19 Degrees brings it into one open harbor, tests every claim in public, and gives it away free. It starts on Australia's coast and is built to run on any coast in the world.</p>
