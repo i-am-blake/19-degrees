@@ -316,14 +316,14 @@
   }
  ],
  "sites": {
-  "IMOS-ATF Sydney Gate": {
-   "large": 73,
-   "mid": 1
-  },
   "IMOS-ATF Coffs Harbour line": {
    "large": 66,
    "small": 3,
    "mid": 5
+  },
+  "IMOS-ATF Sydney Gate": {
+   "large": 73,
+   "mid": 1
   },
   "NSW DPIRD (Tagged shark listening stations)": {
    "small": 2,
