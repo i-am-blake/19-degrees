@@ -727,6 +727,8 @@ h3.splith + p.sub{margin:0 0 6px}
 .ftop{font:inherit;color:var(--ink);background:none;border:0;padding:0;text-decoration:underline;cursor:pointer}
 @media (max-width:820px){.sitefoot{grid-template-columns:1fr}.fcols{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media (pointer:coarse){.fcols a{min-height:44px}}
+/* phone: the form button and the footer button run full width */
+@media (max-width:640px){.contact .crow{display:grid;gap:10px}.contact .cbtn{width:100%;justify-content:center}.sitefoot .hcta{display:block}.sitefoot .hcta .ghbtn{display:flex;width:100%;justify-content:center;box-sizing:border-box}}
 /* buttons that wrap keep the same space between them */
 .winv .hcta{display:flex;flex-wrap:wrap;gap:12px;margin:8px 0 0}
 .winv h3{line-height:1.2}
@@ -1538,7 +1540,7 @@ h3.splith + p.sub{margin:0 0 6px}
     <div class="fbrand">
       <p class="fname">19 Degrees</p>
       <p class="fline">An open science platform for a changing ocean, updated as new evidence comes in.</p>
-      <p class="hcta"><a class="ctabtn donatelink" data-from="footer" href="https://ko-fi.com/19degrees" target="_blank" rel="noopener">Support the research</a></p>
+      <p class="hcta"><a class="ghbtn donatelink" data-from="footer" href="https://ko-fi.com/19degrees" target="_blank" rel="noopener">Support the research</a></p>
     </div>
     <nav class="fcols" aria-label="Footer">
       <div><h2 class="fh">Explore</h2><ul>
