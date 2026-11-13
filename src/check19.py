@@ -227,7 +227,7 @@ for m in re.finditer(r"\b([A-Za-z]+(?:-[a-z]+)?) (?:specific |testable )?claims\
 for c in re.finditer(r'<article class="claim" id="(c\d+)"([\s\S]*?)</article>', page):
     check(f"{c[1].upper()} has a 'Decision it informs' line", "<dt>Decision it informs</dt>" in c[2], True)
     check(f"{c[1].upper()} has a 'Measured per' line", "<dt>Measured per</dt>" in c[2], True)
-i = page.find("Products and the evidence"); seg = page[i:page.find("</section>", i)]
+i = page.find('id="h-products"'); seg = page[i:page.find("</section>", i)]
 prods = seg.count('<td class="psrc">')
 for pat in (r"Products checked (\d+)", r"See all (\d+) products", r"(\d+) products we checked"):
     for m in find("products", pat, True): check(f"number of products ('{m[0]}')", int(m[1]), prods)
