@@ -697,25 +697,6 @@ h3.splith + p.sub{margin:0 0 6px}
 .wayglobal .blockh{margin:0 0 8px}
 /* home: what we know so far */
 .wkwrap:empty{display:none}
-/* Research: every claim at a glance, filterable by grade */
-.emap:empty{display:none}
-.emap{margin:22px 0 30px;padding:20px;border:1px solid var(--rule);background:rgba(255,255,255,.02)}
-.emap .blockh{margin:0 0 4px}
-.emf{display:flex;flex-wrap:wrap;gap:8px;margin:14px 0 6px}
-.emf button{min-height:44px;padding:0 16px;border-radius:999px;border:1.5px solid var(--rule);background:none;color:var(--ink);font:inherit;font-weight:600;cursor:pointer;display:inline-flex;align-items:center;gap:8px}
-.emf button span{font-family:var(--f-data);font-size:13px;color:var(--muted)}
-.emf button[aria-pressed="true"]{background:var(--ink);border-color:var(--ink);color:#041A2C}.emf button[aria-pressed="true"] span{color:#041A2C}
-.emf button:focus-visible{outline:2px solid #3395BE;outline-offset:2px}
-.emcount{margin:0 0 6px;font-size:14px;color:var(--muted)}
-.emg{margin:18px 0 8px;font-size:15px;font-weight:700;display:flex;gap:10px;align-items:baseline}.emg span{font-family:var(--f-data);font-size:12px;color:var(--muted);font-weight:500}
-.emt{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:8px}
-.emtile{display:flex;flex-direction:column;gap:8px;padding:12px;border:1px solid var(--rule);color:var(--ink);text-decoration:none;transition:opacity .15s,border-color .15s,background-color .15s}
-.emtile:hover,.emtile:focus-visible{border-color:#3395BE;background:rgba(51,149,190,.12)}
-.emtile .emh{display:flex;align-items:center;justify-content:space-between;gap:8px}.emtile .cstat{margin:0}
-.emtile .emx{font-size:14px;line-height:1.4;color:var(--muted);display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
-.emtile.dim{opacity:.25}
-@media (max-width:600px){.emap{padding:14px}.emt{grid-template-columns:1fr;gap:6px}.emtile{padding:8px 10px}.emtile .emx{-webkit-line-clamp:2;font-size:14px}.emg{flex-wrap:wrap}.emtile.dim{display:none}}
-@media (prefers-reduced-motion:reduce){.emtile{transition:none}}
 /* Home: updated by new evidence, built from the grade history */
 .mind{list-style:none;margin:18px 0 0;padding:0;display:grid;gap:10px}
 .mind a{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:8px 14px;align-items:center;padding:14px 18px;border:1px solid var(--rule);color:var(--ink);text-decoration:none;transition:border-color .15s,background-color .15s}
@@ -1197,7 +1178,6 @@ h3.splith + p.sub{margin:0 0 6px}
 <tr><td>Ruled out</td><td>The card's own "rules it out" condition is met, and the 95% range excludes an effect worth acting on (a 1.5-times rise).</td></tr>
 </tbody></table><p><b>Reading a p-value.</b> It says how often chance alone would give a result at least this strong if there were no real effect: p = 0.05 is about 1 time in 20, p = 0.01 about 1 time in 100. Each card says it in those words too. Because this page runs many tests, a few with no real effect will pass p &lt; 0.05 by luck. That is why one pass earns only an "Early result", and why further checks can lower a grade.</p><p><b>What counts as a claim here.</b> Every claim has to pass three tests. It is about where, when or how often sharks and people meet, or what happens when they do. It names a decision someone actually makes. And it names what it is measured per. Good ocean science that fails the first test belongs to another project.</p><p><b>Measured per what.</b> Every card names what its test counts per: per drumline per day, per tagged shark, per beach visit, per month at the same place. A bare count over time can't tell more sharks from more fishing, more people in the water or more listening stations, so a test without a fair "per" can reach "leans toward it" at most.</p><p><b>Evidence tiers.</b> Results here rest on very different kinds of data, so each tested card has an "Evidence" line that names its tier and what it rests on. The strongest tier a claim has sets how high its grade can go.</p><table><thead><tr><th>Tier</th><th>Kind of evidence</th><th>Highest grade</th></tr></thead><tbody><tr><td>1</td><td>Measured at the shark: sensors on the tag</td><td>Strong</td></tr><tr><td>2</td><td>Tracked by tag: detections on fixed receivers, strongest when the receivers ran the whole period</td><td>Strong</td></tr><tr><td>3</td><td>Catch or survey with the effort recorded</td><td>Supported</td></tr><tr><td>4</td><td>Stand-in: satellite or monthly temperature at a record, share of catch, residents for beach visits</td><td>Leans toward it</td></tr><tr><td>5</td><td>No denominator: bites, incidents and sightings, which follow where people are</td><td>Leans toward it</td></tr><tr><td>6</td><td>Projection: climate models</td><td>Leans toward it</td></tr></tbody></table><p>Reaching Supported or Strong still needs a test set in advance and a second dataset, region or method, as above. A claim that is itself about bites, such as the moon, can still be ruled out on bite records.</p><p><b>Stand-ins.</b> When the data the claim names isn't public, a test may use a stand-in (share of catch for catch per drumline, people living on the coast for people on the beach). A stand-in can reach "leans toward it" at most.</p><p>The claim's main test sets the label; further tests can lower it but never raise it. "Early" means the test was chosen after seeing the data, which is true of every result so far, so none can be Supported or Strong yet. Records like these can't prove what causes what, so the top grade is Strong, never Proven.</p></div></details>
     <div class="gkey"><span><span class="cstat early">Early: yes</span><span class="cstat early">Leans yes</span>the result points toward the claim</span><span><span class="cstat unc">Unclear</span>no clear result either way</span><span><span class="cstat no">Leans no</span><span class="cstat no">Early: no</span>the result points against it</span><span><span class="cstat ruled">Ruled out</span>failed its own test</span><span><span class="cstat look">First look</span>data described, not yet tested</span></div>
-    <div id="emap" class="emap"></div>
     <h3 class="cgroup">1. Where are sharks going?<span>Range and season</span></h3>
     <div class="claims">
       <article class="claim" id="c1" data-status="early"><details><summary><div class="chead"><span class="cid">C1</span><span class="subt">Range</span><span class="cstat early">Early result: holds in Queensland</span></div><h4>Bull shark catch rates in shark-control gear are rising at the southernmost beaches, not just bites.</h4><span class="cmore" aria-hidden="true"><span class="cm-show">Details</span><span class="cm-hide">Hide</span><i class="cchev"></i></span></summary><div class="cbody"><section class="wts" id="wts-c1" hidden></section><p class="agres" id="shareC1">Early result (exploratory, not specified in advance): in southern Queensland's shark-control gear (Rainbow Beach to the Gold Coast), bull sharks rose from 6.1% of all sharks caught in 1996–2005 (147 of 2,423) to 12.6% in 2016–2025 (308 of 2,450): a rise of 6.5 percentage points (95% CI 4.9 to 8.1; p &lt; 0.001). In the north their share fell from 18.4% to 14.6% (−3.7 points, 95% CI −5.1 to −2.4). This is share of catch, not catch per unit of effort, which isn't published. NSW data would extend it south. <a href="https://www.data.qld.gov.au/dataset/fisheries-queensland-s-shark-control-program-information-and-data" target="_blank" rel="noopener">Queensland Shark Control Program data</a></p>
@@ -2380,13 +2360,6 @@ try{const dlg=document.getElementById("kofiDlg");
       if(!a||e.defaultPrevented||e.button!==0||e.metaKey||e.ctrlKey||e.shiftKey||e.altKey)return; e.preventDefault(); open();});
     dlg.querySelector(".kx").addEventListener("click",()=>dlg.close());
     dlg.addEventListener("click",e=>{if(e.target===dlg)dlg.close();});}
-}catch(e){console.error(e)}
-
-/* Research: evidence map filter */
-try{const em=document.getElementById("emap");if(em&&em.querySelector(".emf")){const bs=[...em.querySelectorAll(".emf button")],ts=[...em.querySelectorAll(".emtile")],out=em.querySelector(".emcount");
-  const set=f=>{bs.forEach(b=>b.setAttribute("aria-pressed",String(b.dataset.f===f)));let n=0;ts.forEach(t=>{const on=f==="all"||t.dataset.b===f;t.classList.toggle("dim",!on);if(on)n++;});
-    const b=bs.find(x=>x.dataset.f===f);out.textContent=f==="all"?`All ${ts.length} claims shown.`:`${n} of ${ts.length} claims: ${b.firstChild.textContent.trim().toLowerCase()}.`;};
-  bs.forEach(b=>b.addEventListener("click",()=>set(b.dataset.f)));set("all");}
 }catch(e){console.error(e)}
 
 /* What works: count the evidence in the products table */
