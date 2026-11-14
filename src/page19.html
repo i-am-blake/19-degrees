@@ -697,6 +697,15 @@ h3.splith + p.sub{margin:0 0 6px}
 .wayglobal .blockh{margin:0 0 8px}
 /* home: what we know so far */
 .wkwrap:empty{display:none}
+/* Home: science that changes its mind, built from the grade history */
+.mind{list-style:none;margin:18px 0 0;padding:0;display:grid;gap:10px}
+.mind a{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:8px 14px;align-items:center;padding:14px 18px;border:1px solid var(--rule);color:var(--ink);text-decoration:none;transition:border-color .15s,background-color .15s}
+.mind a:hover,.mind a:focus-visible{border-color:#3395BE;background:rgba(51,149,190,.12)}
+.mind .cid{grid-column:1;grid-row:1;min-width:2.6em;text-align:center;box-sizing:border-box}.mind .mt{grid-column:2;grid-row:1;font-weight:600;line-height:1.35}
+.mind .mg{grid-column:3;grid-row:1;display:flex;align-items:center;gap:8px}.mind .mg .cstat{margin:0}.mind .was .cstat{opacity:.55}
+.mind .arr{color:var(--muted)}
+.mind .mw{grid-column:2/4;grid-row:2;color:var(--muted);font-size:15px;line-height:1.5}
+@media (max-width:820px){.mind a{grid-template-columns:auto minmax(0,1fr)}.mind .mg{grid-column:1/-1;grid-row:2;flex-wrap:wrap}.mind .mw{grid-column:1/-1;grid-row:3}}
 .wk{margin:18px 0 0;display:grid;gap:14px;grid-template-columns:repeat(3,minmax(0,1fr))}
 @media (max-width:820px){.wk{grid-template-columns:1fr}}
 .wk-col{border:1px solid var(--rule);padding:16px 16px 8px;display:grid;gap:10px;align-content:start;min-width:0}
@@ -887,6 +896,8 @@ h3.splith + p.sub{margin:0 0 6px}
     <p class="sub" style="margin-top:18px">Forty-three claims, tested in public. Each says in advance what would support it and what would rule it out.</p>
     <div id="wk" class="wkwrap"></div>
   </section>
+
+  <section aria-labelledby="h-mind" id="mind" hidden></section>
 
   <section aria-labelledby="h-dots">
     <div class="kicker">Connecting the dots</div>

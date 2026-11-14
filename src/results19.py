@@ -349,11 +349,36 @@ def ready(fn, D):  # a result file from before a test was added lacks its fields
     try: fn(D); return True
     except (KeyError, TypeError): return False
 
+ST_OF = {"First look": "look", "Ruled out": "ruled", "Open": "nt", "Not testable yet": "nt", "Supported": "supported", "Strong": "strong"}
+def badge(lab):
+    return f'<span class="{G.css(ST_OF.get(lab, "early"), lab)}">{G.show(lab)}</span>'
+def changes(html, H):
+    """Home: "Science that changes its mind", the latest day any grade changed, from the grade history, with the reason for each change."""
+    moves = [(e["date"], cid, h[i - 1]["label"], e["label"], e["why"]) for cid, h in H.items() for i, e in enumerate(h) if i]
+    if not moves: return ""
+    day = max(m[0] for m in moves)
+    rows = sorted((m for m in moves if m[0] == day), key=lambda m: int(m[1][1:]))
+    def title(cid):
+        t = re.search(rf'<article class="claim" id="{cid}".*?<h4>(.*?)</h4>', html, re.S)
+        return t[1] if t else cid.upper()
+    n = len(rows); words = "One Two Three Four Five Six Seven Eight Nine Ten".split()
+    head = f'{words[n - 1] if n <= 10 else n} {"grade" if n == 1 else "grades"} changed on {X.fmt_date(day)}.'
+    li = "".join(f'<li><a href="#{cid}" data-tab="research"><span class="cid">{cid.upper()}</span><span class="mt">{title(cid)}</span>'
+                 f'<span class="mg"><span class="was">{badge(a)}</span><span class="arr" aria-label="changed to">→</span>{badge(b)}</span><span class="mw">{why}</span></a></li>'
+                 for _, cid, a, b, why in rows)
+    return ('<div class="kicker">Science that changes its mind</div>'
+            f'<h2 id="h-mind">{head}</h2>'
+            '<p class="sub">When new evidence moves a grade, the change is dated and the reason is given.</p>'
+            f'<ol class="mind">{li}</ol>'
+            '<p class="hcta" style="margin-top:18px"><a class="ghbtn" href="#h-changes" data-tab="research">Every change, with its evidence</a></p>')
+
 def fill(html, D, history=None):
     html = split_claims(apply_grades(html, D))
     if all(k in D for k in WK_NEED) and ready(what_we_know, D):
         html = re.sub(r'(<div id="wk" class="wkwrap">).*?(</div>)', lambda m: m.group(1) + what_we_know(D) + m.group(2), html, count=1, flags=re.S)
     H = X.load_history() if history is None else history
+    _ch = changes(html, H)
+    if _ch: html = re.sub(r'<section aria-labelledby="h-mind" id="mind"[^>]*>.*?</section>', lambda m: f'<section aria-labelledby="h-mind" id="mind">{_ch}</section>', html, count=1, flags=re.S)
     def wts(m):
         try: body = X.block(m[1], D, H)
         except (KeyError, TypeError): return m[0]

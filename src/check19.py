@@ -201,6 +201,9 @@ if not pm[max(pm, key=int)] / pm["1900"] > 6: bad.append("population: page says 
 # Home: "What we know so far" is built from the data files
 if all(k in D for k in results19.WK_NEED) and results19.ready(results19.what_we_know, D):
     check("Home: what we know so far", results19.what_we_know(D) in page, True)
+# Home: the latest grade changes come from the grade history
+_mind = results19.changes(page, explain19.load_history())
+if _mind: check("Home: science that changes its mind", f'<section aria-labelledby="h-mind" id="mind">{_mind}</section>' in page, True)
 # Claims: results first, then the claims waiting for data
 _r, _n = page.find('id="h-results"'), page.find('id="h-next"')
 check("claims split into results and next to test", 0 < _r < _n, True)
