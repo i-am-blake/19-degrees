@@ -34,8 +34,11 @@ sp, im, hb, rn = D["species"], D["imos"], D["heat"], D["rain"]
 # Headline: bull shark bites and the 19°C line
 for m in find("bull bites (hero)", r"(\d+) bull shark bites\. Not one below 19", True):
     check("bull bites (hero)", int(m[1]), sp["bull"]["n"])
-for m in find("bull bites (home)", r"(\d+) bull shark bites in Australia since 1900\. Not one in a month when the sea was below 19", True):
-    check("bull bites (home)", int(m[1]), sp["bull"]["n"])
+_end = "January February March April May June July August September October November December".split()[D["asid_last"]["month"] - 1] + " " + str(D["asid_last"]["year"])
+for m in find("bull bites (home)", r"(\d+) recorded bull shark bites in Australia, 1900 to (\w+ \d{4})\. None in a month when the local sea was below 19", True):
+    check("bull bites (home)", (int(m[1]), m[2]), (sp["bull"]["n"], _end))
+for m in find("bull bites (hero line)", r"(\d+) recorded bites, 1900 to (\w+ \d{4}) ", True):
+    check("bull bites (hero line)", (int(m[1]), m[2]), (sp["bull"]["n"], _end))
 for m in find("bull bites (notebook)", r"(\d+) of (\d+) bull shark bites below 19", True):
     check("bull bites below 19°C (notebook)", (int(m[1]), int(m[2])), (sp["bull"]["below"], sp["bull"]["n"]))
 if sp["bull"]["below"]: bad.append("the page says no bull shark bite was below 19°C, but the data has one")
