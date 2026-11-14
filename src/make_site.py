@@ -32,6 +32,8 @@ doc = ('<!doctype html>\n<html lang="en">\n<head>\n<meta charset="utf-8">\n'
 if os.path.exists(out): shutil.rmtree(out)
 os.makedirs(out)
 open(os.path.join(out, "index.html"), "w").write(doc)
+# each tab also has its own address (/story, /safety, ...): see tab_pages.py
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__))); import tab_pages; tab_pages.write(doc, out)
 open(os.path.join(out, "CNAME"), "w").write(SITE.split("//")[1].strip("/") + "\n")  # GitHub Pages custom domain
 for f in os.listdir(pub):
     if re.match(r"classroom.*\.html$", f):

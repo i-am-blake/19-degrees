@@ -2247,29 +2247,40 @@ try{
   const tabs=[...document.querySelectorAll('.tablist [role="tab"]')], key=t=>t.id.slice(4);
   const panelOf=el=>el&&el.closest('[role="tabpanel"]');
   function show(name,focus,scrollTo){
-    tabs.forEach(t=>{const on=key(t)===name;t.setAttribute("aria-selected",on?"true":"false");t.tabIndex=on?0:-1;document.getElementById(t.getAttribute("aria-controls")).hidden=!on;if(on&&focus)t.focus();});
+    CUR=name; tabs.forEach(t=>{const on=key(t)===name;t.setAttribute("aria-selected",on?"true":"false");t.tabIndex=on?0:-1;document.getElementById(t.getAttribute("aria-controls")).hidden=!on;if(on&&focus)t.focus();});
     const nv=document.querySelector(".tabs"),cur=tabs.find(t=>key(t)===name); if(nv){nv.classList.remove("open");nv.querySelector(".menubtn").setAttribute("aria-expanded","false");if(cur)nv.querySelector(".mcur").textContent=cur.textContent;}
     if(scrollTo){const el=document.getElementById(scrollTo); if(el) el.scrollIntoView();}
     else{ if(scrollY>0) scrollTo0(0);}
     dispatchEvent(new Event("resize"));
   }
   function scrollTo0(y){window.scrollTo({top:y,behavior:"auto"});}
-  function setHash(h){try{history.replaceState(null,"",(!h||h==="home"||h==="home-top")?location.pathname+location.search:"#"+h);}catch(e){}}
+  /* addresses: on the live site each tab has its own page address (/story, /safety, /research, /schools, /media);
+     anywhere else (a local file, a preview) the tab goes in the hash as before */
+  const SLUG={home:"",story:"story",works:"safety",research:"research",students:"schools",media:"media"}, TAB_OF={};
+  Object.keys(SLUG).forEach(k=>{TAB_OF[k]=k;if(SLUG[k])TAB_OF[SLUG[k]]=k;});
+  const pslug=()=>{const m=/^\/([a-z]*)(?:\.html)?\/?$/.exec(location.pathname);return m?(m[1]==="index"?"":m[1]):null;};
+  const PATH=/^https?:$/.test(location.protocol)&&pslug()!==null&&(pslug()===""||pslug() in TAB_OF);
+  let CUR="home";
+  function setHash(h,push,anchor){try{const t=TAB_OF[h]||(h==="home-top"?"home":null);
+    if(PATH){const u="/"+(SLUG[t||"home"]||"")+(anchor?"#"+anchor:"")+location.search;if(u!==location.pathname+location.search+location.hash)history[push?"pushState":"replaceState"](null,"",u);}
+    else history.replaceState(null,"",(!h||h==="home"||h==="home-top")?location.pathname+location.search:"#"+h);}catch(e){}}
   /* logo: back to the top of the story, with a clean address */
-  document.querySelector(".lockup").addEventListener("click",e=>{e.preventDefault();show("home");scrollTo0(0);setHash("");const n=document.querySelector(".tabs");if(n&&n.classList.contains("open")){n.classList.remove("open");document.querySelector(".menubtn").setAttribute("aria-expanded","false");}});
+  document.querySelector(".lockup").addEventListener("click",e=>{e.preventDefault();show("home");scrollTo0(0);setHash("",true);const n=document.querySelector(".tabs");if(n&&n.classList.contains("open")){n.classList.remove("open");document.querySelector(".menubtn").setAttribute("aria-expanded","false");}});
   tabs.forEach((t,i)=>{
-    t.addEventListener("click",()=>{if(key(t)==="story"&&typeof COAST!=="undefined"&&COAST.cur!=="east")COAST.set("east");show(key(t));setHash(key(t));});
+    t.addEventListener("click",()=>{if(key(t)==="story"&&typeof COAST!=="undefined"&&COAST.cur!=="east")COAST.set("east");show(key(t));setHash(key(t),true);});
     t.addEventListener("keydown",e=>{const vis=tabs.filter(x=>!x.hidden),k=vis.indexOf(t);let j=null;if(e.key==="ArrowRight")j=(k+1)%vis.length;if(e.key==="ArrowLeft")j=(k-1+vis.length)%vis.length;if(e.key==="Home")j=0;if(e.key==="End")j=vis.length-1;
-      if(j!=null){e.preventDefault();show(key(vis[j]),true);setHash(key(vis[j]));}});
+      if(j!=null){e.preventDefault();show(key(vis[j]),true);setHash(key(vis[j]),true);}});
   });
   document.addEventListener("click",e=>{const a=e.target.closest('a[href^="#"]');if(!a||e.defaultPrevented||a.closest(".skip"))return;const h=(a.getAttribute("href")||"").slice(1);if(!h)return;
     /* in-page links keep the address of the tab they land on (#research, #story...), not the section's own id */
     let tab=a.dataset.tab;const el=document.getElementById(h);if(!tab){const pn=panelOf(el);if(!pn)return;tab=pn.id.slice(6);}
-    e.preventDefault();const sec=h!==tab?h:null;show(tab,false,sec);setHash(tab);});
-  function fromHash(){let h="";try{h=(location.hash||"").slice(1);}catch(e){}
-    if(["story","works","students","research","media"].includes(h)){show(h);return;}
-    if(h==="top"){show("story");return;}
-    const el=h&&document.getElementById(h), pn=panelOf(el); if(pn){const t=pn.id.slice(6); if(t!=="home") show(t,false,h); else if(el) el.scrollIntoView(); setHash(t);}}
+    e.preventDefault();const sec=h!==tab?h:null;show(tab,false,sec);setHash(tab,true,PATH?sec:null);});
+  function fromHash(load){let h="";try{h=(location.hash||"").slice(1);}catch(e){}
+    if(TAB_OF[h]&&h!=="home"){show(TAB_OF[h]);setHash(TAB_OF[h]);return;}
+    if(h==="top"){show("story");setHash("story",false,PATH?"top":null);return;}
+    const el=h&&document.getElementById(h), pn=panelOf(el); if(pn){const t=pn.id.slice(6); if(t!=="home") show(t,false,h); else if(el) el.scrollIntoView(); setHash(t,false,PATH?h:null);return;}
+    /* no tab in the hash: the page address decides (only when it names a different tab, so a beach in the hash never jumps the page) */
+    if(PATH){const t=TAB_OF[pslug()]||"home"; if(t!==CUR||load){if(t!=="home"||CUR!=="home")show(t,false,el?h:null);}}}
   const mb=document.querySelector(".menubtn"); mb.addEventListener("click",()=>{const n=document.querySelector(".tabs"),o=n.classList.toggle("open");mb.setAttribute("aria-expanded",o?"true":"false");});
   /* close the phone menu on a tap outside it, or with Escape */
   const closeMenu=()=>{const n=document.querySelector(".tabs.open");if(n){n.classList.remove("open");mb.setAttribute("aria-expanded","false");return true;}return false;};
@@ -2296,7 +2307,7 @@ try{
     .finally(()=>{btn.disabled=false;btn.textContent="Send message";});});
   document.getElementById("csentAgain").addEventListener("click",()=>{CF.classList.remove("sent");document.getElementById("csent").hidden=true;CF.elements.name.focus();});
   try{const sp=document.getElementById("supportPop");new IntersectionObserver(es=>{if(sp)sp.style.visibility=es[0].isIntersecting?"hidden":"";}).observe(document.getElementById("contact"));}catch(_){}
-  fromHash(); addEventListener("hashchange",fromHash);
+  fromHash(true); addEventListener("hashchange",()=>fromHash()); addEventListener("popstate",()=>fromHash());
   /* facts for students and media, from the page data */
   const B=D.species.bull, O=D.bull_open.aus.eras, W=D.wa_spike, R=D.ratio, Z=D.zones, km=Math.round((Z.line[0]-Z.line[Z.line.length-1])*111), pc=e=>Math.round(e[1]/e[0]*100), r=Math.round(R.drown/R.shark);
   const A=D.ahead&&D.ahead.east, sA=A&&A.beaches.find(b=>b.name==="Sydney");

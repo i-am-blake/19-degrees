@@ -26,6 +26,7 @@ jobs:
           print(len(vals), "beaches OK")
           PY
           mv new.html index.html
+          python3 -I src/tab_pages.py index.html .
       - name: Publish
         run: |
           git diff --quiet && { echo "No change"; exit 0; }
