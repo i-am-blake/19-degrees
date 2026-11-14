@@ -30,8 +30,8 @@ SHORT = {LABEL["supports"]: "Early: yes", LABEL["leans"]: "Leans yes", LABEL["no
 def show(label): return SHORT.get(label, label)
 def css(st, label):  # badge color follows the direction of the result
     s = show(label)
-    return {"Early: yes": "cstat early", "Leans yes": "cstat early", "Leans no": "cstat no", "Early: no": "cstat no", "Unclear": "cstat"}.get(s,
-        {"ruled": "cstat ruled", "look": "cstat look", "nt": "cstat nt", "supported": "cstat early", "strong": "cstat early"}.get(st, "cstat"))
+    return {"Early: yes": "cstat early", "Leans yes": "cstat early", "Leans no": "cstat no", "Early: no": "cstat no", "Unclear": "cstat unc"}.get(s,
+        {"ruled": "cstat ruled", "look": "cstat look", "nt": "cstat nt", "supported": "cstat sup", "strong": "cstat strong"}.get(st, "cstat"))
 
 def V(ok, p):
     if p is None: return "none"
