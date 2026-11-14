@@ -353,7 +353,7 @@ ST_OF = {"First look": "look", "Ruled out": "ruled", "Open": "nt", "Not testable
 def badge(lab):
     return f'<span class="{G.css(ST_OF.get(lab, "early"), lab)}">{G.show(lab)}</span>'
 def changes(html, H):
-    """Home: "Science that changes its mind", the latest day any grade changed, from the grade history, with the reason for each change."""
+    """Home: "Updated by new evidence", the latest day any grade changed, from the grade history, with the reason for each change."""
     moves = [(e["date"], cid, h[i - 1]["label"], e["label"], e["why"]) for cid, h in H.items() for i, e in enumerate(h) if i]
     if not moves: return ""
     day = max(m[0] for m in moves)
@@ -366,7 +366,7 @@ def changes(html, H):
     li = "".join(f'<li><a href="#{cid}" data-tab="research"><span class="cid">{cid.upper()}</span><span class="mt">{title(cid)}</span>'
                  f'<span class="mg"><span class="was">{badge(a)}</span><span class="arr" aria-label="changed to">→</span>{badge(b)}</span><span class="mw">{why}</span></a></li>'
                  for _, cid, a, b, why in rows)
-    return ('<div class="kicker">Science that changes its mind</div>'
+    return ('<div class="kicker">Updated by new evidence</div>'
             f'<h2 id="h-mind">{head}</h2>'
             '<p class="sub">When new evidence moves a grade, the change is dated and the reason is given.</p>'
             f'<ol class="mind">{li}</ol>'
