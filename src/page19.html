@@ -2358,11 +2358,13 @@ try{
   document.addEventListener("click",e=>{if(jb.classList.contains("open")&&!e.target.closest(".jumpbar"))jClose();});
   document.addEventListener("keydown",e=>{if(e.key==="Escape"&&jb.classList.contains("open")){jClose();jt.focus();}});
   jl.forEach(a=>a.addEventListener("click",e=>{e.preventDefault();jClose();jc.textContent=a.textContent;const t=document.getElementById(a.getAttribute("href").slice(1));t.scrollIntoView({behavior:matchMedia("(prefers-reduced-motion: reduce)").matches?"auto":"smooth"});}));
-  const io=new IntersectionObserver(es=>{es.forEach(en=>{if(en.isIntersecting){const i=secs.indexOf(en.target);jl.forEach((a,j)=>a.classList.toggle("on",j===i));if(i>=0)jc.textContent=jl[i].textContent;}});},{rootMargin:"-200px 0px -60% 0px"});
-  secs.forEach(x=>x&&io.observe(x));
+  /* current chapter = the last heading that has passed just under the bar, so it is right in both scroll directions and after jumps */
+  let cur=-1;const act=()=>{if((pane&&pane.hidden)||!jb.offsetParent)return;const y=jb.getBoundingClientRect().bottom+60;let i=0;secs.forEach((x,j)=>{if(x&&x.getBoundingClientRect().top<=y)i=j;});
+    if(pane&&pane.getBoundingClientRect().bottom<=innerHeight+2)i=secs.length-1;if(i===cur)return;cur=i;jl.forEach((a,j)=>{a.classList.toggle("on",j===i);if(j===i)a.setAttribute("aria-current","true");else a.removeAttribute("aria-current");});jc.textContent=jl[i].textContent;};
+  let aq=false;addEventListener("scroll",()=>{if(!aq){aq=true;requestAnimationFrame(()=>{aq=false;act();});}},{passive:true});addEventListener("resize",act);act();
   /* Story: the 19°C line fills from cold to warm as you read */
   const pr=jb.querySelector(".jbprog i");
-  if(pr){const upd=()=>{if(!pane||pane.hidden)return;const r=pane.getBoundingClientRect(),v=Math.min(1,Math.max(0,(innerHeight*0.5-r.top)/(r.height-innerHeight*0.5)));pr.style.width=(v*100).toFixed(1)+"%";jb.querySelector(".jbprog").setAttribute("aria-valuenow",Math.round(v*100));};upd();addEventListener("scroll",upd,{passive:true});addEventListener("resize",upd);}
+  if(pr){const upd=()=>{if(!pane||pane.hidden)return;const r=pane.getBoundingClientRect(),v=Math.min(1,Math.max(0,(innerHeight*0.5-r.top)/(r.height-innerHeight*0.5)));pr.style.width=(v*100).toFixed(1)+"%";pr.style.backgroundSize=pr.parentNode.clientWidth+"px 100%";jb.querySelector(".jbprog").setAttribute("aria-valuenow",Math.round(v*100));};upd();addEventListener("scroll",upd,{passive:true});addEventListener("resize",upd);}
   });
 }catch(e){console.error(e)}
 </script>
