@@ -471,7 +471,7 @@ footer .copy{justify-self:start;text-align:left;color:var(--ink)}
 .chead{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
 .cid{font-family:var(--f-data);font-weight:700;font-size:13px;color:#041A2C;background:var(--ink);padding:3px 8px;border-radius:4px}
 /* evidence grades: the word, a symbol for direction and a border for strength, so no grade depends on color alone */
-.cstat{margin-left:auto;display:inline-flex;align-items:center;gap:6px;font-family:var(--f-data);font-size:13px;letter-spacing:.06em;text-transform:uppercase;border:1.5px solid var(--rule);color:var(--muted);padding:3px 8px;white-space:nowrap}
+.cstat{margin-left:auto;display:inline-flex;align-items:center;gap:6px;font-family:var(--f-data);font-size:13px;letter-spacing:.06em;text-transform:uppercase;border:1.5px solid var(--rule);color:var(--muted);padding:3px 8px;white-space:nowrap;box-sizing:border-box;width:11.75em;height:2.15em;justify-content:center;flex:none}
 .cstat::before{content:"\2013";content:"\2013"/"";font-weight:700;letter-spacing:0}
 .cstat.early{border-color:#4FB286;color:#8FD9B6}.cstat.early::before{content:"\2197";content:"\2197"/""}
 .cstat.sup{background:#2E7D5B;border-color:#2E7D5B;color:#fff}.cstat.sup::before{content:"\2713";content:"\2713"/""}
