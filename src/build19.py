@@ -367,6 +367,10 @@ if os.path.exists(_ca):
 _isl = os.path.join(here, "islands.json")  # islands19.py: Réunion and New Caledonia (claims C6, C22); optional
 if os.path.exists(_isl):
     d["islands"] = json.load(open(_isl)); print("islands", d["islands"]["c6"]["bull"], {k: v["sea_min"] for k, v in d["islands"]["islands"].items()})
+    _ST = {"Bull": "bull", "Tiger": "tiger", "Great white": "white"}  # Safety, "Start with where you swim": species as the island list names them
+    for _r in csv.DictReader(open(os.path.join(here, "islands_nc_run.csv"), encoding="utf-8")):
+        _c = d["islands"]["islands"].get(_r["SITE"])
+        if _c is not None: _c.setdefault("counts", {"bull": 0, "tiger": 0, "white": 0, "other": 0})[_ST.get(_r["SHARKTYPE"], "other")] += 1
 blob = json.dumps(d, separators=(",", ":")).replace("</", "<\\/")
 html = open(PAGE).read()
 import results19  # result sentences from the monthly-refreshed tests, written from the data

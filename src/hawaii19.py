@@ -34,7 +34,13 @@ def clar(sp):
 
 tm, tn = clar("tiger"); om, on = clar("other")
 yrs = [y for r in rows if (y := year(r))]
-out = dict(n=len(rows), first=min(yrs), last=max(yrs), tiger=sum(species(r) == "tiger" for r in rows),
+def named(r):  # Safety, "Start with where you swim": the three species the site compares, as the list names them
+    s = r["Shark"].strip().lower()
+    for k in ("tiger", "bull", "white"):
+        if re.match(rf"(great )?{k} shark", s): return k
+    return "other"
+counts = {k: sum(named(r) == k for r in rows) for k in ("bull", "tiger", "white", "other")}
+out = dict(n=len(rows), first=min(yrs), last=max(yrs), tiger=sum(species(r) == "tiger" for r in rows), counts=counts,
            tiger_murky=tm, tiger_clarity_n=tn, tiger_murky_pct=round(100 * tm / tn) if tn else None,
            other_murky=om, other_clarity_n=on, other_murky_pct=round(100 * om / on) if on else None,
            p_murky=fisher(tm, tn - tm, om, on - om),

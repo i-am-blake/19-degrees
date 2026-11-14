@@ -201,6 +201,10 @@ if not pm[max(pm, key=int)] / pm["1900"] > 6: bad.append("population: page says 
 # Home: "What we know so far" is built from the data files
 if all(k in D for k in results19.WK_NEED) and results19.ready(results19.what_we_know, D):
     check("Home: what we know so far", results19.what_we_know(D) in page, True)
+# Safety, "Start with where you swim": each other coast's species counts add up to its list
+if D.get("hawaii", {}).get("counts"): check("where you swim: Hawaii adds up", sum(D["hawaii"]["counts"].values()), D["hawaii"]["n"])
+for _k, _v in D.get("islands", {}).get("islands", {}).items():
+    if _v.get("counts"): check(f"where you swim: {_k} adds up", sum(_v["counts"].values()), _v["n"])
 # Claims: results first, then the claims waiting for data
 _r, _n = page.find('id="h-results"'), page.find('id="h-next"')
 check("claims split into results and next to test", 0 < _r < _n, True)
