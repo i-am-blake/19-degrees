@@ -373,23 +373,26 @@ def changes(html, H):
             '<p class="hcta" style="margin-top:18px"><a class="ghbtn" href="#h-changes" data-tab="research">Every change, with its evidence</a></p>')
 
 BUCKET = {"early": "yes", "sup": "yes", "strong": "yes", "no": "no", "ruled": "no", "unc": "mid", "look": "mid"}
-FILTERS = (("yes", "cstat early", "Leans yes"), ("no", "cstat no", "Against"), ("mid", "cstat unc", "Unclear or first look"), ("wait", "cstat nt", "Waiting for data"))
-def bucket(cls):
-    return next((BUCKET[c] for c in cls.split()[1:] if c in BUCKET), "wait")
-def grade_counts(html):
-    """How many claims fall in each filter, from the graded claim cards."""
-    n = {}
-    for cls in re.findall(r'<article class="claim" id="c\d+" data-status="\w+">.{0,240}?<span class="(cstat[^"]*)">', html, re.S):
-        k = bucket(cls); n[k] = n.get(k, 0) + 1
-    return n
+FILTERS = (("all", "All"), ("yes", "Leans yes"), ("no", "Against or ruled out"), ("mid", "Unclear or first look"), ("wait", "Waiting for data"))
 def evidence_map(html):
-    """Research: one row of grade chips that filters the claim cards themselves."""
-    n = grade_counts(html)
-    if not n: return ""
+    """Research: every claim as a tile, in its group, with its grade. Built from the graded claim cards, before they are split."""
+    a = html.find('<h3 class="cgroup">')
+    if a < 0: return ""
+    end = html.index("\n  </section>", a)
+    parts = re.split(r'<h3 class="cgroup">(.*?)</h3>', html[a:end], flags=re.S)[1:]
+    groups, n = [], {}
+    for i in range(0, len(parts), 2):
+        name = re.sub(r"<span>.*?</span>", "", parts[i]).strip()
+        tiles = []
+        for cid, st, cls, lab, h4 in re.findall(r'<article class="claim" id="(c\d+)" data-status="(\w+)">.{0,240}?<span class="(cstat[^"]*)">([^<]*)</span>.*?<h4>(.*?)</h4>', parts[i + 1], re.S):
+            k = next((BUCKET[c] for c in cls.split()[1:] if c in BUCKET), "wait")
+            n[k] = n.get(k, 0) + 1
+            tiles.append(f'<a class="emtile" href="#{cid}" data-b="{k}"><span class="emh"><span class="cid">{cid.upper()}</span><span class="{cls}">{lab}</span></span><span class="emx">{h4}</span></a>')
+        groups.append(f'<h4 class="emg">{name}<span>{len(tiles)} claims</span></h4><div class="emt">{"".join(tiles)}</div>')
     total = sum(n.values())
-    btns = f'<button type="button" data-f="all" aria-pressed="true"><span class="emall">All claims</span><span class="n">{total}</span></button>' + "".join(
-        f'<button type="button" data-f="{k}" aria-pressed="false"><span class="{cls}">{lab}</span><span class="n">{n.get(k, 0)}</span></button>' for k, cls, lab in FILTERS if n.get(k))
-    return f'<div class="emf" role="group" aria-label="Show claims by grade">{btns}</div><p class="emcount" aria-live="polite">All {total} claims shown.</p>'
+    btns = "".join(f'<button type="button" data-f="{k}" aria-pressed="{str(k == "all").lower()}">{lab} <span>{total if k == "all" else n.get(k, 0)}</span></button>' for k, lab in FILTERS)
+    return (f'<h3 class="blockh" id="h-emap">All {total} claims at a glance</h3><p class="sub" style="margin:0">Pick a grade to see where it falls. Click a claim to open it below.</p>'
+            f'<div class="emf" role="group" aria-label="Show claims by grade">{btns}</div><p class="emcount" aria-live="polite"></p>' + "".join(groups))
 
 def fill(html, D, history=None):
     html = apply_grades(html, D)

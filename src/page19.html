@@ -697,19 +697,25 @@ h3.splith + p.sub{margin:0 0 6px}
 .wayglobal .blockh{margin:0 0 8px}
 /* home: what we know so far */
 .wkwrap:empty{display:none}
-/* Research: grade chips that filter the claim cards */
+/* Research: every claim at a glance, filterable by grade */
 .emap:empty{display:none}
-.emap{position:sticky;top:var(--emtop,0px);z-index:3;margin:18px 0 8px;padding:12px 0;background:rgb(4,24,40);box-shadow:0 0 0 100vmax rgb(4,24,40);clip-path:inset(0 -100vmax)}
-.emf{display:flex;flex-wrap:wrap;gap:8px}
-.emf button{min-height:44px;padding:4px 12px 4px 4px;border-radius:10px;border:1.5px solid transparent;background:none;color:var(--ink);font:inherit;cursor:pointer;display:inline-flex;align-items:center;gap:8px}
-.emf button .cstat{margin:0;width:auto}.emf .emall{font-weight:700;padding:0 6px 0 10px}
-.emf button .n{font-family:var(--f-data);font-size:13px;color:var(--muted)}
-.emf button:hover{border-color:var(--rule)}
-.emf button[aria-pressed="true"]{border-color:var(--ink);background:rgba(255,255,255,.06)}.emf button[aria-pressed="true"] .n{color:var(--ink)}
+.emap{margin:22px 0 30px;padding:20px;border:1px solid var(--rule);background:rgba(255,255,255,.02)}
+.emap .blockh{margin:0 0 4px}
+.emf{display:flex;flex-wrap:wrap;gap:8px;margin:14px 0 6px}
+.emf button{min-height:44px;padding:0 16px;border-radius:999px;border:1.5px solid var(--rule);background:none;color:var(--ink);font:inherit;font-weight:600;cursor:pointer;display:inline-flex;align-items:center;gap:8px}
+.emf button span{font-family:var(--f-data);font-size:13px;color:var(--muted)}
+.emf button[aria-pressed="true"]{background:var(--ink);border-color:var(--ink);color:#041A2C}.emf button[aria-pressed="true"] span{color:#041A2C}
 .emf button:focus-visible{outline:2px solid #3395BE;outline-offset:2px}
-.emcount{margin:8px 0 0;font-size:14px;color:var(--muted)}
-.claim.emoff,.emhide{display:none!important}
-@media (max-width:600px){.emap{position:static}.emf{gap:6px}.emf button{min-height:44px}}
+.emcount{margin:0 0 6px;font-size:14px;color:var(--muted)}
+.emg{margin:18px 0 8px;font-size:15px;font-weight:700;display:flex;gap:10px;align-items:baseline}.emg span{font-family:var(--f-data);font-size:12px;color:var(--muted);font-weight:500}
+.emt{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:8px}
+.emtile{display:flex;flex-direction:column;gap:8px;padding:12px;border:1px solid var(--rule);color:var(--ink);text-decoration:none;transition:opacity .15s,border-color .15s,background-color .15s}
+.emtile:hover,.emtile:focus-visible{border-color:#3395BE;background:rgba(51,149,190,.12)}
+.emtile .emh{display:flex;align-items:center;justify-content:space-between;gap:8px}.emtile .cstat{margin:0}
+.emtile .emx{font-size:14px;line-height:1.4;color:var(--muted);display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+.emtile.dim{opacity:.25}
+@media (max-width:600px){.emap{padding:14px}.emt{grid-template-columns:1fr;gap:6px}.emtile{padding:8px 10px}.emtile .emx{-webkit-line-clamp:2;font-size:14px}.emg{flex-wrap:wrap}.emtile.dim{display:none}}
+@media (prefers-reduced-motion:reduce){.emtile{transition:none}}
 /* Home: updated by new evidence, built from the grade history */
 .mind{list-style:none;margin:18px 0 0;padding:0;display:grid;gap:10px}
 .mind a{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:8px 14px;align-items:center;padding:14px 18px;border:1px solid var(--rule);color:var(--ink);text-decoration:none;transition:border-color .15s,background-color .15s}
@@ -2376,19 +2382,12 @@ try{const dlg=document.getElementById("kofiDlg");
     dlg.addEventListener("click",e=>{if(e.target===dlg)dlg.close();});}
 }catch(e){console.error(e)}
 
-/* Research: grade chips filter the claim cards */
-try{const em=document.getElementById("emap");if(em&&em.querySelector(".emf")){const sec=em.closest("section"),bs=[...em.querySelectorAll(".emf button")],out=em.querySelector(".emcount"),
-  B={early:"yes",sup:"yes",strong:"yes",no:"no",ruled:"no",unc:"mid",look:"mid"},cards=[...sec.querySelectorAll("article.claim")];
-  const bk=c=>{const s=c.querySelector(".cstat");if(!s)return"wait";for(const k of s.classList)if(B[k])return B[k];return"wait";};
-  const jb=document.querySelector(".jumpbar"),top=()=>{if(jb){const t=parseFloat(getComputedStyle(jb).top)||0;em.style.setProperty("--emtop",(t+jb.offsetHeight)+"px");}};top();addEventListener("resize",top);
-  const set=f=>{bs.forEach(b=>b.setAttribute("aria-pressed",String(b.dataset.f===f)));let n=0;
-    cards.forEach(c=>{const on=f==="all"||bk(c)===f;c.classList.toggle("emoff",!on);if(on)n++;});
-    sec.querySelectorAll(".claims").forEach(l=>{const any=[...l.querySelectorAll("article.claim")].some(c=>!c.classList.contains("emoff")),h=l.previousElementSibling;l.classList.toggle("emhide",!any);if(h&&h.classList.contains("cgroup"))h.classList.toggle("emhide",!any);});
-    sec.querySelectorAll("h3.splith").forEach(h=>{let e=h.nextElementSibling,any=false;while(e&&!e.matches("h3.splith")){if(e.matches(".claims:not(.emhide)"))any=true;e=e.nextElementSibling;}h.classList.toggle("emhide",!any);const p=h.nextElementSibling;if(p&&p.matches("p.sub"))p.classList.toggle("emhide",!any);});
-    const b=bs.find(x=>x.dataset.f===f);out.textContent=f==="all"?`All ${cards.length} claims shown.`:`Showing ${n} of ${cards.length}: ${b.querySelector(".cstat").textContent.trim().toLowerCase()}.`;};
-  bs.forEach(b=>b.addEventListener("click",()=>{set(b.dataset.f);const r=sec.querySelector("#h-results");if(em.getBoundingClientRect().top<0||em.getBoundingClientRect().top>innerHeight)em.scrollIntoView({block:"start"});}));
-  addEventListener("hashchange",()=>{const h=(location.hash||"").slice(1),e=h&&document.getElementById(h),c=e&&e.closest("article.claim");if(c&&c.classList.contains("emoff"))set("all");});
-}}catch(e){console.error(e)}
+/* Research: evidence map filter */
+try{const em=document.getElementById("emap");if(em&&em.querySelector(".emf")){const bs=[...em.querySelectorAll(".emf button")],ts=[...em.querySelectorAll(".emtile")],out=em.querySelector(".emcount");
+  const set=f=>{bs.forEach(b=>b.setAttribute("aria-pressed",String(b.dataset.f===f)));let n=0;ts.forEach(t=>{const on=f==="all"||t.dataset.b===f;t.classList.toggle("dim",!on);if(on)n++;});
+    const b=bs.find(x=>x.dataset.f===f);out.textContent=f==="all"?`All ${ts.length} claims shown.`:`${n} of ${ts.length} claims: ${b.firstChild.textContent.trim().toLowerCase()}.`;};
+  bs.forEach(b=>b.addEventListener("click",()=>set(b.dataset.f)));set("all");}
+}catch(e){console.error(e)}
 
 /* What works: count the evidence in the products table */
 try{const pt=[...document.querySelectorAll("#panel-works td .cstat")],w=document.getElementById("wsum");
