@@ -2359,7 +2359,7 @@ try{
   document.addEventListener("keydown",e=>{if(e.key==="Escape"&&jb.classList.contains("open")){jClose();jt.focus();}});
   jl.forEach(a=>a.addEventListener("click",e=>{e.preventDefault();jClose();jc.textContent=a.textContent;const t=document.getElementById(a.getAttribute("href").slice(1));t.scrollIntoView({behavior:matchMedia("(prefers-reduced-motion: reduce)").matches?"auto":"smooth"});}));
   /* current chapter = the last heading that has passed just under the bar, so it is right in both scroll directions and after jumps */
-  let cur=-1;const act=()=>{if((pane&&pane.hidden)||!jb.offsetParent)return;const y=jb.getBoundingClientRect().bottom+60;let i=0;secs.forEach((x,j)=>{if(x&&x.getBoundingClientRect().top<=y)i=j;});
+  let cur=-1;const act=()=>{if((pane&&pane.hidden)||!jb.offsetParent)return;const y=Math.max(jb.getBoundingClientRect().bottom+60,innerHeight*0.4);let i=0;secs.forEach((x,j)=>{if(x&&x.getBoundingClientRect().top<=y)i=j;});
     if(pane&&pane.getBoundingClientRect().bottom<=innerHeight+2)i=secs.length-1;if(i===cur)return;cur=i;jl.forEach((a,j)=>{a.classList.toggle("on",j===i);if(j===i)a.setAttribute("aria-current","true");else a.removeAttribute("aria-current");});jc.textContent=jl[i].textContent;};
   let aq=false;addEventListener("scroll",()=>{if(!aq){aq=true;requestAnimationFrame(()=>{aq=false;act();});}},{passive:true});addEventListener("resize",act);act();
   /* Story: the 19°C line fills from cold to warm as you read */
