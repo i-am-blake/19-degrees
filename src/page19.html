@@ -1116,12 +1116,12 @@ h3.splith + p.sub{margin:0 0 6px}
     <div class="wsum" id="wsum" aria-label="Evidence for the products below"></div>
     <div class="where" id="where">
       <h3 class="blockh" id="h-where">Start with where you swim</h3>
-      <p class="sub">The sharks that bite people differ along the coast. Pick a region to see which species were recorded there, then which products were tested with them.</p>
-      <div class="wctl"><label for="wreg">Coastal region</label><select id="wreg"><option value="">All of Australia</option></select></div>
+      <p class="sub">The sharks that bite people differ from coast to coast. Pick a region to see which species were recorded there, then which products were tested with them. More coasts join as their data does.</p>
+      <div class="wctl"><label for="wreg">Region</label><select id="wreg"></select></div>
       <div class="wbars" id="wbars" role="img"></div>
       <p class="wread" id="wread" aria-live="polite"></p>
       <p class="hcta"><button type="button" class="ghbtn" id="wgo"></button> <button type="button" class="ghbtn" id="wall" hidden>Show all products</button></p>
-      <p class="note">A guide to the evidence, not a forecast or a safety rating for any beach. Bites follow where people swim as much as where sharks are. "Other or unidentified" includes whalers, wobbegongs and bites where the species wasn't known. Recorded bites since 1900: Australian Shark-Incident Database, to <span id="wto"></span>.</p>
+      <p class="note">A guide to the evidence, not a forecast or a safety rating for any beach. Bites follow where people swim as much as where sharks are. "Other or unidentified" means other species, or bites where the species wasn't known. Recorded bites: <span id="wsrc"></span>.</p>
     </div>
     <h3 class="blockh" style="margin:30px 0 4px">26 products we checked, and what independent tests found</h3>
 <p class="sub">Every shark deterrent, protective wetsuit, bleeding-control product and barrier we could find with a published test, linked to that test. Products sold without any test we could find are left out. Researchers: the untested and partly tested products are where new trials would help most, especially with bull sharks.</p>
@@ -2389,23 +2389,30 @@ try{const dlg=document.getElementById("kofiDlg");
     dlg.addEventListener("click",e=>{if(e.target===dlg)dlg.close();});}
 }catch(e){console.error(e)}
 
-/* Safety: start with where you swim */
-try{const R=D.region_species||[],sel=document.getElementById("wreg");if(sel&&R.length){
-  R.forEach(([n])=>{const o=document.createElement("option");o.value=n;o.textContent=n;sel.appendChild(o);});
+/* Safety: start with where you swim. Australia by region, then other coasts as their data joins; each region names its own source and years */
+try{const sel=document.getElementById("wreg");if(sel&&(D.region_species||[]).length){
   const MON=["January","February","March","April","May","June","July","August","September","October","November","December"];
-  if(D.asid_last)document.getElementById("wto").textContent=MON[D.asid_last.month-1]+" "+D.asid_last.year;
-  const rows=[...document.querySelectorAll(".ptab tbody tr:not(.pg)")],tw=r=>(r.querySelector("td")||{}).textContent||"",NM={bull:"bull",tiger:"tiger",white:"white"};
+  const aus=`Australian Shark-Incident Database, 1900 to ${D.asid_last?MON[D.asid_last.month-1]+" "+D.asid_last.year:"the latest record"}`;
+  const AU=D.region_species.map(([n,c])=>({n,c,g:"Australia",src:aus,k:["bull","tiger","white","other"]}));
+  const allAU={n:"All of Australia",g:"Australia",src:aus,k:["bull","tiger","white","other"],c:AU.reduce((t,r)=>{for(const k in r.c)t[k]=(t[k]||0)+r.c[k];return t;},{})};
+  const OT=[];
+  if(D.hawaii&&D.hawaii.n)OT.push({n:"Hawaii (US)",g:"Other coasts",k:["tiger","other"],c:{tiger:D.hawaii.tiger,other:D.hawaii.n-D.hawaii.tiger},src:`Hawaii DLNR incident list, ${D.hawaii.first} to ${D.hawaii.last}. Only tiger sharks are counted separately`});
+  const IS=(D.islands||{}).islands||{};[["Reunion","Réunion (France)"],["New Caledonia","New Caledonia (France)"]].forEach(([k,lab])=>{const x=IS[k];if(!x)return;const b=(x.species.bull||{}).n||0,t=(x.species.tiger||{}).n||0;
+    OT.push({n:lab,g:"Other coasts",k:["bull","tiger","other"],c:{bull:b,tiger:t,other:x.n-b-t},src:`University of Réunion incident list (${D.islands.source}), ${D.islands.y0} to ${D.islands.y1}. Only bull and tiger sharks are counted separately`});});
+  const ALL=[allAU,...AU,...OT];
+  [["Australia",[allAU,...AU]],["Other coasts",OT]].forEach(([g,list])=>{if(!list.length)return;const og=document.createElement("optgroup");og.label=g;list.forEach(r=>{const o=document.createElement("option");o.value=r.n;o.textContent=r.n;og.appendChild(o);});sel.appendChild(og);});
+  const rows=[...document.querySelectorAll(".ptab tbody tr:not(.pg)")],tw=r=>(r.querySelector("td")||{}).textContent||"";
   const tested=k=>rows.filter(r=>tw(r).toLowerCase().includes(k)).length;
-  const bars=document.getElementById("wbars"),read=document.getElementById("wread"),go=document.getElementById("wgo"),all=document.getElementById("wall");
+  const bars=document.getElementById("wbars"),read=document.getElementById("wread"),go=document.getElementById("wgo"),all=document.getElementById("wall"),src=document.getElementById("wsrc");
+  const LB={bull:["Bull shark",""],tiger:["Tiger shark",""],white:["White shark","cold"],other:["Other or unidentified","oth"]};
   let top=null;
   const filt=k=>{rows.forEach(r=>r.classList.toggle("pdim",!!k&&!tw(r).toLowerCase().includes(k)));all.hidden=!k;};
-  const show=()=>{const v=sel.value;let c={bull:0,tiger:0,white:0,other:0};
-    (v?R.filter(r=>r[0]===v):R).forEach(([,x])=>{for(const k in c)c[k]+=x[k]||0;});
-    const tot=c.bull+c.tiger+c.white+c.other,mx=Math.max(c.bull,c.tiger,c.white,c.other)||1,pc=x=>Math.round(x/tot*100)+"%";
-    bars.innerHTML=[["bull","Bull shark",""],["tiger","Tiger shark",""],["white","White shark","cold"],["other","Other or unidentified","oth"]].map(([k,l,cl])=>`<div class="wbar ${cl}"><b>${l}</b><span class="tr"><span class="fl" style="width:${c[k]/mx*100}%"></span></span><span class="v">${c[k]} · ${pc(c[k])}</span></div>`).join("");
-    bars.setAttribute("aria-label",`${v||"All of Australia"}: ${tot} recorded bites since 1900. Bull ${c.bull}, tiger ${c.tiger}, white ${c.white}, other or unidentified ${c.other}.`);
-    const rk=["bull","tiger","white"].sort((a,b)=>c[b]-c[a]);top=c[rk[0]]?rk[0]:null;
-    read.textContent=!top?"Few recorded bites here were by bull, tiger or white sharks.":c[rk[0]]===c[rk[1]]?`Here, ${rk[0]} and ${rk[1]} sharks account for the same number of identified bites. ${tested(rk[0])} of ${rows.length} products were tested with ${rk[0]} sharks, ${tested(rk[1])} with ${rk[1]} sharks.`:`Here, most identified bites were by ${top} sharks. ${tested(top)} of ${rows.length} products were tested with them.`;
+  const show=()=>{const r=ALL.find(x=>x.n===sel.value)||allAU,c=r.c,tot=r.k.reduce((t,k)=>t+(c[k]||0),0),mx=Math.max(...r.k.map(k=>c[k]||0))||1,pc=x=>Math.round(x/tot*100)+"%";
+    bars.innerHTML=r.k.map(k=>`<div class="wbar ${LB[k][1]}"><b>${LB[k][0]}</b><span class="tr"><span class="fl" style="width:${(c[k]||0)/mx*100}%"></span></span><span class="v">${c[k]||0} · ${pc(c[k]||0)}</span></div>`).join("");
+    bars.setAttribute("aria-label",`${r.n}: ${tot} recorded bites. `+r.k.map(k=>`${LB[k][0]} ${c[k]||0}`).join(", ")+".");
+    src.textContent=r.src;
+    const rk=r.k.filter(k=>k!=="other").sort((a,b)=>(c[b]||0)-(c[a]||0));top=c[rk[0]]?rk[0]:null;
+    read.textContent=!top?"Few recorded bites here were by bull, tiger or white sharks.":rk[1]&&c[rk[0]]===c[rk[1]]?`Here, ${rk[0]} and ${rk[1]} sharks account for the same number of identified bites. ${tested(rk[0])} of ${rows.length} products were tested with ${rk[0]} sharks, ${tested(rk[1])} with ${rk[1]} sharks.`:`Here, most identified bites were by ${top} sharks. ${tested(top)} of ${rows.length} products were tested with them.`;
     go.hidden=!top;if(top)go.textContent=`Show products tested with ${top} sharks`;filt(null);};
   sel.addEventListener("change",show);go.addEventListener("click",()=>{if(top){filt(top);document.querySelector(".ptwrap").scrollIntoView({block:"start"});}});all.addEventListener("click",()=>filt(null));
   show();
