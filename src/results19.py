@@ -372,8 +372,33 @@ def changes(html, H):
             f'<ol class="mind">{li}</ol>'
             '<p class="hcta" style="margin-top:18px"><a class="ghbtn" href="#h-changes" data-tab="research">Every change, with its evidence</a></p>')
 
+BUCKET = {"early": "yes", "sup": "yes", "strong": "yes", "no": "no", "ruled": "no", "unc": "mid", "look": "mid"}
+FILTERS = (("all", "All"), ("yes", "Leans yes"), ("no", "Against or ruled out"), ("mid", "Unclear or first look"), ("wait", "Waiting for data"))
+def evidence_map(html):
+    """Research: every claim as a tile, in its group, with its grade. Built from the graded claim cards, before they are split."""
+    a = html.find('<h3 class="cgroup">')
+    if a < 0: return ""
+    end = html.index("\n  </section>", a)
+    parts = re.split(r'<h3 class="cgroup">(.*?)</h3>', html[a:end], flags=re.S)[1:]
+    groups, n = [], {}
+    for i in range(0, len(parts), 2):
+        name = re.sub(r"<span>.*?</span>", "", parts[i]).strip()
+        tiles = []
+        for cid, st, cls, lab, h4 in re.findall(r'<article class="claim" id="(c\d+)" data-status="(\w+)">.{0,240}?<span class="(cstat[^"]*)">([^<]*)</span>.*?<h4>(.*?)</h4>', parts[i + 1], re.S):
+            k = next((BUCKET[c] for c in cls.split()[1:] if c in BUCKET), "wait")
+            n[k] = n.get(k, 0) + 1
+            tiles.append(f'<a class="emtile" href="#{cid}" data-b="{k}"><span class="emh"><span class="cid">{cid.upper()}</span><span class="{cls}">{lab}</span></span><span class="emx">{h4}</span></a>')
+        groups.append(f'<h4 class="emg">{name}<span>{len(tiles)} claims</span></h4><div class="emt">{"".join(tiles)}</div>')
+    total = sum(n.values())
+    btns = "".join(f'<button type="button" data-f="{k}" aria-pressed="{str(k == "all").lower()}">{lab} <span>{total if k == "all" else n.get(k, 0)}</span></button>' for k, lab in FILTERS)
+    return (f'<h3 class="blockh" id="h-emap">All {total} claims at a glance</h3><p class="sub" style="margin:0">Pick a grade to see where it falls. Click a claim to open it below.</p>'
+            f'<div class="emf" role="group" aria-label="Show claims by grade">{btns}</div><p class="emcount" aria-live="polite"></p>' + "".join(groups))
+
 def fill(html, D, history=None):
-    html = split_claims(apply_grades(html, D))
+    html = apply_grades(html, D)
+    _em = evidence_map(html)
+    html = split_claims(html)
+    if _em: html = html.replace('<div id="emap" class="emap"></div>', f'<div id="emap" class="emap">{_em}</div>', 1)
     if all(k in D for k in WK_NEED) and ready(what_we_know, D):
         html = re.sub(r'(<div id="wk" class="wkwrap">).*?(</div>)', lambda m: m.group(1) + what_we_know(D) + m.group(2), html, count=1, flags=re.S)
     H = X.load_history() if history is None else history

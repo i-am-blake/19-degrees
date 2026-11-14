@@ -204,6 +204,14 @@ if all(k in D for k in results19.WK_NEED) and results19.ready(results19.what_we_
 # Home: "Updated by new evidence" comes from the grade history
 _mind = results19.changes(page, explain19.load_history())
 if _mind: check("Home: updated by new evidence", f'<section aria-labelledby="h-mind" id="mind">{_mind}</section>' in page, True)
+# Research: the evidence map shows every claim once, with the same grade as its card
+_em = re.search(r'<div id="emap" class="emap">(.*?)</div>\s*<h3 class="splith"', page, re.S)
+if _em:
+    _tiles = re.findall(r'<a class="emtile" href="#(c\d+)" data-b="\w+"><span class="emh"><span class="cid">C\d+</span><span class="(cstat[^"]*)">([^<]*)</span>', _em[1])
+    check("evidence map: one tile per claim", len(_tiles), len(set(re.findall(r'<article class="claim" id="(c\d+)"', page))))
+    for _c, _cl, _lb in _tiles:
+        _card = re.search(rf'<article class="claim" id="{_c}" data-status="\w+">.{{0,240}}?<span class="(cstat[^"]*)">([^<]*)</span>', page, re.S)
+        check(f"evidence map {_c.upper()} grade", (_cl, _lb), (_card[1], _card[2]) if _card else None)
 # Claims: results first, then the claims waiting for data
 _r, _n = page.find('id="h-results"'), page.find('id="h-next"')
 check("claims split into results and next to test", 0 < _r < _n, True)
