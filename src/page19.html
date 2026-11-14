@@ -697,6 +697,7 @@ h3.splith + p.sub{margin:0 0 6px}
 .wayglobal .blockh{margin:0 0 8px}
 /* home: what we know so far */
 .wkwrap:empty{display:none}
+.row .spst{display:flex;flex-direction:column;gap:2px;font-family:var(--f-data);font-size:13px;letter-spacing:.02em;color:var(--muted);margin-top:6px;line-height:1.4}
 .wk{margin:18px 0 0;display:grid;gap:14px;grid-template-columns:repeat(3,minmax(0,1fr))}
 @media (max-width:820px){.wk{grid-template-columns:1fr}}
 .wk-col{border:1px solid var(--rule);padding:16px 16px 8px;display:grid;gap:10px;align-content:start;min-width:0}
@@ -1731,6 +1732,7 @@ try{
       const who=document.createElement("div"); who.className="who"; who.appendChild(outline(k,120));
       const nm=document.createElement("div"); nm.className="nm"; nm.textContent=D.sharks.species[k].name; who.appendChild(nm);
       const ct=document.createElement("div"); ct.className="ct"; ct.innerHTML=`<b class="num">${S.below}</b> of <span class="num">${S.n}</span> bites below 19°C`; who.appendChild(ct);
+      const st=document.createElement("div"); st.className="spst"; st.innerHTML=`<span>${Math.round(S.below/S.n*100)}% below 19°C</span><span>Median ${S.median.toFixed(1)}°C</span><span>Coldest ${S.min.toFixed(1)}°C</span>`; who.appendChild(st);
       row.appendChild(who);
       const fig=document.createElement("div"); fig.style.minWidth="0"; row.appendChild(fig); host.appendChild(row);
       const W=Math.max(260,fig.clientWidth||600), nb=T1-T0, bw=W/nb, across=Math.max(3,Math.floor(bw/(W<520?5.2:7))), p=bw/across, rad=Math.min(p*0.4,3.2);
