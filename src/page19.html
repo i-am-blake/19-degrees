@@ -723,6 +723,27 @@ h3.splith + p.sub{margin:0 0 6px}
 .ptab tr.pdim{opacity:.3}
 .where button.ghbtn{background:none;font:inherit;font-weight:700;cursor:pointer}.where button.ghbtn:hover{background:var(--ink);color:#041A2C}
 @media (max-width:600px){.where{padding:16px}.wbar{grid-template-columns:110px minmax(0,1fr) 78px;gap:8px;font-size:14px}}
+.hdk{margin-top:40px;display:grid;grid-template-columns:240px minmax(0,1fr);background:rgba(255,255,255,.03);border:1px solid var(--rule)}
+.hdktabs{display:flex;flex-direction:column;border-right:1px solid var(--rule)}
+.hdkh{font-weight:800;font-size:21px;padding:20px 20px 12px;color:var(--ink)}
+.hdktabs button{text-align:left;min-height:48px;padding:0 20px;font:inherit;font-weight:700;font-size:16px;color:var(--ink);background:transparent;border:0;border-left:4px solid transparent;cursor:pointer}
+.hdktabs button:hover{background:rgba(255,255,255,.04)}
+.hdktabs button[aria-selected="true"]{border-left-color:var(--warm);background:rgba(51,149,190,.16)}
+.hdktabs button:focus-visible,.hdkpanel:focus-visible{outline:2px solid #3395BE;outline-offset:-2px}
+.hdkpanel{padding:24px 28px;display:flex;flex-direction:column;gap:10px}
+.hdkpanel .k{font-family:var(--f-data);font-size:13px;letter-spacing:.1em;text-transform:uppercase;color:var(--warm)}
+.hdkpanel p{margin:0;max-width:68ch}.hdkpanel p.t{font-size:19px;line-height:1.55}.hdkpanel p.m{font-size:15px;line-height:1.5;color:var(--muted)}
+@media (max-width:700px){.hdk{grid-template-columns:1fr}.hdktabs{flex-direction:row;flex-wrap:wrap;border-right:0;border-bottom:1px solid var(--rule)}.hdkh{width:100%;padding:16px 16px 6px}.hdktabs button{flex:1 1 45%;min-height:44px;padding:0 12px;font-size:15px;border-left:0;border-bottom:3px solid transparent}.hdktabs button[aria-selected="true"]{border-bottom-color:var(--warm)}.hdkpanel{padding:18px 16px}.hdkpanel p.t{font-size:17px}}
+.evst{margin-top:36px;display:grid;gap:14px}
+.evst .blockh{margin:0}
+.evbar{display:flex;gap:3px;height:34px}
+.evbar span{display:flex;align-items:center;justify-content:center;min-width:0;font-family:var(--f-data);font-size:13px;font-weight:700;box-sizing:border-box;border:1.5px solid var(--rule);color:var(--ink)}
+.evbar .sup{background:#2E7D5B;border-color:#2E7D5B;color:#fff}.evbar .early{background:rgba(79,178,134,.22);border-color:#4FB286;color:#8FD9B6}.evbar .no{background:rgba(201,112,95,.22);border-color:#C9705F;color:#F0A493}.evbar .unc{border-style:dashed;border-color:var(--muted)}.evbar .look{border-style:dotted;border-color:#7CC7F0;color:#A9DCF6}.evbar .wait{background:rgba(255,255,255,.04);color:var(--muted)}
+.evkey{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:14px 24px;margin:6px 0 0}
+.evkey div{display:grid;gap:6px;align-content:start}
+.evkey dt{display:flex;align-items:center;gap:10px}.evkey dt .cstat{margin:0;width:auto;min-width:9.5em}
+.evkey dt b{font-family:var(--f-data);font-size:15px}
+.evkey dd{margin:0;font-size:14px;line-height:1.45;color:var(--muted)}
 .spfocus{margin-top:18px;display:grid;gap:14px}
 .spfocus .sptiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:1px;background:var(--rule);border:1px solid var(--rule)}
 .spfocus .sptiles div{background:var(--deep);padding:12px 14px;display:flex;flex-direction:column;gap:4px}
@@ -910,6 +931,7 @@ h3.splith + p.sub{margin:0 0 6px}
       <p class="caveat">It is a pattern in monthly sea temperatures, not a safe line for any beach on any day. Daily data and tags found young bull sharks wintering in colder rivers, in Florida and in Australia.</p>
       <p class="hcta"><a class="ctabtn" href="#h-line">Follow the 19°C line →</a></p>
     </div></div>
+    <div class="hdk" id="hdk" hidden><div class="hdktabs" role="tablist" aria-label="How do we know?"><span class="hdkh" aria-hidden="true">How do we know?</span></div><div class="hdkpanel" role="tabpanel" id="hdkpanel" tabindex="0"></div></div>
   </section>
 
   <section aria-labelledby="h-threads">
@@ -932,6 +954,7 @@ h3.splith + p.sub{margin:0 0 6px}
       <div class="atile"><span class="lab">Products checked</span><span class="big">26</span></div>
     </div>
     <p class="sub" style="margin-top:18px">Forty-three claims, tested in public. Each says in advance what would support it and what would rule it out.</p>
+    <div class="evst" id="evst" hidden><h3 class="blockh" id="h-evst">Where the evidence stands</h3><p class="sub" id="evstSum"></p><div class="evbar" id="evbar" role="img"></div><dl class="evkey" id="evkey"></dl><p class="note"><a href="#h-agenda" data-tab="research">See every claim and its evidence →</a></p></div>
     <div id="wk" class="wkwrap"></div>
   </section>
 
@@ -957,13 +980,13 @@ h3.splith + p.sub{margin:0 0 6px}
   </section>
 
   <section aria-labelledby="h-ways">
-    <div class="kicker">Help build it</div>
-    <h2 id="h-ways">Everyone has a way in.</h2>
+    <div class="kicker">The invitation</div>
+    <h2 id="h-ways">The next result could be yours.</h2>
     <div class="stats4">
-      <article class="way"><h3 class="blockh">Researchers</h3><p class="sub">Pick one of 43 claims, say what would prove it wrong, test it.</p><a class="ctabtn" href="#h-agenda" data-tab="research">See the claims →</a></article>
-      <article class="way"><h3 class="blockh">Data holders</h3><p class="sub">Share openly, as summaries, or under your own agreement. Credited by name.</p><a class="ctabtn" href="#h-data" data-tab="research">Offer data →</a></article>
-      <article class="way"><h3 class="blockh">Funders and partners</h3><p class="sub">Fund the next stage: more countries, more data, independent product trials.</p><a class="ctabtn donatelink" data-from="home" href="https://ko-fi.com/19degrees" target="_blank" rel="noopener">Donate →</a></article>
-      <article class="way"><h3 class="blockh">Teachers</h3><p class="sub">Free classroom sheets for ages 8 to 18, built from the live data.</p><a class="ctabtn" href="#students" data-tab="students">Get the sheets →</a></article>
+      <article class="way"><h3 class="blockh">Researchers</h3><p class="sub">Pick one of the <span class="num" id="wayOpen">20</span> claims not yet tested. Each already says what would prove it wrong.</p><a class="ctabtn" href="#h-agenda" data-tab="research">See the claims →</a></article>
+      <article class="way"><h3 class="blockh">Data holders</h3><p class="sub">Hold the data that would settle a claim? Share it openly, as summaries, or under your own agreement. Credited by name.</p><a class="ctabtn" href="#h-data" data-tab="research">Offer data →</a></article>
+      <article class="way"><h3 class="blockh">Supporters</h3><p class="sub">Keep the tests independent and the data updated, and fund the next stage: more countries and independent product trials.</p><a class="ctabtn donatelink" data-from="home" href="https://ko-fi.com/19degrees" target="_blank" rel="noopener">Support →</a></article>
+      <article class="way"><h3 class="blockh">Teachers</h3><p class="sub">Free real-data lessons for ages 8 to 18, built from the live data.</p><a class="ctabtn" href="#students" data-tab="students">Get the sheets →</a></article>
     </div>
     <p class="note">Everyone else: share it, and swim between the red and yellow flags.</p>
       <div class="wayglobal"><h3 class="blockh">Australia is the first case study.</h3><p class="sub">The methods and code work for any coast. Bull, tiger and white sharks bite in warm water worldwide, and the same questions apply wherever people swim.</p>
@@ -1208,7 +1231,7 @@ h3.splith + p.sub{margin:0 0 6px}
     <div class="ways">
       <article class="way"><span class="wn">1</span><h3>Help test</h3><p>Investigate an open research question. Pick a claim, say what would prove it wrong, and test it. Think a finding here is wrong? Show it: corrections are credited too.</p><a class="ctabtn" href="#h-next">See the open claims →</a></article>
       <article class="way"><span class="wn">2</span><h3>Share data</h3><p>Help fill gaps in the evidence. Catch records, tracking data, rainfall, coroner reviews and local sightings that this site can't reach could settle a claim.</p><a class="ctabtn" href="#h-data">See the data we need →</a></article>
-      <article class="way"><span class="wn">3</span><h3>Contribute</h3><p>Support the research and its future. Every result, dataset and correction is credited, and support keeps the data updated and the tests independent.</p><a class="ctabtn donatelink" data-from="research" href="https://ko-fi.com/19degrees" target="_blank" rel="noopener">Support the research →</a></article>
+      <article class="way"><span class="wn">3</span><h3>Contribute</h3><p>Support the research and its future. Every result, dataset and correction is credited, and support keeps the data updated and the tests independent.</p><a class="ctabtn donatelink" data-from="research" href="https://ko-fi.com/19degrees" target="_blank" rel="noopener">Support →</a></article>
     </div>
     <p class="starter"><b>Start in five minutes.</b> A short Python notebook reproduces the two headline results, 0 of 170 bull shark bites below 19°C and the move into coastal waters, from the downloadable data. <a href="data/19-degrees-starter.ipynb" download>Download the starter notebook</a> · <a href="#h-refs-data">get the data</a> · <a href="#h-contrib">what to send and how you're credited</a></p>
   </section>
@@ -1779,6 +1802,46 @@ try{
     box.replaceChildren(svg);
   }
   draw(); let t; addEventListener("resize",()=>{clearTimeout(t);t=setTimeout(draw,120)});
+}catch(e){console.error(e)}
+</script>
+
+<script>
+/* Home: "How do we know?" for the discovery, and where all the claims stand, read from the claim cards themselves */
+try{
+  const B=D.species.bull, M=["January","February","March","April","May","June","July","August","September","October","November","December"];
+  const g=id=>{const c=document.querySelector(`#${id} .chead .cstat`);return c?c.textContent.trim().toLowerCase():"";};
+  const last=D.asid_last?`${M[D.asid_last.month-1]} ${D.asid_last.year}`:"";
+  if(B.below===0){
+    const T=[
+      ["finding","The finding","Observed pattern",`Every recorded bull shark bite in Australia since 1900 came in a month when the average sea-surface temperature at that spot was 19°C or warmer. The coldest was ${B.min.toFixed(1)}°C.`,`This is a pattern in records, not a cause and not a rule for any beach. It also holds for the ${B.conf.n} bites where the species was confirmed.`],
+      ["evidence","The evidence",`${B.n} bites · monthly sea temperature`,`${B.n} bull shark bites from the Australian Shark-Incident Database (Taronga Conservation Society and Flinders University), 1900 to ${last}, each matched to HadISST monthly sea-surface temperature for its place and month.`,`Anyone can rerun it: a short starter notebook reproduces the 0 of ${B.n} from the downloadable data, on the <a href="#h-help-test" data-tab="research">Research page</a>.`],
+      ["limits","The limitations","What this can't tell you","Monthly averages, not the water on the day. Sea surface, not the river or harbor where many bites happen. Recorded bites only, and the species is sometimes a best guess.","Tagged bull sharks have been measured in water below 19°C: young ones overwinter in some rivers. So the line describes where bites happen, not everywhere bull sharks can be."],
+      ["change","What would change it","How this could be wrong","A confirmed bull shark bite in a month below 19°C. Or daily temperatures at bite sites showing many bites in colder water than the monthly average suggests.",`<a href="#c22" data-tab="research">C22</a> and <a href="#c25" data-tab="research">C25</a> ask whether the line holds outside Australia (${g("c22")} and ${g("c25")}). <a href="#c43" data-tab="research">C43</a> asks why small sharks stay in cold rivers (${g("c43")}).`]];
+    const tl=document.querySelector("#hdk .hdktabs"), pn=document.getElementById("hdkpanel");
+    const bs=T.map((t,i)=>{const b=document.createElement("button");b.type="button";b.setAttribute("role","tab");b.id="hdk-"+t[0];b.setAttribute("aria-controls","hdkpanel");b.textContent=t[1];b.addEventListener("click",()=>pick(i));tl.appendChild(b);return b;});
+    function pick(i,f){bs.forEach((b,j)=>{b.setAttribute("aria-selected",j===i?"true":"false");b.tabIndex=j===i?0:-1;});const t=T[i];pn.setAttribute("aria-labelledby",bs[i].id);pn.innerHTML=`<span class="k">${t[2]}</span><p class="t">${t[3]}</p><p class="m">${t[4]}</p>`;if(f)bs[i].focus();}
+    tl.addEventListener("keydown",e=>{const i=bs.indexOf(document.activeElement);if(i<0)return;let j=null;if(e.key==="ArrowDown"||e.key==="ArrowRight")j=(i+1)%bs.length;else if(e.key==="ArrowUp"||e.key==="ArrowLeft")j=(i-1+bs.length)%bs.length;else if(e.key==="Home")j=0;else if(e.key==="End")j=bs.length-1;if(j!==null){e.preventDefault();pick(j,true);}});
+    pick(0); document.getElementById("hdk").hidden=false;
+  }
+  const cs=[...document.querySelectorAll("#panel-research article.claim .chead .cstat")];
+  if(cs.length){
+    const has=(c,k)=>c.classList.contains(k);
+    const G=[
+      ["sup","Supported","sup",c=>has(c,"sup")||has(c,"strong"),"A test set in advance, then confirmed on independent data."],
+      ["early","Leans yes","early",c=>has(c,"early"),"Tested; points the predicted way, but not strongly enough to call yet."],
+      ["no","Against","no",c=>has(c,"no")||has(c,"ruled"),"Tested; points the other way, including the claims ruled out."],
+      ["unc","Unclear","unc",c=>has(c,"unc"),"Tested; no clear direction either way."],
+      ["look","First look","look",c=>has(c,"look"),"Described from the data so far, not tested."],
+      ["wait","Waiting","",c=>!["sup","strong","early","no","ruled","unc","look"].some(k=>has(c,k)),"Written down with what would prove each wrong, and waiting for data or a test."]];
+    const n=G.map(x=>cs.filter(x[3]).length), tot=cs.length, tested=n[0]+n[1]+n[2]+n[3], wait=n[5];
+    const bar=document.getElementById("evbar"), key=document.getElementById("evkey");
+    G.forEach((x,i)=>{if(!n[i])return;const sp=document.createElement("span");sp.className=x[0];sp.style.flex=n[i];sp.textContent=n[i];sp.title=`${x[1]}: ${n[i]}`;bar.appendChild(sp);
+      const d=document.createElement("div");d.innerHTML=`<dt><span class="cstat ${x[2]}">${x[1]}</span><b>${n[i]}</b></dt><dd>${x[4]}</dd>`;key.appendChild(d);});
+    bar.setAttribute("aria-label",G.map((x,i)=>n[i]?`${x[1]}: ${n[i]}`:"").filter(Boolean).join(", "));
+    document.getElementById("evstSum").textContent=`Of ${tot} claims, ${tested} have a test result, ${n[4]} ${n[4]===1?"has":"have"} a first look and ${wait} ${wait===1?"is":"are"} waiting for data or a test.`;
+    document.getElementById("evst").hidden=false;
+    const wo=document.getElementById("wayOpen"); if(wo) wo.textContent=document.querySelectorAll('article.claim[data-status="open"]').length;
+  }
 }catch(e){console.error(e)}
 </script>
 
