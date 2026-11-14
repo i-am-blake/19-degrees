@@ -159,6 +159,13 @@ HIST = os.path.join(os.path.dirname(os.path.abspath(__file__)), "grades_history.
 def load_history():
     try: return json.load(open(HIST))
     except (OSError, ValueError): return {}
+def reason(cid, D, st):
+    """Why the grade is what it is now, in the claim card's own words, for the grade history."""
+    try:
+        if st == "look": return LOOK[cid][0]
+        if cid in EXPLAIN: return EXPLAIN[cid](D)["why"]
+    except (KeyError, TypeError, ValueError): pass
+    return "The result changed when the data was updated; see the claim card for the current test."
 def update_history(H, D, today):
     """Add an entry when a claim's grade changes. Returns True if anything changed."""
     changed = False
@@ -167,7 +174,7 @@ def update_history(H, D, today):
         except (KeyError, TypeError): continue
         h = H.setdefault(cid, [])
         if not h or h[-1]["label"] != lab:
-            h.append(dict(date=today, label=lab, why="New data changed the result." if h else "First graded.")); changed = True
+            h.append(dict(date=today, label=lab, why=reason(cid, D, st) if h else "First graded.")); changed = True
     return changed
 
 def fmt_date(d):
