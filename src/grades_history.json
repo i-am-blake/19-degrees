@@ -120,7 +120,7 @@
   {
    "date": "2026-11-12",
    "label": "Early result: no clear link",
-   "why": "New data changed the result."
+   "why": "A study that allowed for fishing effort (Banaghan et al. 2025) found no clear rise in southern catch rates."
   }
  ],
  "c3": [
@@ -139,7 +139,7 @@
   {
    "date": "2026-11-12",
    "label": "First look",
-   "why": "New data changed the result."
+   "why": "The test used satellite chlorophyll and did not measure when baitfish run, so it describes the data rather than testing the claim."
   }
  ],
  "c5": [
@@ -186,7 +186,7 @@
   {
    "date": "2026-11-12",
    "label": "First look",
-   "why": "New data changed the result."
+   "why": "The night result rested on six bites, and bites stand in for catches by hour, so it describes the data rather than testing the claim."
   }
  ],
  "c23": [
@@ -212,7 +212,7 @@
   {
    "date": "2026-11-12",
    "label": "Early result: leans toward it",
-   "why": "New data changed the result."
+   "why": "Retested with daily sea temperature and tag thermometers. Off the US, 10.6% of bull shark days were below 19°C, above the 5% set before the test; young bull sharks overwinter in colder rivers."
   }
  ],
  "c26": [
@@ -238,7 +238,7 @@
   {
    "date": "2026-11-12",
    "label": "Early result: leans the other way",
-   "why": "New data changed the result."
+   "why": "Strong upwelling also keeps people out of the water, so fewer incidents can't show fewer sharks."
   }
  ],
  "c32": [
