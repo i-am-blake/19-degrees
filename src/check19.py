@@ -204,6 +204,10 @@ if all(k in D for k in results19.WK_NEED) and results19.ready(results19.what_we_
 # Home: "Updated by new evidence" comes from the grade history
 _mind = results19.changes(page, explain19.load_history())
 if _mind: check("Home: updated by new evidence", f'<section aria-labelledby="h-mind" id="mind">{_mind}</section>' in page, True)
+# Safety, "Start with where you swim": each other coast's species counts add up to its list
+if D.get("hawaii", {}).get("counts"): check("where you swim: Hawaii adds up", sum(D["hawaii"]["counts"].values()), D["hawaii"]["n"])
+for _k, _v in D.get("islands", {}).get("islands", {}).items():
+    if _v.get("counts"): check(f"where you swim: {_k} adds up", sum(_v["counts"].values()), _v["n"])
 # Claims: results first, then the claims waiting for data
 _r, _n = page.find('id="h-results"'), page.find('id="h-next"')
 check("claims split into results and next to test", 0 < _r < _n, True)

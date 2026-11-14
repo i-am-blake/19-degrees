@@ -2396,9 +2396,9 @@ try{const sel=document.getElementById("wreg");if(sel&&(D.region_species||[]).len
   const AU=D.region_species.map(([n,c])=>({n,c,g:"Australia",src:aus,k:["bull","tiger","white","other"]}));
   const allAU={n:"All of Australia",g:"Australia",src:aus,k:["bull","tiger","white","other"],c:AU.reduce((t,r)=>{for(const k in r.c)t[k]=(t[k]||0)+r.c[k];return t;},{})};
   const OT=[];
-  if(D.hawaii&&D.hawaii.n)OT.push({n:"Hawaii (US)",g:"Other coasts",k:["tiger","other"],c:{tiger:D.hawaii.tiger,other:D.hawaii.n-D.hawaii.tiger},src:`Hawaii DLNR incident list, ${D.hawaii.first} to ${D.hawaii.last}. Only tiger sharks are counted separately`});
-  const IS=(D.islands||{}).islands||{};[["Reunion","Réunion (France)"],["New Caledonia","New Caledonia (France)"]].forEach(([k,lab])=>{const x=IS[k];if(!x)return;const b=(x.species.bull||{}).n||0,t=(x.species.tiger||{}).n||0;
-    OT.push({n:lab,g:"Other coasts",k:["bull","tiger","other"],c:{bull:b,tiger:t,other:x.n-b-t},src:`University of Réunion incident list (${D.islands.source}), ${D.islands.y0} to ${D.islands.y1}. Only bull and tiger sharks are counted separately`});});
+  if(D.hawaii&&D.hawaii.counts)OT.push({n:"Hawaii (US)",g:"Other coasts",k:["bull","tiger","white","other"],c:D.hawaii.counts,src:`Hawaii DLNR incident list, ${D.hawaii.first} to ${D.hawaii.last}`});
+  const IS=(D.islands||{}).islands||{};[["Reunion","Réunion (France)"],["New Caledonia","New Caledonia (France)"]].forEach(([k,lab])=>{const x=IS[k];if(!x||!x.counts)return;
+    OT.push({n:lab,g:"Other coasts",k:["bull","tiger","white","other"],c:x.counts,src:`University of Réunion incident list (${D.islands.source}), ${D.islands.y0} to ${D.islands.y1}`});});
   const ALL=[allAU,...AU,...OT];
   [["Australia",[allAU,...AU]],["Other coasts",OT]].forEach(([g,list])=>{if(!list.length)return;const og=document.createElement("optgroup");og.label=g;list.forEach(r=>{const o=document.createElement("option");o.value=r.n;o.textContent=r.n;og.appendChild(o);});sel.appendChild(og);});
   const rows=[...document.querySelectorAll(".ptab tbody tr:not(.pg)")],tw=r=>(r.querySelector("td")||{}).textContent||"";

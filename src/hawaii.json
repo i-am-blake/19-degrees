@@ -3,6 +3,12 @@
  "first": 1995,
  "last": 2026,
  "tiger": 80,
+ "counts": {
+  "bull": 0,
+  "tiger": 80,
+  "white": 1,
+  "other": 93
+ },
  "tiger_murky": 48,
  "tiger_clarity_n": 78,
  "tiger_murky_pct": 62,
