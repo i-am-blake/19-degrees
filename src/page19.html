@@ -116,8 +116,7 @@ h2{font-family:var(--f-display);font-weight:700;font-size:clamp(26px,4.4vw,44px)
 
 /* beach picker + map + season grid */
 .picker,.coastsw{display:flex;flex-wrap:wrap;gap:6px}
-/* phones: short tables become one card per row, each value with its column name */
-@media (max-width:640px){.dt.stack thead{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}.dt.stack,.dt.stack tbody,.dt.stack tr,.dt.stack th[scope=row],.dt.stack td{display:block;width:100%;box-sizing:border-box}.dt.stack tr{border:1px solid var(--rule);padding:10px 12px;margin:0 0 8px}.dt.stack th[scope=row]{padding:0 0 6px;font-size:16px}.dt.stack td{display:flex;justify-content:space-between;gap:12px;padding:5px 0;border:0;border-top:1px solid var(--rule);text-align:right}.dt.stack td::before{content:attr(data-label);color:var(--muted);text-align:left}.dt.stack caption{display:block;text-align:left;margin-bottom:8px}}
+@media (max-width:640px){.dtable.nomob{display:none}}
 .coastsw{margin-bottom:4px}
 .picker button,.coastsw button{font:inherit;font-size:15px;font-weight:600;color:var(--ink);background:transparent;border:1.5px solid var(--rule);padding:10px 14px;min-height:44px;cursor:pointer}
 .picker button:hover,.coastsw button:hover{border-color:var(--muted)}
@@ -959,7 +958,7 @@ h3.splith + p.sub{margin:0 0 6px}
     <div class="controls"><div class="coastsw evsw" role="group" aria-label="Which bites"><button type="button" data-ev="all" aria-pressed="true">All bites</button><button type="button" data-ev="conf" aria-pressed="false">Species confirmed</button></div></div>
     <div class="rows" id="rows"></div>
     <div class="legend"><span><i class="sw" style="background:var(--cold)"></i>Below 19°C</span><span><i class="sw" style="background:var(--warm)"></i>19°C or warmer</span></div>
-    <details class="dtable"><summary>View as a table</summary><div id="tbLine"></div></details>
+    <details class="dtable nomob"><summary>View as a table</summary><div id="tbLine"></div></details>
     <p class="note" id="evNote"></p>
     <p class="note" id="imosNote"><b>Tagged sharks agree.</b> Of 20,105 days that 132 tagged bull sharks were detected off NSW from 2009 to 2026, 99.5% fell in months when the sea was 19°C or warmer, and none in a month below 18.1°C. That is not because cool months are rare: south of Sydney, 43% of months in that time were below 19°C. Listening stations stayed in the water through winter; the sharks had gone. (<a href="https://researchdata.edu.au/imos-animal-tracking-2007-ongoing/3961802" target="_blank" rel="noopener">IMOS Animal Tracking</a> data, this page's analysis.) Bull sharks leave Sydney once the water falls to about 19–20.5°C, and they have been leaving later each year as the sea warms (<a href="https://doi.org/10.1016/j.scitotenv.2025.179966" target="_blank" rel="noopener">Lubitz et al., 2025</a>).</p><p class="note" id="waterNote"><b>So does the water on the day.</b> Where a water temperature was recorded at the bite, all 16 bull shark bites were in water of 20°C or warmer. For comparison, 2 of 10 tiger shark bites and 9 of 41 white shark bites were below 19°C, the coldest at 8°C. (<a href="https://zenodo.org/records/18752301" target="_blank" rel="noopener">Australian Shark-Incident Database</a>, temperatures reported at the scene.) In Western Australia, a 2012 state study found about two-thirds of white shark bites since the mid-1990s were in water below 20°C, and only one above 22°C; it doesn't say how many bites had a recorded temperature (<a href="https://library.dpird.wa.gov.au/cgi/viewcontent.cgi?article=1027&amp;context=fr_fop" target="_blank" rel="noopener">Fisheries Occasional Publication 109, 2012</a>).</p>
   </section>
@@ -2227,10 +2226,10 @@ document.addEventListener("click",e=>{const b=e.target.closest("[data-contact]")
 <script>
 /* "view as a table": the numbers behind the main charts, for screen readers and anyone who prefers tables */
 try{
-  const T=(cap,head,rows,stack)=>`<table class="dt${stack?" stack":""}"><caption>${cap}</caption><thead><tr>${head.map(h=>`<th scope="col">${h}</th>`).join("")}</tr></thead><tbody>${rows.map(r=>`<tr>${r.map((c,i)=>i?`<td data-label="${head[i]}">${c}</td>`:`<th scope="row">${c}</th>`).join("")}</tr>`).join("")}</tbody></table>`;
+  const T=(cap,head,rows)=>`<table class="dt"><caption>${cap}</caption><thead><tr>${head.map(h=>`<th scope="col">${h}</th>`).join("")}</tr></thead><tbody>${rows.map(r=>`<tr>${r.map((c,i)=>i?`<td>${c}</td>`:`<th scope="row">${c}</th>`).join("")}</tr>`).join("")}</tbody></table>`;
   const nm={bull:"Bull shark",tiger:"Tiger shark",white:"White shark"};
   document.getElementById("tbLine").innerHTML=T("Bites since 1900 by the month's sea temperature",["Species","Bites","Below 19°C","Coolest","Median","Warmest","Confirmed by evidence: below 19°C"],
-    ["bull","tiger","white"].map(k=>{const x=D.species[k];return [nm[k],x.n,x.below,x.min.toFixed(1)+"°C",x.median.toFixed(1)+"°C",x.max.toFixed(1)+"°C",`${x.conf.below} of ${x.conf.n}`];}),true);
+    ["bull","tiger","white"].map(k=>{const x=D.species[k];return [nm[k],x.n,x.below,x.min.toFixed(1)+"°C",x.median.toFixed(1)+"°C",x.max.toFixed(1)+"°C",`${x.conf.below} of ${x.conf.n}`];}));
   const BM=D.bite_months, M=["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"], el=e=>e[1]>=2027?`${e[0]}–now`:`${e[0]}–${e[1]}`;
   document.getElementById("tbBites").innerHTML=T("Bull shark bites by month, NSW coast south of Port Macquarie",["Era",...M,"Total"],BM.eras.map((e,i)=>[el(e),...BM.counts.east[i],BM.counts.east[i].reduce((a,b)=>a+b,0)]));
   const O=D.bull_open;
