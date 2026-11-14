@@ -253,6 +253,12 @@ if len(sys.argv) > 2:
     for m in find("C7", r"Western Australia has (\d+) recorded (?:unprovoked )?bull shark bites since 1900, (\d+) of them since 2020"):
         check("C7 WA unprovoked bull shark bites", (int(m[1]), int(m[2])), (len(wa), sum(1 for y in wa if y >= 2020)))
 
+# Every entry in "What has changed" is a date and one paragraph, so the text can't spill into the date column
+_cl = re.search(r'<ol class="chlog">(.*?)</ol>', page, re.S)
+if _cl:
+    for _i, _li in enumerate(re.findall(r'<li>(.*?)</li>', _cl[1], re.S)):
+        check(f"change log entry {_i + 1} is one paragraph", bool(re.fullmatch(r'<time>[^<]*</time><p>(?:(?!</p>).)*</p>', _li, re.S)), True)
+
 print(f"check19: {ok} checks passed, {len(bad)} problems")
 for x in bad: print("  -", x)
 sys.exit(1 if bad else 0)
