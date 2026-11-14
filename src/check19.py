@@ -4,7 +4,7 @@ The build fills the page's data block; the sentences around it are written by ha
 from the built page and stops (exit 1) if a sentence no longer matches the data, so a stale number can't go live.
 It also checks sums and percentages written in the text ("18 of 31 (58%)") and counts (claims, early results, products).
 With asid.csv it also checks the Western Australia bull shark counts in claim C7. Literature figures are not checked here."""
-import csv, html, json, re, sys
+import collections, csv, html, json, re, sys
 
 page = open(sys.argv[1], encoding="utf-8").read()
 D = json.loads(re.search(r'id="n19-data">(.*?)</script>', page, re.S).group(1))
@@ -253,6 +253,16 @@ if len(sys.argv) > 2:
     wa = [int(x["Incident.year"]) for x in csv.DictReader(open(sys.argv[2], encoding="utf-8"))
           if x["State"].strip() == "WA" and "bull" in x["Shark.common.name"].lower()
           and x["Provoked/unprovoked"].strip() == "unprovoked" and x["Incident.year"].isdigit()]
+    # Safety, "Start with where you swim": every bite since 1900 with a place is in exactly one region, and each species adds up
+    _sp = {"white shark": "white", "tiger shark": "tiger", "bull shark": "bull"}
+    _all = collections.Counter()
+    for x in csv.DictReader(open(sys.argv[2], encoding="utf-8")):
+        try: y = int(float(x["Incident.year"])); float(x["Latitude"]); float(x["Longitude"])
+        except ValueError: continue
+        if y >= 1900: _all[_sp.get((x["Shark.common.name"] or "").strip().lower(), "other")] += 1
+    if D.get("region_species"):
+        for _k in ("bull", "tiger", "white", "other"):
+            check(f"where you swim: {_k} bites across regions", sum(r[1][_k] for r in D["region_species"]), _all[_k])
     for m in find("C7", r"Western Australia has (\d+) recorded (?:unprovoked )?bull shark bites since 1900, (\d+) of them since 2020"):
         check("C7 WA unprovoked bull shark bites", (int(m[1]), int(m[2])), (len(wa), sum(1 for y in wa if y >= 2020)))
 

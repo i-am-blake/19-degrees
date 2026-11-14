@@ -697,6 +697,22 @@ h3.splith + p.sub{margin:0 0 6px}
 .wayglobal .blockh{margin:0 0 8px}
 /* home: what we know so far */
 .wkwrap:empty{display:none}
+/* Safety: start with where you swim */
+.where{margin:30px 0 8px;padding:22px;border:1px solid var(--rule)}
+.where .blockh{margin:0 0 4px}
+.wctl{display:flex;flex-direction:column;gap:6px;margin:16px 0 18px;max-width:360px}
+.wctl label{font-weight:700}
+.wctl select{min-height:48px;padding:0 40px 0 14px;border-radius:10px;border:1.5px solid var(--rule);background:#0B2C46 url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='9'%3E%3Cpath d='M1 1l6 6 6-6' fill='none' stroke='%23E8F1F2' stroke-width='2'/%3E%3C/svg%3E") no-repeat right 14px center;color:var(--ink);font:inherit;font-size:16px;appearance:none}
+.wctl select:focus-visible{outline:2px solid #3395BE;outline-offset:2px}
+.wbars{display:grid;gap:8px;max-width:760px}
+.wbar{display:grid;grid-template-columns:170px minmax(0,1fr) 92px;gap:12px;align-items:center;font-size:15px}
+.wbar b{font-weight:600}.wbar .tr{height:22px;background:rgba(255,255,255,.05);position:relative}
+.wbar .fl{position:absolute;left:0;top:0;bottom:0;background:var(--warm)}.wbar.cold .fl{background:var(--cold)}.wbar.oth .fl{background:none;border:1.5px dashed var(--muted);box-sizing:border-box}
+.wbar .v{font-family:var(--f-data);font-size:14px;text-align:right}
+.wread{font-size:18px;line-height:1.5;margin:16px 0 4px;max-width:760px}
+.ptab tr.pdim{opacity:.3}
+.where button.ghbtn{background:none;font:inherit;font-weight:700;cursor:pointer}.where button.ghbtn:hover{background:var(--ink);color:#041A2C}
+@media (max-width:600px){.where{padding:16px}.wbar{grid-template-columns:110px minmax(0,1fr) 78px;gap:8px;font-size:14px}}
 .row .spst{display:flex;flex-direction:column;gap:2px;font-family:var(--f-data);font-size:13px;letter-spacing:.02em;color:var(--muted);margin-top:6px;line-height:1.4}
 /* Home: updated by new evidence, built from the grade history */
 .mind{list-style:none;margin:18px 0 0;padding:0;display:grid;gap:10px}
@@ -1098,6 +1114,15 @@ h3.splith + p.sub{margin:0 0 6px}
     <h2 id="h-products">Shark safety deserves evidence, not assumptions.</h2>
     <p class="sub">Many products and technologies claim to reduce the risk of shark encounters. How much do we actually know about how well they work? We examine the published research, compare the evidence, and show where more independent testing is needed. The goal is not to promote products. It is to help people make better-informed decisions.</p>
     <div class="wsum" id="wsum" aria-label="Evidence for the products below"></div>
+    <div class="where" id="where">
+      <h3 class="blockh" id="h-where">Start with where you swim</h3>
+      <p class="sub">The sharks that bite people differ along the coast. Pick a region to see which species were recorded there, then which products were tested with them.</p>
+      <div class="wctl"><label for="wreg">Coastal region</label><select id="wreg"><option value="">All of Australia</option></select></div>
+      <div class="wbars" id="wbars" role="img"></div>
+      <p class="wread" id="wread" aria-live="polite"></p>
+      <p class="hcta"><button type="button" class="ghbtn" id="wgo"></button> <button type="button" class="ghbtn" id="wall" hidden>Show all products</button></p>
+      <p class="note">A guide to the evidence, not a forecast or a safety rating for any beach. Bites follow where people swim as much as where sharks are. "Other or unidentified" includes whalers, wobbegongs and bites where the species wasn't known. Recorded bites since 1900: Australian Shark-Incident Database, to <span id="wto"></span>.</p>
+    </div>
     <h3 class="blockh" style="margin:30px 0 4px">26 products we checked, and what independent tests found</h3>
 <p class="sub">Every shark deterrent, protective wetsuit, bleeding-control product and barrier we could find with a published test, linked to that test. Products sold without any test we could find are left out. Researchers: the untested and partly tested products are where new trials would help most, especially with bull sharks.</p>
     <div class="gkey"><span><span class="cstat sup">Supported</span>independent tests found it works</span><span><span class="cstat early">Leans yes</span>a small or single effect</span><span><span class="cstat unc">Unclear</span>tests disagree</span><span><span class="cstat look">First look</span>tested, but not with the sharks that bite people, or not peer reviewed</span><span><span class="cstat ruled">Ruled out</span>no effect found</span><span><span class="cstat nt">Can't test yet</span>a trial couldn't run</span></div>
@@ -2363,6 +2388,28 @@ try{const dlg=document.getElementById("kofiDlg");
     dlg.querySelector(".kx").addEventListener("click",()=>dlg.close());
     dlg.addEventListener("click",e=>{if(e.target===dlg)dlg.close();});}
 }catch(e){console.error(e)}
+
+/* Safety: start with where you swim */
+try{const R=D.region_species||[],sel=document.getElementById("wreg");if(sel&&R.length){
+  R.forEach(([n])=>{const o=document.createElement("option");o.value=n;o.textContent=n;sel.appendChild(o);});
+  const MON=["January","February","March","April","May","June","July","August","September","October","November","December"];
+  if(D.asid_last)document.getElementById("wto").textContent=MON[D.asid_last.month-1]+" "+D.asid_last.year;
+  const rows=[...document.querySelectorAll(".ptab tbody tr:not(.pg)")],tw=r=>(r.querySelector("td")||{}).textContent||"",NM={bull:"bull",tiger:"tiger",white:"white"};
+  const tested=k=>rows.filter(r=>tw(r).toLowerCase().includes(k)).length;
+  const bars=document.getElementById("wbars"),read=document.getElementById("wread"),go=document.getElementById("wgo"),all=document.getElementById("wall");
+  let top=null;
+  const filt=k=>{rows.forEach(r=>r.classList.toggle("pdim",!!k&&!tw(r).toLowerCase().includes(k)));all.hidden=!k;};
+  const show=()=>{const v=sel.value;let c={bull:0,tiger:0,white:0,other:0};
+    (v?R.filter(r=>r[0]===v):R).forEach(([,x])=>{for(const k in c)c[k]+=x[k]||0;});
+    const tot=c.bull+c.tiger+c.white+c.other,mx=Math.max(c.bull,c.tiger,c.white,c.other)||1,pc=x=>Math.round(x/tot*100)+"%";
+    bars.innerHTML=[["bull","Bull shark",""],["tiger","Tiger shark",""],["white","White shark","cold"],["other","Other or unidentified","oth"]].map(([k,l,cl])=>`<div class="wbar ${cl}"><b>${l}</b><span class="tr"><span class="fl" style="width:${c[k]/mx*100}%"></span></span><span class="v">${c[k]} · ${pc(c[k])}</span></div>`).join("");
+    bars.setAttribute("aria-label",`${v||"All of Australia"}: ${tot} recorded bites since 1900. Bull ${c.bull}, tiger ${c.tiger}, white ${c.white}, other or unidentified ${c.other}.`);
+    const rk=["bull","tiger","white"].sort((a,b)=>c[b]-c[a]);top=c[rk[0]]?rk[0]:null;
+    read.textContent=!top?"Few recorded bites here were by bull, tiger or white sharks.":c[rk[0]]===c[rk[1]]?`Here, ${rk[0]} and ${rk[1]} sharks account for the same number of identified bites. ${tested(rk[0])} of ${rows.length} products were tested with ${rk[0]} sharks, ${tested(rk[1])} with ${rk[1]} sharks.`:`Here, most identified bites were by ${top} sharks. ${tested(top)} of ${rows.length} products were tested with them.`;
+    go.hidden=!top;if(top)go.textContent=`Show products tested with ${top} sharks`;filt(null);};
+  sel.addEventListener("change",show);go.addEventListener("click",()=>{if(top){filt(top);document.querySelector(".ptwrap").scrollIntoView({block:"start"});}});all.addEventListener("click",()=>filt(null));
+  show();
+}}catch(e){console.error(e)}
 
 /* What works: count the evidence in the products table */
 try{const pt=[...document.querySelectorAll("#panel-works td .cstat")],w=document.getElementById("wsum");
