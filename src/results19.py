@@ -290,7 +290,7 @@ SENTENCES = [(re.compile(r"Hawaii \(\d{4}–\d{4}\): the water was turbid or mud
              (re.compile(r"Hawaii (?:agrees|differs): \d+ of \d+ bites \(\d+%; p = [\d.]+\), and \d+ of \d+ tiger shark bites"), hawaiiC24, ("lunar",))]
 
 CLS = {"early": "cstat early", "ruled": "cstat ruled", "look": "cstat look", "nt": "cstat nt", "open": "cstat",
-       "supported": "cstat early", "strong": "cstat early"}
+       "supported": "cstat sup", "strong": "cstat strong"}
 
 def apply_grades(html, D):
     def one(m):
