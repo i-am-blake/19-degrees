@@ -723,6 +723,16 @@ h3.splith + p.sub{margin:0 0 6px}
 .ptab tr.pdim{opacity:.3}
 .where button.ghbtn{background:none;font:inherit;font-weight:700;cursor:pointer}.where button.ghbtn:hover{background:var(--ink);color:#041A2C}
 @media (max-width:600px){.where{padding:16px}.wbar{grid-template-columns:110px minmax(0,1fr) 78px;gap:8px;font-size:14px}}
+.spfocus{margin-top:18px;display:grid;gap:14px}
+.spfocus .sptiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:1px;background:var(--rule);border:1px solid var(--rule)}
+.spfocus .sptiles div{background:var(--deep);padding:12px 14px;display:flex;flex-direction:column;gap:4px}
+.spfocus .sptiles small{font-family:var(--f-data);font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+.spfocus .sptiles b{font-size:22px;font-weight:700;color:var(--ink)}
+.spfocus .sptiles span{font-size:13px;color:var(--muted)}
+.spfocus h3{margin:0;font-size:22px}
+.spfocus p{margin:0;max-width:68ch}
+.spfocus .splim{font-size:15px;color:var(--muted);border-left:2px solid var(--rule);padding-left:12px}
+.rows.one .row .spst{display:none}
 .row .spst{display:flex;flex-direction:column;gap:2px;font-family:var(--f-data);font-size:13px;letter-spacing:.02em;color:var(--muted);margin-top:6px;line-height:1.4}
 /* Home: updated by new evidence, built from the grade history */
 .mind{list-style:none;margin:18px 0 0;padding:0;display:grid;gap:10px}
@@ -984,8 +994,9 @@ h3.splith + p.sub{margin:0 0 6px}
     <div class="kicker">The line</div>
     <h2 id="h-line">Two of the three sharks that matter stop at 19°C.</h2>
     <p class="sub">White, tiger and bull sharks cause almost every serious bite in Australia. Each dot below is one bite since 1900, placed at that month's sea temperature where it happened.</p>
-    <div class="controls"><div class="coastsw evsw" role="group" aria-label="Which bites"><button type="button" data-ev="all" aria-pressed="true">All bites</button><button type="button" data-ev="conf" aria-pressed="false">Species confirmed</button></div></div>
+    <div class="controls"><div class="coastsw spsw" role="group" aria-label="Which shark"><button type="button" data-sp="all" aria-pressed="true">All three</button><button type="button" data-sp="bull" aria-pressed="false">Bull</button><button type="button" data-sp="tiger" aria-pressed="false">Tiger</button><button type="button" data-sp="white" aria-pressed="false">White</button></div><div class="coastsw evsw" role="group" aria-label="Which bites"><button type="button" data-ev="all" aria-pressed="true">All bites</button><button type="button" data-ev="conf" aria-pressed="false">Species confirmed</button></div></div>
     <div class="rows" id="rows"></div>
+    <div class="spfocus" id="spfocus" hidden aria-live="polite"></div>
     <div class="legend"><span><i class="sw" style="background:var(--cold)"></i>Below 19°C</span><span><i class="sw" style="background:var(--warm)"></i>19°C or warmer</span></div>
     <details class="dtable nomob"><summary>View as a table</summary><div id="tbLine"></div></details>
     <p class="note" id="evNote"></p>
@@ -1774,11 +1785,26 @@ try{
 <script>
 /* the line: unit histogram per species, 1°C columns, one dot per bite */
 try{
-  const host=document.getElementById("rows"), ORDER=["bull","tiger","white"], T0=11, T1=31;
+  const host=document.getElementById("rows"), ALL=["bull","tiger","white"], T0=11, T1=31;
   function outline(k,w){const s=D.sharks.species[k], svg=el("svg",{viewBox:D.sharks.viewBox,width:w,"aria-hidden":"true"});
     s.shapes.forEach(sh=>el("path",{d:sh.d,fill:sh.stroke?"none":"rgba(232,241,242,.10)",stroke:"#E8F1F2","stroke-width":1.2,"stroke-linejoin":"round","stroke-linecap":"round","vector-effect":"non-scaling-stroke"},svg));return svg;}
+  let SP="all";
+  const fmt1=v=>v.toFixed(1), pct=(a,b)=>Math.round(a/b*100);
+  const TXT={
+    bull:S=>({title:S.below===0?"The line holds.":"The line mostly holds.",note:S.below===0?`Every one of the ${S.n} bull shark bites on record fell in a month when the sea was 19°C or warmer. This is the pattern the site is named for.`:`${S.below} of ${S.n} bull shark bites fell in a month below 19°C.`,limit:`Bull sharks swim up rivers, where the water can be colder or warmer than the sea nearby. Young bull sharks tagged in the Clarence River stayed through winter in water below 19°C (<a href="#c43">claim C43</a>), so this chart describes bites, not everywhere a bull shark can be.`}),
+    tiger:S=>({title:S.below===0?"The line holds.":(S.below===1?"One exception.":(S.below<=5?`${["","","Two","Three","Four","Five"][S.below]} exceptions.`:"Mostly above the line.")),note:`Tiger sharks are tropical too. ${S.n-S.below} of their ${S.n} bites fell in months at 19°C or warmer${S.below?`; the coldest was ${fmt1(S.min)}°C. The chart keeps the exceptions in view`:""}.`,limit:"Most tiger shark bites happen in the tropics, where the sea is rarely near 19°C, so this chart says little about how tiger sharks respond to cooler water."}),
+    white:S=>({title:"The line does not apply.",note:`White sharks hunt in cold water: ${S.below} of ${S.n} white shark bites (${pct(S.below,S.n)}%) fell in a month below 19°C, the coldest at ${fmt1(S.min)}°C. The 19°C pattern is a bull shark finding, and showing white sharks beside it keeps anyone from reading 19°C as a safe temperature for swimming.`,limit:"White shark bites are spread from Queensland to Tasmania, so their temperatures mostly reflect where people meet white sharks, not what water white sharks prefer."})};
+  function focus(){
+    const box=document.getElementById("spfocus");
+    if(SP==="all"){box.hidden=true;box.replaceChildren();return;}
+    const S=EVD(SP), A=D.species[SP], t=TXT[SP](S), nm=D.sharks.species[SP].name.toLowerCase();
+    box.innerHTML=`<div class="sptiles"><div><small>Below 19°C</small><b>${S.below} of ${S.n}</b><span class="num">${pct(S.below,S.n)}% of bites</span></div><div><small>Coldest</small><b>${fmt1(S.min)}°C</b></div><div><small>Median</small><b>${fmt1(S.median)}°C</b></div><div><small>Warmest</small><b>${fmt1(S.max)}°C</b></div><div><small>Species confirmed</small><b>${A.conf.n} of ${A.n}</b></div></div><h3>${t.title}</h3><p>${t.note}</p><p class="splim"><b>For ${nm}s:</b> ${t.limit}</p>`;
+    box.hidden=false;
+  }
+  document.querySelectorAll(".spsw button").forEach(b=>b.addEventListener("click",()=>{SP=b.dataset.sp;document.querySelectorAll(".spsw button").forEach(x=>x.setAttribute("aria-pressed",x===b?"true":"false"));draw();focus();}));
   function draw(){
     host.replaceChildren();
+    const ORDER=SP==="all"?ALL:[SP]; host.classList.toggle("one",SP!=="all");
     const maxBin=Math.max(...ORDER.map(k=>{const c={};EVD(k).t.forEach(t=>{c[Math.floor(t)]=(c[Math.floor(t)]||0)+1});return Math.max(...Object.values(c))}));
     ORDER.forEach((k,idx)=>{
       const S=EVD(k), row=document.createElement("div"); row.className="row";
@@ -1788,7 +1814,7 @@ try{
       const st=document.createElement("div"); st.className="spst"; st.innerHTML=`<span>${Math.round(S.below/S.n*100)}% below 19°C</span><span>Median ${S.median.toFixed(1)}°C</span><span>Coldest ${S.min.toFixed(1)}°C</span>`; who.appendChild(st);
       row.appendChild(who);
       const fig=document.createElement("div"); fig.style.minWidth="0"; row.appendChild(fig); host.appendChild(row);
-      const W=Math.max(260,fig.clientWidth||600), nb=T1-T0, bw=W/nb, across=Math.max(3,Math.floor(bw/(W<520?5.2:7))), p=bw/across, rad=Math.min(p*0.4,3.2);
+      const W=Math.max(260,fig.clientWidth||600), nb=T1-T0, bw=W/nb, across=Math.max(SP==="all"?3:2,Math.floor(bw/(SP==="all"?(W<520?5.2:7):(W<520?7:10)))), p=bw/across, rad=Math.min(p*0.4,SP==="all"?3.2:4.6);
       const H=Math.ceil(maxBin/across)*p, axis=idx===ORDER.length-1?26:8, top=14;
       const svg=el("svg",{viewBox:`0 0 ${W} ${H+axis+top}`,role:"img","aria-label":`${D.sharks.species[k].name}: ${S.below} of ${S.n} bites since 1900 were in water below 19°C. Range ${S.min} to ${S.max}°C.`},fig);
       const x=t=>(t-T0)*bw;
@@ -1796,6 +1822,7 @@ try{
       const counts={}, cc=css("--cold"), cw=css("--warm");
       S.t.forEach(t=>{const b=Math.floor(t), i=counts[b]=(counts[b]||0), col=i%across, rw=Math.floor(i/across); counts[b]++;
         el("circle",{cx:x(b)+col*p+p/2,cy:H+top-rw*p-p/2,r:rad,fill:t<19?cc:cw},svg);});
+      Object.keys(counts).forEach(b=>{const r=el("rect",{x:x(+b),y:0,width:bw,height:H+top,fill:"transparent"},svg);el("title",{},r).textContent=`${D.sharks.species[k].name}: ${counts[b]} ${counts[b]===1?"bite":"bites"} at ${b} to ${+b+1}°C`;});
       el("line",{x1:x(19),x2:x(19),y1:0,y2:H+top+4,stroke:"#E8F1F2","stroke-width":1.5,"stroke-dasharray":"3 3"},svg);
       if(idx===0){const tx=el("text",{x:x(19)+6,y:10,fill:css("--ink"),"font-size":12,"font-family":css("--f-data")},svg);tx.textContent="19°C";}
       if(axis>8){for(let t=12;t<=30;t+=W<480?4:2){const tx=el("text",{x:x(t),y:H+top+18,fill:css("--muted"),"font-size":12,"text-anchor":"middle","font-family":css("--f-data")},svg);tx.textContent=t+"°";}}
@@ -1804,7 +1831,7 @@ try{
   draw(); let t; addEventListener("resize",()=>{clearTimeout(t);t=setTimeout(draw,120)});
   const evn=()=>{const c=EV.cur==="conf", f=k=>D.species[k].conf;
     document.getElementById("evNote").innerHTML=(c?`<b>Showing only bites where the species was confirmed by physical evidence</b> (bite analysis, a tooth, DNA, a photo or video). `:`<b>Checked with confirmed bites only</b> (species identified from bite analysis, a tooth, DNA, a photo or video): `)+`bull ${f("bull").below} of ${f("bull").n} below 19°C, tiger ${f("tiger").below} of ${f("tiger").n}, white ${f("white").below} of ${f("white").n}. The line holds. <a href="#h-forces" data-tab="research">More checks</a>.`;};
-  evn(); EV.subs.push(()=>{draw();evn();});
+  evn(); EV.subs.push(()=>{draw();evn();focus();});
 }catch(e){console.error(e)}
 </script>
 
