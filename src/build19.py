@@ -109,6 +109,17 @@ for x in csv.DictReader(open(ASID, encoding="utf-8")):
     g = SP.get((x["Shark.common.name"] or "").strip().lower())
     if k and g: cs[k][g] += 1
 d["coast_species"] = {k: dict(v) for k, v in cs.items()}
+# Safety, "Start with where you swim": bites since 1900 by species in each coastal region, north and east first, then south and west
+REG_ORDER = ["Far North Queensland", "Central QLD & Whitsundays", "Sunshine Coast & Moreton Bay", "Gold Coast", "NSW North Coast",
+             "Mid North Coast & Hunter", "Sydney & Central Coast", "NSW South Coast", "Victoria", "Tasmania", "SA Gulfs & Yorke Peninsula",
+             "SA Eyre Peninsula & Bight", "WA South Coast", "WA South West", "Perth & Rottnest", "WA Mid West & North", "Northern Territory"]
+rs = collections.defaultdict(collections.Counter)
+for x in csv.DictReader(open(ASID, encoding="utf-8")):
+    try: y = int(float(x["Incident.year"])); lat, lon = float(x["Latitude"]), float(x["Longitude"])
+    except ValueError: continue
+    if y < 1900: continue
+    rs[region_of(x["State"], lat, lon)][SP.get((x["Shark.common.name"] or "").strip().lower(), "other")] += 1
+d["region_species"] = [[r, {k: rs[r].get(k, 0) for k in ("bull", "tiger", "white", "other")}] for r in REG_ORDER if sum(rs[r].values())]
 # bull shark bites by decade: southern NSW (Mid North Coast to the Victorian border) and Western Australia,
 # with how many were in a harbour, river, lake, creek, estuary or bay
 SOUTH = {"Mid North Coast & Hunter", "Sydney & Central Coast", "NSW South Coast"}
