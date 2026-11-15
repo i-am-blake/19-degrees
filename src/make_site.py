@@ -34,6 +34,12 @@ os.makedirs(out)
 open(os.path.join(out, "index.html"), "w").write(doc)
 # each tab also has its own address (/story, /safety, ...): see tab_pages.py
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__))); import tab_pages; tab_pages.write(doc, out)
+# sitemap and robots.txt, so search engines find every page and tab address
+import datetime as _dt
+_today = _dt.date.today().isoformat()
+_urls = [SITE] + [SITE + _s for _s, _ in tab_pages.TABS] + [SITE + f for f in ("classroom.html", "classroom-primary.html", "classroom-middle.html", "classroom-senior.html", "sources.html", "legal.html", "privacy.html")]
+open(os.path.join(out, "sitemap.xml"), "w").write('<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' + "".join(f"  <url><loc>{u}</loc><lastmod>{_today}</lastmod></url>\n" for u in _urls) + "</urlset>\n")
+open(os.path.join(out, "robots.txt"), "w").write(f"User-agent: *\nAllow: /\nSitemap: {SITE}sitemap.xml\n")
 open(os.path.join(out, "CNAME"), "w").write(SITE.split("//")[1].strip("/") + "\n")  # GitHub Pages custom domain
 for f in os.listdir(pub):
     if re.match(r"classroom.*\.html$", f):
