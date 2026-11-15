@@ -817,7 +817,6 @@ h3.splith + p.sub{margin:0 0 6px}
 #panel-home .stats4 #hcEarly{color:var(--warm)}
 #panel-home .hcta{display:flex;flex-wrap:wrap;gap:12px;margin:6px 0 0}
 #panel-home .hcta .ctabtn{margin-top:0}
-.stats4.stats2{grid-template-columns:repeat(2,minmax(0,1fr));max-width:620px}
 .stats4{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:18px 24px;margin-top:6px}
 @media (max-width:900px){.stats4{grid-template-columns:repeat(2,minmax(0,1fr))}}
 .stats4 .way h3{font-size:20px}
@@ -948,11 +947,13 @@ h3.splith + p.sub{margin:0 0 6px}
   <section id="evidence" aria-labelledby="h-evidence">
     <div class="kicker">The credibility · updated weekly</div>
     <h2 id="h-evidence">Every claim can be challenged.</h2>
-    <div class="stats4 stats2">
+    <div class="stats4">
+      <div class="atile"><span class="lab">Testable claims</span><span class="big" id="hcClaims">43</span></div>
+      <div class="atile"><span class="lab">Tested so far</span><span class="big" id="hcEarly">14</span></div>
       <div class="atile"><span class="lab">Data sources joined</span><span class="big">32</span></div>
       <div class="atile"><span class="lab">Products checked</span><span class="big">26</span></div>
     </div>
-    <p class="sub" style="margin-top:18px">Every claim says in advance what would support it and what would rule it out.</p>
+    <p class="sub" style="margin-top:18px">Forty-three claims, tested in public. Each says in advance what would support it and what would rule it out.</p>
     <div class="evst" id="evst" hidden><h3 class="blockh" id="h-evst">Where the evidence stands</h3><p class="sub" id="evstSum"></p><div class="evbar" id="evbar" role="img"></div><dl class="evkey" id="evkey"></dl><p class="note"><a href="#h-agenda" data-tab="research">See every claim and its evidence →</a></p></div>
     <div id="wk" class="wkwrap"></div>
   </section>
@@ -987,8 +988,9 @@ h3.splith + p.sub{margin:0 0 6px}
       <article class="way"><h3 class="blockh">Supporters</h3><p class="sub">Keep the tests independent and the data updated, and fund the next stage: more countries and independent product trials.</p><a class="ctabtn donatelink" data-from="home" href="https://ko-fi.com/19degrees" target="_blank" rel="noopener">Support →</a></article>
       <article class="way"><h3 class="blockh">Teachers</h3><p class="sub">Free real-data lessons for ages 8 to 18, built from the live data.</p><a class="ctabtn" href="#students" data-tab="students">Get the sheets →</a></article>
     </div>
+    <p class="note">Everyone else: share it, and swim between the red and yellow flags.</p>
       <div class="wayglobal"><h3 class="blockh">Australia is the first case study.</h3><p class="sub">The methods and code work for any coast. Bull, tiger and white sharks bite in warm water worldwide, and the same questions apply wherever people swim.</p>
-    <ul class="chips"><li class="chip on">Australia · live</li><li class="chip build">South Africa · building</li><li class="chip build">United States · building</li><li class="chip build">Réunion and New Caledonia · building</li><li class="chip build">Mozambique · building</li><li class="chip want">Brazil · data wanted</li></ul>
+    <ul class="chips"><li class="chip on">Australia · live</li><li class="chip build">South Africa · building</li><li class="chip build">United States · building</li><li class="chip build">Réunion and New Caledonia · building</li><li class="chip want">Brazil · data wanted</li><li class="chip build">Mozambique · building</li></ul>
     <p class="note"><a href="#h-refs" data-tab="research">Run it for your coast →</a></p></div>
   </section>
   </div>
@@ -1811,7 +1813,8 @@ try{
   const last=D.asid_last?`${M[D.asid_last.month-1]} ${D.asid_last.year}`:"";
   if(B.below===0){
     const T=[
-      ["evidence","The evidence",`${B.n} bites · monthly sea temperature`,`${B.n} bull shark bites from the Australian Shark-Incident Database (Taronga Conservation Society and Flinders University), 1900 to ${last}, each matched to HadISST monthly sea-surface temperature for its place and month. The pattern also holds for the ${B.conf.n} bites where the species was confirmed.`,`Anyone can rerun it: a short starter notebook reproduces the 0 of ${B.n} from the downloadable data, on the <a href="#h-help-test" data-tab="research">Research page</a>.`],
+      ["finding","The finding","Observed pattern",`Every recorded bull shark bite in Australia since 1900 came in a month when the average sea-surface temperature at that spot was 19°C or warmer. The coldest was ${B.min.toFixed(1)}°C.`,`This is a pattern in records, not a cause and not a rule for any beach. It also holds for the ${B.conf.n} bites where the species was confirmed.`],
+      ["evidence","The evidence",`${B.n} bites · monthly sea temperature`,`${B.n} bull shark bites from the Australian Shark-Incident Database (Taronga Conservation Society and Flinders University), 1900 to ${last}, each matched to HadISST monthly sea-surface temperature for its place and month.`,`Anyone can rerun it: a short starter notebook reproduces the 0 of ${B.n} from the downloadable data, on the <a href="#h-help-test" data-tab="research">Research page</a>.`],
       ["limits","The limitations","What this can't tell you","Monthly averages, not the water on the day. Sea surface, not the river or harbor where many bites happen. Recorded bites only, and the species is sometimes a best guess.","Tagged bull sharks have been measured in water below 19°C: young ones overwinter in some rivers. So the line describes where bites happen, not everywhere bull sharks can be."],
       ["change","What would change it","How this could be wrong","A confirmed bull shark bite in a month below 19°C. Or daily temperatures at bite sites showing many bites in colder water than the monthly average suggests.",`<a href="#c22" data-tab="research">C22</a> and <a href="#c25" data-tab="research">C25</a> ask whether the line holds outside Australia (${g("c22")} and ${g("c25")}). <a href="#c43" data-tab="research">C43</a> asks why small sharks stay in cold rivers (${g("c43")}).`]];
     const tl=document.querySelector("#hdk .hdktabs"), pn=document.getElementById("hdkpanel");
@@ -2235,7 +2238,7 @@ try{const w=D.zones.species.white, f=w[0], l=w[w.length-1], km=Math.round((l.mid
 /* home tab: live counts and the four newest results, read from the Researchers tab */
 try{
   const cl=document.querySelectorAll("#panel-research article.claim");
-  if(cl.length&&document.getElementById("hcClaims")){document.getElementById("hcClaims").textContent=cl.length;document.getElementById("hcEarly").textContent=[...cl].filter(c=>["early","ruled","supported","strong"].includes(c.dataset.status)).length;}
+  if(cl.length){document.getElementById("hcClaims").textContent=cl.length;document.getElementById("hcEarly").textContent=[...cl].filter(c=>["early","ruled","supported","strong"].includes(c.dataset.status)).length;}
 }catch(e){console.error(e)}
 </script>
 <script>
