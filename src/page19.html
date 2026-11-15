@@ -741,6 +741,39 @@ h3.splith + p.sub{margin:0 0 6px}
 .light a{color:var(--cold)}.light .linkcard{color:var(--ink)}.light .linkcard .go{color:var(--warm)}
 .light :focus-visible{outline-color:var(--cold)}
 body:has(#panel-students:not([hidden])) .depth{display:none}
+.doors3{display:grid;gap:0;margin-top:6px}
+.doortabs{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.doortabs button{display:grid;gap:6px;align-content:start;text-align:left;font:inherit;color:var(--ink);background:transparent;border:1.5px solid #D9D2C3;padding:18px 20px;cursor:pointer;min-height:44px}
+.doortabs button b{font-family:var(--f-display);font-size:24px;line-height:1.1}
+.doortabs .dage{font-family:var(--f-data);font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+.doortabs .dwhat{font-size:15px;line-height:1.45;color:var(--muted)}
+.doortabs button:hover{border-color:var(--muted)}
+.doortabs button[aria-selected="true"]{background:var(--sheet);border-color:var(--warm);border-bottom-width:4px}
+.doortabs button[aria-selected="true"] .dage{color:var(--warm)}
+.doortabs button:focus-visible,.doorpanel:focus-visible{outline:2px solid var(--cold);outline-offset:2px}
+.doorpanel{margin-top:12px;background:var(--sheet);border:1px solid var(--rule);padding:26px 28px;display:grid;grid-template-columns:minmax(0,1fr) 280px;gap:22px 32px}
+.doorpanel .dk{font-family:var(--f-data);font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--warm)}
+.doorpanel h3{font-family:var(--f-display);font-size:clamp(22px,2.6vw,28px);line-height:1.15;margin:6px 0 14px}
+.dmonths{display:flex;flex-wrap:wrap;gap:8px}
+.dmonths button{font:inherit;display:grid;gap:2px;justify-items:center;min-width:76px;min-height:44px;padding:10px 12px;background:var(--sheet);border:1.5px solid #D9D2C3;color:var(--ink);cursor:pointer}
+.dmonths button b{font-size:15px}.dmonths button span{font-family:var(--f-data);font-size:13px;color:var(--muted)}
+.dmonths button[aria-pressed="true"]{background:#FCE7CF;border-color:var(--warm)}
+.dgrid{display:grid;grid-template-columns:62px repeat(12,minmax(0,1fr));gap:4px;align-items:center;max-width:560px}
+.dgrid span{font-family:var(--f-data);font-size:12px;color:var(--muted);text-align:center}.dgrid .dl{text-align:left;color:var(--ink)}
+.dgrid i{display:block;height:30px;border:1.5px solid var(--cold);background:var(--sheet)}
+.dgrid i.w{background:var(--warmfill);border-color:var(--warmfill)}.dgrid i.s{background:#F8D4AA;border-color:#F8D4AA}
+.dleg{display:flex;flex-wrap:wrap;gap:6px 16px;font-size:13px;color:var(--muted);margin-top:8px}.dleg i{display:inline-block;width:14px;height:14px;vertical-align:-2px;margin-right:6px;border:1.5px solid var(--cold)}.dleg i.w{background:var(--warmfill);border-color:var(--warmfill)}.dleg i.s{background:#F8D4AA;border-color:#F8D4AA}
+.dsrc{font-size:13px;color:var(--muted);margin:10px 0 0}
+.dnote{margin:14px 0 0;font-weight:600;min-height:1.5em}
+.dask{display:grid;gap:8px}.dask textarea{font:inherit;width:100%;min-height:96px;padding:10px 12px;border:1.5px solid #9AAAB5;background:var(--sheet);color:var(--ink);resize:vertical}
+.dask .ctabtn{margin-top:4px}
+.dsteps{margin:16px 0 0;padding:0;list-style:none;display:grid;gap:8px;counter-reset:ds}
+.dsteps li{counter-increment:ds;display:grid;grid-template-columns:28px 1fr;gap:10px;align-items:start}
+.dsteps li::before{content:counter(ds);font-family:var(--f-data);font-weight:700;font-size:13px;width:24px;height:24px;border-radius:50%;background:var(--ink);color:#fff;display:grid;place-items:center}
+.dteach{border-left:3px solid var(--warmfill);padding:4px 0 4px 16px;display:grid;gap:8px;align-content:start}
+.dteach .dk{color:var(--muted)}.dteach b{font-family:var(--f-display);font-size:18px;line-height:1.2}.dteach p{margin:0;font-size:14.5px;color:var(--muted)}
+.dteach .dgr{display:flex;flex-wrap:wrap;gap:6px}.dteach .dgr .cstat{margin:0;width:auto;font-size:11px}
+@media (max-width:760px){.doortabs{grid-template-columns:1fr;gap:8px}.doortabs button{padding:14px 16px}.doortabs .dwhat{display:none}.doorpanel{grid-template-columns:1fr;padding:20px 16px}.dgrid{grid-template-columns:46px repeat(12,minmax(0,1fr));gap:3px}.dgrid i{height:24px}}
 .spfocus{margin-top:18px;display:grid;gap:14px}
 .spfocus .sptiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:1px;background:var(--rule);border:1px solid var(--rule)}
 .spfocus .sptiles div{background:var(--deep);padding:12px 14px;display:flex;flex-direction:column;gap:4px}
@@ -1168,11 +1201,14 @@ body:has(#panel-students:not([hidden])) .depth{display:none}
   <section aria-labelledby="h-stu">
     <div class="kicker">Students and schools</div>
     <h2 class="state" id="h-stu">A real climate story, with real data, for the classroom.</h2>
-    <p class="sub">Everything here comes from the same records scientists use. Pick a printable sheet for your class, or use the facts and questions below for a project. Each sheet has teacher notes on its last page: learning intentions, success criteria, big ideas, curriculum links for Australia, the US, England, the International Baccalaureate and others, and the UN Sustainable Development Goals, a lesson sequence, differentiation, a wellbeing note and an answer guide. <a href="classroom.html" target="_blank" rel="noopener">See all teacher notes</a>.</p>
-    <div class="cards three">
-      <a class="card linkcard" href="classroom-primary.html" target="_blank" rel="noopener"><span class="kicker">Ages 8 to 11 · 45–60 min</span><h3>Shark detectives</h3><p>Read a map, count the warm months, and draw a beach safety poster.</p><span class="go">Open the sheet →</span></a>
-      <a class="card linkcard" href="classroom-middle.html" target="_blank" rel="noopener"><span class="kicker">Ages 12 to 15 · 50–60 min</span><h3>A moving line</h3><p>Read a chart, work out a percentage, and explain why fewer sharks can still mean more bites near some beaches.</p><span class="go">Open the sheet →</span></a>
-      <a class="card linkcard" href="classroom-senior.html" target="_blank" rel="noopener"><span class="kicker">Ages 16 and up · 1–2 lessons</span><h3>Testing a climate claim</h3><p>Rates, p-values, other explanations, and designing your own test with the downloadable data.</p><span class="go">Open the sheet →</span></a>
+    <p class="sub">Everything here comes from the same records scientists use. Pick a door to start in a minute, print the classroom sheet that goes with it, or use the facts and questions below for a project. Each sheet has teacher notes on its last page: learning intentions, success criteria, big ideas, curriculum links for Australia, the US, England, the International Baccalaureate and others, and the UN Sustainable Development Goals, a lesson sequence, differentiation, a wellbeing note and an answer guide. <a href="classroom.html" target="_blank" rel="noopener">See all teacher notes</a>.</p>
+    <div class="doors3" id="doors">
+      <div class="doortabs" role="tablist" aria-label="Pick a door">
+        <button type="button" role="tab" id="door-discover" aria-controls="doorpanel" aria-selected="true"><span class="dage">Ages 8 to 11 · 1 minute</span><b>Discover</b><span class="dwhat">The ocean, sharks and the 19°C line. Look, find, wonder.</span></button>
+        <button type="button" role="tab" id="door-investigate" aria-controls="doorpanel" aria-selected="false" tabindex="-1"><span class="dage">Ages 12 to 15 · 5 minutes</span><b>Investigate</b><span class="dwhat">Compare real data and test an explanation, the way researchers do.</span></button>
+        <button type="button" role="tab" id="door-contribute" aria-controls="doorpanel" aria-selected="false" tabindex="-1"><span class="dage">Ages 12 and up · with a teacher</span><b>Contribute</b><span class="dwhat">Ask a question the data could answer, and send it in with your teacher.</span></button>
+      </div>
+      <div class="doorpanel" id="doorpanel" role="tabpanel" aria-labelledby="door-discover"></div>
     </div>
     <h3 class="blockh" style="margin-top:12px">Five facts for your project</h3>
     <ol class="facts5" id="stuFacts"></ol>
@@ -1784,6 +1820,55 @@ try{
     box.replaceChildren(svg);
   }
   draw(); let t; addEventListener("resize",()=>{clearTimeout(t);t=setTimeout(draw,120)});
+}catch(e){console.error(e)}
+</script>
+
+<script>
+/* Schools: three doors, each starting with something a class can do in a minute, from the page data */
+try{
+  const SY=D.sydney, ML=["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"], MF=["January","February","March","April","May","June","July","August","September","October","November","December"];
+  const have=SY.last_temps.map((t,i)=>[i,t]).filter(x=>x[1]!=null), close=have.reduce((a,b)=>Math.abs(b[1]-19)<Math.abs(a[1]-19)?b:a,have[0]);
+  const R0=SY.rows[0], R1=SY.rows[SY.rows.length-1], dec=r=>`${r.decade}s`;
+  const SH={primary:["classroom-primary.html","Shark detectives","Ages 8 to 11 · 45 to 60 minutes. Read a map, count the warm months, and draw a beach safety poster."],
+    middle:["classroom-middle.html","A moving line","Ages 12 to 15 · 50 to 60 minutes. Read a chart, work out a percentage, and explain a pattern."],
+    senior:["classroom-senior.html","Testing a climate claim","Ages 16 and up · 1 to 2 lessons. Rates, p-values, other explanations, and designing a test with the downloadable data."]};
+  const teach=k=>{const x=SH[k];return `<div class="dteach"><span class="dk">For teachers</span><b>${x[1]}</b><p>${x[2]}</p><a class="ctabtn" href="${x[0]}" target="_blank" rel="noopener">Open the classroom sheet →</a></div>`;};
+  const steps=a=>`<ol class="dsteps">${a.map(t=>`<li><span>${t}</span></li>`).join("")}</ol>`;
+  const src=`<p class="dsrc">Sea off Sydney, monthly average. HadISST, UK Met Office.</p>`;
+  const DOOR={
+    discover:()=>`<div><span class="dk">Discover · your first minute</span><h3>Tap the month when the sea off Sydney was closest to 19°C.</h3>
+      <div class="dmonths" role="group" aria-label="Months of ${SY.last_year}">${have.map(([i,t])=>`<button type="button" aria-pressed="false" data-m="${i}"><b>${ML[i]}</b><span>${t.toFixed(1)}°C</span></button>`).join("")}</div>
+      <p class="dsrc">Sea off Sydney, monthly average, ${MF[have[0][0]]} to ${MF[have[have.length-1][0]]} ${SY.last_year}. HadISST, UK Met Office.</p>
+      <p class="dnote" id="dnote" aria-live="polite">${have.every(x=>x[1]>=19)?"Every month here was 19°C or warmer. Which was closest?":"Some months here were colder than 19°C. Which was closest?"}</p>
+      ${steps(["Tap a month.","What might that month mean for bull sharks near Sydney?","What else would you need to know before you were sure?"])}</div>${teach("primary")}`,
+    investigate:()=>{const cells=r=>r.share.map((v,i)=>`<i class="${v>=.5?"w":v>0?"s":""}" title="${MF[i]}: ${Math.round(v*100)}% of years"></i>`).join("");
+      return `<div><span class="dk">Investigate · your first five minutes</span><h3>Which months changed between the ${dec(R0)} and the ${dec(R1)}?</h3>
+      <div class="dgrid" role="img" aria-label="Months that averaged 19°C or warmer off Sydney in most years: ${dec(R0)} ${R0.share.filter(v=>v>=.5).length} months, ${dec(R1)} ${R1.share.filter(v=>v>=.5).length} months.">
+        <span></span>${ML.map(m=>`<span>${m[0]}</span>`).join("")}<span class="dl">${dec(R0)}</span>${cells(R0)}<span class="dl">${dec(R1)}</span>${cells(R1)}</div>
+      <div class="dleg"><span><i class="w"></i>19°C or warmer, most years</span><span><i class="s"></i>some years</span><span><i></i>colder</span></div>
+      <p class="dsrc">Share of years each month off Sydney averaged 19°C or warmer${R1.years<10?`; the ${dec(R1)} so far are ${R1.years} years`:""}. HadISST, UK Met Office.</p>
+      ${steps(["Find the months that turned orange.","Bull shark bites happen in months at 19°C or warmer. What does that suggest?","Name one thing that could make that suggestion wrong."])}</div>${teach("middle")}`;},
+    contribute:()=>`<div><span class="dk">Contribute · start with a question</span><h3>What would you want to find out?</h3>
+      <div class="dask"><label for="dq">Your class's question</label><textarea id="dq" maxlength="600" placeholder="Example: Do bull sharks go further up the river when it rains?"></textarea>
+      <button type="button" class="ctabtn" id="dqsend">Send it with the contact form →</button></div>
+      <p class="dsrc">Sent by the teacher. Please leave out students' names, photos and contact details.</p>
+      ${steps(["Write one question about sharks, water or people.","Say what answer would surprise you.","Your teacher sends it on."])}
+      <p class="dsrc">A question becomes a claim once you can say what data would answer it. Good questions can become new claims on the Research page.</p></div>
+      <div class="dteach"><span class="dk">Grades, same as Research</span><div class="dgr"><span class="cstat sup">Supported</span><span class="cstat early">Leans yes</span><span class="cstat unc">Unclear</span><span class="cstat look">First look</span><span class="cstat ruled">Ruled out</span></div>
+      <b>${SH.senior[1]}</b><p>${SH.senior[2]}</p><a class="ctabtn" href="${SH.senior[0]}" target="_blank" rel="noopener">Open the classroom sheet →</a></div>`};
+  const K=["discover","investigate","contribute"], tabs=K.map(k=>document.getElementById("door-"+k)), pn=document.getElementById("doorpanel");
+  function open(i,f){tabs.forEach((t,j)=>{t.setAttribute("aria-selected",j===i?"true":"false");t.tabIndex=j===i?0:-1;});pn.setAttribute("aria-labelledby",tabs[i].id);pn.innerHTML=DOOR[K[i]]();if(f)tabs[i].focus();wire();}
+  function wire(){
+    pn.querySelectorAll(".dmonths button").forEach(b=>b.addEventListener("click",()=>{pn.querySelectorAll(".dmonths button").forEach(x=>x.setAttribute("aria-pressed",x===b?"true":"false"));
+      const m=+b.dataset.m, t=SY.last_temps[m], n=document.getElementById("dnote");
+      n.textContent=m===close[0]?`Yes! ${MF[m]}: ${t.toFixed(1)}°C, ${t>=19?"just above":"just below"} the line.`:`${MF[m]} was ${t.toFixed(1)}°C. Try a ${t>close[1]?"colder":"warmer"} one.`;}));
+    const sb=document.getElementById("dqsend"); if(sb) sb.addEventListener("click",()=>{const q=document.getElementById("dq").value.trim(), f=document.getElementById("cform");if(!f)return;
+      const tp=f.elements.topic; if(tp)[...tp.options].forEach(o=>{if(o.text==="Using it in a class")tp.value=o.value||o.text;});
+      if(q) f.elements.msg.value="Our class's question: "+q;
+      document.getElementById("contact").scrollIntoView({behavior:matchMedia("(prefers-reduced-motion: reduce)").matches?"auto":"smooth"}); setTimeout(()=>f.elements.name.focus({preventScroll:true}),400);});
+  }
+  tabs.forEach((t,i)=>{t.addEventListener("click",()=>open(i));t.addEventListener("keydown",e=>{let j=null;if(e.key==="ArrowRight"||e.key==="ArrowDown")j=(i+1)%3;else if(e.key==="ArrowLeft"||e.key==="ArrowUp")j=(i+2)%3;else if(e.key==="Home")j=0;else if(e.key==="End")j=2;if(j!=null){e.preventDefault();open(j,true);}});});
+  open(0);
 }catch(e){console.error(e)}
 </script>
 
