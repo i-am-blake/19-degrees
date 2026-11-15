@@ -34,7 +34,7 @@ shark = d["sharks"]["species"]["bull"]["shapes"][0]["d"]
 MAP = f"""<svg class="map" viewBox="{vx:.1f} {vy:.1f} {vw:.1f} {vh:.1f}" role="img" aria-label="Map of the east coast of Australia showing the line where the sea is 19°C or warmer for half the year: near Jervis Bay in 1950 to 1979, near Eden now, and past the Victorian border by about 2050 at the recent pace.">
 <defs><linearGradient id="sea" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#F6C27F"/><stop offset=".55" stop-color="#BFE0EF"/><stop offset="1" stop-color="#7FB8D6"/></linearGradient></defs>
 <rect x="{vx:.1f}" y="{vy:.1f}" width="{vw:.1f}" height="{vh:.1f}" fill="url(#sea)"/>
-<path d="{C['d']}" fill="#F3EBDD" stroke="#10212B" stroke-width="{sc*0.7:.2f}" stroke-linejoin="round"/>
+<path d="{C['d']}" fill="#F3EBDD" stroke="#0B2236" stroke-width="{sc*0.7:.2f}" stroke-linejoin="round"/>
 {line(Z['line'][0], '#1C5A80', f'1950–79', 'stroke-dasharray="6 5"')}
 {line(Z['line'][-1], '#C2561F', 'Now')}
 {line(-37.9, '#7A2E12', '2050?', 'stroke-dasharray="2 4"')}
@@ -44,16 +44,18 @@ MAP = f"""<svg class="map" viewBox="{vx:.1f} {vy:.1f} {vw:.1f} {vh:.1f}" role="i
 <text x="{vx+sc*4:.1f}" y="{vy+sc*16:.1f}" font-size="{sc*5.4:.2f}" fill="#10212B" font-family="system-ui,sans-serif">for at least half the year</text>
 </svg>"""
 
-CSS = """:root{--ink:#10212B;--muted:#4A6170;--warm:#C2561F;--cold:#1C5A80;--rule:#C9D6DD}
-*{box-sizing:border-box}body{margin:0;background:#fff;color:var(--ink);font:16px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif;padding:24px 16px}
+CSS = """/* the site's light theme: deep orange for text, bright orange only for fills and lines */
+:root{--ink:#0B2236;--muted:#4A6577;--warm:#9A5214;--warmfill:#F0A04B;--cold:#1F6E9C;--rule:#C9D3D9;--paper:#F6F3EC;--f-display:"Bricolage Grotesque","Arial Narrow",system-ui,sans-serif;--f-body:"Figtree",system-ui,-apple-system,"Segoe UI",sans-serif;--f-data:"Martian Mono",ui-monospace,Menlo,monospace}
+*{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font:16px/1.5 var(--f-body);padding:24px 16px}
+.wrap{background:#fff;padding:28px 32px;border:1px solid var(--rule)}
 .wrap{max-width:780px;margin:0 auto}.top{display:flex;align-items:center;justify-content:space-between;gap:16px;border-bottom:3px solid var(--ink);padding-bottom:12px;margin-bottom:16px}
 .logo{width:150px;color:var(--ink)}.logo svg{width:100%;height:auto;display:block}
-.k{font:12px ui-monospace,Menlo,monospace;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
-h1{font-size:30px;line-height:1.1;margin:4px 0 0}h2{font-size:19px;margin:22px 0 8px}
+.k{font:12px var(--f-data);letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+h1{font-family:var(--f-display);font-weight:800;letter-spacing:-.02em;font-size:30px;line-height:1.1;margin:4px 0 0}h2{font-family:var(--f-display);font-weight:700;font-size:19px;margin:22px 0 8px}
 .hero{display:grid;grid-template-columns:minmax(0,1fr) 300px;gap:22px;align-items:start}.map{width:100%;height:auto;display:block;border:1px solid var(--rule)}
-.fact{border-left:4px solid var(--warm);padding:6px 0 6px 12px;margin:10px 0}.fact b{color:var(--warm)}
+.fact{border-left:4px solid var(--warmfill);padding:6px 0 6px 12px;margin:10px 0}.fact b{color:var(--warm)}
 table{border-collapse:collapse;width:100%}th,td{padding:3px 6px;text-align:left;font-size:14px}th{width:70px;color:var(--muted);font-weight:500}td:last-child{width:50px;text-align:right}
-.b{display:block;height:14px;background:var(--warm)}.half{position:relative}.half::after{content:"";position:absolute;left:50%;top:-3px;bottom:-3px;border-left:1.5px dashed var(--ink)}
+.b{display:block;height:14px;background:var(--warmfill)}.half{position:relative}.half::after{content:"";position:absolute;left:50%;top:-3px;bottom:-3px;border-left:1.5px dashed var(--ink)}
 ol li{margin-bottom:14px}.lines{border-bottom:1px solid var(--rule);height:30px}.box{border:1.5px dashed var(--rule);height:150px;margin-top:8px}
 dl{display:grid;grid-template-columns:170px 1fr;gap:6px 14px}dt{font-weight:600}dd{margin:0}
 .ans{break-before:page;page-break-before:always;margin-top:36px;border-top:2px dashed var(--rule);padding-top:12px;font-size:14.5px}
@@ -62,12 +64,13 @@ dl{display:grid;grid-template-columns:170px 1fr;gap:6px 14px}dt{font-weight:600}
 @media (max-width:620px){.tgrid{grid-template-columns:1fr}}
 .btns{display:flex;flex-wrap:wrap;gap:8px;margin:6px 0 4px}.btn{font:inherit;padding:8px 14px;border:1.5px solid var(--ink);background:#fff;color:var(--ink);cursor:pointer;min-height:44px;text-decoration:none;display:inline-flex;align-items:center}
 .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,220px),1fr));gap:14px;margin-top:14px}.card{border:1.5px solid var(--rule);padding:18px;display:grid;gap:6px}.card h3{margin:0;font-size:19px}
-@media print{.btns{display:none}body{padding:0}.ans{margin-top:0;border-top:0}}
-@media (max-width:620px){.hero{grid-template-columns:1fr}.hero .map{max-width:320px}dl{grid-template-columns:1fr}}"""
+a{color:var(--cold)}a.card{color:var(--ink);text-decoration:none}a.card h3{color:var(--cold);text-decoration:underline;text-underline-offset:3px}a.card:hover{border-color:var(--warmfill)}a.card:focus-visible,.btn:focus-visible{outline:2px solid var(--cold);outline-offset:2px}
+@media print{.btns{display:none}body{padding:0;background:#fff}.wrap{padding:0;border:0}.ans{margin-top:0;border-top:0}}
+@media (max-width:620px){.wrap{padding:18px 16px}.hero{grid-template-columns:1fr}.hero .map{max-width:320px}dl{grid-template-columns:1fr}}"""
 
 def page(title, kicker, body):
     return f"""<!doctype html><html lang="en-US"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>{title}</title><style>{CSS}</style></head><body><div class="wrap">
+<title>{title}</title><link rel="stylesheet" href="fonts/fonts.css"><style>{CSS}</style></head><body><div class="wrap">
 <div class="top"><div><div class="k">{kicker}</div><h1>{title}</h1></div><div class="logo" aria-hidden="true">{logo}</div></div>
 {body}
 <p class="src">Data: Australian Shark-Incident Database (Taronga Conservation Society Australia and Flinders University); HadISST sea temperature (UK Met Office); Pacoureau et al. 2021; Surf Life Saving Australia. From 19 Degrees, free and open source. © 2026 19 Degrees.</p>
