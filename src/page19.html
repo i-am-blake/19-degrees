@@ -741,7 +741,7 @@ h3.splith + p.sub{margin:0 0 6px}
 .light a{color:var(--cold)}.light .linkcard{color:var(--ink)}.light .linkcard .go{color:var(--warm)}
 .light :focus-visible{outline-color:var(--cold)}
 body:has(#panel-students:not([hidden])) .depth{display:none}
-.doors3{display:grid;gap:0;margin-top:6px}
+.doors3{display:grid;gap:0;margin-top:6px;scroll-margin-top:calc(var(--surf-h) + 24px)}
 .doortabs{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
 .doortabs button{display:grid;gap:6px;align-content:start;text-align:left;font:inherit;color:var(--ink);background:transparent;border:1.5px solid #D9D2C3;padding:18px 20px;cursor:pointer;min-height:44px}
 .doortabs button b{font-family:var(--f-display);font-size:24px;line-height:1.1}
@@ -774,6 +774,20 @@ body:has(#panel-students:not([hidden])) .depth{display:none}
 .dteach .dk{color:var(--muted)}.dteach b{font-family:var(--f-display);font-size:18px;line-height:1.2}.dteach p{margin:0;font-size:14.5px;color:var(--muted)}
 .dteach .dgr{display:flex;flex-wrap:wrap;gap:6px}.dteach .dgr .cstat{margin:0;width:auto;font-size:11px}
 @media (max-width:760px){.doortabs{grid-template-columns:1fr;gap:8px}.doortabs button{padding:14px 16px}.doortabs .dwhat{display:none}.doorpanel{grid-template-columns:1fr;padding:20px 16px}.dgrid{grid-template-columns:46px repeat(12,minmax(0,1fr));gap:3px}.dgrid i{height:24px}}
+.dgrid2{display:grid;grid-template-columns:62px minmax(0,1fr);gap:4px;max-width:560px}
+.dlabs{display:grid;grid-template-rows:20px 34px 34px;gap:4px;align-items:center;font-family:var(--f-data);font-size:12px;color:var(--ink)}
+.dcols{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:4px}
+.dcol{font:inherit;display:grid;grid-template-rows:20px 34px 34px;gap:4px;padding:0;border:0;background:none;cursor:pointer;color:var(--muted);min-width:0}
+.dcol span{font-family:var(--f-data);font-size:12px;text-align:center;align-self:center}
+.dcol i{display:block;border:1.5px solid var(--cold);background:var(--sheet)}
+.dcol i.w{background:var(--warmfill);border-color:var(--warmfill)}.dcol i.s{background:#F8D4AA;border-color:#F8D4AA}
+.dcol[aria-pressed="true"] span{color:#fff;background:var(--ink);border-radius:4px}
+.dcol[aria-pressed="true"]{outline:2px solid var(--ink);outline-offset:2px}
+.dcol.ok{outline:3px solid #1E7A50;outline-offset:2px}.dcol.miss{outline:3px dashed #1E7A50;outline-offset:2px}.dcol.extra{outline:3px solid #A8432F;outline-offset:2px}
+.dcol:focus-visible{outline:2px solid var(--cold);outline-offset:3px}
+.dcheck{margin:0;font:inherit;font-weight:600;cursor:pointer;min-height:44px}
+.light .ghbtn{color:var(--ink);border-color:var(--ink);background:transparent}
+@media (max-width:760px){.dgrid2{grid-template-columns:44px minmax(0,1fr)}.dlabs,.dcol{grid-template-rows:20px 28px 28px}.dcols{gap:3px}}
 .spfocus{margin-top:18px;display:grid;gap:14px}
 .spfocus .sptiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:1px;background:var(--rule);border:1px solid var(--rule)}
 .spfocus .sptiles div{background:var(--deep);padding:12px 14px;display:flex;flex-direction:column;gap:4px}
@@ -1853,11 +1867,14 @@ try{
       <p class="dsrc">Sea off Sydney, monthly average, ${MF[have[0][0]]} to ${MF[have[have.length-1][0]]} ${SY.last_year}. HadISST, UK Met Office.</p>
       <p class="dnote" id="dnote" aria-live="polite">${have.every(x=>x[1]>=19)?"Every month here was 19°C or warmer. Which was closest?":"Some months here were colder than 19°C. Which was closest?"}</p>
       ${steps(["Tap a month.","What might that month mean for bull sharks near Sydney?","What else would you need to know before you were sure?"])}</div>${teach("primary")}`,
-    investigate:()=>{const cells=r=>r.share.map((v,i)=>`<i class="${v>=.5?"w":v>0?"s":""}" title="${MF[i]}: ${Math.round(v*100)}% of years"></i>`).join("");
+    investigate:()=>{const cat=v=>v>=.5?"w":v>0?"s":"";
+      const yrs=(r,m)=>`${Math.round(r.share[m]*r.years)} of ${r.years} years`;
+      const cols=ML.map((m,i)=>`<button type="button" class="dcol" data-m="${i}" aria-pressed="false" aria-label="${MF[i]}: 19°C or warmer in ${yrs(R0,i)} in the ${dec(R0)}, and ${yrs(R1,i)} in the ${dec(R1)}"><span>${m[0]}</span><i class="${cat(R0.share[i])}"></i><i class="${cat(R1.share[i])}"></i></button>`).join("");
       return `<div><span class="dk">Investigate · your first five minutes</span><h3>Which months changed between the ${dec(R0)} and the ${dec(R1)}?</h3>
-      <div class="dgrid" role="img" aria-label="Months that averaged 19°C or warmer off Sydney in most years: ${dec(R0)} ${R0.share.filter(v=>v>=.5).length} months, ${dec(R1)} ${R1.share.filter(v=>v>=.5).length} months.">
-        <span></span>${ML.map(m=>`<span>${m[0]}</span>`).join("")}<span class="dl">${dec(R0)}</span>${cells(R0)}<span class="dl">${dec(R1)}</span>${cells(R1)}</div>
+      <div class="dgrid2"><div class="dlabs" aria-hidden="true"><span></span><span>${dec(R0)}</span><span>${dec(R1)}</span></div><div class="dcols" role="group" aria-label="Tap the months you think changed">${cols}</div></div>
       <div class="dleg"><span><i class="w"></i>19°C or warmer, most years</span><span><i class="s"></i>some years</span><span><i></i>colder</span></div>
+      <p class="dnote" id="dmon" aria-live="polite">Tap a month to see its years. Tap the ones you think changed, then check.</p>
+      <p><button type="button" class="ghbtn dcheck" id="dcheck">Check my answer</button></p>
       <p class="dsrc">Share of years each month off Sydney averaged 19°C or warmer${R1.years<10?`; the ${dec(R1)} so far are ${R1.years} years`:""}. HadISST, UK Met Office.</p>
       ${steps(["Find the months that turned orange.","Bull shark bites happen in months at 19°C or warmer. What does that suggest?","Name one thing that could make that suggestion wrong."])}</div>${teach("middle")}`;},
     contribute:()=>`<div><span class="dk">Contribute · start with a question</span><h3>What would you want to find out?</h3>
@@ -1869,18 +1886,32 @@ try{
       <div class="dteach"><span class="dk">Grades, same as Research</span><div class="dgr"><span class="cstat sup">Supported</span><span class="cstat early">Leans yes</span><span class="cstat unc">Unclear</span><span class="cstat look">First look</span><span class="cstat ruled">Ruled out</span></div>
       <b>${SH.senior[1]}</b><p>${SH.senior[2]}</p><a class="ctabtn" href="${SH.senior[0]}" target="_blank" rel="noopener">Open the classroom sheet →</a></div>`};
   const K=["discover","investigate","contribute"], tabs=K.map(k=>document.getElementById("door-"+k)), pn=document.getElementById("doorpanel");
-  function open(i,f){tabs.forEach((t,j)=>{t.setAttribute("aria-selected",j===i?"true":"false");t.tabIndex=j===i?0:-1;});pn.setAttribute("aria-labelledby",tabs[i].id);pn.innerHTML=DOOR[K[i]]();if(f)tabs[i].focus();wire();}
+  const setDoorHash=k=>{try{history.replaceState(null,"",location.pathname+location.search+"#"+k);}catch(e){}};
+  function open(i,f,keep){if(!keep&&document.getElementById("panel-students")&&!document.getElementById("panel-students").hidden)setDoorHash(K[i]);tabs.forEach((t,j)=>{t.setAttribute("aria-selected",j===i?"true":"false");t.tabIndex=j===i?0:-1;});pn.setAttribute("aria-labelledby",tabs[i].id);pn.innerHTML=DOOR[K[i]]();if(f)tabs[i].focus();wire();}
   function wire(){
     pn.querySelectorAll(".dmonths button").forEach(b=>b.addEventListener("click",()=>{pn.querySelectorAll(".dmonths button").forEach(x=>x.setAttribute("aria-pressed",x===b?"true":"false"));
       const m=+b.dataset.m, t=SY.last_temps[m], n=document.getElementById("dnote");
       n.textContent=m===close[0]?`Yes! ${MF[m]}: ${t.toFixed(1)}°C, ${t>=19?"just above":"just below"} the line.`:`${MF[m]} was ${t.toFixed(1)}°C. Try a ${t>close[1]?"colder":"warmer"} one.`;}));
+    const cols=[...pn.querySelectorAll(".dcol")];
+    if(cols.length){const cat=v=>v>=.5?2:v>0?1:0, CH=ML.map((m,i)=>cat(R0.share[i])!==cat(R1.share[i])), yr=(r,m)=>`${Math.round(r.share[m]*r.years)} of ${r.years}`, list=a=>a.length<2?a.join(""):a.slice(0,-1).join(", ")+" and "+a[a.length-1];
+      cols.forEach(b=>b.addEventListener("click",()=>{const m=+b.dataset.m,on=b.getAttribute("aria-pressed")!=="true";b.setAttribute("aria-pressed",on?"true":"false");pn.querySelectorAll(".dcol").forEach(x=>x.classList.remove("ok","miss","extra"));
+        document.getElementById("dmon").textContent=`${MF[m]}: 19°C or warmer in ${yr(R0,m)} years in the ${dec(R0)}, and ${yr(R1,m)} years in the ${dec(R1)}.`+(on?" Marked as changed.":" Unmarked.");}));
+      document.getElementById("dcheck").addEventListener("click",()=>{const pick=cols.map(b=>b.getAttribute("aria-pressed")==="true"),hit=[],miss=[],extra=[];
+        cols.forEach((b,i)=>{b.classList.remove("ok","miss","extra");if(CH[i]&&pick[i]){hit.push(MF[i]);b.classList.add("ok");}else if(CH[i]){miss.push(MF[i]);b.classList.add("miss");}else if(pick[i]){extra.push(MF[i]);b.classList.add("extra");}});
+        const n=CH.filter(Boolean).length;let t=hit.length===n&&!extra.length?`Yes! All ${n}: ${list(hit)}.`:`You found ${hit.length} of ${n}.`+(miss.length?` Also changed: ${list(miss)}.`:"")+(extra.length?` ${list(extra)} ${extra.length===1?"looks":"look"} the same in both rows.`:"");
+        document.getElementById("dmon").textContent=t+(hit.length===n&&!extra.length?"":" Green outlines mark the months that changed (dashed: missed); red marks a month that stayed the same.");});}
     const sb=document.getElementById("dqsend"); if(sb) sb.addEventListener("click",()=>{const q=document.getElementById("dq").value.trim(), f=document.getElementById("cform");if(!f)return;
       const tp=f.elements.topic; if(tp)[...tp.options].forEach(o=>{if(o.text==="Using it in a class")tp.value=o.value||o.text;});
       if(q) f.elements.msg.value="Our class's question: "+q;
       document.getElementById("contact").scrollIntoView({behavior:matchMedia("(prefers-reduced-motion: reduce)").matches?"auto":"smooth"}); setTimeout(()=>f.elements.name.focus({preventScroll:true}),400);});
   }
   tabs.forEach((t,i)=>{t.addEventListener("click",()=>open(i));t.addEventListener("keydown",e=>{let j=null;if(e.key==="ArrowRight"||e.key==="ArrowDown")j=(i+1)%3;else if(e.key==="ArrowLeft"||e.key==="ArrowUp")j=(i+2)%3;else if(e.key==="Home")j=0;else if(e.key==="End")j=2;if(j!=null){e.preventDefault();open(j,true);}});});
-  open(0);
+  open(0,false,true);
+  /* a link to a door (/schools#investigate) opens the Schools tab on that door */
+  const fromDoor=()=>{let h="";try{h=(location.hash||"").slice(1);}catch(e){}const i=K.indexOf(h);if(i<0)return;
+    const st=document.getElementById("tab-students");if(st&&st.getAttribute("aria-selected")!=="true"){st.click();setDoorHash(K[i]);}
+    open(i,false,true);setTimeout(()=>document.getElementById("doors").scrollIntoView(),0);};
+  addEventListener("load",fromDoor);addEventListener("hashchange",fromDoor);
 }catch(e){console.error(e)}
 </script>
 
