@@ -108,6 +108,8 @@ Please also cite the data sources below.
 | `data/` | Every dataset behind the charts (CSV and JSON), a data dictionary and a starter Jupyter notebook |
 | `share/` | Share images and a LinkedIn carousel (PDF) |
 | `fonts/` | Self-hosted fonts (SIL Open Font License) |
+| `story.html`, `safety.html`, `research.html`, `schools.html`, `media.html` | The same page, opening on each tab (19-degrees.org/story and so on) |
+| `src/history/` | A dated snapshot of every claim's grade and the headline numbers, saved by each weekly build |
 | `src/` | The scripts and template that build everything above |
 
 ## Rebuild it yourself
