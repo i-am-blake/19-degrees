@@ -813,6 +813,26 @@ body:has(#panel-students:not([hidden])) .depth{display:none}
 .gpanel li .cstat{margin:0;width:auto;min-width:0;font-size:11px;padding:0 8px;height:1.9em}
 .gpanel li a{color:var(--ink)}
 @media (max-width:860px){.gmap{grid-template-columns:1fr;grid-template-areas:"fig" "list" "panel"}.gpin text{display:none}}
+.isowrap{margin:10px 0 30px}
+.isogrid2{display:grid;grid-template-columns:minmax(0,1fr) 340px;gap:24px;align-items:start}
+.isomapbox svg{display:block;width:100%;height:auto;max-height:600px}
+.isoland{fill:rgba(232,241,242,.12);stroke:rgba(232,241,242,.35);stroke-width:1;vector-effect:non-scaling-stroke}
+.isobeach{fill:var(--ink)}.isolab{font-family:var(--f-data);fill:var(--muted)}
+.isobeyond{fill:rgba(232,241,242,.05)}.isonote{font-family:var(--f-data);fill:var(--muted);letter-spacing:.06em;text-transform:uppercase}
+.isoline{stroke:var(--warm);stroke-width:4;stroke-linecap:round;vector-effect:non-scaling-stroke}
+.isogrid2.proj .isoline{stroke-dasharray:9 7;stroke-width:3}
+.isoghost{stroke:var(--muted);stroke-width:1.5;stroke-dasharray:2 4;opacity:.7;vector-effect:non-scaling-stroke}
+.isoband{fill:rgba(240,160,75,.16);stroke:var(--warm);stroke-width:1;stroke-dasharray:4 4;vector-effect:non-scaling-stroke}
+.isotag{font-family:var(--f-data);fill:var(--ink);paint-order:stroke;stroke:#03131F;stroke-width:4px;vector-effect:non-scaling-stroke}
+.isoctl{display:flex;align-items:center;gap:12px}.isoctl .ghbtn{font:inherit;font-weight:600;cursor:pointer;background:none;color:var(--ink);min-height:44px;min-width:76px}
+.isoctl input{flex:1;accent-color:var(--warm);min-height:44px}.isoyl{font-family:var(--f-data);font-size:15px;min-width:3.2em}
+.isoread{margin:12px 0;font-size:15.5px;line-height:1.55;min-height:6.5em}
+.isochart{display:block;width:100%;height:auto}
+.isogrid{stroke:var(--rule);stroke-width:1}.isoax{font-family:var(--f-data);font-size:10px;fill:var(--muted)}
+.isoobs{fill:none;stroke:var(--warm);stroke-width:2.5}.isoproj{stroke:var(--warm);stroke-width:2;stroke-dasharray:6 5}
+.isodot{fill:var(--warm);stroke:#03131F;stroke-width:2}.isodot.p{fill:#03131F;stroke:var(--warm)}
+.isosw{display:inline-block;width:22px;height:0;vertical-align:middle}.isosw.o{border-top:3px solid var(--warm)}.isosw.p{border-top:2px dashed var(--warm)}.isosw.b{height:12px;background:rgba(232,241,242,.08);border:1px solid var(--rule)}
+@media (max-width:860px){.isogrid2{grid-template-columns:1fr}.isomapbox svg{max-height:460px}}
 .spfocus{margin-top:18px;display:grid;gap:14px}
 .spfocus .sptiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:1px;background:var(--rule);border:1px solid var(--rule)}
 .spfocus .sptiles div{background:var(--deep);padding:12px 14px;display:flex;flex-direction:column;gap:4px}
@@ -1204,6 +1224,19 @@ body:has(#panel-students:not([hidden])) .depth{display:none}
     <div class="kicker">Looking ahead: what it means</div>
     <h2 id="h-ahead">If nothing changes: 2050.</h2>
     <p class="sub">If each beach keeps warming at its pace since 1980, this is what the 19°C line would mean around 2050 for where bull sharks can be, how long they stay, and how often they bite. It extends the trend; it is not a climate model.</p>
+    <div class="isowrap" id="isowrap" hidden>
+      <h3 class="blockh" id="h-iso">The 19°C line moving down the coast, 1950 to 2050</h3>
+      <p class="sub">How far south the sea stayed at 19°C or more for at least half the year, as 10-year averages of the six east coast beach patches. The years to now are observed; 2050 is a projection, drawn apart.</p>
+      <div class="isogrid2" id="isofig">
+        <div class="isomapbox"><svg id="isomap" role="img" aria-labelledby="h-iso"></svg></div>
+        <div class="isoside">
+          <div class="isoctl"><button type="button" class="ghbtn" id="isoplay" aria-pressed="false">Play</button><label for="isoyr" class="isoyl"><span id="isoyl">2025</span></label><input type="range" id="isoyr" min="0" step="1"></div>
+          <p class="isoread" id="isoread" aria-live="polite"></p>
+          <svg id="isochart" class="isochart" aria-hidden="true"></svg>
+          <div class="legend"><span><i class="isosw o"></i>Observed, 10-year average</span><span><i class="isosw p"></i>Projection to about 2050</span><span><i class="isosw b"></i>Beyond the beaches measured</span></div>
+        </div>
+      </div>
+    </div>
     <div class="controls"><div class="coastsw" role="group" aria-label="Coast"><button type="button" data-coast="east">East coast</button><button type="button" data-coast="west">West coast</button></div></div>
     <div class="ahead3" aria-live="polite">
       <div class="atile"><span class="lab">Range</span><div id="aRange"></div></div>
@@ -2021,6 +2054,71 @@ try{
     if(f)tabs[i].focus({preventScroll:true});}
   tl.addEventListener("keydown",e=>{const i=tabs.indexOf(document.activeElement);if(i<0)return;let j=null;if(e.key==="ArrowRight"||e.key==="ArrowDown")j=(i+1)%tabs.length;else if(e.key==="ArrowLeft"||e.key==="ArrowUp")j=(i-1+tabs.length)%tabs.length;else if(e.key==="Home")j=0;else if(e.key==="End")j=tabs.length-1;if(j!==null){e.preventDefault();pick(j,true);}});
   pick(0);
+}catch(e){console.error(e)}
+</script>
+
+<script>
+/* The 19°C line moving down the east coast: observed 1950-2025 (10-year averages of the beach patches), then a separate 2050 projection by two named methods */
+try{
+  const C=D.coast, X=lon=>(lon-C.lon0)/(C.lon1-C.lon0)*C.w, Y=lat=>(C.lat0-lat)/(C.lat0-C.lat1)*C.h;
+  const EB=D.beaches.filter(b=>b.coast==="east"), PJ=D.proj||{};
+  const lineOf=m=>{for(let i=0;i<m.length-1;i++){const [l1,m1]=m[i],[l2,m2]=m[i+1];if(m1>=6&&m2<6)return l1+(6-m1)/(m2-m1)*(l2-l1);}return m[m.length-1][1]>=6?"S":"N";};
+  const lastYr=Math.max(...EB[0].years.map(r=>r[0]));
+  const obs=y=>lineOf(EB.map(b=>{const v=b.years.filter(r=>r[0]>y-10&&r[0]<=y).map(r=>r[1]);return [b.patch[0],v.reduce((a,c)=>a+c,0)/v.length];}));
+  const Y0=1950, step=5, YRS=[];for(let y=Y0;y<lastYr;y+=step)YRS.push(y);YRS.push(lastYr);
+  const OBS=YRS.map(y=>[y,obs(y)]);
+  const trend=lineOf(EB.map(b=>[b.patch[0],b.months_2050])), cm=lineOf(EB.map(b=>[b.patch[0],(PJ[b.key]||{}).median])), cmlo=lineOf(EB.map(b=>[b.patch[0],(PJ[b.key]||{}).lo])), cmhi=lineOf(EB.map(b=>[b.patch[0],(PJ[b.key]||{}).hi]));
+  const south=EB[EB.length-1], TOWNS=[["the Gold Coast",-28.0],["Byron Bay",-28.6],["Coffs Harbour",-30.3],["Port Macquarie",-31.4],["Newcastle",-32.9],["Sydney",-33.9],["Wollongong",-34.4],["Jervis Bay",-35.1],["Batemans Bay",-35.7],["Narooma",-36.2],["Eden",-37.1]];  /* the same towns as the zone chart */
+  const near=l=>TOWNS.reduce((a,t)=>Math.abs(t[1]-l)<Math.abs(a[1]-l)?t:a)[0];
+  const say=l=>l==="S"?`past ${south.name}, the southernmost beach measured`:l==="N"?"north of the Gold Coast":`near ${near(l)}`;
+  /* map, cropped to the NSW coast */
+  const vx=X(147.8), vy=Y(-27), vw=X(158.5)-vx, vh=Y(-38.9)-vy, NS="http://www.w3.org/2000/svg", k=vw/520;
+  const svg=document.getElementById("isomap"); svg.setAttribute("viewBox",`${vx.toFixed(1)} ${vy.toFixed(1)} ${vw.toFixed(1)} ${vh.toFixed(1)}`); svg.style.setProperty("--k",k);
+  const mk=(t,a,p)=>{const e=document.createElementNS(NS,t);for(const k in a)e.setAttribute(k,a[k]);(p||svg).appendChild(e);return e;};
+  mk("path",{d:C.d,class:"isoland"});
+  const xr=vx+vw, yS=Y(south.patch[0]);
+  mk("rect",{x:vx,y:yS,width:vw,height:vy+vh-yS,class:"isobeyond"});
+  const tb=mk("text",{x:xr-8*k,y:vy+vh-8*k,"text-anchor":"end",class:"isonote","font-size":10*k});tb.textContent=`Beyond the beaches measured`;
+  EB.forEach(b=>{const x=X(b.beach[1]),y=Y(b.beach[0]);mk("circle",{cx:x,cy:y,r:3.5*k,class:"isobeach"});const t=mk("text",{x:x-8*k,y:y+4*k,"text-anchor":"end",class:"isolab","font-size":12*k});t.textContent=b.name;});
+  const ghost=mk("line",{class:"isoghost"}), band=mk("rect",{class:"isoband"}), L=mk("line",{class:"isoline"}), tag=mk("text",{class:"isotag","text-anchor":"end","font-size":12*k});
+  const xAt=l=>{const b=EB.reduce((a,c)=>Math.abs(c.patch[0]-l)<Math.abs(a.patch[0]-l)?c:a);return X(b.beach[1])+8*k;};
+  const setL=(el,l)=>{const y=Y(l==="S"?south.patch[0]-0.45:l);el.setAttribute("x1",xAt(l==="S"?south.patch[0]:l));el.setAttribute("x2",xr);el.setAttribute("y1",y);el.setAttribute("y2",y);return y;};
+  setL(ghost,OBS[0][1]);
+  /* small chart of the line's latitude over time */
+  const ch=document.getElementById("isochart"), cw=320, chh=200, pad=[34,10,22,8];
+  const latMax=-33, latMin=Math.min(-37.9,south.patch[0]-0.5), cx=y=>pad[0]+(y-Y0)/(2050-Y0)*(cw-pad[0]-pad[1]), cy=l=>pad[3]+(latMax-l)/(latMax-latMin)*(chh-pad[2]-pad[3]);
+  const cm2=(t,a)=>mk(t,a,ch);
+  ch.setAttribute("viewBox",`0 0 ${cw} ${chh}`);
+  [-34,-35,-36,-37].forEach(l=>{cm2("line",{x1:pad[0],x2:cw-pad[1],y1:cy(l),y2:cy(l),class:"isogrid"});const t=cm2("text",{x:pad[0]-4,y:cy(l)+4,"text-anchor":"end",class:"isoax"});t.textContent=`${-l}°S`;});
+  [1950,1975,2000,2025,2050].forEach(y=>{const t=cm2("text",{x:cx(y),y:chh-6,"text-anchor":"middle",class:"isoax"});t.textContent=y;});
+  cm2("rect",{x:pad[0],y:cy(south.patch[0]),width:cw-pad[0]-pad[1],height:chh-pad[2]-cy(south.patch[0]),class:"isobeyond"});
+  cm2("polyline",{points:OBS.filter(o=>o[1]!=="S"&&o[1]!=="N").map(o=>`${cx(o[0]).toFixed(1)},${cy(o[1]).toFixed(1)}`).join(" "),class:"isoobs"});
+  const lastO=OBS[OBS.length-1];
+  cm2("line",{x1:cx(lastO[0]),y1:cy(lastO[1]==="S"?south.patch[0]:lastO[1]),x2:cx(2050),y2:cy(south.patch[0]),class:"isoproj"});
+  cm2("path",{d:`M${cx(2050)},${cy(south.patch[0])+4}v16m-5,-6l5,6l5,-6`,class:"isoproj",fill:"none"});
+  const dot=cm2("circle",{r:4,class:"isodot"});
+  /* stops: observed years, then the projection */
+  const STOPS=OBS.map(o=>({y:o[0],l:o[1],kind:"obs"})).concat([{y:2050,l:"S",kind:"proj"}]);
+  const sl=document.getElementById("isoyr"); sl.max=STOPS.length-1; sl.value=STOPS.length-2;
+  const out=document.getElementById("isoread"), fig=document.getElementById("isofig");
+  function draw(i){const s=STOPS[i], pr=s.kind==="proj";
+    fig.classList.toggle("proj",pr);
+    const y=setL(L,s.l);
+    band.setAttribute("x",xAt(south.patch[0]));band.setAttribute("width",pr?xr-xAt(south.patch[0]):0);band.setAttribute("y",yS);band.setAttribute("height",pr?vy+vh-yS:0);
+    tag.setAttribute("x",xr-8*k);tag.setAttribute("y",y-9*k);tag.textContent=pr?"About 2050 · projection":`${s.y-9}–${s.y} · observed`;
+    dot.setAttribute("cx",cx(s.y));dot.setAttribute("cy",cy(s.l==="S"?south.patch[0]:s.l));dot.classList.toggle("p",pr);
+    out.innerHTML=pr
+      ?`<b>About 2050, projection.</b> Both methods put the line ${say("S")}. At each beach's pace of warming since 1980, ${south.name} would have ${south.months_2050} months a year at 19°C or more; the median of ${(PJ[south.key]||{}).models||27} climate models (CMIP6, middle emissions path) gives ${(PJ[south.key]||{}).median}, with a range of ${(PJ[south.key]||{}).lo} to ${(PJ[south.key]||{}).hi}. The beaches measured stop at ${south.name}, so how far past it can't be shown. Not a forecast.`
+      :`<b>${s.y-9} to ${s.y}, observed.</b> On average, the sea stayed at 19°C or more for at least half the year as far south as ${say(s.l)}${s.l!=="S"&&s.l!=="N"?` (${(-s.l).toFixed(1)}°S)`:""}.`;
+    sl.setAttribute("aria-valuetext",pr?"About 2050, projection":`${s.y-9} to ${s.y}, observed`);
+    document.getElementById("isoyl").textContent=pr?"2050":s.y;}
+  sl.addEventListener("input",()=>{stop();draw(+sl.value);});
+  let tm=null; const pb=document.getElementById("isoplay");
+  const stop=()=>{if(tm){clearInterval(tm);tm=null;pb.textContent="Play";pb.setAttribute("aria-pressed","false");}};
+  pb.addEventListener("click",()=>{if(tm){stop();return;}let i=+sl.value>=STOPS.length-1?0:+sl.value;pb.textContent="Pause";pb.setAttribute("aria-pressed","true");
+    const fast=matchMedia("(prefers-reduced-motion: reduce)").matches;draw(i);sl.value=i;tm=setInterval(()=>{i++;if(i>=STOPS.length){stop();return;}sl.value=i;draw(i);},fast?1400:700);});
+  draw(+sl.value);
+  document.getElementById("isowrap").hidden=false;
 }catch(e){console.error(e)}
 </script>
 
