@@ -788,6 +788,11 @@ body:has(#panel-students:not([hidden])) .depth{display:none}
 .dcheck{margin:0;font:inherit;font-weight:600;cursor:pointer;min-height:44px}
 .light .ghbtn{color:var(--ink);border-color:var(--ink);background:transparent}
 @media (max-width:760px){.dgrid2{grid-template-columns:44px minmax(0,1fr)}.dlabs,.dcol{grid-template-rows:20px 28px 28px}.dcols{gap:3px}}
+.stype{font-family:var(--f-data);font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink);display:inline-flex;align-items:center;gap:8px;padding-right:6px;border-right:1px solid var(--rule)}
+.stype::before{content:"";width:22px;height:0;border-top:2px solid currentColor}
+.stype.assoc::before{border-top-style:dotted}.stype.proj::before{border-top-style:dashed}
+.stype.test::before{width:8px;height:8px;border:0;background:currentColor}
+.gloss dt .stype{border-right:0}
 .spfocus{margin-top:18px;display:grid;gap:14px}
 .spfocus .sptiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:1px;background:var(--rule);border:1px solid var(--rule)}
 .spfocus .sptiles div{background:var(--deep);padding:12px 14px;display:flex;flex-direction:column;gap:4px}
@@ -992,7 +997,7 @@ body:has(#panel-students:not([hidden])) .depth{display:none}
     <h2 id="h-evidence">Every claim can be challenged.</h2>
     <div class="stats4">
       <div class="atile"><span class="lab">Testable claims</span><span class="big" id="hcClaims">43</span></div>
-      <div class="atile"><span class="lab">Tested so far</span><span class="big" id="hcEarly">14</span></div>
+      <div class="atile"><span class="lab">Checked by a test</span><span class="big" id="hcEarly">14</span></div>
       <div class="atile"><span class="lab">Data sources joined</span><span class="big">32</span></div>
       <div class="atile"><span class="lab">Products checked</span><span class="big">26</span></div>
     </div>
@@ -1061,7 +1066,7 @@ body:has(#panel-students:not([hidden])) .depth{display:none}
     <div class="controls"><div class="coastsw spsw" role="group" aria-label="Which shark"><button type="button" data-sp="all" aria-pressed="true">All three</button><button type="button" data-sp="bull" aria-pressed="false">Bull</button><button type="button" data-sp="tiger" aria-pressed="false">Tiger</button><button type="button" data-sp="white" aria-pressed="false">White</button></div><div class="coastsw evsw" role="group" aria-label="Which bites"><button type="button" data-ev="all" aria-pressed="true">All bites</button><button type="button" data-ev="conf" aria-pressed="false">Species confirmed</button></div></div>
     <div class="rows" id="rows"></div>
     <div class="spfocus" id="spfocus" hidden aria-live="polite"></div>
-    <div class="legend"><span><i class="sw" style="background:var(--cold)"></i>Below 19°C</span><span><i class="sw" style="background:var(--warm)"></i>19°C or warmer</span></div>
+    <div class="legend"><span class="stype obs" title="Measured or recorded values">Observed</span><span><i class="sw" style="background:var(--cold)"></i>Below 19°C</span><span><i class="sw" style="background:var(--warm)"></i>19°C or warmer</span></div>
     <details class="dtable nomob"><summary>View as a table</summary><div id="tbLine"></div></details>
     <p class="note" id="evNote"></p>
     <p class="note" id="imosNote"><b>Tagged sharks agree.</b> Of 20,105 days that 132 tagged bull sharks were detected off NSW from 2009 to 2026, 99.5% fell in months when the sea was 19°C or warmer, and none in a month below 18.1°C. That is not because cool months are rare: south of Sydney, 43% of months in that time were below 19°C. Listening stations stayed in the water through winter; the sharks had gone. (<a href="https://researchdata.edu.au/imos-animal-tracking-2007-ongoing/3961802" target="_blank" rel="noopener">IMOS Animal Tracking</a> data, this page's analysis.) Bull sharks leave Sydney once the water falls to about 19–20.5°C, and they have been leaving later each year as the sea warms (<a href="https://doi.org/10.1016/j.scitotenv.2025.179966" target="_blank" rel="noopener">Lubitz et al., 2025</a>).</p><p class="note" id="waterNote"><b>So does the water on the day.</b> Where a water temperature was recorded at the bite, all 16 bull shark bites were in water of 20°C or warmer. For comparison, 2 of 10 tiger shark bites and 9 of 41 white shark bites were below 19°C, the coldest at 8°C. (<a href="https://zenodo.org/records/18752301" target="_blank" rel="noopener">Australian Shark-Incident Database</a>, temperatures reported at the scene.) In Western Australia, a 2012 state study found about two-thirds of white shark bites since the mid-1990s were in water below 20°C, and only one above 22°C; it doesn't say how many bites had a recorded temperature (<a href="https://library.dpird.wa.gov.au/cgi/viewcontent.cgi?article=1027&amp;context=fr_fop" target="_blank" rel="noopener">Fisheries Occasional Publication 109, 2012</a>).</p>
@@ -1083,7 +1088,7 @@ body:has(#panel-students:not([hidden])) .depth{display:none}
         <h3 class="blockh" id="h-biteseason" style="margin-top:22px">When in the year bull sharks bite</h3>
         <p class="sub" id="biteSeasonSub"></p>
         <div class="today" id="biteSeasons" role="img"></div>
-        <div class="legend"><span><i class="sw" style="background:var(--warm);border-radius:2px"></i>Summer (Dec–Feb)</span><span><i class="sw" style="background:#B9785A;border-radius:2px"></i>Autumn (Mar–May)</span><span><i class="sw" style="background:var(--cold);border-radius:2px"></i>Winter (Jun–Aug)</span><span><i class="sw" style="background:var(--muted);opacity:.6;border-radius:2px"></i>Spring (Sep–Nov)</span></div>
+        <div class="legend"><span class="stype obs" title="Measured or recorded values">Observed</span><span><i class="sw" style="background:var(--warm);border-radius:2px"></i>Summer (Dec–Feb)</span><span><i class="sw" style="background:#B9785A;border-radius:2px"></i>Autumn (Mar–May)</span><span><i class="sw" style="background:var(--cold);border-radius:2px"></i>Winter (Jun–Aug)</span><span><i class="sw" style="background:var(--muted);opacity:.6;border-radius:2px"></i>Spring (Sep–Nov)</span></div>
         <details class="dtable"><summary>View as a table</summary><div id="tbBites"></div></details>
         <p class="readout" id="bitesRead"></p>
         <p class="note" id="bitesNote"></p>
@@ -1106,7 +1111,7 @@ body:has(#panel-students:not([hidden])) .depth{display:none}
         <div class="coastsw" id="zsp" role="group" aria-label="Shark"><button type="button" data-sp="bull" aria-pressed="true">Bull</button><button type="button" data-sp="tiger" aria-pressed="false">Tiger</button><button type="button" data-sp="white" aria-pressed="false">White</button></div>
         <div class="eras" id="zera" role="group" aria-label="Era"></div>
         <p class="readout" id="zcap" aria-live="polite"></p>
-        <div class="legend zleg"><span><i class="zsw"></i>Where most bites happened, one column per era</span><span><i class="zmid"></i>Center of the zone</span><span><i class="zln"></i>Where the sea is 19°C or more half the year</span></div>
+        <div class="legend zleg"><span class="stype assoc" title="Two things move together; this does not show one causes the other">Association · not a cause</span><span><i class="zsw"></i>Where most bites happened, one column per era</span><span><i class="zmid"></i>Center of the zone</span><span><i class="zln"></i>Where the sea is 19°C or more half the year</span></div>
         <p class="note" id="zahead"></p>
       </div>
     </div>
@@ -1115,7 +1120,7 @@ body:has(#panel-students:not([hidden])) .depth{display:none}
       <p class="sub" id="histSub"></p>
       <div class="controls"><div class="coastsw" role="group" aria-label="Coast"><button type="button" data-coast="east">East coast</button><button type="button" data-coast="west">West coast</button></div><div class="coastsw" id="unitsw" role="group" aria-label="Show"><button type="button" data-unit="count" aria-pressed="true">Number of bites</button><button type="button" data-unit="rate" aria-pressed="false">Per 10 million people</button></div></div>
       <div class="fig" id="hist"></div>
-      <div class="legend"><span><i class="sw" style="background:var(--ink);border-radius:2px"></i>Coastal waters</span><span><i class="sw" style="background:var(--muted);opacity:.55;border-radius:2px"></i>Estuary, harbor or river</span></div>
+      <div class="legend"><span class="stype obs" title="Measured or recorded values">Observed</span><span><i class="sw" style="background:var(--ink);border-radius:2px"></i>Coastal waters</span><span><i class="sw" style="background:var(--muted);opacity:.55;border-radius:2px"></i>Estuary, harbor or river</span></div>
       <p class="note" id="histNote"></p>
     </div>
     <div class="recblock">
@@ -1123,7 +1128,7 @@ body:has(#panel-students:not([hidden])) .depth{display:none}
       <p class="sub">Share of all bull shark bites in Australia that happened in coastal waters rather than in an estuary, harbor, river or lake, by era.</p>
       <div class="today" id="openFig" role="img"></div>
       <details class="dtable"><summary>View as a table</summary><div id="tbOpen"></div></details>
-      <div class="legend"><span><i class="sw" style="background:var(--warm);border-radius:2px"></i>Coastal waters</span><span><i class="sw" style="background:var(--muted);opacity:.55;border-radius:2px"></i>Harbor, river, lake or estuary</span></div>
+      <div class="legend"><span class="stype obs" title="Measured or recorded values">Observed</span><span><i class="sw" style="background:var(--warm);border-radius:2px"></i>Coastal waters</span><span><i class="sw" style="background:var(--muted);opacity:.55;border-radius:2px"></i>Harbor, river, lake or estuary</span></div>
       <p class="readout" id="openRead"></p>
       <p class="note" id="openNote"></p>
     </div>
@@ -1150,7 +1155,7 @@ body:has(#panel-students:not([hidden])) .depth{display:none}
     <h3 class="ratioh" id="h-ratio">For every shark death on Australia's coast, about <span id="ratioN">50</span> people drown.</h3>
     <p class="sub" id="ratioSub">July 2015 to June 2025. Each dot is one life.</p>
     <div class="fig" id="dots" role="img" aria-label="Dot field of coastal drownings and fatal shark bites"></div>
-    <div class="legend"><span><i class="sw" style="background:var(--muted)"></i><span id="lgD">1,301 coastal drownings</span></span><span><i class="sw" style="background:var(--death)"></i><span id="lgS">26 fatal shark bites</span></span></div>
+    <div class="legend"><span class="stype obs" title="Measured or recorded values">Observed</span><span><i class="sw" style="background:var(--muted)"></i><span id="lgD">1,301 coastal drownings</span></span><span><i class="sw" style="background:var(--death)"></i><span id="lgS">26 fatal shark bites</span></span></div>
     </div>
     <p class="callout swimflags"><b>Swim between the red and yellow flags, and pick your time.</b> Lifesavers watch for rips there, the bigger killer. After heavy rain, stay out of harbors and rivers for 72 hours and beaches for 24, and check the SharkSmart app.</p>
     <p class="readout" id="safeRead"></p>
@@ -1186,7 +1191,7 @@ body:has(#panel-students:not([hidden])) .depth{display:none}
     </div>
     <h3 class="blockh" style="margin-top:10px">Months a year at 19°C or more, by beach</h3>
     <div class="today" id="aheadBars"></div>
-    <div class="legend"><span><i class="sw" style="background:var(--warm);border-radius:2px"></i>Now (2016–2025 average)</span><span><i class="sw" style="border:1.5px dashed var(--warm);border-radius:2px"></i>Added by about 2050 at the recent pace</span></div>
+    <div class="legend"><span class="stype proj" title="Where the recent trend leads if it carries on; not a forecast">Projection · at the recent pace</span><span><i class="sw" style="background:var(--warm);border-radius:2px"></i>Now (2016–2025 average)</span><span><i class="sw" style="border:1.5px dashed var(--warm);border-radius:2px"></i>Added by about 2050 at the recent pace</span></div>
     <details class="dtable"><summary>View as a table</summary><div id="tbAhead"></div></details>
     <p class="note" id="aheadNote"></p>
     <h3 class="blockh" style="margin-top:22px">What that means for the years ahead</h3>
@@ -1497,6 +1502,16 @@ body:has(#panel-students:not([hidden])) .depth{display:none}
   <section aria-labelledby="h-refs" class="refs">
     <div class="kicker">For teachers, students and scientists</div>
     <h2 id="h-refs">Words, methods and sources</h2>
+    <details>
+      <summary>How to read the charts</summary>
+      <p>Every chart says what kind of statement it makes, at the start of its key.</p>
+      <dl class="gloss">
+        <dt><span class="stype obs">Observed</span></dt><dd>Measured or recorded values: bites, sea temperatures, counts.</dd>
+        <dt><span class="stype assoc">Association</span></dt><dd>Two things move together. That alone does not show one causes the other.</dd>
+        <dt><span class="stype test">Checked by a test</span></dt><dd>A statistical test on observational records (bite records, tags, catches), run by this site's code and written down with what would prove the claim wrong. It always comes with the claim's grade. None of it is an experiment. "Supported" needs more: a test set in advance, then confirmed on a second dataset, region or method.</dd>
+        <dt><span class="stype proj">Projection</span></dt><dd>Where a trend leads if it carries on, with its method named. Not a forecast.</dd>
+      </dl>
+    </details>
     <details>
       <summary>Words used on this page</summary>
       <dl class="gloss">
