@@ -215,7 +215,7 @@ for _a in re.finditer(r'<article class="claim" id="(c\d+)" data-status="(\w+)">'
 cards = page.count('class="claim"')
 early = sum(page.count(f'data-status="{s}"') for s in ("early", "ruled", "supported", "strong"))
 for lab, pat, want in (("claims", r"Testable claims (\d+)", cards),
-                       ("claims", r"Pick one of (\d+) claims", cards),
+                       ("claims not yet tested", r"Pick one of the (\d+) claims not yet tested", len(re.findall(r'<article class="claim" id="c\d+" data-status="open"', page))),
                        ("claims tested", r"Tested so far (\d+)", early)):
     for m in find(lab, pat, True): check(f"number of {lab} ('{m[0]}')", int(m[1]), want)
 # The same count written out in words ("Forty-three claims")
