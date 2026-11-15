@@ -42,7 +42,7 @@ if sp["bull"]["below"]: bad.append("the page says no bull shark bite was below 1
 
 # Sydney's months at 19°C or more, now and 2050
 syd = {b["name"]: b for b in D["ahead"]["east"]["beaches"]}
-for m in find("Sydney months", r"Sydney's sea now stays above 19°C \(66°F\) (\w+) months a year"):
+for m in find("Sydney months", r"Sydney's sea now stays at 19°C \(66°F\) or warmer (\w+) months a year"):
     check("Sydney months a year at 19°C", WORDS.get(m[1].lower(), m[1]), syd["Sydney"]["now"])
 
 # Drownings vs shark deaths

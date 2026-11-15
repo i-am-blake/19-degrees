@@ -1054,7 +1054,7 @@ body:has(#panel-students:not([hidden])) .depth{display:none}
   <header class="hero" id="top">
     <div class="kicker">Australia, 1900 to today</div>
     <h1 class="state" id="statement">170 bull shark bites. Not one below <span class="w">19°C</span>.</h1>
-    <p class="lede" id="lede">Sydney's sea now stays above 19°C (66°F) nine months a year. A century ago it was six.</p>
+    <p class="lede" id="lede">Sydney's sea now stays at 19°C (66°F) or warmer nine months a year. A century ago it was six.</p>
     <div class="tldr"><div class="kicker">In three lines</div><ul id="tldr"></ul><p class="note" id="tldrNote"></p></div>
     <div class="live" role="region" aria-labelledby="h-now">
       <h2 class="blockh" id="h-now">Right now</h2>
@@ -1779,7 +1779,7 @@ try{
     ?`${fmt(B0.n)} bull shark bites. Not one below <span class="w">19°C</span>.`
     :`${fmt(B0.n)} bull shark bites. Only ${B0.below} below <span class="w">19°C</span>.`;
   const words=n=>["zero","one","two","three","four","five","six","seven","eight","nine","ten","eleven","twelve"][Math.round(n)]||Math.round(n);
-  document.getElementById("lede").textContent=`Sydney's sea now stays above 19°C (66°F) ${words(SYD.recent)} months a year. A century ago it was ${words(SYD.base)}. The warm season keeps getting longer, and tagged bull sharks are staying longer with it.`;
+  document.getElementById("lede").textContent=`Sydney's sea now stays at 19°C (66°F) or warmer ${words(SYD.recent)} months a year. A century ago it was ${words(SYD.base)}. The warm season keeps getting longer, and tagged bull sharks are staying longer with it.`;
   {const y=document.getElementById("yNow"); if(y) y.textContent=SYD.last_year;}
   try{
     const R2=D.ratio, B1=D.species.bull, BM=D.bite_months, eN=BM.counts.east[BM.counts.east.length-1], eA=BM.counts.east[0], s4=r=>r.reduce((t,x)=>t+x,0), au=r=>r[2]+r[3]+r[4]+r[5]+r[6]+r[7];
@@ -2201,7 +2201,7 @@ try{
     if(prev&&prev.n>=3&&z.n>=3){const km=Math.round((prev.mid-z.mid)*111); if(Math.abs(km)>=50) cap+=` The center of the zone is ${Math.abs(km)} km further ${km>0?"south":"north"} than in ${Z.eras[era-1][0]}–${String(Z.eras[era-1][1]).slice(2)}.`;}
     document.getElementById("zcap").innerHTML=cap;
     { const sb=Z.south_beach; document.getElementById("zahead").textContent=Z.line_2050==null
-      ?`Last column: a look ahead, not a forecast. If the sea keeps warming at its pace since 1980 (about ${sb.trend.toFixed(2)}°C a decade off ${sb.name}), by about 2050 the half-year 19°C line would pass ${sb.name} and the Victorian border: ${sb.name} would average ${sb.months_2050} months a year at 19°C or more.`
+      ?`Last column: a look ahead, not a forecast. If the sea keeps warming at its pace since 1980 (about ${sb.trend.toFixed(2)}°C a decade off ${sb.name}), by about 2050 the half-year 19°C line would pass ${sb.name} and the Victorian border: ${sb.name} would average ${sb.months_2050} months a year at 19°C or more${(()=>{const q=D.proj&&D.proj[(sb.key||sb.name).toLowerCase()];return q&&q.median!==sb.months_2050?` (the ${q.models} climate models on Research give ${q.median})`:"";})()}.`
       :`Last column: a look ahead, not a forecast. If the sea keeps warming at its pace since 1980, by about 2050 the half-year 19°C line would sit near ${town(Z.line_2050)}.`; }
     window.ZERA=Z.eras[era]; if(typeof window.renderRecord==="function") window.renderRecord();
     svg.setAttribute("aria-label",document.getElementById("zcap").textContent);
