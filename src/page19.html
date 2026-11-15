@@ -957,17 +957,16 @@ h3.splith + p.sub{margin:0 0 6px}
   </section>
 
   <section aria-labelledby="h-ways">
-    <div class="kicker">Help build it</div>
-    <h2 id="h-ways">Everyone has a way in.</h2>
+    <div class="kicker">The invitation</div>
+    <h2 id="h-ways">The next result could be yours.</h2>
     <div class="stats4">
-      <article class="way"><h3 class="blockh">Researchers</h3><p class="sub">Pick one of 43 claims, say what would prove it wrong, test it.</p><a class="ctabtn" href="#h-agenda" data-tab="research">See the claims →</a></article>
-      <article class="way"><h3 class="blockh">Data holders</h3><p class="sub">Share openly, as summaries, or under your own agreement. Credited by name.</p><a class="ctabtn" href="#h-data" data-tab="research">Offer data →</a></article>
-      <article class="way"><h3 class="blockh">Funders and partners</h3><p class="sub">Fund the next stage: more countries, more data, independent product trials.</p><a class="ctabtn donatelink" data-from="home" href="https://ko-fi.com/19degrees" target="_blank" rel="noopener">Donate →</a></article>
-      <article class="way"><h3 class="blockh">Teachers</h3><p class="sub">Free classroom sheets for ages 8 to 18, built from the live data.</p><a class="ctabtn" href="#students" data-tab="students">Get the sheets →</a></article>
+      <article class="way"><h3 class="blockh">Researchers</h3><p class="sub">Pick one of the <span class="num" id="wayOpen">20</span> claims not yet tested. Each already says what would prove it wrong.</p><a class="ctabtn" href="#h-agenda" data-tab="research">See the claims →</a></article>
+      <article class="way"><h3 class="blockh">Data holders</h3><p class="sub">Hold the data that would settle a claim? Share it openly, as summaries, or under your own agreement. Credited by name.</p><a class="ctabtn" href="#h-data" data-tab="research">Offer data →</a></article>
+      <article class="way"><h3 class="blockh">Supporters</h3><p class="sub">Keep the tests independent and the data updated, and fund the next stage: more countries and independent product trials.</p><a class="ctabtn donatelink" data-from="home" href="https://ko-fi.com/19degrees" target="_blank" rel="noopener">Support →</a></article>
+      <article class="way"><h3 class="blockh">Teachers</h3><p class="sub">Free real-data lessons for ages 8 to 18, built from the live data.</p><a class="ctabtn" href="#students" data-tab="students">Get the sheets →</a></article>
     </div>
-    <p class="note">Everyone else: share it, and swim between the red and yellow flags.</p>
       <div class="wayglobal"><h3 class="blockh">Australia is the first case study.</h3><p class="sub">The methods and code work for any coast. Bull, tiger and white sharks bite in warm water worldwide, and the same questions apply wherever people swim.</p>
-    <ul class="chips"><li class="chip on">Australia · live</li><li class="chip build">South Africa · building</li><li class="chip build">United States · building</li><li class="chip build">Réunion and New Caledonia · building</li><li class="chip want">Brazil · data wanted</li><li class="chip build">Mozambique · building</li></ul>
+    <ul class="chips"><li class="chip on">Australia · live</li><li class="chip build">South Africa · building</li><li class="chip build">United States · building</li><li class="chip build">Réunion and New Caledonia · building</li><li class="chip build">Mozambique · building</li><li class="chip want">Brazil · data wanted</li></ul>
     <p class="note"><a href="#h-refs" data-tab="research">Run it for your coast →</a></p></div>
   </section>
   </div>
@@ -2175,6 +2174,7 @@ try{const w=D.zones.species.white, f=w[0], l=w[w.length-1], km=Math.round((l.mid
 /* home tab: live counts and the four newest results, read from the Researchers tab */
 try{
   const cl=document.querySelectorAll("#panel-research article.claim");
+  const wo=document.getElementById("wayOpen"); if(wo&&cl.length) wo.textContent=[...cl].filter(c=>c.dataset.status==="open").length;
   if(cl.length){document.getElementById("hcClaims").textContent=cl.length;document.getElementById("hcEarly").textContent=[...cl].filter(c=>["early","ruled","supported","strong"].includes(c.dataset.status)).length;}
 }catch(e){console.error(e)}
 </script>
