@@ -1853,7 +1853,8 @@ try{
 <script>
 /* Schools: three doors, each starting with something a class can do in a minute, from the page data */
 try{
-  const SY=D.sydney, ML=["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"], MF=["January","February","March","April","May","June","July","August","September","October","November","December"];
+  /* the same Sydney series as the story and the classroom sheets (the beach patch), so the door and the season grid agree */
+  const SYB=(D.beaches||[]).find(b=>b.key==="sydney"), SY={last_year:D.sydney.last_year,last_temps:D.sydney.last_temps,rows:(SYB&&SYB.rows)||D.sydney.rows}, ML=["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"], MF=["January","February","March","April","May","June","July","August","September","October","November","December"];
   const have=SY.last_temps.map((t,i)=>[i,t]).filter(x=>x[1]!=null), close=have.reduce((a,b)=>Math.abs(b[1]-19)<Math.abs(a[1]-19)?b:a,have[0]);
   const R0=SY.rows[0], R1=SY.rows[SY.rows.length-1], dec=r=>`${r.decade}s`;
   const SH={primary:["classroom-primary.html","Shark detectives","Ages 8 to 11 · 45 to 60 minutes. Read a map, count the warm months, and draw a beach safety poster."],
