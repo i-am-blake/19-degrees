@@ -63,7 +63,7 @@ def e_c16(D):
     return t("Whether tagged bull sharks are leaving Sydney later each autumn.",
              f'The last detection each year moved about {c["slope"]} days later a year. ' + chance(c["p"]) +
              f' Check: at the {r["stations"]} listening stations that were in the water in most years, the shift almost disappears ({r["slope"]} days a year, {pv(r["p"])}).',
-             "The main test passed but the station check didn't: part of the shift may come from where receivers sat, not when sharks left. So \"Leans yes\", not \"Early: yes\".",
+             "The main test passed but the station check didn't: part of the shift may come from where receivers sat, not when sharks left. So \"Leans yes\", not \"Early yes\".",
              "The full deployment history of every listening station, including those that heard nothing.")
 def e_c18(D):
     d = {x["decade"]: x for x in D["coastpop"]["decades"]}; a, z = d[1990], d[max(d)]
@@ -90,7 +90,7 @@ def e_c23(D):
     x = D["california"]["test"]
     return t("Whether California's white shark incidents have moved north as the coast warmed.",
              f'The middle latitude of incidents moved about {abs(x["shift_km"])} km south, from {x["pre_lat"]}°N in {x["pre"][0]}–{x["pre"][1]} to {x["post_lat"]}°N since 2014. ' + chance(x["p"]),
-             "A clear result in the opposite direction to the claim: \"Early: no\". Why isn't settled: more young white sharks off Southern California, more people in the water there, or both.",
+             "A clear result in the opposite direction to the claim: \"Early no\". Why isn't settled: more young white sharks off Southern California, more people in the water there, or both.",
              "Tagging data on where young white sharks spend each year.")
 def e_c24(D):
     a = D["lunar"]["all"]; lo, hi = G.wilson(a["near"], a["n"])
@@ -111,11 +111,11 @@ def e_c25(D):
                  f'<br><b>Against it.</b> Off the US as a whole, {du["below19"]} of {du["shark_days"]:,} bull shark days ({du["below19_pct"]:.1f}%) were below 19°C. Of those, {sp["river_dataset"]["below19"]} come from Florida\'s Manatee River, where {m["animals"]} tagged bull sharks stayed through winter in water as cold as {m["gauge"]["min"]}°C at the nearest gauge. '
                  f'In the Clarence River in NSW, {cl["sharks_in_winter"]} tagged bull sharks stayed into winter, in water with a median of {cl["winter_median"]}°C. '
                  f'There, {cs["small"]["with_winter_day"]} of {cs["small"]["sharks"]} sharks under 150 cm were detected in winter, and none of {cs["large"]["sharks"]} sharks of 200 cm or more.',
-                 f'The daily test was written down before the data came back: fewer than {d["rule"]["supports_below_pct"]}% of shark-days below 19°C would support the claim, and the US result misses that, so the grade drops from "Early: yes" to "Leans yes". The exceptions aren\'t scattered. They are river populations on two continents, and in Australia they are the smaller sharks. The claim holds on open coasts and in harbors, and fails in at least two rivers.',
+                 f'The daily test was written down before the data came back: fewer than {d["rule"]["supports_below_pct"]}% of shark-days below 19°C would support the claim, and the US result misses that, so the grade drops from "Early yes" to "Leans yes". The exceptions aren\'t scattered. They are river populations on two continents, and in Australia they are the smaller sharks. The claim holds on open coasts and in harbors, and fails in at least two rivers.',
                  'Sizes for the Manatee River sharks, and winter tracking from more rivers. If the cold-water sharks are consistently young, the claim should be restated as two: adults follow the 19°C line, young sharks in river nurseries do not.')
     return t("Whether bull sharks outside Australia also stay in water of 19°C or warmer.",
              f'Off Mozambique and South Africa, {a["below"]} of {a["days"]:,} tagged bull shark days came in a month below 19°C, though {a["cell_months_below_pct"]}% of months there were that cool. Off the US, {u["below"]} of {u["days"]:,} record-days ({100 - u["pct_warm"]:.1f}%), against {u["cell_months_below_pct"]}% of months. ' + chance(max(G.binom2(a["below"], a["days"], a["cell_months_below_pct"] / 100), G.binom2(u["below"], u["days"], u["cell_months_below_pct"] / 100))),
-             "Tested on the claim's own measure, in the predicted direction, on two separate coasts: \"Early: yes\". It stays \"early\" because the test was chosen after seeing the data.",
+             "Tested on the claim's own measure, in the predicted direction, on two separate coasts: \"Early yes\". It stays \"early\" because the test was chosen after seeing the data.",
              "A test set in advance on a third coast (Brazil or the Gulf of Mexico) would move it to Supported.")
 def e_c43(D):
     z = D["size"]; m = z["main"]; sm, md, lg = (m["by_shark"][k] for k in ("small", "mid", "large")); dy = m["by_day"]; wc = z["checks"]["without_clarence"]["by_day"]["small"]["days"]
