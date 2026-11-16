@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://19-degrees.org/sitemap.xml

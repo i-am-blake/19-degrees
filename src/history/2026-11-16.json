@@ -1,0 +1,360 @@
+{
+ "date": "2026-11-16",
+ "bites_to": {
+  "year": 2026,
+  "month": 6
+ },
+ "sea_temperature_to": "2026-06",
+ "species": {
+  "bull": {
+   "n": 170,
+   "below": 0,
+   "min": 19.2,
+   "median": 23.7,
+   "max": 29.5,
+   "confirmed": 128,
+   "confirmed_below": 0
+  },
+  "tiger": {
+   "n": 213,
+   "below": 2,
+   "min": 17.8,
+   "median": 25.7,
+   "max": 30.6,
+   "confirmed": 184,
+   "confirmed_below": 2
+  },
+  "white": {
+   "n": 363,
+   "below": 141,
+   "min": 11.5,
+   "median": 20.0,
+   "max": 28.3,
+   "confirmed": 279,
+   "confirmed_below": 114
+  }
+ },
+ "sydney_months": {
+  "base": 6.4,
+  "recent": 9.3
+ },
+ "half_year_line_lat": [
+  -34.99,
+  -35.72,
+  -36.41,
+  -36.93
+ ],
+ "claims": [
+  {
+   "id": "C1",
+   "status": "early",
+   "grade": "Unclear",
+   "grade_class": "unc",
+   "title": "Bull shark catch rates in shark-control gear are rising at the southernmost beaches, not just bites."
+  },
+  {
+   "id": "C2",
+   "status": "look",
+   "grade": "First look",
+   "grade_class": "look",
+   "title": "Tagged bull sharks are staying longer at listening stations south of Sydney, not only in Sydney."
+  },
+  {
+   "id": "C3",
+   "status": "early",
+   "grade": "Leans yes",
+   "grade_class": "early",
+   "title": "By 2050 the half-year 19°C line passes the Victorian border."
+  },
+  {
+   "id": "C4",
+   "status": "look",
+   "grade": "First look",
+   "grade_class": "look",
+   "title": "Baitfish such as mullet now run later into autumn off NSW, matching the longer bull shark season."
+  },
+  {
+   "id": "C5",
+   "status": "ruled",
+   "grade": "Ruled out",
+   "grade_class": "ruled",
+   "title": "White shark bites on the NSW north coast peak in June–November, when humpbacks migrate past."
+  },
+  {
+   "id": "C29",
+   "status": "early",
+   "grade": "Leans no",
+   "grade_class": "no",
+   "title": "Cold upwelling brings white sharks close to shore."
+  },
+  {
+   "id": "C30",
+   "status": "look",
+   "grade": "First look",
+   "grade_class": "look",
+   "title": "White shark nurseries are shifting with warming water: young white sharks arrive earlier and stay longer in warm years."
+  },
+  {
+   "id": "C16",
+   "status": "early",
+   "grade": "Leans yes",
+   "grade_class": "early",
+   "title": "Bull sharks are leaving Sydney later each autumn as the sea warms."
+  },
+  {
+   "id": "C22",
+   "status": "look",
+   "grade": "First look",
+   "grade_class": "look",
+   "title": "Outside Australia, bull shark bites also stop below about 19°C."
+  },
+  {
+   "id": "C25",
+   "status": "early",
+   "grade": "Leans yes",
+   "grade_class": "early",
+   "title": "Outside Australia, tagged and recorded bull sharks are also found almost only in water of 19°C or warmer."
+  },
+  {
+   "id": "C23",
+   "status": "early",
+   "grade": "Early: no",
+   "grade_class": "no",
+   "title": "California's white shark incidents have moved north as the coast warmed."
+  },
+  {
+   "id": "C43",
+   "status": "early",
+   "grade": "Leans yes",
+   "grade_class": "early",
+   "title": "Small bull sharks stay in rivers through winter; large ones leave."
+  },
+  {
+   "id": "C6",
+   "status": "early",
+   "grade": "Leans yes",
+   "grade_class": "early",
+   "title": "Coastal bull shark bites happen within about 5 km of a river mouth, and within 3 days of more than 50 mm of rain, far more often than chance."
+  },
+  {
+   "id": "C28",
+   "status": "early",
+   "grade": "Unclear",
+   "grade_class": "unc",
+   "title": "Heavy rain brings tiger sharks close to shore."
+  },
+  {
+   "id": "C7",
+   "status": "look",
+   "grade": "First look",
+   "grade_class": "look",
+   "title": "Western Australia's bull shark bites since 2020 came in months when the warm current down the coast was stronger than average."
+  },
+  {
+   "id": "C26",
+   "status": "early",
+   "grade": "Unclear",
+   "grade_class": "unc",
+   "title": "Western Australia's shark bites come more often when the Indian Ocean Dipole is positive."
+  },
+  {
+   "id": "C18",
+   "status": "early",
+   "grade": "Leans yes",
+   "grade_class": "early",
+   "title": "Bites in southern NSW are rising faster than the number of people using the beach."
+  },
+  {
+   "id": "C19",
+   "status": "early",
+   "grade": "Leans yes",
+   "grade_class": "early",
+   "title": "Hot spells put more people and sharks in the same water at once."
+  },
+  {
+   "id": "C24",
+   "status": "ruled",
+   "grade": "Ruled out",
+   "grade_class": "ruled",
+   "title": "Shark bites cluster around the full or new moon."
+  },
+  {
+   "id": "C9",
+   "status": "look",
+   "grade": "First look",
+   "grade_class": "look",
+   "title": "A large share of shark-bite deaths involved a limb wound that is survivable when bleeding is stopped within minutes."
+  },
+  {
+   "id": "C20",
+   "status": "look",
+   "grade": "First look",
+   "grade_class": "look",
+   "title": "Shark nets reduce bull shark bites at the beaches they cover."
+  },
+  {
+   "id": "C21",
+   "status": "look",
+   "grade": "First look",
+   "grade_class": "look",
+   "title": "SMART drumlines would catch more bull sharks if they were also set at dawn, dusk or night."
+  },
+  {
+   "id": "C31",
+   "status": "open",
+   "grade": "Not yet tested",
+   "grade_class": "",
+   "title": "Growing seal and sea lion colonies bring white sharks to nearby swimming beaches."
+  },
+  {
+   "id": "C38",
+   "status": "open",
+   "grade": "Not yet tested",
+   "grade_class": "",
+   "title": "There are more young bull sharks in the southern nurseries, not only the same sharks ranging further south."
+  },
+  {
+   "id": "C42",
+   "status": "open",
+   "grade": "Not yet tested",
+   "grade_class": "",
+   "title": "Other warm-water species off eastern Australia are being recorded further south at about the same pace as the 19°C line."
+  },
+  {
+   "id": "C8",
+   "status": "nt",
+   "grade": "Can't test yet",
+   "grade_class": "nt",
+   "title": "Turtle movements predict when tiger sharks arrive."
+  },
+  {
+   "id": "C17",
+   "status": "open",
+   "grade": "Not yet tested",
+   "grade_class": "",
+   "title": "Sharks off NSW are eating more tropical fish as tropical species move south."
+  },
+  {
+   "id": "C27",
+   "status": "open",
+   "grade": "Not yet tested",
+   "grade_class": "",
+   "title": "Shark feeding and cage diving keep sharks near those sites longer, without raising bites at nearby beaches."
+  },
+  {
+   "id": "C40",
+   "status": "open",
+   "grade": "Not yet tested",
+   "grade_class": "",
+   "title": "When a beach is closed after a sighting, or the water turns murky after rain, most people stay out of the water."
+  },
+  {
+   "id": "C10",
+   "status": "open",
+   "grade": "Not yet tested",
+   "grade_class": "",
+   "title": "Drones with infrared or multi-band cameras spot shark-sized targets in water under 1.5 m visibility at least twice as often as standard drones."
+  },
+  {
+   "id": "C11",
+   "status": "open",
+   "grade": "Not yet tested",
+   "grade_class": "",
+   "title": "A tourniquet built into a surf leash stops blood flow to the leg as well as a standard medical tourniquet, when an untrained surfer applies it in under a minute."
+  },
+  {
+   "id": "C12",
+   "status": "open",
+   "grade": "Not yet tested",
+   "grade_class": "",
+   "title": "Shark-bite victims at beaches with a bleeding kit close by, or a patrol on duty, have bleeding controlled sooner and survive more often."
+  },
+  {
+   "id": "C13",
+   "status": "open",
+   "grade": "Not yet tested",
+   "grade_class": "",
+   "title": "The beaches gaining warm-water months fastest are among the least prepared: fewer bleeding kits, fewer patrol days and longer ambulance times."
+  },
+  {
+   "id": "C14",
+   "status": "open",
+   "grade": "Not yet tested",
+   "grade_class": "",
+   "title": "Bite-resistant wetsuits reduce injuries from bull shark bites, not just white and tiger shark bites, and reduce severe bleeding in real incidents."
+  },
+  {
+   "id": "C15",
+   "status": "open",
+   "grade": "Not yet tested",
+   "grade_class": "",
+   "title": "Lights that break up a surfer's outline from below, proven on seal-shaped decoys, also reduce white shark approaches to real surfboards, and work for bull and tiger sharks."
+  },
+  {
+   "id": "C37",
+   "status": "open",
+   "grade": "Not yet tested",
+   "grade_class": "",
+   "title": "Bull sharks are seen from drones near beaches more often in warm months and after rain."
+  },
+  {
+   "id": "C39",
+   "status": "open",
+   "grade": "Not yet tested",
+   "grade_class": "",
+   "title": "In the days before a bite, tagged sharks were detected at nearby listening stations more often than usual."
+  },
+  {
+   "id": "C32",
+   "status": "open",
+   "grade": "Not yet tested",
+   "grade_class": "",
+   "title": "Human greenhouse gas emissions, not natural swings, account for most of the extra months the sea off Sydney now spends at 19°C or warmer."
+  },
+  {
+   "id": "C33",
+   "status": "open",
+   "grade": "Not yet tested",
+   "grade_class": "",
+   "title": "Rivers that drain cleared, farmed or built-up land bring more bull sharks to their mouths when they run high."
+  },
+  {
+   "id": "C34",
+   "status": "open",
+   "grade": "Not yet tested",
+   "grade_class": "",
+   "title": "Shark bites cluster near boat ramps and fish-cleaning tables, where fish scraps go into the water."
+  },
+  {
+   "id": "C35",
+   "status": "open",
+   "grade": "Not yet tested",
+   "grade_class": "",
+   "title": "Canal estates and built-up estuaries hold bull sharks for more of the year than natural estuaries do."
+  },
+  {
+   "id": "C36",
+   "status": "open",
+   "grade": "Not yet tested",
+   "grade_class": "",
+   "title": "Heavy fishing of baitfish such as mullet near the coast pushes sharks to hunt closer to the beaches."
+  },
+  {
+   "id": "C41",
+   "status": "open",
+   "grade": "Not yet tested",
+   "grade_class": "",
+   "title": "Estuaries that have lost more of their mangroves and seagrass hold fewer young bull sharks."
+  }
+ ],
+ "counts": {
+  "Can't test yet": 1,
+  "Early: no": 1,
+  "First look": 8,
+  "Leans no": 1,
+  "Leans yes": 7,
+  "Not yet tested": 20,
+  "Ruled out": 2,
+  "Unclear": 3
+ }
+}
