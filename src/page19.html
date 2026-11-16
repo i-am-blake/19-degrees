@@ -722,7 +722,8 @@ h3.splith + p.sub{margin:0 0 6px}
 .wread{font-size:18px;line-height:1.5;margin:16px 0 4px;max-width:760px}
 .ptab tr.pdim{opacity:.3}
 .where button.ghbtn{background:none;font:inherit;font-weight:700;cursor:pointer}.where button.ghbtn:hover{background:var(--ink);color:#041A2C}
-@media (max-width:600px){.where{padding:16px}.wbar{grid-template-columns:110px minmax(0,1fr) 78px;gap:8px;font-size:14px}}
+.wbar .v{white-space:nowrap}
+@media (max-width:600px){.where{padding:16px}.wbar{grid-template-columns:96px minmax(0,1fr) 76px;gap:8px;font-size:14px}.wbar .v{font-size:13px}.where .wbtns{display:none}}
 /* light theme: same system, other water. Schools now; also for print and partners. Deep orange for text, bright orange only for fills and lines */
 .light{--paper:#F6F3EC;--sheet:#FFFFFF;--ink:#0B2236;--muted:#4A6577;--warm:#9A5214;--warmfill:#F0A04B;--cold:#1F6E9C;--rule:rgba(11,34,54,.18);--deep:#FFFFFF;--sea:#FFFFFF;
   color-scheme:light;color:var(--ink);background:var(--paper);box-shadow:0 0 0 100vmax var(--paper);clip-path:inset(0 -100vmax)}
@@ -1270,7 +1271,7 @@ body:has(#panel-students:not([hidden])) .depth{display:none}
       <div class="wctl"><label for="wreg">Region</label><select id="wreg"></select></div>
       <div class="wbars" id="wbars" role="img"></div>
       <p class="wread" id="wread" aria-live="polite"></p>
-      <p class="hcta"><button type="button" class="ghbtn" id="wgo"></button> <button type="button" class="ghbtn" id="wall" hidden>Show all products</button></p>
+      <p class="hcta wbtns"><button type="button" class="ghbtn" id="wgo"></button> <button type="button" class="ghbtn" id="wall" hidden>Show all products</button></p>
       <p class="note">A guide to the evidence, not a forecast or a safety rating for any beach. Bites follow where people swim as much as where sharks are. "Other or unidentified" means other species, or bites where the species wasn't known. Recorded bites: <span id="wsrc"></span>.</p>
     </div>
     <h3 class="blockh" style="margin:30px 0 4px">26 products we checked, and what independent tests found</h3>
