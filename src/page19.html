@@ -473,7 +473,7 @@ footer .copy{justify-self:start;text-align:left;color:var(--ink)}
 .cid{font-family:var(--f-data);font-weight:700;font-size:13px;color:#041A2C;background:var(--ink);padding:3px 8px;border-radius:4px}
 /* evidence grades: the word, a symbol for direction and a border for strength, so no grade depends on color alone */
 .cstat{margin-left:auto;display:inline-flex;align-items:center;gap:6px;font-family:var(--f-data);font-size:13px;letter-spacing:.06em;text-transform:uppercase;border:1.5px solid var(--rule);color:var(--muted);padding:3px 8px;white-space:nowrap;box-sizing:border-box;width:13.5em;height:2.15em;justify-content:center;flex:none}
-.cstat::before{content:"\2013";content:"\2013"/"";font-weight:700;letter-spacing:0}
+.cstat::before{content:none}
 .cstat.early{border-color:#4FB286;color:#8FD9B6}.cstat.early::before{content:"\2197";content:"\2197"/""}
 .cstat.sup{background:#2E7D5B;border-color:#2E7D5B;color:#fff}.cstat.sup::before{content:"\2713";content:"\2713"/""}
 .cstat.strong{background:var(--ink);border-color:var(--ink);color:var(--bg,#041A2C)}.cstat.strong::before{content:"\2713\2713";content:"\2713\2713"/""}
@@ -678,8 +678,9 @@ section[aria-labelledby="h-q"] .cards.qs{grid-template-columns:repeat(2,minmax(0
 .arrived>h3{margin:0;font-size:20px}
 /* claims: grade key, results first, then next to test */
 .gkey{display:flex;flex-wrap:wrap;gap:10px 22px;margin:14px 0 4px;font-size:14px;color:var(--muted)}
-.gkey>span{display:inline-flex;flex-wrap:wrap;align-items:center;gap:6px}
-.gkey .cstat{margin:0}
+.gkey>span{display:inline-flex;flex-wrap:nowrap;align-items:center;gap:6px 10px}
+.gkey .cstat{margin:0;flex-shrink:0}
+@media (max-width:600px){.gkey{flex-direction:column;gap:10px}.gkey>span{display:grid;grid-template-columns:auto minmax(0,1fr);gap:4px 12px;line-height:1.35}.gkey>span>.cstat+.cstat{grid-column:1;grid-row:2}.gkey>span>.cstat:nth-of-type(2)~*{grid-row:1/span 2}.gkey .cstat{font-size:11px}}
 h3.splith{font-size:clamp(24px,1.6vw + 14px,30px);margin:40px 0 4px}
 h3.splith + p.sub{margin:0 0 6px}
 .claims.next{gap:0}
@@ -770,8 +771,9 @@ body:has(#panel-students:not([hidden])) .depth{display:none}
 .dask{display:grid;gap:8px}.dask textarea{font:inherit;width:100%;min-height:96px;padding:10px 12px;border:1.5px solid #9AAAB5;background:var(--sheet);color:var(--ink);resize:vertical}
 .dask .ctabtn{margin-top:4px}
 .dsteps{margin:16px 0 0;padding:0;list-style:none;display:grid;gap:8px;counter-reset:ds}
-.dsteps li{counter-increment:ds;display:grid;grid-template-columns:28px 1fr;gap:10px;align-items:start}
-.dsteps li::before{content:counter(ds);font-family:var(--f-data);font-weight:700;font-size:13px;width:24px;height:24px;border-radius:50%;background:var(--ink);color:#fff;display:grid;place-items:center}
+.dsteps li{counter-increment:ds;position:relative;padding-left:38px;min-height:26px;line-height:1.5}
+.dsteps li::before{content:counter(ds);position:absolute;left:0;top:1px;font-family:var(--f-data);font-weight:700;font-size:13px;width:26px;height:26px;border-radius:50%;background:var(--ink);color:var(--deep);display:grid;place-items:center}
+.dsteps li b{display:block}
 .dteach{border-left:3px solid var(--warmfill);padding:4px 0 4px 16px;display:grid;gap:8px;align-content:start}
 .dteach .dk{color:var(--muted)}.dteach b{font-family:var(--f-display);font-size:18px;line-height:1.2}.dteach p{margin:0;font-size:14.5px;color:var(--muted)}
 .dteach .dgr{display:flex;flex-wrap:wrap;gap:6px}.dteach .dgr .cstat{margin:0;width:auto;font-size:11px}
@@ -794,16 +796,16 @@ body:has(#panel-students:not([hidden])) .depth{display:none}
 .gmapfig{grid-area:fig;min-width:0}.gmapfig svg{display:block;width:100%;height:auto}
 .gland{fill:rgba(232,241,242,.13);stroke:rgba(232,241,242,.28);stroke-width:.6}
 .gpin{cursor:pointer}.gpin circle.o{fill:none;stroke-width:2}.gpin circle.i{stroke:#03131F;stroke-width:1.5}
-.gpin.live circle.i{fill:var(--warm)}.gpin.live circle.o{stroke:var(--warm)}
-.gpin.build circle.i{fill:#7CC7F0}.gpin.build circle.o{stroke:#7CC7F0;stroke-dasharray:3 2}
-.gpin.want circle.i{fill:#03131F;stroke:#E8F1F2;stroke-dasharray:2 2}.gpin.want circle.o{stroke:none}
+.gpin.on circle.i{fill:var(--warm)!important}.gpin.on circle.o{stroke:var(--warm)!important}
+.gpin.build circle.i,.gpin.live circle.i{fill:#7CC7F0}.gpin.build circle.o,.gpin.live circle.o{stroke:#7CC7F0;stroke-dasharray:3 2}
+.gpin.want circle.i{fill:#03131F;stroke:#7CC7F0;stroke-dasharray:2 2}.gpin.want circle.o{stroke:none}
 .gpin text{font-family:var(--f-data);font-size:22px;fill:var(--ink);paint-order:stroke;stroke:#03131F;stroke-width:6px;display:none}.gpin.on text{display:block}
 .gpin.on circle.o{stroke-width:3.5}.gpin.on text{font-weight:700}
 .gpin:focus-visible{outline:none}.gpin:focus-visible circle.o{stroke:#fff;stroke-width:3.5}
 .gmaplist{grid-area:list;display:flex;flex-wrap:wrap;gap:8px;align-self:start;align-content:start}
 .gmaplist button{font:inherit;font-size:14px;line-height:1.2;height:auto;min-height:40px;padding:6px 14px;border-radius:999px;border:1.5px solid var(--rule);background:transparent;color:var(--ink);cursor:pointer;display:inline-flex;align-items:center;gap:8px}
 .gmaplist button i{width:10px;height:10px;border-radius:50%;display:inline-block}
-.gmaplist button.live i{background:var(--warm)}.gmaplist button.build i{background:#7CC7F0}.gmaplist button.want i{border:1.5px dashed var(--ink)}
+.gmaplist button.live i{background:#7CC7F0}.gmaplist button[aria-selected="true"] i{background:var(--warm)!important;border-color:var(--warm)!important}.gmaplist button.build i{background:#7CC7F0}.gmaplist button.want i{border:1.5px dashed var(--ink)}
 .gmaplist button[aria-selected="true"]{border-color:var(--ink);background:rgba(232,241,242,.1);font-weight:700}
 .gmaplist button:focus-visible,.gpanel:focus-visible{outline:2px solid #3395BE;outline-offset:2px}
 .gpanel{grid-area:panel;border:1px solid var(--rule);padding:20px 22px;display:grid;gap:12px;align-content:start;background:rgba(255,255,255,.03)}
@@ -1270,7 +1272,7 @@ body:has(#panel-students:not([hidden])) .depth{display:none}
       <li>Why are there fewer oceanic sharks and rays than in 1970, and why does that matter?</li>
       <li>Tiger sharks eat sea turtles, and turtles are turning up further south. Could tracking turtles help predict when tiger sharks arrive? What data would you need?</li>
     </ol>
-    <h3 class="blockh" style="margin-top:12px">Words to know</h3>
+    <h3 class="blockh" style="margin-top:12px">Key terms</h3>
     <dl class="gloss">
       <dt>Sea surface temperature</dt><dd>How warm the top few meters of the sea are.</dd>
       <dt>The 19°C line</dt><dd>How far south the sea stays at 19°C (66°F) or warmer. No bull shark bite in Australia since 1900 happened in a month when the sea was cooler.</dd>
@@ -2030,7 +2032,7 @@ try{
     const box=document.getElementById("spfocus");
     if(SP==="all"){box.hidden=true;box.replaceChildren();return;}
     const S=EVD(SP), A=D.species[SP], t=TXT[SP](S), nm=D.sharks.species[SP].name.toLowerCase();
-    box.innerHTML=`<div class="sptiles"><div><small>Below 19°C</small><b>${S.below} of ${S.n}</b><span class="num">${pct(S.below,S.n)}% of bites</span></div><div><small>Coldest</small><b>${fmt1(S.min)}°C</b></div><div><small>Median</small><b>${fmt1(S.median)}°C</b></div><div><small>Warmest</small><b>${fmt1(S.max)}°C</b></div><div><small>Species confirmed</small><b>${A.conf.n} of ${A.n}</b></div></div><h3>${t.title}</h3><p>${t.note}</p><p class="splim"><b>For ${nm}s:</b> ${t.limit}</p>`;
+    box.innerHTML=`<div class="sptiles"><div><small>Below 19°C</small><b>${S.below} of ${S.n}</b><span class="num">${pct(S.below,S.n)}% of bites</span></div><div><small>Coldest</small><b>${fmt1(S.min)}°C</b></div><div><small>Median</small><b>${fmt1(S.median)}°C</b></div><div><small>Warmest</small><b>${fmt1(S.max)}°C</b></div></div><h3>${t.title}</h3><p>${t.note}</p><p class="splim"><b>For ${nm}s:</b> ${t.limit}</p>`;
     box.hidden=false;
   }
   document.querySelectorAll(".spsw button").forEach(b=>b.addEventListener("click",()=>{SP=b.dataset.sp;document.querySelectorAll(".spsw button").forEach(x=>x.setAttribute("aria-pressed",x===b?"true":"false"));draw();focus();}));

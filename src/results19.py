@@ -315,8 +315,8 @@ def split_claims(html):
     done = "".join(block(h, [x for st, x in zip(sts, arts) if st not in NEXT], "claims") for h, sts, arts in groups)
     wait = "".join(block(h, [x for st, x in zip(sts, arts) if st in NEXT], "claims next") for h, sts, arts in groups)
     n_done = sum(st not in NEXT for _, sts, _ in groups for st in sts); n_wait = sum(st in NEXT for _, sts, _ in groups for st in sts)
-    out = (f'<h3 class="splith" id="h-results">Results so far</h3>\n    <p class="sub">{n_done} claims with a first look or a result.</p>\n' + done +
-           f'    <h3 class="splith" id="h-next">Next to test</h3>\n    <p class="sub">{n_wait} claims written down, with what would prove each one wrong, and waiting for data. Open one to see what it needs.</p>\n' + wait)
+    out = (f'<h3 class="splith" id="h-results">Results so far</h3>\n    <p class="sub"><span class="num">{n_done} / {n_done+n_wait}</span> claims with a first look or a result</p>\n' + done +
+           f'    <h3 class="splith" id="h-next">Next to test</h3>\n    <p class="sub"><span class="num">{n_wait} / {n_done+n_wait}</span> claims waiting for data</p>\n' + wait)
     return html[:a] + out.rstrip("\n") + html[end:]
 
 def _n(x): return f"{x:,}"
