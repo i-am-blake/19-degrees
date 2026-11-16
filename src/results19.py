@@ -103,7 +103,7 @@ def whaleC5(D):
             "none": "no clear link.", "other": "points the other way."}[G.V(up, w["p"])]
     return (f'Early result: {lead} Off NSW, {w["humpback_records"]:,} humpback whale records on ' + A("https://obis.org", "OBIS") + f' peak in {months}. '
             f'{w["white_in"]} of {w["white_n"]} NSW white shark bites since 1980 ({w["white_pct"]}%) came in those months, against {w["other_in"]} of {w["other_n"]} bull, tiger and whaler shark bites ({w["other_pct"]}%; {pf(w["p"])}). '
-            'Comparing species keeps the season\'s beach crowds out of it. Whale records also depend on when people look.')
+            'Comparing species keeps the season\'s beach crowds out of it. Whale records also depend on when people look. These are bites from the whole NSW coast, not only the north coast, and white shark risk varies a lot from place to place along it, so a north-coast test is still needed.')
 
 def whitecoolC5(D):
     w = D["whitecool"]
@@ -116,7 +116,7 @@ def whitecoolC5(D):
     k = f'({w["cooler"]["per_month"]:.3f} against {w["warmer"]["per_month"]:.3f} a month in warmer ones, compared within the same calendar month; {w["cool_ratio"]} times, {pf(w["cool_p"])})'
     s3 = (f"Cooler-than-usual months caught more {k}" if cool else f"Cooler-than-usual months caught fewer {k}" if warm
           else f"Nor did cooler-than-usual months catch more {k}" if not grew else f"Cooler-than-usual months didn't catch more {k}")
-    end = " White sharks pass on a fixed winter calendar that overlaps the whales'; neither the whales' numbers nor the cold drives it." if not grew and not cool else ""
+    end = " White sharks pass on a fixed winter calendar that overlaps the whales'; neither the whales' numbers nor the cold drives it. Runs of baitfish such as sea mullet and Australian salmon fall in the same months and may set that calendar instead; this test can't tell them apart." if not grew and not cool else ""
     return ('Early result, from the sharks\' side: ' + lead + ' Queensland\'s shark-control gear, Gold Coast to Bundaberg, '
             f'caught {w["total"]} white sharks from May to November between 1996 and 2025. '
             f'East Australian humpbacks grew roughly tenfold over those years, {s2}. {s3}.{end} ({QLD}; HadISST.)')
