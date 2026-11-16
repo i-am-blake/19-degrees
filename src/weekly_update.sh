@@ -19,7 +19,9 @@ python3 -I asid_to_csv.py asid.xlsx asid.csv
 NEWDB=0; cmp -s asid_version.txt "$R/src/asid_version.txt" 2>/dev/null || NEWDB=1
 
 # 2. Sea temperature (stop if NOAA is unreachable: these scripts exit with an error)
-mkdir -p sst beach_sst; python3 -I fetch_sst.py sst; python3 -I fetch_nino34.py sst; python3 -I fetch_beaches.py beach_sst
+# NOAA sometimes stalls: each download gets 10 minutes and up to 3 tries before the run stops
+retry(){ local n; for n in 1 2 3; do timeout 600 "$@" && return 0; warn "try $n of 3 failed: $*"; [ "$n" -lt 3 ] && sleep 60; done; return 1; }
+mkdir -p sst beach_sst; retry python3 -I fetch_sst.py sst; retry python3 -I fetch_nino34.py sst; retry python3 -I fetch_beaches.py beach_sst
 
 # 3. Tagging, warm spells, rain (rain only when the database is new; the page keeps its last numbers otherwise)
 if git -C "$R" fetch -q origin imos-data 2>/dev/null; then mkdir -p imos && git -C "$R" archive origin/imos-data | tar -x -C imos && python3 -I imos19.py imos sst imos.json || warn "IMOS step failed, page keeps last numbers"; python3 -I tagtemp19.py imos tagtemp.json || warn "C25 tag temperature step failed, page keeps last numbers"; python3 -I size19.py imos size.json > /dev/null || warn "C43 size step failed, page keeps last numbers"; else warn "no imos-data branch"; fi
