@@ -118,7 +118,7 @@
   {
    "id": "C23",
    "status": "early",
-   "grade": "Early: no",
+   "grade": "Early no",
    "grade_class": "no",
    "title": "California's white shark incidents have moved north as the coast warmed."
   },
@@ -349,7 +349,7 @@
  ],
  "counts": {
   "Can't test yet": 1,
-  "Early: no": 1,
+  "Early no": 1,
   "First look": 8,
   "Leans no": 1,
   "Leans yes": 7,
