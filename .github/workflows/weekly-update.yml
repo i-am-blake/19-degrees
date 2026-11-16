@@ -49,4 +49,5 @@ jobs:
           git add -A
           git diff --cached --quiet && { echo "Nothing changed this week"; exit 0; }
           git -c user.name="Blake Erickson" -c user.email="323228245+i-am-blake@users.noreply.github.com" commit -qm "Weekly data update, $(date -u +%Y-%m-%d)"
-          git pull -q --rebase origin main && git push -q origin main
+          # main may have moved during the run (a daily update, an approved merge): sync as the author, retrying the push once
+          for n in 1 2; do git -c user.name="Blake Erickson" -c user.email="323228245+i-am-blake@users.noreply.github.com" pull -q --rebase origin main && git push -q origin main && break; [ "$n" = 2 ] && exit 1; sleep 20; done
