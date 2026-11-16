@@ -31,4 +31,4 @@ jobs:
         run: |
           git diff --quiet && { echo "No change"; exit 0; }
           git -c user.name="Blake Erickson" -c user.email="323228245+i-am-blake@users.noreply.github.com" commit -qam "Daily sea temperature update, $(date -u +%Y-%m-%d)"
-          git pull -q --rebase origin main && git push -q origin main
+          git -c user.name="Blake Erickson" -c user.email="323228245+i-am-blake@users.noreply.github.com" pull -q --rebase origin main && git push -q origin main
