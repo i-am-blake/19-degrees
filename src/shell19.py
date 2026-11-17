@@ -54,6 +54,7 @@ dl.kv{display:grid;grid-template-columns:minmax(120px,190px) 1fr;gap:8px 18px;ma
 .ladder li.no{border-style:dashed}
 .ladder.three{grid-template-columns:repeat(3,1fr)}
 @media (max-width:620px){.ladder,.ladder.three{grid-template-columns:1fr}}
+.ltab{min-width:620px}.ltab th[scope=row] a{color:var(--ink);font-weight:600}.ltab th[scope=row] span{display:block;font:400 13px/1.4 var(--f-body);color:var(--muted);text-transform:none;letter-spacing:0}.ltab th[scope=row]{font:inherit;text-transform:none;letter-spacing:0;color:var(--ink)}.ltab td.rg{text-align:center;color:var(--rule);font-size:20px;color:#3C5A6B}.ltab td.rg.on{color:var(--cold)}.ltab td:last-child{color:inherit}.ltab .cstat{font-size:11px;padding:4px 7px}
 .prod{border-top:1px solid var(--rule);padding:20px 0 8px}.prod h3{margin:0 0 4px}.prod .use{color:var(--muted);font-size:15px}
 .chlog{list-style:none;padding:0}.chlog li{padding:14px 0;border-bottom:1px solid var(--rule);max-width:none}.chlog time{font:500 13px/1.6 var(--f-data);color:var(--warm);letter-spacing:.06em}
 code{font:400 14px var(--f-data);color:var(--ink)}

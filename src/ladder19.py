@@ -137,9 +137,30 @@ def build(T, out, write, page, relink, esc, text, BUILT, long_date):
         desc = f"{heading}: {len(ps)} shark-safety products checked against published independent tests and placed on an evidence ladder from lab test to real-world protection. " + (tops[0] if tops else "")
         written.append(write(f"safety-check/{slug}", page(f"safety-check/{slug}", title, "Safety · evidence ladder", body, h1=title.split(":")[0],
                        desc=desc[:300], crumbs=[("Safety", "/safety")])))
+    # every product at once, highest rung first, one table per ladder (their steps differ)
+    SHORT = {"deter": ("Behavior", "Bait-taking", "Bites on decoys", "People, real use"),
+             "fabric": ("Material tests", "Live sharks", "Real bites"), "bleed": ("Controlled test", "Real rescues", "Survival")}
+    NAME = {"deter": "Deterrents: do they keep sharks away?", "fabric": "Bite-resistant fabric: does it reduce the injury?", "bleed": "Bleeding control: does it save lives?"}
+    slug_of = {h: sl for h, sl, *_ in GROUPS}
+    pid = lambda n: re.sub(r"[^a-z0-9]+", "-", n.lower()).strip("-")
+    tables = ""
+    for k in ("deter", "fabric", "bleed"):
+        ps = sorted((p for p in P if RUNG[p["name"]][0] == k), key=lambda p: (-RUNG[p["name"]][1], p["group"], p["name"]))
+        head = "".join(f'<th scope="col" title="{esc(full)}">{i + 1}. {sh}</th>' for i, (sh, full) in enumerate(zip(SHORT[k], LADDER[k])))
+        rows = ""
+        for p in ps:
+            r = RUNG[p["name"]][1]
+            cells = "".join(f'<td class="rg{" on" if i < r else ""}">{"<span class=sr>Reached</span>●" if i < r else "<span class=sr>Not shown</span>·"}</td>' for i in range(len(LADDER[k])))
+            rows += (f'<tr><th scope="row"><a href="/safety-check/{slug_of[p["group"]]}#{pid(p["name"])}">{p["name"]}</a><span>{p["group"]}</span></th>'
+                     f'<td><span class="{p["cls"]}">{p["grade"]}</span></td>{cells}</tr>')
+        tables += (f'  <h3>{NAME[k]}</h3>\n  <p class="note">Steps: ' + " → ".join(f"{i + 1}. {x}" for i, x in enumerate(LADDER[k])) + '</p>\n'
+                   f'  <div class="tbl"><table class="ltab"><thead><tr><th scope="col">Product</th><th scope="col">Grade</th>{head}</tr></thead><tbody>{rows}</tbody></table></div>\n')
     cards = "".join(f'<a href="/safety-check/{slug}"><span class="meta">{sum(1 for p in P if p["group"] == h)} products</span><b>{h}</b>{lead.split(". ")[0].rstrip(".")}.</a>' for h, slug, _, _, lead in GROUPS)
     body = f'''  <p class="lead">Every shark-safety product we could find with a published, independent test, placed on an evidence ladder: from a change in behavior in a test, to fewer bites in a field trial, to protecting people in real-world use.</p>
   <p class="answer">{"No deterrent has yet been shown to protect people in real-world use. " if allmax.get("deter", 0) < 4 else ""}The best electric deterrents have cut bites on boards and decoys in field trials, for some species.</p>
+  <h2>Every product, by how far its evidence has climbed</h2>
+  <p>A filled dot means independent tests have reached that rung. The grade also weighs how many tests agree and how good they were, so a product can be graded Supported on a low rung.</p>
+{tables}  <h2>By group</h2>
   <div class="cards">{cards}</div>
   <p class="meta">Updated {long_date(BUILT)} · <a href="/safety">Back to Safety</a></p>
 '''
