@@ -32,8 +32,7 @@ doc = ('<!doctype html>\n<html lang="en">\n<head>\n<meta charset="utf-8">\n'
 if os.path.exists(out): shutil.rmtree(out)
 os.makedirs(out)
 open(os.path.join(out, "index.html"), "w").write(doc)
-# each tab also has its own address (/story, /safety, ...): see tab_pages.py
-sys.path.insert(0, os.path.dirname(os.path.abspath(__file__))); import tab_pages; tab_pages.write(doc, out)
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__))); import tab_pages
 # sitemap and robots.txt, so search engines find every page and tab address
 import datetime as _dt
 _today = _dt.date.today().isoformat()
@@ -82,6 +81,8 @@ if os.path.exists(_fp):
     _d = re.search(r"(\d+) / (\d+)</span> claims with a first look or a result", _ix)
     if f"{_d.group(1)} of {_d.group(2)} claims have a first look" not in _fu: sys.exit("::error::funders.html claim count does not match the Research page.")
     print("funder page and PDF: numbers match the home page")
+# each tab is its own page (/, /story, /safety, ...): split last, because the pages above read the full index.html
+tab_pages.write(doc, out)
 bad = []
 for root, _, files in os.walk(out):
     for f in files:
