@@ -2622,7 +2622,7 @@ try{const A=D.attention, sec=document.getElementById("attention");
     let g="";
     for(let t=0;t<=mx;t+=100) g+=`<line x1="${L}" x2="${W-R}" y1="${Y(t)}" y2="${Y(t)}" stroke="var(--rule)" stroke-width="1" ${t===100?'stroke-dasharray="4 4"':''}/><text x="${L-6}" y="${Y(t)+4}" text-anchor="end">${t}</text>`;
     MS.forEach((m,i)=>g+=`<text x="${X(i)}" y="${H-8}" text-anchor="middle">${m}</text>`);
-    const ends=S.map(x=>({k:x.k,c:x.c,y:Y(x.v[11])})).sort((a,b)=>a.y-b.y); for(let i=1;i<ends.length;i++) if(ends[i].y-ends[i-1].y<15) ends[i].y=ends[i-1].y+15;
+    const ends=S.map(x=>({k:x.k,c:x.c,y:Y(x.v[11])})).sort((a,b)=>a.y-b.y); for(let i=1;i<ends.length;i++) if(ends[i].y-ends[i-1].y<18) ends[i].y=ends[i-1].y+18;
     S.forEach(x=>{g+=`<polyline fill="none" stroke="${x.c}" stroke-width="${x.w}" stroke-linejoin="round" points="${x.v.map((v,i)=>X(i)+","+Y(v)).join(" ")}"/>`;
       x.v.forEach((v,i)=>g+=`<circle cx="${X(i)}" cy="${Y(v)}" r="4" fill="${x.c}" stroke="var(--deep)" stroke-width="2"><title>${x.k==="Wikipedia"?"Wikipedia views":x.k+" bites"}, ${ML[i]}: ${v}% of an average month</title></circle>`);});
     ends.forEach(e=>g+=`<text class="lab" x="${W-R+10}" y="${e.y+4}" style="fill:${e.c}">${e.k}</text>`);
