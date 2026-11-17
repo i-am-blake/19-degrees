@@ -1,0 +1,31 @@
+name: Run new-claims script (look only)
+# Runs src/newclaims19.py from a branch and prints its JSON. Changes nothing.
+on:
+  workflow_dispatch:
+    inputs:
+      ref: { description: "Branch", required: false, default: "release" }
+permissions:
+  contents: read
+jobs:
+  run:
+    runs-on: ubuntu-26.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v5
+        with: { ref: "${{ inputs.ref }}" }
+      - uses: actions/setup-python@v6
+        with: { python-version: "3.12" }
+      - name: Run
+        run: |
+          pip install -q -r src/requirements.txt numpy pandas openpyxl scipy
+          R="$PWD"; W="$RUNNER_TEMP/w"; mkdir -p "$W"; cp -r src/. "$W/"; cd "$W"
+          git -C "$R" fetch -q origin ocean-data sst-cache
+          mkdir -p ocean sstc && git -C "$R" archive origin/ocean-data | tar -x -C ocean && git -C "$R" archive origin/sst-cache | tar -x -C sstc && tar -xzf sstc/sst.tgz
+          python3 - <<'PY'
+          import json, urllib.request
+          h = json.load(urllib.request.urlopen("https://zenodo.org/api/records/18752301/versions?sort=version&size=1", timeout=60))["hits"]["hits"][0]
+          f = next(x for x in h["files"] if x["key"].endswith(".xlsx")); urllib.request.urlretrieve(f["links"]["self"], "asid.xlsx")
+          PY
+          python3 -I asid_to_csv.py asid.xlsx asid.csv
+          python3 -I newclaims19.py asid.csv ocean/hawaii_incidents.csv ocean/scp-numbers-caught.xlsx sst newclaims.json
+          echo "JSONSTART"; cat newclaims.json | tr -d '\n '; echo; echo "JSONEND"
