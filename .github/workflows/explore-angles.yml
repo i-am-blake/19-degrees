@@ -2,6 +2,8 @@ name: Explore new angles (look only)
 # Checks six open sources for new claims and runs a first look where the data allows. Changes nothing in the repo or on the site.
 on:
   workflow_dispatch:
+    inputs:
+      only: { description: "Run one section (wiki, usla, osm, prey, heat, eac, redtide); empty runs all", required: false, default: "" }
 permissions:
   contents: read
 jobs:
@@ -13,11 +15,12 @@ jobs:
       - name: Look
         run: |
           pip install -q -r src/requirements.txt numpy pandas openpyxl
-          cd src && python3 - <<'PY' | tee ../report.md
+          cd src && ONLY="${{ inputs.only }}" python3 - <<'PY' | tee ../report.md
           import csv, io, json, re, math, time, urllib.request, urllib.parse, collections, statistics as st
           UA = {"User-Agent": "19-degrees-explore/1.0 (+https://19-degrees.org)"}
           def get(u, t=180, data=None, h=None):
               r = urllib.request.Request(u, data=data, headers={**UA, **(h or {})}); return urllib.request.urlopen(r, timeout=t).read()
+          import os; ONLY = os.environ.get("ONLY", "")
           def section(n): print(f"\n## {n}\n")
           def safe(f):
               try: f()
@@ -37,16 +40,17 @@ jobs:
               h = json.loads(get("https://zenodo.org/api/records/18752301/versions?sort=version&size=1"))["hits"]["hits"][0]
               f = next(x for x in h["files"] if x["key"].endswith(".xlsx"))
               open("asid.xlsx", "wb").write(get(f["links"]["self"], 300))
-              import subprocess; subprocess.run(["python3", "-I", "asid_to_csv.py", "asid.xlsx", "asid.csv"], check=True, capture_output=True)
+              import subprocess; r = subprocess.run(["python3", "-I", "asid_to_csv.py", "asid.xlsx", "asid.csv"], capture_output=True, text=True)
+              if r.returncode: raise RuntimeError("asid_to_csv: " + r.stderr[-600:])
               rows = list(csv.DictReader(open("asid.csv"))); cols = list(rows[0].keys())
               print(f"\nAustralian database: {len(rows)} records; columns: {', '.join(cols[:25])}")
-              dk = next((c for c in cols if re.search(r"date", c, re.I)), None)
+              yk = next((c for c in cols if c.lower() in ("incident.year", "year")), None); mk = next((c for c in cols if c.lower() in ("incident.month", "month")), None)
               fk = next((c for c in cols if re.search(r"(fatal|injury|outcome)", c, re.I)), None)
               bites = collections.Counter(); fatal = collections.Counter()
               for r in rows:
-                  m = re.match(r"(\d{4})-(\d{2})", r.get(dk, "") or "")
-                  if not m: continue
-                  ym = m.group(1) + m.group(2); bites[ym] += 1
+                  try: ym = f"{int(float(r[yk])):04d}{int(float(r[mk])):02d}"
+                  except Exception: continue
+                  bites[ym] += 1
                   if fk and re.search(r"fatal", r.get(fk, ""), re.I): fatal[ym] += 1
               ms = sorted(m for m in views["Shark_attack"] if m <= max(bites or ["0"]))
               def corr(x, y):
@@ -60,7 +64,7 @@ jobs:
               for m in ms: byc[m[4:]].append(views["Shark_attack"][m])
               print("- Average views by calendar month: " + ", ".join(f"{k}: {int(st.mean(x)):,}" for k, x in sorted(byc.items())))
               print("- Note: English Wikipedia is mostly US/UK readers, so Australian bites are only one driver; a US/global bite series would be the fair test.")
-          safe(wiki)
+          if ONLY in ('', 'wiki'): safe(wiki)
 
           # ---------- B. People in the water (US) ----------
           def usla():
@@ -71,7 +75,7 @@ jobs:
                       links = sorted(set(re.findall(r'href="([^"]*(?:stat|Stat|STAT|report|xls|csv)[^"]*)"', b)))[:25]
                       print(f"- `{u}`: reachable, {len(b)//1000} kB; mentions attendance: {'attendance' in b.lower()}; links: {links}")
                   except Exception as e: print(f"- `{u}`: {type(e).__name__} {str(e)[:120]}")
-          safe(usla)
+          if ONLY in ('', 'usla'): safe(usla)
 
           # ---------- C. Where people surf ----------
           def osm():
@@ -87,7 +91,7 @@ jobs:
                           print(f"- {k}: {len(el)} surf spots ({named} named)"); break
                       except Exception as e: last = f"{type(e).__name__}"; time.sleep(10)
                   else: print(f"- {k}: all servers failed ({last})")
-          safe(osm)
+          if ONLY in ('', 'osm'): safe(osm)
 
           # ---------- D. Prey ----------
           def prey():
@@ -106,7 +110,7 @@ jobs:
                           r = json.loads(b)["result"]; print(f"- Queensland open data search 'qfish': {r['count']} datasets: " + "; ".join(x["title"] for x in r["results"][:12]))
                       else: print(f"- QFish site reachable ({len(b)//1000} kB); interactive query tool")
                   except Exception as e: print(f"- `{u}`: {type(e).__name__} {str(e)[:150]}")
-          safe(prey)
+          if ONLY in ('', 'prey'): safe(prey)
 
           # ---------- E. Heatwaves (already claim C19) ----------
           def heat():
@@ -114,7 +118,7 @@ jobs:
               d = json.load(open("heat.json"))
               for k, v in d.items(): print(f"- {k}: {v['n']} bites; {v['t_pct']}% fell in the warmest tenth of months (chance: 10%), p = {v['t_p']}")
               print("- Possible refinement: a daily heatwave version using the daily beach temperatures (OISST) the site already fetches.")
-          safe(heat)
+          if ONLY in ('', 'heat'): safe(heat)
 
           # ---------- F. East Australian Current ----------
           def eac():
@@ -129,7 +133,7 @@ jobs:
                       years = sorted(set(re.findall(r"_(\d{4})\d{4}T?", c)))
                       print(f"  - {dname}: {len(sub)} entries; years in file names: {years[:1]}–{years[-1:]}; e.g. {sub[:5]}")
                   except Exception as e: print(f"  - {dname}: {type(e).__name__}")
-          safe(eac)
+          if ONLY in ('', 'eac'): safe(eac)
 
           # ---------- G. Florida red tide ----------
           def redtide():
@@ -151,6 +155,6 @@ jobs:
                   except Exception as e: print(f"  - layer {l['id']}: {type(e).__name__} {str(e)[:120]}")
               j = json.loads(get("https://geodata.myfwc.com/api/search/v1/collections/all/items?q=red%20tide&limit=10", 90))
               print("- FWC open data, 'red tide': " + "; ".join(f.get("properties", {}).get("title", "?") for f in j.get("features", [])[:10]))
-          safe(redtide)
+          if ONLY in ('', 'redtide'): safe(redtide)
           PY
           cat ../report.md >> "$GITHUB_STEP_SUMMARY"
