@@ -164,6 +164,12 @@ n_done = m_done.group(1) if m_done else "?"
 m_wait = re.search(r'(\d+) / \d+</span> claims waiting for data', t)
 n_wait = m_wait.group(1) if m_wait else "?"
 pct = round(100 * int(n_done) / int(n_claims)) if n_done.isdigit() and n_claims.isdigit() else 0
+# Supporters who asked to be named (edit src/supporters.json: ["Name", ...]); the list only shows once it has names
+try:
+    _sup = json.load(open(os.path.join(os.path.dirname(os.path.abspath(__file__)), "supporters.json"), encoding="utf-8"))
+except (OSError, ValueError):
+    _sup = []
+SUPP = ('  <p class="thanks"><b>Thank you to our supporters:</b> ' + ", ".join(html.escape(n) for n in _sup) + ".</p>\n") if _sup else ""
 KOFI = "https://ko-fi.com/19degrees"
 CONTACT = "/#contact"
 FUND_CSS = """<style>.hero-cta{display:flex;flex-wrap:wrap;gap:12px;margin:24px 0 8px}
@@ -211,7 +217,7 @@ fund_body = FUND_CSS + f"""
   <h2>How funders are thanked</h2>
   <div class="tiers"><div><h3>Supporter</h3><p>Any gift. Thanked by name on this page, if you choose.</p></div><div><h3>Claim sponsor</h3><p>Fund a claim or a dataset. Credited on that claim and in its result.</p></div><div><h3>Project partner</h3><p>Fund one of the projects above. Listed here as a partner, with a report when the work is done.</p></div></div>
   <p>Thanks never buys influence. Every level follows the independence policy below.</p>
-  <h2>Independence policy</h2>
+""" + SUPP + f"""  <h2>Independence policy</h2>
   <ul class="rules">
     <li><b>Money never touches results.</b> Funders get no say over methods, results, grades or wording. A result that goes against a funder's interest is published the same way as any other.</li>
     <li><b>Everyone is tested the same way.</b> Funding is accepted from foundations, institutions, companies and individuals. Any funder's product or position is tested and graded exactly like everyone else's.</li>
