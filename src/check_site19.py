@@ -88,9 +88,9 @@ try:
     check("feed: entries", len(feed.findall("{http://www.w3.org/2005/Atom}entry")) == min(30, n_log))
 except ET.ParseError as e: check(f"feed isn't valid XML: {e}", False)
 # 9. the data page lists every download and dates the dataset to this build
-dp = read("data/index.html")
+dp = read("open-data.html")
 for f in os.listdir(os.path.join(root, "data")):
-    if f != "index.html": check(f"data page doesn't list {f}", f'href="/data/{f}"' in dp)
+    check(f"data page doesn't list {f}", f'href="/data/{f}"' in dp)
 ld = json.loads(re.search(r'<script type="application/ld\+json">(.*?)</script>', dp, re.S).group(1))
 ds = next(x for x in (ld if isinstance(ld, list) else [ld]) if x.get("@type") == "Dataset")
 check("dataset date matches the build", ds["dateModified"] == D["built"])
