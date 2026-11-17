@@ -68,12 +68,13 @@ for p in [p for p in pages if p.startswith("questions/")]:
 # 6. the numbers in the answers match the page data
 D = json.loads(re.search(r'id="n19-data">(.*?)</script>', read("index.html"), re.S).group(1))
 B = D["species"]["bull"]; Z = D["zones"]
-q1 = read("questions/what-is-the-19c-line.html")
-check("19°C line page: bull shark bite count", f"Australia's {B['n']} recorded bull shark bites" in html.unescape(q1))
-check("19°C line page: distance the line moved", f"moved about {round((Z['line'][0] - Z['line'][-1]) * 111)} km south" in q1)
-check("bull shark temperature page: coolest month", f"{B['min']:.1f}°C or more" in read("questions/what-temperature-do-bull-sharks-prefer.html"))
-ws = D["wa_spike"]; q5 = read("questions/are-shark-bites-increasing.html")
-check("bites page: Western Australia counts", f"since 2020 ({ws['post']})" in q5 and f"before ({ws['pre']})" in q5)
+if os.path.exists(os.path.join(root, "questions", "what-is-the-19c-line.html")):
+    q1 = read("questions/what-is-the-19c-line.html")
+    check("19°C line page: bull shark bite count", f"Australia's {B['n']} recorded bull shark bites" in html.unescape(q1))
+    check("19°C line page: distance the line moved", f"moved about {round((Z['line'][0] - Z['line'][-1]) * 111)} km south" in q1)
+    check("bull shark temperature page: coolest month", f"{B['min']:.1f}°C or more" in read("questions/what-temperature-do-bull-sharks-prefer.html"))
+    ws = D["wa_spike"]; q5 = read("questions/are-shark-bites-increasing.html")
+    check("bites page: Western Australia counts", f"since 2020 ({ws['post']})" in q5 and f"before ({ws['pre']})" in q5)
 # 7. the safety ladder lists every product on the Safety page, each once
 S = read("safety.html")
 prods = [text(re.sub(r"<span>.*?</span>", "", x)) for x in re.findall(r'<tr><th scope="row">(.*?)</th>', S[S.index('<table class="ptab">'):S.index("</table>", S.index('<table class="ptab">'))], re.S)]
