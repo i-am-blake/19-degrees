@@ -157,41 +157,63 @@ def tile(label):
     m = re.search(r'<span class="lab">' + label + r'</span><span class="big"[^>]*>(\d+)<', t)
     return m.group(1) if m else "?"
 m_open = re.search(r"Pick one of the (?:<[^>]+>)?(\d+)", t)
+m_done = re.search(r'(\d+) / (\d+)</span> claims with a first look or a result', t)
 n_claims, n_sources, n_products = tile("Testable claims"), tile("Data sources joined"), tile("Products checked")
 n_open = m_open.group(1) if m_open else "?"
-FUND_CSS = """<style>.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin:24px 0 8px}
+n_done = m_done.group(1) if m_done else "?"
+KOFI = "https://ko-fi.com/19degrees"
+CONTACT = "/#contact"
+FUND_CSS = """<style>.hero-cta{display:flex;flex-wrap:wrap;gap:12px;margin:24px 0 8px}
+.btn{display:inline-flex;align-items:center;min-height:48px;padding:0 22px;font:700 16px/1 var(--f-body);text-decoration:none;border:1.5px solid var(--warm)}
+.btn.pri{background:var(--warm);color:#041A2C}.btn.pri:hover{background:#F6B970;color:#041A2C}.btn.sec{color:var(--ink)}.btn.sec:hover{background:rgba(240,160,75,.12);color:var(--ink)}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin:32px 0 8px}
 .stats div{border:1px solid var(--rule);padding:14px 16px;display:flex;flex-direction:column;gap:4px}
 .stats b{font:800 34px/1 var(--f-display);color:var(--ink)}.stats span{font:500 12px/1.4 var(--f-data);letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:12px;margin-top:12px}
+.cards div{border:1px solid var(--rule);padding:18px;display:flex;flex-direction:column;gap:8px}
+.cards h3{font:700 18px/1.3 var(--f-display);margin:0;color:var(--ink)}.cards p{margin:0;font-size:15px;flex:1}.cards a{font-weight:600}
+.cards .tag{font:500 11px/1.4 var(--f-data);letter-spacing:.1em;text-transform:uppercase;color:var(--warm)}
 .rules{list-style:none;padding:0;display:grid;gap:10px}.rules li{border-left:3px solid var(--warm);padding:4px 0 4px 14px}
-.ways{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px;margin-top:12px}
-.ways div{border:1px solid var(--rule);padding:16px}.ways h3{font:700 18px/1.3 var(--f-display);margin:0 0 6px;color:var(--ink)}.ways p{margin:0 0 10px;font-size:15px}</style>"""
-PAYS = [
- ("Access to data", "Several claims can't be tested because the data they need isn't public or costs money to obtain. Funding pays for data requests, licenses and the time to clean and join new datasets."),
- ("Testing the open claims", f"{n_open} of the {n_claims} claims are waiting for data or a test. Funding pays for the research time to run each test in the open, with the method set before the result is known."),
- ("Independent review", "Paying qualified reviewers to check methods and results, so mistakes are found and published rather than hidden."),
- ("Schools", "Testing and improving the free classroom sheets with teachers, for each age range."),
- ("Keeping it running", "The weekly data update, hosting and the tools that keep every number on the site checked automatically."),
+.status{border:1px solid var(--rule);padding:18px 20px;margin-top:12px}.status p{margin:0 0 8px}.status p:last-child{margin:0}</style>"""
+OPPS = [
+ ("Fund a claim", f"{n_open} of the {n_claims} claims are still waiting for data or a test. Fund one, and it gets tested in the open, with the method set before the result is known."),
+ ("Open a dataset", "Some claims can't be tested because the data isn't public or costs money. Fund the request, license or cleaning that opens one up for everyone."),
+ ("Sponsor the schools program", "Free classroom sheets for three age ranges. Fund testing with teachers and new lessons built on real data."),
+ ("Underwrite independent review", "Pay qualified scientists to check methods and results, so mistakes are found and published, not hidden."),
 ]
+WAYS = [
+ ("Give once", "A contribution of any size goes straight to the research.", KOFI, "Support on Ko-fi →", True),
+ ("Give in someone's honor", "Add their name in the Ko-fi message, for an ocean lover, a surfer or a lifeguard.", KOFI, "Give in their honor →", True),
+ ("Partner as an organization", "Foundations, councils, universities and companies can fund a named project above.", CONTACT, "Talk about a partnership →", False),
+ ("Share data", "Agencies and researchers can contribute the data that lets an open claim be tested.", "/research", "How sharing works →", False),
+]
+def link(u, txt, ext):
+    return f'<a href="{u}"' + (' target="_blank" rel="noopener"' if ext else "") + f">{txt}</a>"
 fund_body = FUND_CSS + f"""
-  <p class="lead">19 Degrees is an independent, open project testing how a warming ocean is changing where sharks and people meet. Every claim says in advance what would support it and what would rule it out, and every result is published, including the ones that go against it.</p>
-  <div class="stats"><div><b>{n_claims}</b><span>Testable claims</span></div><div><b>{n_sources}</b><span>Data sources joined</span></div><div><b>{n_products}</b><span>Safety products checked</span></div><div><b>Weekly</b><span>Data updates</span></div></div>
-  <h2>Why it matters</h2>
-  <p>Shark research and ocean-temperature research are spread across agencies, universities and countries, in datasets that rarely meet. 19 Degrees joins them in one open place, so anyone can see what the evidence says, what it doesn't say yet, and what data is missing. All code is open source (MIT) and all content can be reused with credit (CC BY 4.0).</p>
-  <h2>What funding pays for</h2>
-""" + "".join(f"  <p><b>{h}.</b> {d}</p>\n" for h, d in PAYS) + """  <h2>Independence</h2>
+  <p class="lead">A warming ocean is redrawing where sharks and people meet. 19 Degrees tests what that means for swimmers, surfers, coastal towns and the sharks themselves, in the open, and says so when the evidence goes the other way.</p>
+  <div class="hero-cta"><a class="btn pri" href="{KOFI}" target="_blank" rel="noopener">Support the research</a><a class="btn sec" href="/19-degrees-summary.pdf">Download the summary (PDF)</a></div>
+  <div class="stats"><div><b>{n_done} / {n_claims}</b><span>Claims with a first look or result</span></div><div><b>{n_sources}</b><span>Data sources joined</span></div><div><b>{n_products}</b><span>Safety products checked</span></div><div><b>Weekly</b><span>Data updates</span></div></div>
+  <h2>Why it matters now</h2>
+  <p>Shark and ocean-temperature research is spread across agencies, universities and countries, in datasets that rarely meet. As the water warms, the places and seasons where people and sharks overlap are changing faster than any one study can follow. 19 Degrees joins the evidence in one open place: what it says, what it doesn't say yet, and what data is missing. All code is open source (MIT) and all content can be reused with credit (CC BY 4.0).</p>
+  <h2>What you can fund</h2>
+  <div class="cards">""" + "".join(f'<div><span class="tag">Named project</span><h3>{h}</h3><p>{d}</p>{link(CONTACT, "Fund this →", False)}</div>' for h, d in OPPS) + """</div>
+  <h2>Ways to give</h2>
+  <div class="cards">""" + "".join(f"<div><h3>{h}</h3><p>{d}</p>{link(u, l, e)}</div>" for h, d, u, l, e in WAYS) + """</div>
+  <h2>Independence policy</h2>
   <ul class="rules">
-    <li>Funders get no say over methods, results, grades or wording. A result that goes against a funder's interest is published the same way as any other.</li>
-    <li>Funding is accepted from foundations, institutions, companies and individuals, including makers of shark-safety products. Their products are tested and graded exactly like everyone else's.</li>
-    <li>Every funder and partner above a set amount is listed publicly, with what the money was for.</li>
-    <li>19 Degrees stays neutral on contested measures such as nets and drumlines, and reports what the evidence shows.</li>
+    <li><b>Money never touches results.</b> Funders get no say over methods, results, grades or wording. A result that goes against a funder's interest is published the same way as any other.</li>
+    <li><b>Everyone is tested the same way.</b> Funding is accepted from foundations, institutions, companies and individuals. Any funder's product or position is tested and graded exactly like everyone else's.</li>
+    <li><b>Funding is public.</b> Funders of named projects are listed with what their money paid for.</li>
+    <li><b>Neutral on contested measures.</b> 19 Degrees reports what the evidence shows on nets, drumlines and other measures, and takes no side.</li>
   </ul>
-  <h2>Ways to help</h2>
-  <div class="ways">
-    <div><h3>Grants and partnerships</h3><p>Fund a claim, a region, a dataset or the schools program.</p><a href="/#contact">Get in touch →</a></div>
-    <div><h3>Share data</h3><p>Researchers and agencies can contribute data that lets an open claim be tested.</p><a href="/research#h-data">How sharing works →</a></div>
-    <div><h3>Support the research</h3><p>A contribution of any size.</p><a href="https://ko-fi.com/19degrees" target="_blank" rel="noopener">Support on Ko-fi →</a></div>
+  <h2>What funders get back</h2>
+  <p>Funders of a named project get a short report when the work is done: what was tested, what was found, and where the data and code live. Results are published on the site for everyone, with credit to the funder.</p>
+  <h2>Status and transparency</h2>
+  <div class="status">
+    <p>19 Degrees is an independent project. It is not a registered charity, so contributions are not tax-deductible.</p>
+    <p>19 Degrees is open to working with a fiscal sponsor. If your organization offers fiscal sponsorship, <a href="/#contact">get in touch</a>.</p>
   </div>
-  <p class="foot" style="border:0;margin-top:32px">Questions about funding? Use the <a href="/#contact">contact form</a> and choose "Funding or partnership". The author replies to every message.</p>
+  <p style="margin-top:32px">Questions about funding? Use the <a href="/#contact">contact form</a> and choose "Funding or partnership". The author replies to every message.</p>
 """
 
 os.makedirs(out, exist_ok=True)
