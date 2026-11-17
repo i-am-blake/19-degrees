@@ -1,7 +1,8 @@
 """One-page funder summary (print HTML) built from the live index.html counts; render to PDF with
-render_summary.js. Usage: python3 -I make_summary.py <index.html> <out.html>"""
+headless Chrome (make_site.py does this every build). Usage: python3 -I make_summary.py <index.html> <out.html> [fonts.css href]"""
 import re, sys
 src, out = sys.argv[1:3]
+FONTS = sys.argv[3] if len(sys.argv) > 3 else "fonts/fonts.css"
 t = open(src, encoding="utf-8").read()
 logo = re.search(r'<svg class="mark"[^>]*>.*?</svg>', t, re.S).group(0)
 def tile(label):
@@ -20,7 +21,7 @@ OPPS = [("Fund a claim", f"{n_wait} claims are waiting for data or a test. Each 
         ("Sponsor the schools program", "Free classroom sheets for three age ranges, tested with teachers."),
         ("Underwrite independent review", "Qualified scientists check methods and results, and mistakes are published.")]
 html = f"""<!doctype html><html lang="en-US"><head><meta charset="utf-8"><title>19 Degrees · Funder summary</title>
-<link rel="stylesheet" href="FONTS">
+<link rel="stylesheet" href="{FONTS}">
 <style>@page{{size:Letter;margin:0}}*{{box-sizing:border-box}}
 body{{margin:0;font:400 9.6pt/1.38 "Figtree",system-ui,sans-serif;color:#0B2C46;-webkit-print-color-adjust:exact;print-color-adjust:exact}}
 .sheet{{width:8.5in;height:11in;padding:.5in .65in;display:flex;flex-direction:column;gap:8.5pt;background:#FBF8F2}}
