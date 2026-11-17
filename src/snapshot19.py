@@ -16,7 +16,7 @@ sp = {k: {f: v[f] for f in ("n", "below", "min", "median", "max")} | {"confirmed
 syd = next((b for b in D["beaches"] if b["key"] == "sydney"), {})
 snap = dict(date=D["built"], bites_to=D.get("asid_last"), sea_temperature_to=D.get("sst_last"), species=sp,
             sydney_months=dict(base=syd.get("base"), recent=syd.get("recent")), half_year_line_lat=D["zones"].get("line"),
-            claims=claims, counts={g: sum(1 for c in claims if c["grade"] == g) for g in sorted({c["grade"] for c in claims})})
+            claims=claims, merged={"C2": "C16", "C37": "C6"}, counts={g: sum(1 for c in claims if c["grade"] == g) for g in sorted({c["grade"] for c in claims})})
 json.dump(snap, open(os.path.join(out, D["built"] + ".json"), "w"), indent=1, ensure_ascii=False)
 dates = sorted(f[:-5] for f in os.listdir(out) if re.fullmatch(r"\d{4}-\d{2}-\d{2}\.json", f))
 json.dump(dict(snapshots=dates), open(os.path.join(out, "index.json"), "w"), indent=1)
