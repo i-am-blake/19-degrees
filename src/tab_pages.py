@@ -23,7 +23,7 @@ def panel_spans(s):
 
 def titles(doc):
     d = json.loads(re.search(r'id="n19-data">(.*?)</script>', doc, re.S).group(1))
-    n = len(re.findall(r'<article class="claim\b', doc))
+    n = len(re.findall(r'<article class="claim" id="c\d+"', doc))
     if n < 10: sys.exit("could not count the claims for the Research page description")
     b = d["species"]["bull"]["n"]
     return {
