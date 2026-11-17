@@ -1,0 +1,60 @@
+name: Explore open shark data (look only)
+# Downloads candidate open datasets and reports what shark species, years and temperature fields they hold.
+# Changes nothing in the repo or on the site. Started by hand.
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  look:
+    runs-on: ubuntu-26.04
+    timeout-minutes: 40
+    steps:
+      - name: Look
+        run: |
+          python3 - <<'PY' | tee report.md
+          import csv, io, json, re, tarfile, urllib.request, urllib.parse, collections
+          UA = {"User-Agent": "19-degrees-explore/1.0 (+https://19-degrees.org)"}
+          def get(u, t=300): return urllib.request.urlopen(urllib.request.Request(u, headers=UA), timeout=t).read()
+          BIG = {"carcharhinus leucas": "bull", "galeocerdo cuvier": "tiger", "carcharodon carcharias": "white"}
+          print("## 1. US Animal Telemetry Network (IOOS ERDDAP)\n")
+          E = "https://erddap.ioos.us/erddap"
+          try:
+              rows = list(csv.reader(io.StringIO(get(f"{E}/search/index.csv?page=1&itemsPerPage=2000&searchFor=" + urllib.parse.quote("shark")).decode())))
+              h = rows[0]; it = h.index("Title"); idd = h.index("Dataset ID")
+              sh = [r for r in rows[2:] if r]
+              print(f"{len(sh)} datasets match 'shark'\n")
+              hits = collections.Counter()
+              for r in sh:
+                  t = r[it].lower(); sp = [v for k, v in BIG.items() if k in t or v + " shark" in t]
+                  for s in sp: hits[s] += 1
+              print("Big three in titles:", dict(hits) or "none", "\n")
+              for r in sh[:400]:
+                  t = r[it]
+                  if any(k in t.lower() for k in list(BIG) + ["bull shark", "tiger shark", "white shark"]):
+                      try:
+                          info = get(f"{E}/info/{r[idd]}/index.csv", 60).decode()
+                          tc = {a: v for _, _, a, _, v in csv.reader(io.StringIO(info)) if a in ("time_coverage_start", "time_coverage_end", "geospatial_lat_min", "geospatial_lat_max", "geospatial_lon_min", "geospatial_lon_max", "license")}
+                          temp = "yes" if re.search(r"temperature", info, re.I) else "no"
+                      except Exception as e: tc, temp = {"err": type(e).__name__}, "?"
+                      print(f"- {t} (`{r[idd]}`): {tc.get('time_coverage_start','?')[:10]} to {tc.get('time_coverage_end','?')[:10]}, lat {tc.get('geospatial_lat_min','?')} to {tc.get('geospatial_lat_max','?')}, lon {tc.get('geospatial_lon_min','?')} to {tc.get('geospatial_lon_max','?')}, temperature field: {temp}")
+          except Exception as e: print("ATN search failed:", type(e).__name__, e)
+          print("\n## 2. NOAA Gulf SEAMAP groundfish trawl (NCEI 0147703)\n")
+          try:
+              b = get("https://www.ncei.noaa.gov/archive/archive-management-system/OAS/bin/prd/jquery/accession/download/147703", 900)
+              tf = tarfile.open(fileobj=io.BytesIO(b))
+              names = [m for m in tf.getmembers() if m.isfile()]
+              print(f"{len(names)} files, {len(b)//1_000_000} MB compressed\n")
+              for m in names: print(f"- `{m.name}` ({m.size//1000} kB)")
+              print()
+              for m in names:
+                  if not re.search(r"\.(csv|txt|dat)$", m.name, re.I) or m.size > 400_000_000: continue
+                  txt = tf.extractfile(m).read().decode("latin-1")
+                  head = txt.splitlines()[0][:300] if txt else ""
+                  low = txt.lower()
+                  found = {v: low.count(k) for k, v in BIG.items() if k in low}
+                  extra = {w: low.count(w) for w in ("carcharhin", "galeocerdo", "sphyrna", "temp")}
+                  print(f"**{m.name}**: header `{head}`  \n big three: {found or 'none'}; other counts: {extra}\n")
+          except Exception as e: print("SEAMAP download failed:", type(e).__name__, e)
+          PY
+          cat report.md >> "$GITHUB_STEP_SUMMARY"
