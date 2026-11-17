@@ -19,29 +19,35 @@ jobs:
           BIG = {"carcharhinus leucas": "bull", "galeocerdo cuvier": "tiger", "carcharodon carcharias": "white"}
           print("## 1. US Animal Telemetry Network (IOOS ERDDAP)\n")
           E = "https://erddap.ioos.us/erddap"
+          def search(q):
+              try: return list(csv.reader(io.StringIO(get(f"{E}/search/index.csv?page=1&itemsPerPage=2000&searchFor=" + urllib.parse.quote(q)).decode())))
+              except urllib.error.HTTPError as e: return [] if e.code == 404 else [["error", str(e.code)]]
+          for q in ("Carcharodon carcharias", "Galeocerdo cuvier", "Carcharhinus leucas", "white shark", "tiger shark", "bull shark", "atn shark"):
+              rows = search(q)
+              if not rows: print(f"- search `{q}`: no datasets"); continue
+              if rows[0][0] == "error": print(f"- search `{q}`: error {rows[0][1]}"); continue
+              h = rows[0]; it = h.index("Title"); idd = h.index("Dataset ID"); got = [r for r in rows[2:] if r]
+              print(f"- search `{q}`: {len(got)} datasets")
+              for r in got[:15]: print(f"    - {r[it]} (`{r[idd]}`)")
           try:
-              rows = list(csv.reader(io.StringIO(get(f"{E}/search/index.csv?page=1&itemsPerPage=2000&searchFor=" + urllib.parse.quote("shark")).decode())))
-              h = rows[0]; it = h.index("Title"); idd = h.index("Dataset ID")
-              sh = [r for r in rows[2:] if r]
-              print(f"{len(sh)} datasets match 'shark'\n")
-              hits = collections.Counter()
-              for r in sh:
-                  t = r[it].lower(); sp = [v for k, v in BIG.items() if k in t or v + " shark" in t]
-                  for s in sp: hits[s] += 1
-              print("Big three in titles:", dict(hits) or "none", "\n")
-              for r in sh[:400]:
-                  t = r[it]
-                  if any(k in t.lower() for k in list(BIG) + ["bull shark", "tiger shark", "white shark"]):
-                      try:
-                          info = get(f"{E}/info/{r[idd]}/index.csv", 60).decode()
-                          tc = {a: v for _, _, a, _, v in csv.reader(io.StringIO(info)) if a in ("time_coverage_start", "time_coverage_end", "geospatial_lat_min", "geospatial_lat_max", "geospatial_lon_min", "geospatial_lon_max", "license")}
-                          temp = "yes" if re.search(r"temperature", info, re.I) else "no"
-                      except Exception as e: tc, temp = {"err": type(e).__name__}, "?"
-                      print(f"- {t} (`{r[idd]}`): {tc.get('time_coverage_start','?')[:10]} to {tc.get('time_coverage_end','?')[:10]}, lat {tc.get('geospatial_lat_min','?')} to {tc.get('geospatial_lat_max','?')}, lon {tc.get('geospatial_lon_min','?')} to {tc.get('geospatial_lon_max','?')}, temperature field: {temp}")
-          except Exception as e: print("ATN search failed:", type(e).__name__, e)
+              info = list(csv.reader(io.StringIO(get(f"{E}/info/atn_collection/index.csv", 120).decode())))
+              vars_ = [r[1] for r in info if r and r[0] == "variable"]
+              print("\natn_collection variables:", ", ".join(vars_))
+              tx = [v for v in vars_ if re.search(r"(taxon|scientific|species|common|vernacular)", v, re.I)]
+              for v in tx[:3]:
+                  try:
+                      d = get(f"{E}/tabledap/atn_collection.csv?{v}&distinct()", 300).decode().splitlines()[2:]
+                      sharks = [x for x in d if re.search(r"(shark|carchar|galeocerdo|sphyrna|isurus|prionace|lamna|notorynchus|negaprion)", x, re.I)]
+                      print(f"\n`{v}`: {len(d)} distinct values; shark-like: {sharks[:40]}")
+                  except Exception as e: print(f"`{v}` distinct failed: {type(e).__name__} {e}")
+          except Exception as e: print("atn_collection info failed:", type(e).__name__, e)
           print("\n## 2. NOAA Gulf SEAMAP groundfish trawl (NCEI 0147703)\n")
           try:
-              b = get("https://www.ncei.noaa.gov/archive/archive-management-system/OAS/bin/prd/jquery/accession/download/147703", 900)
+              b = None
+              for n in range(4):
+                  try: b = get("https://www.ncei.noaa.gov/archive/archive-management-system/OAS/bin/prd/jquery/accession/download/147703", 900); break
+                  except Exception as e: print(f"try {n+1}: {type(e).__name__} {e}"); import time; time.sleep(60)
+              if b is None: raise RuntimeError("NCEI unavailable after 4 tries")
               tf = tarfile.open(fileobj=io.BytesIO(b))
               names = [m for m in tf.getmembers() if m.isfile()]
               print(f"{len(names)} files, {len(b)//1_000_000} MB compressed\n")
