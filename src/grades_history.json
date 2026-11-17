@@ -154,6 +154,11 @@
    "date": "2026-11-10",
    "label": "Early result: leans toward it",
    "why": "The main rain test passed, but river flow didn't agree and bite dates are monthly."
+  },
+  {
+   "date": "2026-11-23",
+   "label": "Early result: leans toward it",
+   "why": "C37's drone check (sightings per flight hour after heavy rain) was folded in as a further check. It needs drone flight logs and hasn't been run, so the grade is unchanged."
   }
  ],
  "c16": [
@@ -161,6 +166,11 @@
    "date": "2026-11-10",
    "label": "Early result: leans toward it",
    "why": "Holding the listening stations fixed weakened the trend."
+  },
+  {
+   "date": "2026-11-23",
+   "label": "Early result: leans toward it",
+   "why": "Merged with C2 and retitled \"The bull shark season off NSW is getting longer\". The grade is still set by the leaving-Sydney test; staying longer south of Sydney (former C2) is a first look."
   }
  ],
  "c18": [
