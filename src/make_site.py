@@ -37,7 +37,7 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__))); import tab_pages
 # sitemap and robots.txt, so search engines find every page and tab address
 import datetime as _dt
 _today = _dt.date.today().isoformat()
-_urls = [SITE] + [SITE + _s for _s, _ in tab_pages.TABS] + [SITE + f for f in ("classroom.html", "classroom-primary.html", "classroom-middle.html", "classroom-senior.html", "sources.html", "legal.html", "privacy.html")]
+_urls = [SITE] + [SITE + _s for _s, _ in tab_pages.TABS] + [SITE + f for f in ("classroom.html", "classroom-primary.html", "classroom-middle.html", "classroom-senior.html", "sources.html", "legal.html", "privacy.html", "funders.html")]
 open(os.path.join(out, "sitemap.xml"), "w").write('<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' + "".join(f"  <url><loc>{u}</loc><lastmod>{_today}</lastmod></url>\n" for u in _urls) + "</urlset>\n")
 open(os.path.join(out, "robots.txt"), "w").write(f"User-agent: *\nAllow: /\nSitemap: {SITE}sitemap.xml\n")
 open(os.path.join(out, "CNAME"), "w").write(SITE.split("//")[1].strip("/") + "\n")  # GitHub Pages custom domain
@@ -60,6 +60,28 @@ if os.path.exists(_m404):
 _mp = os.path.join(os.path.dirname(os.path.abspath(__file__)), "make_pages.py")
 if os.path.exists(_mp):
     subprocess.run([sys.executable, "-I", _mp, os.path.join(out, "index.html"), out] + [d + "=" + b for d, b in (("ocean", "ocean-data"), ("imos", "imos-data")) if os.path.isdir(d)], check=True)
+# Funder summary PDF: rebuilt every time from the same index.html as funders.html, so its numbers always match the site
+_ms = os.path.join(os.path.dirname(os.path.abspath(__file__)), "make_summary.py")
+_chrome = shutil.which("google-chrome") or shutil.which("chromium") or shutil.which("chromium-browser")
+if os.path.exists(_ms):
+    _sh = os.path.join(out, "_summary.html"); _pdf = os.path.join(out, "19-degrees-summary.pdf")
+    subprocess.run([sys.executable, "-I", _ms, os.path.join(out, "index.html"), _sh], check=True)
+    if not _chrome: sys.exit("::error::No Chrome to build 19-degrees-summary.pdf; not publishing a PDF with old numbers.")
+    subprocess.run([_chrome, "--headless=new", "--no-sandbox", "--disable-gpu", "--no-pdf-header-footer", "--print-to-pdf=" + _pdf, "file://" + os.path.abspath(_sh)], check=True, timeout=120, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+    os.remove(_sh)
+    _pages = re.findall(rb"/Type\s*/Page[^s]", open(_pdf, "rb").read())
+    if len(_pages) != 1: sys.exit(f"::error::Funder summary PDF is {len(_pages)} pages, not 1.")
+# the funder page and its PDF must show the same numbers as the home page
+_ix = open(os.path.join(out, "index.html"), encoding="utf-8").read()
+_fp = os.path.join(out, "funders.html")
+if os.path.exists(_fp):
+    _fu = open(_fp, encoding="utf-8").read()
+    for _lab, _fl in (("Data sources joined", "Data sources joined"), ("Products checked", "Safety products checked")):
+        _n = re.search(r'<span class="lab">' + _lab + r'</span><span class="big"[^>]*>(\d+)<', _ix).group(1)
+        if f"<b>{_n}</b><span>{_fl}</span>" not in _fu: sys.exit(f"::error::funders.html {_fl} does not match the home page ({_n}).")
+    _d = re.search(r"(\d+) / (\d+)</span> claims with a first look or a result", _ix)
+    if f"{_d.group(1)} of {_d.group(2)} claims have a first look" not in _fu: sys.exit("::error::funders.html claim count does not match the Research page.")
+    print("funder page and PDF: numbers match the home page")
 bad = []
 for root, _, files in os.walk(out):
     for f in files:
