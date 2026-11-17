@@ -1,0 +1,15 @@
+cff-version: 1.2.0
+message: "If you use 19 Degrees, please cite it as below."
+title: "19 Degrees: open evidence on a warming ocean, sharks and people"
+type: software
+authors:
+  - family-names: Erickson
+    given-names: Blake
+license: MIT
+url: "https://19-degrees.org"
+repository-code: "https://github.com/i-am-blake/19-degrees"
+keywords:
+  - sharks
+  - sea surface temperature
+  - climate change
+  - open science
