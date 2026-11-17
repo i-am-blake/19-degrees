@@ -81,12 +81,11 @@ def write(doc, out):
         if keep == "works":  # the product table links to the evidence ladder pages
             import ladder19
             d = d.replace('<div class="wsum" id="wsum" aria-label="Evidence for the products below"></div>',
-                          '<div class="wsum" id="wsum" aria-label="Evidence for the products below"></div>\n    <p class="hcta"><a class="ctabtn" href="/safety-check/">See how far each product\'s testing has got →</a></p>', 1)
+                          '<div class="wsum" id="wsum" aria-label="Evidence for the products below"></div>\n    <p class="hcta"><a class="ctabtn" href="/safety-check/">Compare the evidence for each product →</a></p>', 1)
             for h, gslug, *_ in ladder19.GROUPS:
                 d = d.replace(f'<tr class="pg"><th colspan="5" scope="colgroup">{h}</th></tr>',
-                              f'<tr class="pg"><th colspan="5" scope="colgroup">{h} <a class="pgl" href="/safety-check/{gslug}">See the ladder →</a></th></tr>', 1)
-            d, k = re.subn(r'(<div class="winv">.*?<p class="hcta">.*?)(</p>)', lambda m: m.group(1) + ' <a class="ghbtn" href="/safety-check/">See the evidence ladder</a>' + m.group(2), d, count=1, flags=re.S)
-            if k != 1 or d.count('href="/safety-check/') != 2 + len(ladder19.GROUPS): sys.exit("could not add the evidence ladder links to the Safety page")
+                              f'<tr class="pg"><th colspan="5" scope="colgroup">{h} <a class="pgl" href="/safety-check/{gslug}">See the evidence →</a></th></tr>', 1)
+            if d.count('href="/safety-check/') != 1 + len(ladder19.GROUPS): sys.exit("could not add the evidence ladder links to the Safety page")
         d, n = re.subn(r'<script[^>]*id="n19-data"', lambda m: '<script type="application/json" id="n19-ids">' + json.dumps(ids, separators=(",", ":")) + '</script>\n' + m.group(0), d, count=1)
         if n != 1: sys.exit("page data not found")
         if slug:
