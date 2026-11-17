@@ -191,7 +191,7 @@ WAYS = [
  ("Give once", "Like buying a coffee: quick, any size, and it adds up. Every contribution goes to the research.", KOFI, "Support on Ko-fi →", True),
  ("Give in someone's honor", "Add their name in the Ko-fi message, for an ocean lover, a surfer or a lifeguard.", KOFI, "Give in their honor →", True),
  ("Partner as an organization", "Foundations, councils, universities and companies can fund one of the projects above.", CONTACT, "Talk about a partnership →", False),
- ("Share data", "Agencies and researchers can contribute the data that lets an open claim be tested.", "/research", "How sharing works →", False),
+ ("Share data", "Agencies and researchers can contribute the data that lets an open claim be tested.", "/research#h-data", "How sharing works →", False),
 ]
 def link(u, txt, ext):
     return f'<a href="{u}"' + (' target="_blank" rel="noopener"' if ext else "") + f">{txt}</a>"
