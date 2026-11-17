@@ -30,12 +30,12 @@ mon = daily.groupby([daily.index.year, daily.index.month]).mean()
 autumn = {y: float(np.mean([mon[(y, m)] for m in (3, 4, 5)])) for y in range(2010, int(daily.index.year.max()) + 1) if all((y, m) in mon.index for m in (3, 4, 5))}
 # average autumn cooling rate, °C a day, 1 March to 31 July
 s = smooth[(smooth.index.month >= 3) & (smooth.index.month <= 7) & (smooth.index.year >= 2010)].dropna()
-cool = -stats.linregress(s.index.dayofyear, s.values).slope
+cool = -stats.linregress(s.index.day_of_year, s.values).slope
 
 def detrend(y, x): r = stats.linregress(x, y); return y - (r.intercept + r.slope * x)
 def run(sub):
     last = sub.groupby([sub.t.dt.year.rename("yr"), "animal_id"]).t.max().reset_index()
-    last = last[last.t.dt.month >= 3].copy(); last["doy"] = last.t.dt.dayofyear
+    last = last[last.t.dt.month >= 3].copy(); last["doy"] = last.t.dt.day_of_year
     last["temp"] = smooth.reindex(last.t.dt.normalize()).values
     yr = last.groupby("yr").agg(n=("doy", "size"), doy=("doy", "median")).reset_index()
     yr["autumn"] = yr.yr.map(autumn); yr = yr[(yr.n >= 5) & yr.autumn.notna()]

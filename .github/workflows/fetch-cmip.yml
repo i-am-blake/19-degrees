@@ -30,10 +30,10 @@ permissions:
   contents: write
 jobs:
   cmip:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     timeout-minutes: 60
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
       - name: Extract projections
         run: |
           mkdir -p out

@@ -11,10 +11,10 @@ permissions:
   contents: write
 jobs:
   gauges:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     timeout-minutes: 30
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
       - name: Find gauges and fetch monthly rainfall
         run: |
           mkdir -p meta out

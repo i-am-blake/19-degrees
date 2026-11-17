@@ -37,7 +37,7 @@ R["c2"] = dict(early_min=int(early.sharks.min()), early_max=int(early.sharks.max
 from scipy import stats
 sy = d[(d[lon] > 150) & (d[lat] < -33.6) & (d[lat] > -34.2)].copy(); sy["t"] = sy.t.dt.tz_localize(None)
 sy = sy[(sy.t.dt.month <= 9) & (sy.t.dt.year >= 2010)]
-last = sy.groupby([sy.t.dt.year.rename("yr"), "animal_id"]).t.max().reset_index(); last["doy"] = last.t.dt.dayofyear
+last = sy.groupby([sy.t.dt.year.rename("yr"), "animal_id"]).t.max().reset_index(); last["doy"] = last.t.dt.day_of_year
 lr = stats.linregress(last.yr, last.doy); y1 = int(last.yr.max())
 md = lambda a, b: (pd.Timestamp("2021-01-01") + pd.Timedelta(days=float(last[(last.yr >= a) & (last.yr <= b)].doy.median()) - 1)).strftime("%-d %B")
 R["c16"] = dict(early=md(2010, 2013), recent=md(y1 - 4, y1), recent_from=y1 - 4, recent_to=y1, slope=round(lr.slope, 1), lo=round(lr.slope - 1.96 * lr.stderr, 1), hi=round(lr.slope + 1.96 * lr.stderr, 1),
@@ -55,7 +55,7 @@ yrs = range(2010, y1 + 1); win = {}
 for st, x in dep.groupby("station_name"):
     win[st] = {y for y in yrs if ((x.a <= pd.Timestamp(y, 3, 1)) & (x.b >= pd.Timestamp(y, 8, 31))).any()}  # listening March to August
 def fit(sub):
-    l2 = sub.groupby([sub.t.dt.year.rename("yr"), "animal_id"]).t.max().reset_index(); l2["doy"] = l2.t.dt.dayofyear
+    l2 = sub.groupby([sub.t.dt.year.rename("yr"), "animal_id"]).t.max().reset_index(); l2["doy"] = l2.t.dt.day_of_year
     r = stats.linregress(l2.yr, l2.doy)
     return dict(slope=round(r.slope, 1), lo=round(r.slope - 1.96 * r.stderr, 1), hi=round(r.slope + 1.96 * r.stderr, 1), p=float(r.pvalue), n=int(len(l2)), sharks=int(l2.animal_id.nunique()))
 on = sy[[y in win.get(s, ()) for s, y in zip(sy.station_name, sy.t.dt.year)]]

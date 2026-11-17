@@ -9,10 +9,10 @@ permissions:
 concurrency: { group: site-update, cancel-in-progress: false }
 jobs:
   today:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     timeout-minutes: 10
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
       - name: Read today's readings
         shell: bash
         run: |

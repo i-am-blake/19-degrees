@@ -1,5 +1,5 @@
 name: Check links
-# Opens every outside link on the site and lists any that fail. Runs when started by hand and once a week.
+# Opens every outside link on the site once a week. Fails (and GitHub emails the owner) only when a page is gone; sites that block checkers are listed, not failed.
 on:
   workflow_dispatch:
   schedule:
@@ -8,10 +8,10 @@ permissions:
   contents: read
 jobs:
   links:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     timeout-minutes: 20
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
       - name: Check every outside link
         run: |
           python3 - <<'PY'
@@ -33,9 +33,16 @@ jobs:
                       if method == "GET": return u, type(e).__name__
               return u, "?"
           with cf.ThreadPoolExecutor(12) as ex: res = list(ex.map(check, urls))
-          bad = [(u, s) for u, s in res if not (isinstance(s, int) and s < 400)]
-          print(f"{len(urls)} links checked, {len(bad)} need a look")
-          for u, s in bad: print(f"::warning title=Link needs a look::{s} {u}")
-          open("summary.md", "w").write(f"### {len(urls)} links checked, {len(bad)} need a look\n\n" + "".join(f"- `{s}` {u}\n" for u, s in bad))
+          # Gone = the site says the page doesn't exist (404/410) or the address no longer resolves. These fail the run so GitHub emails the owner.
+          # Blocked = the site refuses automated checks (403, 429, timeouts). Those pages usually work in a browser, so they're listed, not failed.
+          gone = [(u, s) for u, s in res if s in (404, 410) or s == "URLError"]
+          blocked = [(u, s) for u, s in res if (u, s) not in gone and not (isinstance(s, int) and s < 400)]
+          print(f"{len(urls)} links checked: {len(gone)} gone, {len(blocked)} blocked by the site")
+          for u, s in gone: print(f"::error title=Dead link::{s} {u}")
+          out = f"### {len(urls)} links checked\n\n**Gone ({len(gone)})**, fix or replace:\n\n" + ("".join(f"- `{s}` {u}\n" for u, s in gone) or "- none\n")
+          out += f"\n**Blocked by the site ({len(blocked)})**, usually fine in a browser:\n\n" + ("".join(f"- `{s}` {u}\n" for u, s in blocked) or "- none\n")
+          open("summary.md", "w").write(out)
+          open("gone.txt", "w").write(str(len(gone)))
           PY
           cat summary.md >> "$GITHUB_STEP_SUMMARY"
+          [ "$(cat gone.txt)" = "0" ] || { echo "::error::Dead links found, see the run summary"; exit 1; }
