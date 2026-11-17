@@ -201,8 +201,10 @@ h2{font-family:var(--f-display);font-weight:700;font-size:clamp(26px,4.4vw,44px)
 /* one text pattern under every separator:
    kicker, heading, intro (.sub), controls (.controls), figure, legend, notes (.note) */
 .note{color:var(--muted);margin:0;font-size:14px;line-height:1.55}
-.attn{margin:34px 0 26px;display:grid;gap:10px}.attlead{margin:0;font-size:18px;line-height:1.5;max-width:46em}.attfig{margin:0;max-width:760px}
-#attChart{width:100%;height:auto;display:block;overflow:visible}#attChart text{font-family:var(--f-data);font-size:11px;fill:var(--muted)}#attChart .lab{font-size:13px;font-weight:500}
+.attn{margin:34px 0 26px;display:grid;gap:14px;max-width:760px}.attlead{margin:0;font-size:18px;line-height:1.5}.attlead b{color:var(--warm);font-weight:600}
+.attrow{border-top:1px solid var(--rule);padding-top:12px}.attrow h4{margin:0;font:700 17px/1.3 var(--f-body)}.attrow .sub{margin:2px 0 6px;color:var(--muted);font-size:13px}
+.attrow svg{width:100%;height:auto;display:block}.attrow text{font-family:var(--f-data);font-size:11px;fill:var(--muted)}.attrow text.pk,.attrow text.pl{fill:var(--warm)}.attrow text.pl{font-size:12px}
+@media (max-width:600px){.attrow text{font-size:17px}.attrow text.pl{font-size:18px}}
 
 .controls{display:flex;flex-wrap:wrap;gap:8px 18px;align-items:center}
 .controls .coastsw,.controls .picker{margin:0}
@@ -1244,8 +1246,7 @@ body:has(#panel-students:not([hidden])) .depth{display:none}
     <section class="attn" id="attention" aria-labelledby="h-attn" hidden>
       <h3 class="blockh" id="h-attn">Attention vs. reality</h3>
       <p class="attlead" id="attLead"></p>
-      <figure class="attfig"><svg id="attChart" viewBox="0 0 640 270" role="img" aria-labelledby="attDesc"><desc id="attDesc"></desc></svg>
-        <figcaption class="note" id="attCap"></figcaption></figure>
+      <div id="attRows"></div>
       <p class="note" id="attNote"></p>
     </section>
     <div class="winv"><h3>The evidence is still incomplete.</h3><p>Help independently test the next generation of shark safety technologies, and make what is found available to everyone.</p><p class="hcta"><a class="ctabtn donatelink" data-from="works" href="https://ko-fi.com/19degrees" target="_blank" rel="noopener">Support independent research →</a> <a class="ghbtn" href="#h-agenda" data-tab="research">See the safety claims being tested</a></p></div>
@@ -2610,24 +2611,21 @@ try{const I=D.imos; if(I){const f=n=>n.toLocaleString("en-US"), MO=["January","F
 <script>
 /* Attention vs reality panel on Safety (attention19.py writes attention.json; build19.py adds it as D.attention) */
 try{const A=D.attention, sec=document.getElementById("attention");
-  if(A&&sec&&A.views_idx&&A.au_idx&&A.hi_idx){
-    const ML=["January","February","March","April","May","June","July","August","September","October","November","December"], MS=ML.map(m=>m[0]);
-    const ym=s=>`${ML[+s.slice(4)-1].slice(0,3)} ${s.slice(0,4)}`, n=x=>x.toLocaleString("en-US");
-    document.getElementById("attLead").textContent=`Interest in “shark attack” on Wikipedia peaks every ${ML[A.peak-1]}, at ${A.ratio} times its ${ML[A.low-1]} low. Bites don't follow it: Australia's peak in ${ML[A.au_peak-1]}, Hawaii's in ${ML[A.hi_peak-1]}.`;
-    document.getElementById("attNote").textContent=`Month by month since ${ym(A.first)}, Wikipedia views and Australian bites barely move together (correlation ${A.r_au.toFixed(2)}, where 0 is no link and 1 is lockstep). Interest rises with the northern summer, when Shark Week airs. Most English Wikipedia readers are in the US and UK, so this shows when people look, not where the risk is.`;
-    document.getElementById("attCap").textContent=`Each line is a calendar month as a percent of its own monthly average (100 = an average month). Views: English Wikipedia “Shark attack” article, human readers, ${ym(A.first)} to ${ym(A.last)} (Wikimedia pageviews, CC0). Australia: ${n(A.au_n)} unprovoked bites over the same months (Australian Shark-Incident Database). Hawaii: ${n(A.hi_n)} bites, ${A.hi_first} to ${A.hi_last} (Hawaii DLNR).`;
-    const S=[{k:"Wikipedia",v:A.views_idx,c:"var(--warm)",w:3},{k:"Australia",v:A.au_idx,c:"var(--ink)",w:2},{k:"Hawaii",v:A.hi_idx,c:"var(--cold)",w:2}];
-    const W=640,H=270,L=40,R=96,T=12,B=28, mx=Math.max(200,Math.ceil(Math.max(...S.flatMap(x=>x.v))/50)*50);
-    const X=i=>L+i*(W-L-R)/11, Y=v=>T+(H-T-B)*(1-v/mx);
-    let g="";
-    for(let t=0;t<=mx;t+=100) g+=`<line x1="${L}" x2="${W-R}" y1="${Y(t)}" y2="${Y(t)}" stroke="var(--rule)" stroke-width="1" ${t===100?'stroke-dasharray="4 4"':''}/><text x="${L-6}" y="${Y(t)+4}" text-anchor="end">${t}</text>`;
-    MS.forEach((m,i)=>g+=`<text x="${X(i)}" y="${H-8}" text-anchor="middle">${m}</text>`);
-    const ends=S.map(x=>({k:x.k,c:x.c,y:Y(x.v[11])})).sort((a,b)=>a.y-b.y); for(let i=1;i<ends.length;i++) if(ends[i].y-ends[i-1].y<18) ends[i].y=ends[i-1].y+18;
-    S.forEach(x=>{g+=`<polyline fill="none" stroke="${x.c}" stroke-width="${x.w}" stroke-linejoin="round" points="${x.v.map((v,i)=>X(i)+","+Y(v)).join(" ")}"/>`;
-      x.v.forEach((v,i)=>g+=`<circle cx="${X(i)}" cy="${Y(v)}" r="4" fill="${x.c}" stroke="var(--deep)" stroke-width="2"><title>${x.k==="Wikipedia"?"Wikipedia views":x.k+" bites"}, ${ML[i]}: ${v}% of an average month</title></circle>`);});
-    ends.forEach(e=>g+=`<text class="lab" x="${W-R+10}" y="${e.y+4}" style="fill:${e.c}">${e.k}</text>`);
-    const svg=document.getElementById("attChart"); svg.insertAdjacentHTML("beforeend",g);
-    document.getElementById("attDesc").textContent=`Line chart by calendar month. Wikipedia views peak in ${ML[A.peak-1]}; Australian bites peak in ${ML[A.au_peak-1]}; Hawaii bites peak in ${ML[A.hi_peak-1]}.`;
+  if(A&&sec&&A.views_month&&A.au_idx&&A.hi_idx){
+    const ML=["January","February","March","April","May","June","July","August","September","October","November","December"], MS="JFMAMJJASOND";
+    const yr=s=>s.slice(0,4), pct=xs=>{const t=xs.reduce((a,b)=>a+b,0);return xs.map(x=>100*x/t)}, n=x=>x.toLocaleString("en-US");
+    const pk=xs=>xs.indexOf(Math.max(...xs));
+    const rows=[{t:"When people read about shark attacks",s:`Monthly views of the English Wikipedia article “Shark attack”, ${yr(A.first)}–${yr(A.last)} average`,v:A.views_month,f:x=>`${Math.round(x/1000)}k`,d:"views"},
+      {t:"When bites happen: Australia",s:`Share of the year's ${n(A.au_n)} unprovoked bites, ${yr(A.first)}–${yr(A.last)}`,v:pct(A.au_idx),f:x=>`${Math.round(x)}%`,d:"of the year's bites"},
+      {t:"When bites happen: Hawaii",s:`Share of the year's ${n(A.hi_n)} bites, ${A.hi_first}–${A.hi_last}`,v:pct(A.hi_idx),f:x=>`${Math.round(x)}%`,d:"of the year's bites"}];
+    const bars=r=>{const W=600,H=120,bw=W/12,mx=Math.max(...r.v),p=pk(r.v);let g="";
+      r.v.forEach((x,i)=>{const h=(H-44)*x/mx,X=i*bw+4;g+=`<rect x="${X}" y="${H-18-h}" width="${bw-8}" height="${h}" rx="2" fill="${i===p?"var(--warm)":"#2E5C7A"}"><title>${ML[i]}: ${r.f(x)} ${r.d}</title></rect><text x="${X+(bw-8)/2}" y="${H-4}" text-anchor="middle"${i===p?' class="pk"':''}>${MS[i]}</text>`;});
+      const X=p*bw+4+(bw-8)/2, anc=p<2?"start":p>9?"end":"middle", x0=p<2?p*bw+4:p>9?(p+1)*bw-4:X;
+      g+=`<text x="${x0}" y="12" text-anchor="${anc}" class="pl">Peak: ${ML[p].slice(0,3)} · ${r.f(mx)}</text>`;
+      return `<svg viewBox="0 -14 600 138" role="img" aria-label="${r.t}: highest in ${ML[p]} (${r.f(mx)})">${g}</svg>`;};
+    document.getElementById("attRows").innerHTML=rows.map(r=>`<div class="attrow"><h4>${r.t}</h4><p class="sub">${r.s}</p>${bars(r)}</div>`).join("");
+    document.getElementById("attLead").innerHTML=`People read about shark attacks most in <b>${ML[pk(rows[0].v)]}</b>. Bites peak at other times: <b>${ML[pk(rows[1].v)]}</b> in Australia, <b>${ML[pk(rows[2].v)]}</b> in Hawaii.`;
+    document.getElementById("attNote").innerHTML=`Read down any column to compare the same month. Most English Wikipedia readers are in the US and UK, so the top row shows when people look, not where the risk is. Sources: Wikimedia pageviews (human readers, CC0); Australian Shark-Incident Database; Hawaii DLNR.`;
     sec.hidden=false;}
 }catch(e){console.error(e)}
 /* claim C19: bites in unusually warm months (heat19.py writes heat.json; build19.py adds it as D.heat) */
