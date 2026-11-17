@@ -178,6 +178,8 @@ FUND_CSS = """<style>.hero-cta{display:flex;flex-wrap:wrap;gap:12px;margin:24px 
 .cards .tag{font:500 11px/1.4 var(--f-data);letter-spacing:.1em;text-transform:uppercase;color:var(--warm)}
 .rules{list-style:none;padding:0;display:grid;gap:10px}.rules li{border-left:3px solid var(--warm);padding:4px 0 4px 14px}
 .goal{margin:28px 0 0}.goal .track{height:14px;background:rgba(232,241,242,.12);margin:8px 0 6px}.goal .fill{height:100%;background:var(--warm)}.goal p{margin:0;font-size:15px}.goal b{color:var(--ink)}
+.tiers{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,220px),1fr));gap:12px;margin-top:12px}.tiers div{border-top:3px solid var(--warm);background:rgba(232,241,242,.04);padding:16px}.tiers h3{font:700 17px/1.3 var(--f-display);margin:0 0 6px;color:var(--ink)}.tiers p{margin:0;font-size:15px}
+.story{display:grid;gap:4px;border-left:3px solid var(--cold);padding:4px 0 4px 18px;margin-top:12px}.story p{margin:0}
 .status{border:1px solid var(--rule);padding:18px 20px;margin-top:12px}.status p{margin:0 0 8px}.status p:last-child{margin:0}</style>"""
 OPPS = [
  ("Fund a claim", f"{n_wait} of the {n_claims} claims are still waiting for data or a test. Fund one, and it gets tested in the open, with the method set before the result is known."),
@@ -200,10 +202,15 @@ fund_body = FUND_CSS + f"""
   <div class="stats"><div><b>Open</b><span>Code, data and methods</span></div><div><b>{n_sources}</b><span>Data sources joined</span></div><div><b>{n_products}</b><span>Safety products checked</span></div><div><b>Weekly</b><span>Data updates</span></div></div>
   <h2>Why it matters now</h2>
   <p>Shark and ocean-temperature research is spread across agencies, universities and countries, in datasets that rarely meet. As the water warms, the places and seasons where people and sharks overlap are changing faster than any one study can follow. 19 Degrees joins the evidence in one open place: what it says, what it doesn't say yet, and what data is missing. All code is open source (MIT) and all content can be reused with credit (CC BY 4.0).</p>
+  <h2>Why this exists</h2>
+  <div class="story"><p>Blake Erickson is a freediver and surfer who has been obsessed with sharks since he was a little kid. Years in the water taught him how much the ocean gives, and how much it needs looking after. He started 19 Degrees to give something back: an honest, open picture of how a warming sea is changing life for the people who use it and the sharks that live in it.</p></div>
   <h2>What you can fund</h2>
   <div class="cards">""" + "".join(f'<div><span class="tag">Named project</span><h3>{h}</h3><p>{d}</p>{link(CONTACT, "Fund this →", False)}</div>' for h, d in OPPS) + """</div>
   <h2>Ways to give</h2>
   <div class="cards">""" + "".join(f"<div><h3>{h}</h3><p>{d}</p>{link(u, l, e)}</div>" for h, d, u, l, e in WAYS) + """</div>
+  <h2>How funders are thanked</h2>
+  <div class="tiers"><div><h3>Supporter</h3><p>Any gift. Thanked by name on this page, if you choose.</p></div><div><h3>Claim sponsor</h3><p>Fund a claim or a dataset. Credited on that claim and in its result.</p></div><div><h3>Project partner</h3><p>Fund a named project. Listed here as a partner, with a report when the work is done.</p></div></div>
+  <p>Thanks never buys influence. Every level follows the independence policy below.</p>
   <h2>Independence policy</h2>
   <ul class="rules">
     <li><b>Money never touches results.</b> Funders get no say over methods, results, grades or wording. A result that goes against a funder's interest is published the same way as any other.</li>
@@ -211,8 +218,6 @@ fund_body = FUND_CSS + f"""
     <li><b>Funding is public.</b> Funders of named projects are listed with what their money paid for.</li>
     <li><b>Neutral on contested measures.</b> 19 Degrees reports what the evidence shows on nets, drumlines and other measures, and takes no side.</li>
   </ul>
-  <h2>What funders get back</h2>
-  <p>Funders of a named project get a short report when the work is done: what was tested, what was found, and where the data and code live. Results are published on the site for everyone, with credit to the funder.</p>
   <h2>Status and transparency</h2>
   <div class="status">
     <p>19 Degrees is an independent project. It is not a registered charity, so contributions are not tax-deductible.</p>
