@@ -12,6 +12,8 @@ jobs:
     timeout-minutes: 45
     steps:
       - uses: actions/checkout@v5
+      - uses: actions/setup-python@v6
+        with: { python-version: "3.12" }
       - name: Look
         run: |
           pip install -q -r src/requirements.txt numpy pandas openpyxl
