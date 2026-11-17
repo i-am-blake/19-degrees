@@ -132,7 +132,7 @@ def build(T, out, write, page, relink, esc, text, BUILT, long_date):
   <ul><li>Only products with a published test are listed. Products sold without any test we could find are left out.</li>
   <li>Trials use baits, boards and decoys, not people, and test a few species in a few places. Results may not carry over to other sharks, water or behavior.</li>
   <li>This is a guide to the evidence, not a safety rating or an endorsement or criticism of any maker. Follow lifesavers, beach signs and local authorities.</li></ul>
-  <p class="meta">Updated {long_date(BUILT)} · <a href="/safety#h-products">All products on the Safety page</a> · <a href="/questions/do-shark-deterrents-work">Do shark deterrents work?</a></p>
+  <p class="meta">Updated {long_date(BUILT)} · <a href="/safety#h-products">All products on the Safety page</a></p>
 '''
         desc = f"{heading}: {len(ps)} shark-safety products checked against published independent tests and placed on an evidence ladder from lab test to real-world protection. " + (tops[0] if tops else "")
         written.append(write(f"safety-check/{slug}", page(f"safety-check/{slug}", title, "Safety · evidence ladder", body, h1=title.split(":")[0],

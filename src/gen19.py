@@ -222,8 +222,11 @@ import ladder19
 WRITTEN += ladder19.build(T, out, write, page, relink, esc, text, BUILT, long_date)
 
 # ---- /questions/<slug> --------------------------------------------------------------------------------------------------
-import questions19
-WRITTEN += questions19.build(T, D, CLAIMS, out, write, page, relink, esc, text, BUILT, long_date, ym)
+# Paused until the answers' wording is reviewed: set QUESTIONS = True to build them again
+QUESTIONS = False
+if QUESTIONS:
+    import questions19
+    WRITTEN += questions19.build(T, D, CLAIMS, out, write, page, relink, esc, text, BUILT, long_date, ym)
 
 json.dump(sorted(WRITTEN), open(os.path.join(out, ".generated.json"), "w"))
-print(f"generated pages: {len(WRITTEN)} (data, changes, {len(CLAIMS)} claims, safety-check, questions)")
+print(f"generated pages: {len(WRITTEN)} (data, changes, {len(CLAIMS)} claims, safety-check" + (", questions" if QUESTIONS else "") + ")")
