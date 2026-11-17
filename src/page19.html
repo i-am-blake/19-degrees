@@ -1767,6 +1767,8 @@ if(window.N19_CFG.GOATCOUNTER){try{const g=document.createElement("script");g.as
 
 <script>
 const D=JSON.parse(document.getElementById("n19-data").textContent);
+/* each tab is its own page on the live site: an element from another tab comes back as a detached stand-in, so shared scripts carry on */
+const $id=i=>document.getElementById(i)||document.createElement("div");
 const css=n=>getComputedStyle(document.documentElement).getPropertyValue(n).trim();
 const fmt=n=>n.toLocaleString("en-US");
 const toF=c=>Math.round(c*9/5+32);
@@ -1789,32 +1791,32 @@ function drawStripes(g,W,H,ys){g.replaceChildren();const lo=Math.min(...ys.map(r
 /* headline text from data */
 try{
   const R=D.ratio, ratio=Math.round(R.drown/R.shark);
-  document.getElementById("ratioN").textContent=ratio;
-  document.getElementById("lgD").textContent=fmt(R.drown)+" coastal drownings";
-  document.getElementById("lgS").textContent=R.shark+" fatal shark bites";
+  $id("ratioN").textContent=ratio;
+  $id("lgD").textContent=fmt(R.drown)+" coastal drownings";
+  $id("lgS").textContent=R.shark+" fatal shark bites";
   const w=R.window, mm=s=>MON[+s.slice(5)-1]+" "+s.slice(0,4);
-  document.getElementById("ratioSub").textContent=mm(w.start)+" to "+mm(w.end)+". Each dot is one life.";
-  document.getElementById("dots").setAttribute("aria-label",`Dot chart: ${fmt(R.drown)} coastal drownings and ${R.shark} fatal shark bites, ${mm(w.start)} to ${mm(w.end)}.`);
+  $id("ratioSub").textContent=mm(w.start)+" to "+mm(w.end)+". Each dot is one life.";
+  $id("dots").setAttribute("aria-label",`Dot chart: ${fmt(R.drown)} coastal drownings and ${R.shark} fatal shark bites, ${mm(w.start)} to ${mm(w.end)}.`);
   const B0=D.species.bull;
-  document.getElementById("statement").innerHTML=B0.below===0
+  $id("statement").innerHTML=B0.below===0
     ?`${fmt(B0.n)} bull shark bites. Not one below <span class="w">19°C</span>.`
     :`${fmt(B0.n)} bull shark bites. Only ${B0.below} below <span class="w">19°C</span>.`;
   const words=n=>["zero","one","two","three","four","five","six","seven","eight","nine","ten","eleven","twelve"][Math.round(n)]||Math.round(n);
-  document.getElementById("lede").textContent=`Sydney's sea now stays at 19°C (66°F) or warmer ${words(SYD.recent)} months a year. A century ago it was ${words(SYD.base)}. The warm season keeps getting longer, and tagged bull sharks are staying longer with it.`;
-  {const y=document.getElementById("yNow"); if(y) y.textContent=SYD.last_year;}
+  $id("lede").textContent=`Sydney's sea now stays at 19°C (66°F) or warmer ${words(SYD.recent)} months a year. A century ago it was ${words(SYD.base)}. The warm season keeps getting longer, and tagged bull sharks are staying longer with it.`;
+  {const y=$id("yNow"); if(y) y.textContent=SYD.last_year;}
   try{
     const R2=D.ratio, B1=D.species.bull, BM=D.bite_months, eN=BM.counts.east[BM.counts.east.length-1], eA=BM.counts.east[0], s4=r=>r.reduce((t,x)=>t+x,0), au=r=>r[2]+r[3]+r[4]+r[5]+r[6]+r[7];
     const NSo=D.bull_decades.nsw_south, hb=Object.values(NSo).reduce((t,v)=>t+v[1],0), tot=Object.values(NSo).reduce((t,v)=>t+v[0],0), A=D.anomaly&&D.anomaly.all;
-    (document.getElementById("tk1")||{}).textContent=`About ${Math.round(R2.drown/R2.shark)} people drown on Australia's coast for every shark death. Swim between the red and yellow flags.`;
-    (document.getElementById("tk2")||{}).textContent=`Not one of ${B1.n} bull shark bites since 1900 happened in water below 19°C. Tiger sharks almost the same: ${D.species.tiger.below} of ${D.species.tiger.n}.`;
-    (document.getElementById("tk3")||{}).textContent=`Sydney's sea is at 19°C or more ${SYD.recent.toFixed(1)} months a year, up from ${SYD.base.toFixed(1)}. South of Port Macquarie, ${au(eN)} of ${s4(eN)} bull shark bites since 2000 came in autumn or winter (March to August), against ${au(eA)} of ${s4(eA)} before 1960.`;
-    {const O=D.bull_open.aus.eras, f=O[0], l=O[O.length-1]; (document.getElementById("tk4")||{}).textContent=`Before 1960, ${f[1]} of ${f[0]} bull shark bites in Australia were in coastal waters; the rest were in estuaries, harbors and rivers. Since 2015, ${l[1]} of ${l[0]} have been in coastal waters. Rivers and harbors after rain are still risky, but so now are nearby beaches.`;}
-    (document.getElementById("tk5")||{}).textContent=A?`Months that were unusually warm for their time of year had about the same number of bites as unusually cool ones (ratio ${A.ratio.toFixed(2)}, range ${A.lo.toFixed(2)} to ${A.hi.toFixed(2)}). What has changed is how long the warm season lasts.`:"";
-    const Zt=D.zones; if(Zt) (document.getElementById("tk7")||{}).textContent=`The stretch of coast where the sea is 19°C or more for half the year now reaches about ${Math.round((Zt.line[0]-Zt.line[Zt.line.length-1])*111)} km further south than in ${Zt.eras[0][0]}–${String(Zt.eras[0][1]).slice(2)}, from near Jervis Bay to near Eden. At the pace since 1980 it passes the Victorian border by about 2050.`;
-    const w=D.wa_spike; if(w) (document.getElementById("tk6")||{}).textContent=`Bull shark bites were close to unknown in the west: ${w.pre} from 1900 to 2019. There have been ${w.post} since 2020, and bull sharks went from ${Math.round(w.bull_0019/w.all_0019*100)}% of the state's shark bites to ${Math.round(w.post/w.all_post*100)}%. That is very unlikely to be chance.`;
+    ($id("tk1")||{}).textContent=`About ${Math.round(R2.drown/R2.shark)} people drown on Australia's coast for every shark death. Swim between the red and yellow flags.`;
+    ($id("tk2")||{}).textContent=`Not one of ${B1.n} bull shark bites since 1900 happened in water below 19°C. Tiger sharks almost the same: ${D.species.tiger.below} of ${D.species.tiger.n}.`;
+    ($id("tk3")||{}).textContent=`Sydney's sea is at 19°C or more ${SYD.recent.toFixed(1)} months a year, up from ${SYD.base.toFixed(1)}. South of Port Macquarie, ${au(eN)} of ${s4(eN)} bull shark bites since 2000 came in autumn or winter (March to August), against ${au(eA)} of ${s4(eA)} before 1960.`;
+    {const O=D.bull_open.aus.eras, f=O[0], l=O[O.length-1]; ($id("tk4")||{}).textContent=`Before 1960, ${f[1]} of ${f[0]} bull shark bites in Australia were in coastal waters; the rest were in estuaries, harbors and rivers. Since 2015, ${l[1]} of ${l[0]} have been in coastal waters. Rivers and harbors after rain are still risky, but so now are nearby beaches.`;}
+    ($id("tk5")||{}).textContent=A?`Months that were unusually warm for their time of year had about the same number of bites as unusually cool ones (ratio ${A.ratio.toFixed(2)}, range ${A.lo.toFixed(2)} to ${A.hi.toFixed(2)}). What has changed is how long the warm season lasts.`:"";
+    const Zt=D.zones; if(Zt) ($id("tk7")||{}).textContent=`The stretch of coast where the sea is 19°C or more for half the year now reaches about ${Math.round((Zt.line[0]-Zt.line[Zt.line.length-1])*111)} km further south than in ${Zt.eras[0][0]}–${String(Zt.eras[0][1]).slice(2)}, from near Jervis Bay to near Eden. At the pace since 1980 it passes the Victorian border by about 2050.`;
+    const w=D.wa_spike; if(w) ($id("tk6")||{}).textContent=`Bull shark bites were close to unknown in the west: ${w.pre} from 1900 to 2019. There have been ${w.post} since 2020, and bull sharks went from ${Math.round(w.bull_0019/w.all_0019*100)}% of the state's shark bites to ${Math.round(w.post/w.all_post*100)}%. That is very unlikely to be chance.`;
   }catch(e){console.error(e)}
   const W=D.species.white;
-  (document.getElementById("whiteNote")||{}).textContent=`${W.below} of ${W.n} white shark bites since 1900 were in water below 19°C. The 19° line tells you nothing about them.`;
+  ($id("whiteNote")||{}).textContent=`${W.below} of ${W.n} white shark bites since 1900 were in water below 19°C. The 19° line tells you nothing about them.`;
 }catch(e){console.error(e)}
 </script>
 
@@ -1934,32 +1936,32 @@ try{
       <p class="dsrc">A question becomes a claim once you can say what data would answer it. Good questions can become new claims on the Research page.</p></div>
       <div class="dteach"><span class="dk">Grades, same as Research</span><div class="dgr"><span class="cstat sup">Supported</span><span class="cstat early">Leans yes</span><span class="cstat unc">Unclear</span><span class="cstat look">First look</span><span class="cstat ruled">Ruled out</span></div>
       <b>${SH.senior[1]}</b><p>${SH.senior[2]}</p><a class="ctabtn" href="${SH.senior[0]}" target="_blank" rel="noopener">Open the classroom sheet →</a></div>`};
-  const K=["discover","investigate","contribute"], tabs=K.map(k=>document.getElementById("door-"+k)), pn=document.getElementById("doorpanel");
+  const K=["discover","investigate","contribute"], tabs=K.map(k=>$id("door-"+k)), pn=$id("doorpanel");
   const setDoorHash=k=>{try{history.replaceState(null,"",location.pathname+location.search+"#"+k);}catch(e){}};
-  function open(i,f,keep){if(!keep&&document.getElementById("panel-students")&&!document.getElementById("panel-students").hidden)setDoorHash(K[i]);tabs.forEach((t,j)=>{t.setAttribute("aria-selected",j===i?"true":"false");t.tabIndex=j===i?0:-1;});pn.setAttribute("aria-labelledby",tabs[i].id);pn.innerHTML=DOOR[K[i]]();if(f)tabs[i].focus();wire();}
+  function open(i,f,keep){if(!keep&&$id("panel-students")&&!$id("panel-students").hidden)setDoorHash(K[i]);tabs.forEach((t,j)=>{t.setAttribute("aria-selected",j===i?"true":"false");t.tabIndex=j===i?0:-1;});pn.setAttribute("aria-labelledby",tabs[i].id);pn.innerHTML=DOOR[K[i]]();if(f)tabs[i].focus();wire();}
   function wire(){
     pn.querySelectorAll(".dmonths button").forEach(b=>b.addEventListener("click",()=>{pn.querySelectorAll(".dmonths button").forEach(x=>x.setAttribute("aria-pressed",x===b?"true":"false"));
-      const m=+b.dataset.m, t=SY.last_temps[m], n=document.getElementById("dnote");
+      const m=+b.dataset.m, t=SY.last_temps[m], n=$id("dnote");
       n.textContent=m===close[0]?`Yes! ${MF[m]}: ${t.toFixed(1)}°C, ${t>=19?"just above":"just below"} the line.`:`${MF[m]} was ${t.toFixed(1)}°C. Try a ${t>close[1]?"colder":"warmer"} one.`;}));
     const cols=[...pn.querySelectorAll(".dcol")];
     if(cols.length){const cat=v=>v>=.5?2:v>0?1:0, CH=ML.map((m,i)=>cat(R0.share[i])!==cat(R1.share[i])), yr=(r,m)=>`${Math.round(r.share[m]*r.years)} of ${r.years}`, list=a=>a.length<2?a.join(""):a.slice(0,-1).join(", ")+" and "+a[a.length-1];
       cols.forEach(b=>b.addEventListener("click",()=>{const m=+b.dataset.m,on=b.getAttribute("aria-pressed")!=="true";b.setAttribute("aria-pressed",on?"true":"false");pn.querySelectorAll(".dcol").forEach(x=>x.classList.remove("ok","miss","extra"));
-        document.getElementById("dmon").textContent=`${MF[m]}: 19°C or warmer in ${yr(R0,m)} years in the ${dec(R0)}, and ${yr(R1,m)} years in the ${dec(R1)}.`+(on?" Marked as changed.":" Unmarked.");}));
-      document.getElementById("dcheck").addEventListener("click",()=>{const pick=cols.map(b=>b.getAttribute("aria-pressed")==="true"),hit=[],miss=[],extra=[];
+        $id("dmon").textContent=`${MF[m]}: 19°C or warmer in ${yr(R0,m)} years in the ${dec(R0)}, and ${yr(R1,m)} years in the ${dec(R1)}.`+(on?" Marked as changed.":" Unmarked.");}));
+      $id("dcheck").addEventListener("click",()=>{const pick=cols.map(b=>b.getAttribute("aria-pressed")==="true"),hit=[],miss=[],extra=[];
         cols.forEach((b,i)=>{b.classList.remove("ok","miss","extra");if(CH[i]&&pick[i]){hit.push(MF[i]);b.classList.add("ok");}else if(CH[i]){miss.push(MF[i]);b.classList.add("miss");}else if(pick[i]){extra.push(MF[i]);b.classList.add("extra");}});
         const n=CH.filter(Boolean).length;let t=hit.length===n&&!extra.length?`Yes! All ${n}: ${list(hit)}.`:`You found ${hit.length} of ${n}.`+(miss.length?` Also changed: ${list(miss)}.`:"")+(extra.length?` ${list(extra)} ${extra.length===1?"looks":"look"} the same in both rows.`:"");
-        document.getElementById("dmon").textContent=t+(hit.length===n&&!extra.length?"":" Green outlines mark the months that changed (dashed: missed); red marks a month that stayed the same.");});}
-    const sb=document.getElementById("dqsend"); if(sb) sb.addEventListener("click",()=>{const q=document.getElementById("dq").value.trim(), f=document.getElementById("cform");if(!f)return;
+        $id("dmon").textContent=t+(hit.length===n&&!extra.length?"":" Green outlines mark the months that changed (dashed: missed); red marks a month that stayed the same.");});}
+    const sb=$id("dqsend"); if(sb) sb.addEventListener("click",()=>{const q=$id("dq").value.trim(), f=$id("cform");if(!f)return;
       const tp=f.elements.topic; if(tp)[...tp.options].forEach(o=>{if(o.text==="Using it in a class")tp.value=o.value||o.text;});
       if(q) f.elements.msg.value="Our class's question: "+q;
-      document.getElementById("contact").scrollIntoView({behavior:matchMedia("(prefers-reduced-motion: reduce)").matches?"auto":"smooth"}); setTimeout(()=>f.elements.name.focus({preventScroll:true}),400);});
+      $id("contact").scrollIntoView({behavior:matchMedia("(prefers-reduced-motion: reduce)").matches?"auto":"smooth"}); setTimeout(()=>f.elements.name.focus({preventScroll:true}),400);});
   }
   tabs.forEach((t,i)=>{t.addEventListener("click",()=>open(i));t.addEventListener("keydown",e=>{let j=null;if(e.key==="ArrowRight"||e.key==="ArrowDown")j=(i+1)%3;else if(e.key==="ArrowLeft"||e.key==="ArrowUp")j=(i+2)%3;else if(e.key==="Home")j=0;else if(e.key==="End")j=2;if(j!=null){e.preventDefault();open(j,true);}});});
   open(0,false,true);
   /* a link to a door (/schools#investigate) opens the Schools tab on that door */
   const fromDoor=()=>{let h="";try{h=(location.hash||"").slice(1);}catch(e){}const i=K.indexOf(h);if(i<0)return;
-    const st=document.getElementById("tab-students");if(st&&st.getAttribute("aria-selected")!=="true"){st.click();setDoorHash(K[i]);}
-    open(i,false,true);setTimeout(()=>document.getElementById("doors").scrollIntoView(),0);};
+    const st=$id("tab-students");if(st&&st.getAttribute("aria-selected")!=="true"){st.click();setDoorHash(K[i]);}
+    open(i,false,true);setTimeout(()=>$id("doors").scrollIntoView(),0);};
   addEventListener("load",fromDoor);addEventListener("hashchange",fromDoor);
 }catch(e){console.error(e)}
 </script>
@@ -2010,7 +2012,7 @@ try{
      have:"Nothing yet.",
      want:"Bite records with date, place and species would let the same tests run here."}];
   const SL={live:"Live",build:"Building",want:"Data wanted"};
-  const g=document.getElementById("gpins"), tl=document.getElementById("gtabs"), pn=document.getElementById("gpanel"), NS="http://www.w3.org/2000/svg";
+  const g=$id("gpins"), tl=$id("gtabs"), pn=$id("gpanel"), NS="http://www.w3.org/2000/svg";
   const mk=(t,a,par)=>{const e=document.createElementNS(NS,t);for(const k in a)e.setAttribute(k,a[k]);par.appendChild(e);return e;};
   const pins=[], tabs=[];
   C.forEach((c,i)=>{
@@ -2430,8 +2432,8 @@ try{const w=D.zones.species.white, f=w[0], l=w[w.length-1], km=Math.round((l.mid
 /* home tab: live counts and the four newest results, read from the Researchers tab */
 try{
   const cl=document.querySelectorAll("#panel-research article.claim");
-  const wo=document.getElementById("wayOpen"); if(wo&&cl.length) wo.textContent=[...cl].filter(c=>c.dataset.status==="open").length;
-  if(cl.length){document.getElementById("hcClaims").textContent=cl.length;document.getElementById("hcEarly").textContent=[...cl].filter(c=>["early","ruled","supported","strong"].includes(c.dataset.status)).length;}
+  const wo=$id("wayOpen"); if(wo&&cl.length) wo.textContent=[...cl].filter(c=>c.dataset.status==="open").length;
+  if(cl.length){$id("hcClaims").textContent=cl.length;$id("hcEarly").textContent=[...cl].filter(c=>["early","ruled","supported","strong"].includes(c.dataset.status)).length;}
 }catch(e){console.error(e)}
 </script>
 <script>
@@ -2439,7 +2441,12 @@ try{
 try{
   const tabs=[...document.querySelectorAll('.tablist [role="tab"]')], key=t=>t.id.slice(4);
   const panelOf=el=>el&&el.closest('[role="tabpanel"]');
+  /* on the live site each tab is its own page: a tab whose content isn't on this page opens that page */
+  let IDS={};try{const j=document.getElementById("n19-ids");if(j)IDS=JSON.parse(j.textContent);}catch(e){}
+  const away=(name,h)=>{window.N19_LEAVING=1;location.href="/"+SLUG[name]+(h?"#"+h:"");};
   function show(name,focus,scrollTo){
+    if(window.N19_LEAVING)return;
+    const pnl=document.getElementById("panel-"+name); if(pnl&&pnl.dataset.elsewhere){away(name,scrollTo);return;}
     CUR=name; tabs.forEach(t=>{const on=key(t)===name;t.setAttribute("aria-selected",on?"true":"false");t.tabIndex=on?0:-1;document.getElementById(t.getAttribute("aria-controls")).hidden=!on;if(on&&focus)t.focus();});
     const nv=document.querySelector(".tabs"),cur=tabs.find(t=>key(t)===name); if(nv){nv.classList.remove("open");nv.querySelector(".menubtn").setAttribute("aria-expanded","false");if(cur)nv.querySelector(".mcur").textContent=cur.textContent;}
     if(scrollTo){const el=document.getElementById(scrollTo); if(el) el.scrollIntoView();}
@@ -2455,6 +2462,7 @@ try{
   const PATH=/^https?:$/.test(location.protocol)&&pslug()!==null&&(pslug()===""||pslug() in TAB_OF);
   let CUR="home";
   function setHash(h,push,anchor){try{const t=TAB_OF[h]||(h==="home-top"?"home":null);
+    if(window.N19_LEAVING)return;
     if(PATH){const u="/"+(SLUG[t||"home"]||"")+(anchor?"#"+anchor:"")+location.search;if(u!==location.pathname+location.search+location.hash)history[push?"pushState":"replaceState"](null,"",u);}
     else history.replaceState(null,"",(!h||h==="home"||h==="home-top")?location.pathname+location.search:"#"+h);}catch(e){}}
   /* logo: back to the top of the story, with a clean address */
@@ -2470,9 +2478,11 @@ try{
     e.preventDefault();const sec=h!==tab?h:null;show(tab,false,sec);setHash(tab,true);});
   function fromHash(load){let h="";try{h=(location.hash||"").slice(1);}catch(e){}
     const MERGED={c2:"c16",c37:"c6"}; if(MERGED[h]) h=MERGED[h];  /* merged claims: old links open the claim that absorbed them */
+    /* an old address or a shared link to a section that now lives on another page (/#c16 is now /research#c16) */
+    if(PATH&&h&&!document.getElementById(h)){for(const sl in IDS){if(sl!==pslug()&&(" "+IDS[sl]+" ").includes(" "+h+" ")){window.N19_LEAVING=1;location.replace("/"+sl+"#"+h);return;}}}
     if(TAB_OF[h]&&h!=="home"){show(TAB_OF[h]);setHash(TAB_OF[h]);return;}
     if(h==="top"){show("story");setHash("story",false,PATH?"top":null);return;}
-    const el=h&&document.getElementById(h), pn=panelOf(el); if(pn){const t=pn.id.slice(6); if(t!=="home") show(t,false,h); else if(el) el.scrollIntoView(); setHash(t,false,PATH?h:null);return;}
+    const el=h&&document.getElementById(h), pn=panelOf(el); if(pn){const t=pn.id.slice(6); if(t!=="home") show(t,false,h); else if(el) el.scrollIntoView(); setHash(t,false,PATH&&!/^h-/.test(h)?h:null);return;}
     /* no tab in the hash: the page address decides (only when it names a different tab, so a beach in the hash never jumps the page) */
     if(PATH){const t=TAB_OF[pslug()]||"home"; if(t!==CUR||load){if(t!=="home"||CUR!=="home")show(t,false,el?h:null);}}}
   const mb=document.querySelector(".menubtn"); mb.addEventListener("click",()=>{const n=document.querySelector(".tabs"),o=n.classList.toggle("open");mb.setAttribute("aria-expanded",o?"true":"false");});
@@ -2511,14 +2521,16 @@ try{
     `The line where the sea stays 19°C or warmer for half the year has moved about ${km} km south, from near Jervis Bay to near Eden.`,
     `${pc(O[O.length-1])}% of Australia's bull shark bites since 2015 happened in coastal waters, mostly off surf beaches, up from ${pc(O[0])}% before 1960.`,
     `About ${r} people drown on Australia's coast for every shark death.`];
-  document.getElementById("stuFacts").innerHTML=facts.map(f=>`<li>${f}</li>`).join("");
-  document.getElementById("stuRatio").textContent=r; try{document.getElementById("aheadRatio").textContent=r;}catch(_){} document.getElementById("mediaRatio").textContent=r;
+  /* each tab is its own page on the live site, so any of these may be absent */
+  const put=(id,f)=>{const e=document.getElementById(id);if(e)f(e);};
+  put("stuFacts",e=>e.innerHTML=facts.map(f=>`<li>${f}</li>`).join(""));
+  ["stuRatio","aheadRatio","mediaRatio"].forEach(id=>put(id,e=>e.textContent=r));
   const mf=[facts[0],facts[1],facts[2],facts[3],
     `Since 2020, Western Australia has had more bull shark bites (${W.post}) than in the 120 years before that combined (${W.pre}); a jump this big is very unlikely to be chance.`,
     `Oceanic sharks and rays are down about 71% worldwide since 1970 (Pacoureau et al. 2021): fewer sharks, closer encounters.`,
     sA?`At the pace of warming since 1980, the sea off Sydney would be warm enough for bull sharks about ${sA.y2050} months a year by 2050.`:"",
     facts[4]].filter(Boolean);
-  document.getElementById("mediaFacts").innerHTML=mf.map(f=>`<li>${f}</li>`).join("");
+  put("mediaFacts",e=>e.innerHTML=mf.map(f=>`<li>${f}</li>`).join(""));
 }catch(e){console.error(e)}
 </script>
 
@@ -2600,10 +2612,10 @@ try{
     ["White shark bites below 19°C",g(sp.white.below,sp.white.n),g(sp.white.conf.below,sp.white.conf.n)],
     [`Bull shark bites in coastal waters, ${L0[0]}–${L0[1]}`,`${f(oa[0][1],oa[0][0])} (${pc(oa[0][1],oa[0][0])})`,`${f(oc[0][1],oc[0][0])} (${pc(oc[0][1],oc[0][0])})`],
     [`Bull shark bites in coastal waters, ${Ln[0]}–now`,`${f(oa[oa.length-1][1],oa[oa.length-1][0])} (${pc(oa[oa.length-1][1],oa[oa.length-1][0])})`,`${f(oc[oc.length-1][1],oc[oc.length-1][0])} (${pc(oc[oc.length-1][1],oc[oc.length-1][0])})`]];
-  document.getElementById("evCompare").innerHTML=`<table class="dt"><thead><tr><th scope="col">Finding</th><th scope="col">All bites</th><th scope="col">Species confirmed</th></tr></thead><tbody>${rows.map(r=>`<tr><th scope="row">${r[0]}</th><td>${r[1]}</td><td>${r[2]}</td></tr>`).join("")}</tbody></table>`;
-  const st0=()=>{(document.getElementById("evState")||{}).innerHTML=EV.cur==="conf"?'The story\'s temperature and open-sea charts now use <b>confirmed bites only</b>. <a href="#h-line" data-tab="story">See them</a>.':'The story\'s charts use all bites. Switch to see them redraw with confirmed bites only.';};
+  $id("evCompare").innerHTML=`<table class="dt"><thead><tr><th scope="col">Finding</th><th scope="col">All bites</th><th scope="col">Species confirmed</th></tr></thead><tbody>${rows.map(r=>`<tr><th scope="row">${r[0]}</th><td>${r[1]}</td><td>${r[2]}</td></tr>`).join("")}</tbody></table>`;
+  const st0=()=>{($id("evState")||{}).innerHTML=EV.cur==="conf"?'The story\'s temperature and open-sea charts now use <b>confirmed bites only</b>. <a href="#h-line" data-tab="story">See them</a>.':'The story\'s charts use all bites. Switch to see them redraw with confirmed bites only.';};
   
-  const A=D.anomaly&&D.anomaly.bull; if(A) document.getElementById("hotTxt").textContent=`Months that were unusually warm for their time of year had about the same number of bull shark bites as unusually cool months (${A.warm} against ${A.cool}; ratio ${A.ratio}, 95% CI ${A.lo} to ${A.hi}).`;
+  const A=D.anomaly&&D.anomaly.bull; if(A) $id("hotTxt").textContent=`Months that were unusually warm for their time of year had about the same number of bull shark bites as unusually cool months (${A.warm} against ${A.cool}; ratio ${A.ratio}, 95% CI ${A.lo} to ${A.hi}).`;
 }catch(e){console.error(e)}
 </script>
 
