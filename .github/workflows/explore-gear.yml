@@ -26,7 +26,9 @@ jobs:
           print("FateReason values:", collections.Counter(str(r[ix["FateReason"]]) for r in rows).most_common(12))
           print("Fate values:", collections.Counter(str(r[ix["Fate"]]) for r in rows).most_common(12))
           print("Alive/Deceased:", collections.Counter(str(r[ix["Alive/Deceased"]]) for r in rows).most_common(6), "\n")
-          tgt = lambda r: str(r[ix["FateReason"]]).strip().lower() == "target species"
+          TG = {"TIGER SHARK", "BULL WHALER", "WHITE SHARK"}
+          tgt = lambda r: str(r[ix["CommonName"]]).strip().upper() in TG
+          print("Labelled 'Target Species' by year: " + ", ".join(f"{y}: {sum(1 for r in rows if int(r[ix['Year']])==y and str(r[ix['FateReason']])=='Target Species')}" for y in yrs))
           for lo, hi in [(yrs[0], 2026), (2016, 2026)]:
               S = [r for r in rows if lo <= int(r[ix["Year"]]) <= hi]
               t = sum(n(r) for r in S if tgt(r)); o = sum(n(r) for r in S if not tgt(r))
