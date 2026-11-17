@@ -42,11 +42,12 @@ ul{{margin:0;padding-left:14pt}}li{{margin:2pt 0}}
 <div class="goal"><b>The goal: an answer for every claim.</b> {n_done} of {n_claims} have a first look or a result. Help answer the next {n_wait}.<div class="track"><div class="fill" style="width:{pct}%"></div></div></div>
 <div class="stats"><div><b>Open</b><span>Code, data and methods</span></div><div><b>{n_sources}</b><span>Data sources joined</span></div><div><b>{n_products}</b><span>Safety products checked</span></div><div><b>Weekly</b><span>Data updates</span></div></div>
 <div><h2>Why it matters now</h2><p>Shark and ocean-temperature research sits in datasets that rarely meet, across agencies, universities and countries. As the water warms, the places and seasons where people and sharks overlap are changing faster than any one study can follow. 19 Degrees joins the evidence in one open place. Code is open source (MIT); content is reusable with credit (CC BY 4.0).</p></div>
+<div><h2>Why this exists</h2><p>Blake Erickson is a freediver and surfer who has been obsessed with sharks since he was a little kid. He started 19 Degrees to give back to the ocean: an honest, open picture of how a warming sea is changing life for people and sharks.</p></div>
 <div><h2>What you can fund</h2><div class="opps">""" + "".join(f"<div><b>{h}</b>{d}</div>" for h, d in OPPS) + """</div></div>
 <div><h2>Independence policy</h2><ul>
 <li>Funders get no say over methods, results, grades or wording.</li>
 <li>Any funder's product or position is tested and graded like everyone else's.</li>
-<li>Funders of named projects are listed publicly with what their money paid for, and get a short report when the work is done.</li>
+<li>Thanks, never influence: supporters named if they choose; claim sponsors credited on the claim; project partners listed, with a report when the work is done.</li>
 <li>Neutral on contested measures such as nets and drumlines.</li></ul></div>
 <div><h2>Status</h2><p>An independent project, not a registered charity; contributions are not tax-deductible. Open to working with a fiscal sponsor.</p></div>
 <div class="foot"><div><b>19-degrees.org/funders</b><br>Contact form: choose "Funding or partnership"</div><div style="text-align:right"><b>ko-fi.com/19degrees</b><br>Give any amount</div></div>
