@@ -28,7 +28,6 @@ Credit: "19 Degrees", with a link to the page.
 - CMIP6 climate model output: licensed by each modelling centre (mostly CC BY 4.0); cite the World Climate Research Programme CMIP6 and each model used (listed in cmip_tos_delta_ssp245.csv on the ocean-data branch).
 - GBIF occurrence counts: GBIF.org; each source dataset keeps its own license (CC0, CC BY or CC BY-NC).
 - NASA MODIS Aqua Kd490 water clarity: NASA open data, no restrictions on use. Acknowledge NASA Ocean Biology Processing Group.
-- Wikipedia page views: Wikimedia Foundation Pageviews API, public domain (CC0). Monthly views of the English Wikipedia "Shark attack" article.
 - IMOS Animal Tracking acoustic detections: CC BY 4.0. Cite: IMOS Animal Tracking Facility, Integrated Marine Observing System (IMOS). IMOS is enabled by the National Collaborative Research Infrastructure Strategy (NCRIS).
 - Queensland Shark Control Program data (catches, gear locations): Queensland Government open data, CC BY 4.0. Credit: Queensland Department of Primary Industries, Shark Control Program.
 - ERSSTv5 sea surface temperature: NOAA NCEI, public domain (US Government work). Cite Huang, B. et al. (2017), Extended Reconstructed Sea Surface Temperature, Version 5 (ERSSTv5), J. Climate 30, 8179-8205, doi:10.1175/JCLI-D-16-0836.1.

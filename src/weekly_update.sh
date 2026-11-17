@@ -50,8 +50,6 @@ python3 -I fieldnotes19.py asid.csv fieldnotes.json || warn "fieldnotes step fai
 HI=""; [ -s ocean/hawaii_incidents.csv ] && HI=ocean/hawaii_incidents.csv
 { f=$(ls ocean/california_*.xlsx 2>/dev/null | head -n 1); [ -n "$f" ] && python3 -I lunar19.py islands_nc_run.csv "$f" $HI lunar.json; } || warn "C24 step failed, page keeps last numbers"
 { [ -n "$HI" ] && python3 -I hawaii19.py "$HI" hawaii.json; } || warn "Hawaii step failed, page keeps last numbers"
-# Attention vs reality panel (Safety): Wikipedia interest by month against bites; keeps last numbers if Wikimedia is down
-python3 -I attention19.py asid.csv hawaii.json attention.json || warn "Attention panel step failed, page keeps last numbers"
 { f=$(ls ocean/california_*.xlsx 2>/dev/null | head -n 1); [ -n "$f" ] && python3 -I exposure19.py islands_nc_run.csv "$f" $HI exposure.json; } || warn "C18 weekend step failed, page keeps last numbers"
 { f=$(ls ocean/california_*.xlsx 2>/dev/null | head -n 1); [ -n "$f" ] && ls ocean/weather_*.csv >/dev/null 2>&1 && python3 -I beachday19.py ocean islands_nc_run.csv "$f" $HI beachday.json; } || warn "Beach weather step failed, page keeps last numbers"
 { f=$(ls ocean/california_*.xlsx 2>/dev/null | head -n 1); [ -n "$f" ] && [ -s ocean/tides_hilo.csv ] && python3 -I tides19.py ocean/tides_hilo.csv "$f" $HI tides.json; } || warn "Tides step failed, page keeps last numbers"
@@ -111,7 +109,7 @@ python3 -I make_site.py 19-degrees.html pub site
 
 # 7. Copy back
 cp -r site/. "$R/"
-cp heat.json asid_version.txt "$R/src/"; [ -f rain.json ] && cp rain.json "$R/src/"; [ -f imos.json ] && cp imos.json "$R/src/"; [ -f leeuwin.json ] && cp leeuwin.json "$R/src/"; [ -f california.json ] && cp california.json "$R/src/"; [ -f grades_history.json ] && cp grades_history.json "$R/src/"; for j in attention fieldnotes lunar obis iod coastpop mhw beachwatch hawaii exposure beachday tides whales chlorophyll rivers harbour tigerqld tigerrain whitecool upwelling catchshare tagtemp size; do [ -f $j.json ] && cp $j.json "$R/src/"; done
+cp heat.json asid_version.txt "$R/src/"; [ -f rain.json ] && cp rain.json "$R/src/"; [ -f imos.json ] && cp imos.json "$R/src/"; [ -f leeuwin.json ] && cp leeuwin.json "$R/src/"; [ -f california.json ] && cp california.json "$R/src/"; [ -f grades_history.json ] && cp grades_history.json "$R/src/"; for j in fieldnotes lunar obis iod coastpop mhw beachwatch hawaii exposure beachday tides whales chlorophyll rivers harbour tigerqld tigerrain whitecool upwelling catchshare tagtemp size; do [ -f $j.json ] && cp $j.json "$R/src/"; done
 # a dated snapshot of the claims and headline numbers, kept in src/history/ for the evidence history
 python3 -I snapshot19.py 19-degrees.html "$R/src/history" || warn "snapshot skipped"
 echo "built OK (new database version: $NEWDB)"
