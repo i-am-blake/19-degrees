@@ -22,26 +22,26 @@ OPPS = [("Fund a claim", f"{n_wait} claims are waiting for data or a test. Each 
 html = f"""<!doctype html><html lang="en-US"><head><meta charset="utf-8"><title>19 Degrees · Funder summary</title>
 <link rel="stylesheet" href="FONTS">
 <style>@page{{size:Letter;margin:0}}*{{box-sizing:border-box}}
-body{{margin:0;font:400 10pt/1.42 "Figtree",system-ui,sans-serif;color:#0B2C46;-webkit-print-color-adjust:exact;print-color-adjust:exact}}
-.sheet{{width:8.5in;height:11in;padding:.5in .65in;display:flex;flex-direction:column;gap:11pt;overflow:hidden;background:#FBF8F2}}
-.top{{display:flex;align-items:center;justify-content:space-between;background:#0F5677;margin:-.5in -.65in 0;padding:.28in .65in;color:#fff}}
-.top .mark{{height:34pt;width:auto;color:#fff}}.top span{{font:500 9pt/1.3 "Martian Mono",monospace;letter-spacing:.14em;text-transform:uppercase;color:#F0A04B}}
-h1{{font:800 24pt/1.05 "Bricolage Grotesque",sans-serif;margin:6pt 0 0;letter-spacing:-.01em}}
-h2{{font:700 13pt/1.25 "Bricolage Grotesque",sans-serif;margin:0 0 4pt}}p{{margin:0}}
-.lead{{font-size:11pt}}
+body{{margin:0;font:400 9.6pt/1.38 "Figtree",system-ui,sans-serif;color:#0B2C46;-webkit-print-color-adjust:exact;print-color-adjust:exact}}
+.sheet{{width:8.5in;height:11in;padding:.5in .65in;display:flex;flex-direction:column;gap:8.5pt;background:#FBF8F2}}
+.top{{display:flex;align-items:center;justify-content:space-between;background:#0F5677;margin:-.5in -.65in 0;padding:.2in .65in;color:#fff}}
+.top .mark{{height:28pt;width:auto;color:#fff}}.top span{{font:500 9pt/1.3 "Martian Mono",monospace;letter-spacing:.14em;text-transform:uppercase;color:#F0A04B}}
+h1{{font:800 21pt/1.08 "Bricolage Grotesque",sans-serif;margin:6pt 0 0;letter-spacing:-.01em;text-wrap:balance}}
+h2{{font:700 12pt/1.2 "Bricolage Grotesque",sans-serif;margin:0 0 2pt}}p{{margin:0}}
+.lead{{font-size:10.4pt}}
 .goal .track{{height:9pt;background:#E1E8EC;margin:4pt 0 0}}.goal .fill{{height:100%;background:#F0A04B}}
-.stats{{display:grid;grid-template-columns:repeat(4,1fr);gap:8pt}}.stats div{{border:1pt solid #C9D6DD;padding:7pt 9pt}}
-.stats b{{display:block;font:800 20pt/1 "Bricolage Grotesque",sans-serif}}.stats span{{font:500 7.5pt/1.3 "Martian Mono",monospace;letter-spacing:.04em;line-height:1.25;text-transform:uppercase;color:#4A6A7C;display:block;margin-top:3pt}}
+.stats{{display:grid;grid-template-columns:repeat(4,1fr);gap:8pt}}.stats div{{border:1pt solid #C9D6DD;padding:6pt 9pt}}
+.stats b{{display:block;font:800 17pt/1 "Bricolage Grotesque",sans-serif}}.stats span{{font:500 7.5pt/1.3 "Martian Mono",monospace;letter-spacing:.04em;line-height:1.25;text-transform:uppercase;color:#4A6A7C;display:block;margin-top:3pt}}
 .opps{{display:grid;grid-template-columns:1fr 1fr;gap:8pt}}.opps div{{border-left:3pt solid #F0A04B;padding:2pt 0 2pt 9pt}}.opps b{{display:block}}
-ul{{margin:0;padding-left:14pt}}li{{margin:2pt 0}}
-.foot{{margin-top:auto;border-top:1pt solid #C9D6DD;padding-top:10pt;display:flex;justify-content:space-between;gap:20pt;font-size:10pt;color:#4A6A7C}}
+ul{{margin:0;padding-left:14pt}}li{{margin:1pt 0}}
+.foot{{margin-top:auto;border-top:1pt solid #C9D6DD;padding-top:8pt;display:flex;justify-content:space-between;gap:20pt;font-size:10pt;color:#4A6A7C}}
 .foot b{{color:#0B2C46}}</style></head><body><div class="sheet">
 <div class="top">{logo}<span>Funder summary</span></div>
 <h1>Give every coast answers built on evidence, not fear.</h1>
 <p class="lead">As the ocean warms, the places and seasons where people and sharks meet are shifting. Councils are choosing safety measures, families are deciding where to swim, and scientists are racing to keep up, often without the data to know what works. 19 Degrees, an independent and open project, tests those questions in public and publishes every answer, including the surprising ones.</p>
 <div class="goal"><b>The goal: an answer for every claim.</b> {n_done} of {n_claims} have a first look or a result. <span style="white-space:nowrap">Help answer the next {n_wait}.</span><div class="track"><div class="fill" style="width:{pct}%"></div></div></div>
 <div class="stats"><div><b>Open</b><span>Code, data and methods</span></div><div><b>{n_sources}</b><span>Data sources joined</span></div><div><b>{n_products}</b><span>Safety products checked</span></div><div><b>Weekly</b><span>Data updates</span></div></div>
-<div><h2>Why it matters now</h2><p>Shark and ocean-temperature research sits in datasets that rarely meet, across agencies, universities and countries. As the water warms, the places and seasons where people and sharks overlap are changing faster than any one study can follow. 19 Degrees joins the evidence in one open place. Code is open source (MIT); content is reusable with credit (CC BY 4.0).</p></div>
+<div><h2>Why it matters now</h2><p>Shark and ocean-temperature research sits in datasets that rarely meet. As the water warms, where and when people and sharks overlap is changing faster than any one study can follow. 19 Degrees joins the evidence in one open place. Code is open source (MIT); content is reusable with credit (CC BY 4.0).</p></div>
 <div><h2>Why this exists</h2><p>Blake Erickson is a freediver and surfer who has been obsessed with sharks since he was a little kid. He started 19 Degrees to give back to the ocean: an honest, open picture of how a warming sea is changing life for people and sharks.</p></div>
 <div><h2>What you can fund</h2><div class="opps">""" + "".join(f"<div><b>{h}</b>{d}</div>" for h, d in OPPS) + """</div></div>
 <div><h2>Independence policy</h2><ul>
