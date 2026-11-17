@@ -1,10 +1,30 @@
 {
   "title": "19 Degrees: open evidence on a warming ocean, sharks and people",
   "upload_type": "software",
-  "description": "<p>19 Degrees is an independent, open project testing how a warming ocean is changing where sharks and people meet. Each claim states in advance what would support it and what would rule it out, and every result is published, including the ones that go against it. This archive holds the site, the data pipeline and the build scripts for one release.</p><p>Code: MIT License. Text, charts and derived data: CC BY 4.0. Third-party data keep their own licenses, listed on the Sources page.</p>",
-  "creators": [{ "name": "Erickson, Blake" }],
-  "license": "mit",
-  "keywords": ["sharks", "sea surface temperature", "climate change", "bull shark", "white shark", "tiger shark", "shark bites", "open science", "reproducible research"],
-  "related_identifiers": [{ "identifier": "https://19-degrees.org", "relation": "isDocumentedBy", "resource_type": "publication-other" }],
+  "description": "<p>19 Degrees is an independent, open project testing how a warming ocean is changing where sharks and people meet. Each claim states in advance what would support it and what would rule it out, and every result is published, including the ones that go against it. This archive holds the site, the data pipeline and the build scripts for one release.</p><p>Code: Apache License 2.0. Text, charts and derived data: CC BY 4.0. Third-party data keep their own licenses, listed on the Sources page.</p>",
+  "creators": [
+    {
+      "name": "Erickson, Blake"
+    }
+  ],
+  "license": "apache-2.0",
+  "keywords": [
+    "sharks",
+    "sea surface temperature",
+    "climate change",
+    "bull shark",
+    "white shark",
+    "tiger shark",
+    "shark bites",
+    "open science",
+    "reproducible research"
+  ],
+  "related_identifiers": [
+    {
+      "identifier": "https://19-degrees.org",
+      "relation": "isDocumentedBy",
+      "resource_type": "publication-other"
+    }
+  ],
   "language": "eng"
 }

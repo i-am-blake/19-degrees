@@ -46,6 +46,6 @@ The scripts in [`src/`](src/README.md) rebuild every number on the site; the sta
 
 Spotted an error in the text, a number or the code? Open an issue or a pull request. For changes to the site, edit `src/page19.html` (the template) and the scripts in `src/`, not the built `index.html`, which is regenerated weekly.
 
-## Licences
+## Licenses
 
-By contributing code you agree to license it under MIT; text and data you contribute to the site are published under CC BY 4.0 unless agreed otherwise. Source data keeps its own license.
+By contributing code you agree to license it under the Apache License 2.0; text and data you contribute to the site are published under CC BY 4.0 unless agreed otherwise. Source data keeps its own license.

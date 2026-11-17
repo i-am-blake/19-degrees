@@ -5,7 +5,7 @@ type: software
 authors:
   - family-names: Erickson
     given-names: Blake
-license: MIT
+license: Apache-2.0
 url: "https://19-degrees.org"
 repository-code: "https://github.com/i-am-blake/19-degrees"
 keywords:

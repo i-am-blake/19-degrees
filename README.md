@@ -159,7 +159,7 @@ The most useful thing right now is **data**. See [CONTRIBUTING.md](CONTRIBUTING.
 
 ## License
 
-Code: MIT. Text, charts and the 19 Degrees datasets: CC BY 4.0. Fonts: SIL Open Font License. Source data stays under its own license. The 19 Degrees name and logo are not licensed for reuse. See [`LICENSE`](LICENSE).
+Code: Apache 2.0 (versions before v1.0 were MIT). Text, charts and the 19 Degrees datasets: CC BY 4.0. Fonts: SIL Open Font License. Source data stays under its own license. The 19 Degrees name and logo are not licensed for reuse. Contributions are accepted under the same licenses. See [`LICENSE`](LICENSE) and [`LICENSE-APACHE`](LICENSE-APACHE).
 
 ## Disclaimer
 

@@ -1,14 +1,14 @@
 19 Degrees — licenses
 
-1. Code (HTML, CSS, JavaScript and the Python build scripts): MIT License
+1. Code (HTML, CSS, JavaScript and the Python build scripts): Apache License, Version 2.0
 
-Copyright (c) 2026 Blake Erickson
+Copyright 2026 Blake Erickson
 
-Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+Licensed under the Apache License, Version 2.0 (the "License"); you may not use these files except in compliance with the License. You may obtain a copy of the License in LICENSE-APACHE in this repository or at https://www.apache.org/licenses/LICENSE-2.0
 
-The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
 
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+Versions of the code published before v1.0 (16 November 2026) were released under the MIT License and stay available under it.
 
 2. Text, charts, images, classroom sheets and share cards: Creative Commons Attribution 4.0 International (CC BY 4.0)
 https://creativecommons.org/licenses/by/4.0/
@@ -53,14 +53,14 @@ Credit: "19 Degrees", with a link to the page.
 - Figures quoted from published studies remain the work of their authors; see the page's source list.
 
 4. Fonts and illustrations
-- The fonts in fonts/ (Bricolage Grotesque, Figtree, Martian Mono) are under the SIL Open Font License 1.1; see fonts/OFL.txt. They are not covered by the MIT License.
+- The fonts in fonts/ (Bricolage Grotesque, Figtree, Martian Mono) are under the SIL Open Font License 1.1; see fonts/OFL.txt. They are not covered by the Apache License.
 - The tiger and bull shark outlines are traced from public-domain drawings (Robbie Cada; NOAA) via Wikimedia Commons, credited on the page. The white shark and the other outlines were drawn by the author from field-guide anatomy.
 
 5. Name and logo
-The 19 Degrees name and the shark "19" logo are not licensed under MIT or CC BY. All rights reserved. You may refer to the project by name and link to it, but don't use the name or logo for your own product, service or site, or in a way that suggests the author endorses you or your work.
+The 19 Degrees name and the shark "19" logo are not licensed under Apache 2.0 or CC BY. All rights reserved. You may refer to the project by name and link to it, but don't use the name or logo for your own product, service or site, or in a way that suggests the author endorses you or your work.
 
 6. No advice, no warranty
 19 Degrees is an independent educational and research project. Its text, charts, data and code summarise public data and published research. They may contain errors or be out of date and are provided "as is", without warranty of any kind. They are not safety, medical, legal or professional advice. Don't rely on them to decide whether or where to swim, surf or dive: follow lifesavers, beach signs and local authorities. Product information summarises published independent tests, which are linked; it is not the author's own testing and is not an endorsement or a criticism of any maker. To the fullest extent the law allows, the author is not liable for any loss, injury or damage arising from use of, or reliance on, this project or anything built with it. Anyone who reuses the code, data or content (for example in an app, alert or warning service) is responsible for how they use it.
 
 7. Contributions
-Contributions are accepted under the same licenses: code under MIT, text and data under CC BY 4.0, unless agreed otherwise in writing. By contributing you confirm you have the right to do so.
+Contributions are accepted under the same licenses: code under Apache 2.0, text and data under CC BY 4.0, unless agreed otherwise in writing. By contributing you confirm you have the right to do so.
