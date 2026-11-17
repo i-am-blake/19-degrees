@@ -267,13 +267,47 @@ def sizeC43(D):
             'Winter here means June to August in NSW, not cold water: the temperatures are on the ' + '<a href="#c25">C25</a> card. Winter days also depend on where receivers were; the Clarence River array ran mainly from 2010 to 2014. ('
             + A("https://researchdata.edu.au/imos-animal-tracking-2007-ongoing/3961802", "IMOS Animal Tracking") + ", CC BY 4.0.)")
 
+ASIDL = A("https://zenodo.org/records/18752301", "Australian Shark-Incident Database")
+def survC44(D):
+    c = D["newclaims"]["c44"]; e, l, s = c["early"], c["late"], c["species"]; d = {x["decade"]: x for x in c["decades"]}
+    lab = G.show(G.grade("c44", D)[1])  # the sentence follows the grade, checks included
+    lead = {"Early yes": "more injured victims survive now", "Leans yes": "more injured victims survive overall, but not after white or bull shark bites",
+            "Unclear": "no clear change in how many injured victims survive", "Early no": "fewer injured victims survive now",
+            "Leans no": "fewer injured victims may survive now, not settled"}.get(lab, "see the grade above")
+    sp = lambda k: f'{s[k]["early"]["pct"]}% to {s[k]["late"]["pct"]}%'
+    return (f'Early result (exploratory): {lead}. Of people injured in unprovoked bites, {e["pct"]}% died in 1960–1989 ({e["fatal"]} of {e["n"]}) '
+            f'and {l["pct"]}% from 2000 to {c["last_year"]} ({l["fatal"]} of {l["n"]}; {pf(c["p"])}). By shark, tiger shark bites went from {sp("tiger")}, '
+            f'but white shark bites went from {sp("white")} and bull shark bites from {sp("bull")}. Deaths per decade haven\'t fallen: {d[2010]["fatal"]} in the 2010s and '
+            f'{d[max(d)]["fatal"]} so far in the 2020s, while recorded injuries rose from {d[1960]["injured"]} in the 1960s to {d[2010]["injured"]} in the 2010s. '
+            f'More minor bites being recorded can lower the share on its own. ({ASIDL}, CC BY 4.0.)')
+def tigerC45(D):
+    c = D["newclaims"]["c45"]; e, l = c["early"], c["late"]
+    return (f'Early result (exploratory): {c["son"]} of {c["n"]} tiger shark incidents in Hawaii ({c["first"]}–{c["last"]}) came in September to November '
+            f'({c["son_pct"]}%, where a quarter of the year gives 25%; {pf(c["p_season"])}), {c["by_month"][9]} of them in October. That share was {e["pct"]}% up to 2010 '
+            f'({e["son"]} of {e["n"]}) and {l["pct"]}% since ({l["son"]} of {l["n"]}; {pf(c["p"])}). The test against autumn sea temperature hasn\'t been run yet. ({HDL}.)')
+def gearC46(D):
+    c = D["newclaims"]["c46"]; a, r = c["all"], c["recent"]; o = a["other_by"]
+    part = lambda k: f'{o[k]["n"]:,} {k} ({o[k]["alive_pct"]}% found alive)'
+    ratio = lambda g: a["gear"][g]["other"] / a["gear"][g]["target"]
+    return (f'Early result: from {c["first"]} to {c["last"]}, Queensland\'s nets and drumlines caught {a["target"]:,} tiger, bull and white sharks and {a["other"]:,} other animals, '
+            f'so {a["pct_other"]}% of the catch was something else: {part("other sharks")}, {part("rays, fish and others")}, {part("turtles")} and {part("dolphins and whales")}. '
+            f'In the last 10 years ({c["recent_from"]}–{c["last"]}) the share was {r["pct_other"]}%. Nets caught {ratio("net"):.1f} other animals for every target shark, drumlines {ratio("drum"):.1f}. '
+            f'This counts what the gear catches; whether it reduces bites is <a href="#c20">C20</a>. ({QLD}, CC BY 4.0.)')
+def ensoC32(D):
+    c = D["newclaims"]["c32"]
+    return (f'First look: El Niño and La Niña don\'t explain the extra warm months. Off Sydney, the number of months a year at 19°C or warmer rose by about '
+            f'{c["per_decade"]} a decade from {c["first"]} to {c["last"]}. With that rise taken out, the link with the year\'s mean El Niño index is r = {c["r"]:.2f} ({pf(c["p"])}): '
+            f'El Niño years ran {c["nino"]["months"]:+.1f} months against the trend ({c["nino"]["n"]} years) and La Niña years {c["nina"]["months"]:+.1f} ({c["nina"]["n"]} years). '
+            'This rules out one natural swing, not all of them. (HadISST, Met Office; the El Niño index is built from the same record.)')
+
 PARAS = {"mhwC19": (mhwC19, ("mhw",)), "bwC6": (bwC6, ("beachwatch",)), "plumeC6": (plumeC6, ("rivers", "harbour")),
          "qldC6": (qldC6, ("tigerqld",)), "wkC18": (wkC18, ("exposure", "beachday")), "whaleC5": (whaleC5, ("whales",)),
          "whitecoolC5": (whitecoolC5, ("whitecool",)), "chlC4": (chlC4, ("chlorophyll",)), "tideC24": (tideC24, ("tides",)),
          "tigerC28": (tigerC28, ("tigerqld", "tigerrain")), "upC29": (upC29, ("upwelling",)),
          "stationsC16": (stationsC16, ("imos",)), "juvC30": (juvC30, ("imos",)),
          "shareC1": (shareC1, ("catchshare",)), "projC3": (projC3, ("proj",)),
-         "tagsC25": (tagsC25, ("tags_sa",)), "dailyC25": (dailyC25, ("daily",)), "tagtempC25": (tagtempC25, ("tagtemp",)), "sizeC43": (sizeC43, ("size",))}
+         "tagsC25": (tagsC25, ("tags_sa",)), "dailyC25": (dailyC25, ("daily",)), "tagtempC25": (tagtempC25, ("tagtemp",)), "sizeC43": (sizeC43, ("size",)),
+         "survC44": (survC44, ("newclaims",)), "tigerC45": (tigerC45, ("newclaims",)), "gearC46": (gearC46, ("newclaims",)), "ensoC32": (ensoC32, ("newclaims",))}
 
 def hawaiiC6(D):
     h = D["hawaii"]

@@ -125,6 +125,28 @@ def e_c43(D):
              f'<br><b>Against it.</b> Away from the Clarence River there {"is" if wc == 1 else "are"} {wc} shark-day{"" if wc == 1 else "s"} for a shark still under 150 cm, so what small sharks do in winter is known from one river. Large sharks are not absent in winter: {lg["winter_sharks"]} of {lg["sharks"]} were detected at least once.',
              'The result is strong and the checks agree, but it rests on one river, and the test was chosen after seeing that river\'s data. That holds it at "Leans yes".',
              "Winter tracking of small bull sharks in a second river, with sizes recorded. Lengths for the Manatee River sharks in Florida (claim C25) would test it on another continent.")
+def e_c44(D):
+    c = D["newclaims"]["c44"]; e, l, s = c["early"], c["late"], c["species"]; d = {x["decade"]: x for x in c["decades"]}
+    return t("Whether more people injured in an unprovoked shark bite in Australia survive than in past decades.",
+             f'<b>For the claim.</b> {e["pct"]}% of injured victims died in 1960–1989 ({e["fatal"]} of {e["n"]}), against {l["pct"]}% from 2000 to {c["last_year"]} ({l["fatal"]} of {l["n"]}). ' + chance(c["p"]) +
+             f' Tiger shark bites fell from {s["tiger"]["early"]["pct"]}% to {s["tiger"]["late"]["pct"]}%.'
+             f'<br><b>Against it.</b> White shark bites went from {s["white"]["early"]["pct"]}% to {s["white"]["late"]["pct"]}% and bull shark bites from {s["bull"]["early"]["pct"]}% to {s["bull"]["late"]["pct"]}%. '
+             f'Deaths per decade haven\'t fallen ({d[2010]["fatal"]} in the 2010s, {d[max(d)]["fatal"]} so far in the 2020s), while recorded injuries rose from {d[1960]["injured"]} in the 1960s to {d[2010]["injured"]} in the 2010s.',
+             "The overall drop is real in the records, but it doesn't show for the two sharks behind most deaths, and more minor bites being recorded can lower the share on its own. Bite records also reach \"Leans yes\" at most.",
+             "A measure of how severe each wound was, so like can be compared with like, and the time it took to stop the bleeding (see C9 and C12).")
+def e_c45(D):
+    c = D["newclaims"]["c45"]; e, l = c["early"], c["late"]
+    return t("Whether Hawaii's tiger shark incidents are becoming more concentrated in September to November.",
+             f'{c["son"]} of {c["n"]} tiger shark incidents ({c["son_pct"]}%) came in September to November, where a quarter of the year gives 25% ({pv(c["p_season"])}). '
+             f'That share was {e["pct"]}% up to 2010 ({e["son"]} of {e["n"]}) and {l["pct"]}% since ({l["son"]} of {l["n"]}). ' + chance(c["p"]),
+             "The autumn peak itself is known (Meyer and colleagues, 2025). The rise since 2010 points toward the claim but rests on small numbers, and the test against autumn sea temperature hasn't been run yet.",
+             "The temperature test: whether the autumn share is higher in years when Hawaii's autumn water is warmer than usual.")
+def e_c46(D):
+    c = D["newclaims"]["c46"]; a, r = c["all"], c["recent"]
+    return t("Whether most animals caught in Queensland's shark-control gear are something other than tiger, bull or white sharks.",
+             f'From {c["first"]} to {c["last"]}, {a["pct_other"]}% of animals caught were something else ({a["other"]:,} of {a["target"] + a["other"]:,}), and {r["pct_other"]}% in the last 10 years. ' + chance(a["p"]),
+             "Both periods are well over half, and the program records every animal it catches, so \"Early yes\". It counts what the gear catches, not whether it reduces bites, which is C20.",
+             "A change in gear or practice that moves the share either way, or the same count from another program, such as NSW.")
 def e_c26(D):
     i = D["iod"]["all"]
     return t("Whether Western Australia's bites come more often when the Indian Ocean Dipole is positive.",
@@ -147,7 +169,7 @@ def e_c29(D):
 
 LOOK = {"c4": ("The claim is that the baitfish run has shifted later in autumn, and nothing here measures when the run happens. The chlorophyll result below asks a different question: whether bites fall in greener months.", "Monthly catch records for mullet and other baitfish off NSW over several decades."),
         "c21": ("The result below rests on a handful of night-time bull shark bites, too few to test, and bites by hour are not catches by hour.", "Catch times from SMART drumlines, or a trial with lines set at dawn, dusk and overnight."),
-        "c2": ("The number of tagged bull sharks heard south of Sydney rose, but so did the number of listening stations, and the public data shows only stations that heard something.", "The full listening-station history from NSW."),
+        "c32": ("This checks one natural swing, El Niño and La Niña, against the extra warm months. Separating human emissions from all natural swings needs a climate attribution study.", "An attribution analysis comparing climate model runs with and without human emissions."),
         "c7": ("Only 5 recent WA bites can be checked against the current's strength, too few for a test.", "More bites, or tag detections from WA's receivers."),
         "c9": ("The records show where the wounds were, not how long it took to stop the bleeding, so this can only describe the deaths.", "Coroner findings and ambulance timelines, through a university partner."),
         "c20": ("Without past net and drumline locations, any comparison would be against today's gear. This describes the counts only.", "Queensland's gear locations by year since 1962."),
