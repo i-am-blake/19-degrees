@@ -1,0 +1,147 @@
+name: Explore new angles (look only)
+# Checks six open sources for new claims and runs a first look where the data allows. Changes nothing in the repo or on the site.
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  look:
+    runs-on: ubuntu-26.04
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v5
+      - name: Look
+        run: |
+          pip install -q openpyxl
+          cd src && python3 - <<'PY' | tee ../report.md
+          import csv, io, json, re, math, time, urllib.request, urllib.parse, collections, statistics as st
+          UA = {"User-Agent": "19-degrees-explore/1.0 (+https://19-degrees.org)"}
+          def get(u, t=180, data=None, h=None):
+              r = urllib.request.Request(u, data=data, headers={**UA, **(h or {})}); return urllib.request.urlopen(r, timeout=t).read()
+          def section(n): print(f"\n## {n}\n")
+          def safe(f):
+              try: f()
+              except Exception as e: print(f"**Failed:** {type(e).__name__}: {str(e)[:300]}")
+
+          # ---------- A. Attention vs reality ----------
+          def wiki():
+              section("A. Wikipedia attention vs actual bites")
+              arts = ["Shark_attack", "Shark", "Great_white_shark", "Bull_shark", "Tiger_shark", "Jaws_(film)"]
+              views = {}
+              for a in arts:
+                  j = json.loads(get(f"https://wikimedia.org/api/rest_v1/metrics/pageviews/per-article/en.wikipedia/all-access/user/{urllib.parse.quote(a, safe='')}/monthly/2015070100/2026110100"))
+                  views[a] = {i["timestamp"][:6]: i["views"] for i in j["items"]}
+                  top = sorted(views[a].items(), key=lambda x: -x[1])[:5]
+                  print(f"- **{a}**: {len(views[a])} months, median {int(st.median(views[a].values())):,}/month; top months: " + ", ".join(f"{m[:4]}-{m[4:]} ({v:,})" for m, v in top))
+              # actual bites: Australian database
+              h = json.loads(get("https://zenodo.org/api/records/18752301/versions?sort=version&size=1"))["hits"]["hits"][0]
+              f = next(x for x in h["files"] if x["key"].endswith(".xlsx"))
+              open("asid.xlsx", "wb").write(get(f["links"]["self"], 300))
+              import subprocess; subprocess.run(["python3", "-I", "asid_to_csv.py", "asid.xlsx", "asid.csv"], check=True, capture_output=True)
+              rows = list(csv.DictReader(open("asid.csv"))); cols = list(rows[0].keys())
+              print(f"\nAustralian database: {len(rows)} records; columns: {', '.join(cols[:25])}")
+              dk = next((c for c in cols if re.search(r"date", c, re.I)), None)
+              fk = next((c for c in cols if re.search(r"(fatal|injury|outcome)", c, re.I)), None)
+              bites = collections.Counter(); fatal = collections.Counter()
+              for r in rows:
+                  m = re.match(r"(\d{4})-(\d{2})", r.get(dk, "") or "")
+                  if not m: continue
+                  ym = m.group(1) + m.group(2); bites[ym] += 1
+                  if fk and re.search(r"fatal", r.get(fk, ""), re.I): fatal[ym] += 1
+              ms = sorted(m for m in views["Shark_attack"] if m <= max(bites or ["0"]))
+              def corr(x, y):
+                  mx, my = st.mean(x), st.mean(y); sx = math.sqrt(sum((a-mx)**2 for a in x)); sy = math.sqrt(sum((b-my)**2 for b in y))
+                  return sum((a-mx)*(b-my) for a, b in zip(x, y)) / (sx*sy) if sx and sy else float("nan")
+              v = [views["Shark_attack"][m] for m in ms]
+              print(f"\nMonths compared: {ms[0]}–{ms[-1]} ({len(ms)})")
+              print(f"- Correlation, monthly 'Shark attack' views vs Australian bites that month: {corr(v, [bites[m] for m in ms]):.2f}")
+              print(f"- vs Australian fatal bites that month (field `{fk}`): {corr(v, [fatal[m] for m in ms]):.2f}")
+              byc = collections.defaultdict(list)
+              for m in ms: byc[m[4:]].append(views["Shark_attack"][m])
+              print("- Average views by calendar month: " + ", ".join(f"{k}: {int(st.mean(x)):,}" for k, x in sorted(byc.items())))
+              print("- Note: English Wikipedia is mostly US/UK readers, so Australian bites are only one driver; a US/global bite series would be the fair test.")
+          safe(wiki)
+
+          # ---------- B. People in the water (US) ----------
+          def usla():
+              section("B. US Lifesaving Association: beach attendance and rescues")
+              for u in ["https://www.usla.org/page/statistics", "https://arc.usla.org/Statistics/public.asp", "https://www.usla.org/page/STATISTICS"]:
+                  try:
+                      b = get(u, 60).decode("utf-8", "ignore")
+                      links = sorted(set(re.findall(r'href="([^"]*(?:stat|Stat|STAT|report|xls|csv)[^"]*)"', b)))[:25]
+                      print(f"- `{u}`: reachable, {len(b)//1000} kB; mentions attendance: {'attendance' in b.lower()}; links: {links}")
+                  except Exception as e: print(f"- `{u}`: {type(e).__name__} {str(e)[:120]}")
+          safe(usla)
+
+          # ---------- C. Where people surf ----------
+          def osm():
+              section("C. OpenStreetMap surf breaks")
+              q = '[out:json][timeout:300];nwr["sport"="surfing"];out center tags;'
+              j = json.loads(get("https://overpass-api.de/api/interpreter", 400, data=urllib.parse.urlencode({"data": q}).encode()))
+              pts = []
+              for e in j["elements"]:
+                  c = e.get("center") or e; 
+                  if "lat" in c: pts.append((c["lat"], c["lon"], e.get("tags", {}).get("name", "")))
+              print(f"{len(pts)} places tagged as surf spots worldwide")
+              boxes = {"Australia": (-45, 110, -9, 155), "California": (32, -125, 42, -114), "Hawaii": (18, -161, 23, -154), "South Africa": (-35.5, 16, -22, 33.5), "Reunion": (-21.5, 55.1, -20.8, 55.9), "Brazil": (-34, -54, 5, -34), "US Atlantic & Gulf": (24, -98, 45, -66), "New Caledonia": (-23, 163, -19, 168.5)}
+              for k, (a, b, c, d) in boxes.items():
+                  n = [p for p in pts if a <= p[0] <= c and b <= p[1] <= d]
+                  print(f"- {k}: {len(n)} (named: {sum(1 for p in n if p[2])})")
+          safe(osm)
+
+          # ---------- D. Prey ----------
+          def prey():
+              section("D. Prey: NOAA fish landings and Queensland QFish")
+              try:
+                  q = urllib.parse.quote(json.dumps({"ts_afs_name": {"$like": "%MENHADEN%"}}))
+                  j = json.loads(get(f"https://apps-st.fisheries.noaa.gov/ods/foss/landings/?q={q}&limit=500", 120))
+                  it = j.get("items", []); yrs = sorted({i.get("year") for i in it if i.get("year")})
+                  print(f"- NOAA FOSS menhaden landings: {len(it)} rows returned (first page), years {yrs[:1]}–{yrs[-1:]}, fields: {list(it[0].keys()) if it else []}")
+                  if it: print(f"  sample: {it[0]}")
+              except Exception as e: print(f"- NOAA FOSS: {type(e).__name__} {str(e)[:200]}")
+              for u in ["https://qfish.fisheries.qld.gov.au/", "https://www.data.qld.gov.au/api/3/action/package_search?q=qfish&rows=20"]:
+                  try:
+                      b = get(u, 60).decode("utf-8", "ignore")
+                      if "package_search" in u:
+                          r = json.loads(b)["result"]; print(f"- Queensland open data search 'qfish': {r['count']} datasets: " + "; ".join(x["title"] for x in r["results"][:12]))
+                      else: print(f"- QFish site reachable ({len(b)//1000} kB); interactive query tool")
+                  except Exception as e: print(f"- `{u}`: {type(e).__name__} {str(e)[:150]}")
+          safe(prey)
+
+          # ---------- E. Heatwaves (already claim C19) ----------
+          def heat():
+              section("E. Marine heatwaves: already on the site as claim C19")
+              d = json.load(open("heat.json"))
+              for k, v in d.items(): print(f"- {k}: {v['n']} bites; {v['t_pct']}% fell in the warmest tenth of months (chance: 10%), p = {v['t_p']}")
+              print("- Possible refinement: a daily heatwave version using the daily beach temperatures (OISST) the site already fetches.")
+          safe(heat)
+
+          # ---------- F. East Australian Current ----------
+          def eac():
+              section("F. East Australian Current moorings (IMOS)")
+              base = "https://thredds.aodn.org.au/thredds/catalog/IMOS/DWM/DA/catalog.xml"
+              b = get(base, 120).decode()
+              dirs = re.findall(r'title="([^"]+)"', b); print(f"- IMOS deep-water array folders: {dirs[:30]}")
+              for dname in [x for x in dirs if "EAC" in x.upper()][:6]:
+                  try:
+                      c = get(base.replace("catalog.xml", f"{dname}/catalog.xml"), 120).decode()
+                      sub = re.findall(r'title="([^"]+)"', c)
+                      years = sorted(set(re.findall(r"_(\d{4})\d{4}T", c)))
+                      print(f"  - {dname}: {len(sub)} entries; years in file names: {years[:1]}–{years[-1:]}; e.g. {sub[:5]}")
+                  except Exception as e: print(f"  - {dname}: {type(e).__name__}")
+          safe(eac)
+
+          # ---------- G. Florida red tide ----------
+          def redtide():
+              section("G. Red tides and fish kills (Florida and the Gulf)")
+              for u in ["https://www.ncei.noaa.gov/erddap/tabledap/habsos.csv?time&time>=2020-01-01&orderByCount(%22%22)",
+                        "https://gis.ncdc.noaa.gov/arcgis/rest/services/ms/HABSOS_CellCounts/MapServer?f=json",
+                        "https://geodata.myfwc.com/api/search/v1/collections/all/items?q=red%20tide&limit=10",
+                        "https://www.ncei.noaa.gov/products/harmful-algal-blooms-observing-system"]:
+                  try:
+                      b = get(u, 90).decode("utf-8", "ignore")
+                      print(f"- `{u[:80]}`: reachable ({len(b)//1000} kB): {re.sub(r'\\s+', ' ', b[:240])}")
+                  except Exception as e: print(f"- `{u[:80]}`: {type(e).__name__} {str(e)[:120]}")
+          safe(redtide)
+          PY
+          cat ../report.md >> "$GITHUB_STEP_SUMMARY"
