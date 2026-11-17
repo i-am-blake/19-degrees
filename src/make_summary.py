@@ -33,8 +33,8 @@ ul{{margin:0;padding-left:14pt}}li{{margin:2pt 0}}
 .foot{{margin-top:auto;border-top:1pt solid #C9D6DD;padding-top:10pt;display:flex;justify-content:space-between;gap:20pt;font-size:10pt;color:#4A6A7C}}
 .foot b{{color:#0B2C46}}</style></head><body><div class="sheet">
 <div class="top">{logo}<span>Funder summary</span></div>
-<h1>A warming ocean is redrawing where sharks and people meet.</h1>
-<p class="lead">19 Degrees is an independent, open project testing what that means for swimmers, surfers, coastal towns and the sharks themselves. Every claim says in advance what would support it and what would rule it out, and every result is published, including the ones that go the other way.</p>
+<h1>Give every coast answers built on evidence, not fear.</h1>
+<p class="lead">As the ocean warms, the places and seasons where people and sharks meet are shifting. Councils are choosing safety measures, families are deciding where to swim, and scientists are racing to keep up, often without the data to know what works. 19 Degrees, an independent and open project, tests those questions in public and publishes every answer, including the surprising ones.</p>
 <div class="stats"><div><b>{n_done} / {n_claims}</b><span>Claims with a first look or result</span></div><div><b>{n_sources}</b><span>Data sources joined</span></div><div><b>{n_products}</b><span>Safety products checked</span></div><div><b>Weekly</b><span>Data updates</span></div></div>
 <div><h2>Why it matters now</h2><p>Shark and ocean-temperature research sits in datasets that rarely meet, across agencies, universities and countries. As the water warms, the places and seasons where people and sharks overlap are changing faster than any one study can follow. 19 Degrees joins the evidence in one open place. Code is open source (MIT); content is reusable with credit (CC BY 4.0).</p></div>
 <div><h2>What you can fund</h2><div class="opps">""" + "".join(f"<div><b>{h}</b>{d}</div>" for h, d in OPPS) + """</div></div>

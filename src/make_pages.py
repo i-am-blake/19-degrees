@@ -43,7 +43,7 @@ a:focus-visible{outline:2px solid var(--ink);outline-offset:3px}
 @media (max-width:620px){.bar nav{display:none}}
 @media (prefers-reduced-motion:reduce){.barwave svg{animation:none}}"""
 
-def page(slug, title, kicker, body):
+def page(slug, title, kicker, body, h1=None):
     cur = ' aria-current="page"'
     nav = "".join('<a href="/' + s + '.html"' + (cur if s == slug else "") + ">" + n + "</a>"
                   for s, n in (("sources", "Sources"), ("legal", "Legal"), ("privacy", "Privacy")))
@@ -69,7 +69,7 @@ def page(slug, title, kicker, body):
 </div>
 <main>
   <div class="kicker">{kicker}</div>
-  <h1>{title}</h1>
+  <h1>{h1 or title}</h1>
 {body}
   <p class="foot">© 2026 19 Degrees · <a href="/">Home</a></p>
 </main>
@@ -190,7 +190,7 @@ WAYS = [
 def link(u, txt, ext):
     return f'<a href="{u}"' + (' target="_blank" rel="noopener"' if ext else "") + f">{txt}</a>"
 fund_body = FUND_CSS + f"""
-  <p class="lead">A warming ocean is redrawing where sharks and people meet. 19 Degrees tests what that means for swimmers, surfers, coastal towns and the sharks themselves, in the open, and says so when the evidence goes the other way.</p>
+  <p class="lead">As the ocean warms, the places and seasons where people and sharks meet are shifting. Councils are choosing safety measures, families are deciding where to swim, and scientists are racing to keep up, often without the data to know what actually works. 19 Degrees tests those questions in the open and publishes every answer, including the surprising ones. Your support turns open questions into answers anyone can use.</p>
   <div class="hero-cta"><a class="btn pri" href="{KOFI}" target="_blank" rel="noopener">Support the research</a><a class="btn sec" href="/19-degrees-summary.pdf">Download the summary (PDF)</a></div>
   <div class="stats"><div><b>{n_done} / {n_claims}</b><span>Claims with a first look or result</span></div><div><b>{n_sources}</b><span>Data sources joined</span></div><div><b>{n_products}</b><span>Safety products checked</span></div><div><b>Weekly</b><span>Data updates</span></div></div>
   <h2>Why it matters now</h2>
@@ -220,6 +220,6 @@ os.makedirs(out, exist_ok=True)
 for slug, title, kicker, body in (("sources", "Sources and methods", "Data and credits", src_body),
                                   ("legal", "Legal and disclaimer", "Terms of use", leg_body),
                                   ("privacy", "Privacy", "Your data", pri_body),
-                                  ("funders", "Fund the research", "Funders and partners", fund_body)):
-    open(os.path.join(out, slug + ".html"), "w", encoding="utf-8").write(page(slug, title, kicker, body))
+                                  ("funders", "Fund the research", "Fund the research", fund_body)):
+    open(os.path.join(out, slug + ".html"), "w", encoding="utf-8").write(page(slug, title, kicker, body, "Give every coast answers built on evidence, not fear." if slug == "funders" else None))
 print("pages: sources.html, legal.html, privacy.html, funders.html")
