@@ -109,6 +109,8 @@ for f in favicon.ico favicon.svg apple-touch-icon.png icon-32.png icon-192.png i
 cp launch/head.html pub/launch/head.html; cp -r "$R/fonts/." pub/fonts/
 python3 -I export19.py 19-degrees.html pub; python3 -I classroom19.py 19-degrees.html pub; python3 -I notebook19.py pub
 python3 -I share19.py 19-degrees.html pub/share || { warn "share images skipped, keeping last week's"; rm -rf pub/share; cp -r "$R/share" pub/share; }
+# files added to share/ by hand (the LinkedIn carousel PDF) stay published
+for f in "$R"/share/*; do [ -e "pub/share/$(basename "$f")" ] || cp "$f" pub/share/; done
 python3 -I make_site.py 19-degrees.html pub site
 # every page, link and generated number in the finished site must agree with the home page (stops here if not)
 python3 -I check_site19.py site
