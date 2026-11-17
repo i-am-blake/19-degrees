@@ -1,7 +1,7 @@
 """Assemble the GitHub Pages site: python3 -I make_site.py <built 19-degrees.html> <pub_dir> <out_dir>
 Wraps the built page in a full HTML document with launch/head.html (link previews, icons) and copies
 the classroom sheets, data/, share/ and launch files. Fails if the address placeholder or a personal email is left in."""
-import os, re, shutil, subprocess, sys
+import json, os, re, shutil, subprocess, sys
 page, pub, out = sys.argv[1:4]
 SITE = "https://19-degrees.org/"
 body = open(page).read()
@@ -33,12 +33,6 @@ if os.path.exists(out): shutil.rmtree(out)
 os.makedirs(out)
 open(os.path.join(out, "index.html"), "w").write(doc)
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__))); import tab_pages
-# sitemap and robots.txt, so search engines find every page and tab address
-import datetime as _dt
-_today = _dt.date.today().isoformat()
-_urls = [SITE] + [SITE + _s for _s, _ in tab_pages.TABS] + [SITE + f for f in ("classroom.html", "classroom-primary.html", "classroom-middle.html", "classroom-senior.html", "sources.html", "legal.html", "privacy.html", "funders.html")]
-open(os.path.join(out, "sitemap.xml"), "w").write('<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' + "".join(f"  <url><loc>{u}</loc><lastmod>{_today}</lastmod></url>\n" for u in _urls) + "</urlset>\n")
-open(os.path.join(out, "robots.txt"), "w").write(f"User-agent: *\nAllow: /\nSitemap: {SITE}sitemap.xml\n")
 open(os.path.join(out, "CNAME"), "w").write(SITE.split("//")[1].strip("/") + "\n")  # GitHub Pages custom domain
 for f in os.listdir(pub):
     if re.match(r"classroom.*\.html$", f):
@@ -81,6 +75,17 @@ if os.path.exists(_fp):
     _d = re.search(r"(\d+) / (\d+)</span> claims with a first look or a result", _ix)
     if f"{_d.group(1)} of {_d.group(2)} claims have a first look" not in _fu: sys.exit("::error::funders.html claim count does not match the Research page.")
     print("funder page and PDF: numbers match the home page")
+# Generated pages: data, changes and its feed, one page per claim, the safety evidence ladder, questions
+_gp = os.path.join(os.path.dirname(os.path.abspath(__file__)), "gen19.py")
+subprocess.run([sys.executable, "-I", _gp, os.path.join(out, "index.html"), out], check=True)
+_gen = json.load(open(os.path.join(out, ".generated.json"))); os.remove(os.path.join(out, ".generated.json"))
+# sitemap and robots.txt, so search engines find every page (merged-claim pages that only send readers on are left out)
+import datetime as _dt
+_today = _dt.date.today().isoformat()
+_urls = [SITE] + [SITE + _s for _s, _ in tab_pages.TABS] + [SITE + f for f in ("classroom.html", "classroom-primary.html", "classroom-middle.html", "classroom-senior.html", "sources.html", "legal.html", "privacy.html", "funders.html")]
+_urls += [SITE + re.sub(r"(^|/)index$", r"\1", g) for g in _gen if not g.endswith(".xml") and g not in ("claims/c2", "claims/c37")]
+open(os.path.join(out, "sitemap.xml"), "w").write('<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' + "".join(f"  <url><loc>{u}</loc><lastmod>{_today}</lastmod></url>\n" for u in _urls) + "</urlset>\n")
+open(os.path.join(out, "robots.txt"), "w").write(f"User-agent: *\nAllow: /\nSitemap: {SITE}sitemap.xml\n")
 # each tab is its own page (/, /story, /safety, ...): split last, because the pages above read the full index.html
 tab_pages.write(doc, out)
 bad = []

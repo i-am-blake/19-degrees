@@ -110,6 +110,8 @@ cp launch/head.html pub/launch/head.html; cp -r "$R/fonts/." pub/fonts/
 python3 -I export19.py 19-degrees.html pub; python3 -I classroom19.py 19-degrees.html pub; python3 -I notebook19.py pub
 python3 -I share19.py 19-degrees.html pub/share || { warn "share images skipped, keeping last week's"; rm -rf pub/share; cp -r "$R/share" pub/share; }
 python3 -I make_site.py 19-degrees.html pub site
+# every page, link and generated number in the finished site must agree with the home page (stops here if not)
+python3 -I check_site19.py site
 
 # 7. Copy back
 cp -r site/. "$R/"

@@ -29,13 +29,14 @@
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
 <link rel="manifest" href="site.webmanifest">
 
-<!-- Search engines: structured description of the dataset and page -->
+<!-- Search engines: who publishes the site (the open dataset is described on /data) -->
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"Dataset","name":"19 Degrees: sea temperature and shark bites in Australia, 1900 to today",
- "description":"Every Australian bull, tiger and white shark bite since 1900 matched to that month's sea surface temperature, with season, range and coastal-waters analyses. An evidence check of shark-safety products and programs against published independent tests. Open data and code to advance shark and climate research worldwide. Updated weekly.",
- "url":"https://YOUR-SITE/","creator":{"@type":"Person","name":"Blake Erickson"},"license":"https://creativecommons.org/licenses/by/4.0/",
- "isBasedOn":["https://zenodo.org/records/18752301","https://www.metoffice.gov.uk/hadobs/hadisst/"],"spatialCoverage":"Australia","temporalCoverage":"1900/..",
- "distribution":[{"@type":"DataDownload","encodingFormat":"application/json","contentUrl":"https://YOUR-SITE/data/19-degrees-data.json"},{"@type":"DataDownload","encodingFormat":"text/csv","contentUrl":"https://YOUR-SITE/data/bite-temperatures.csv"}]}
+{"@context":"https://schema.org","@graph":[
+ {"@type":"Organization","@id":"https://YOUR-SITE/#org","name":"19 Degrees","url":"https://YOUR-SITE/","logo":"https://YOUR-SITE/icon-512.png",
+  "description":"An independent, open project that brings shark, ocean-temperature and shark-safety research together and tests every claim in public.",
+  "founder":{"@type":"Person","name":"Blake Erickson"},
+  "sameAs":["https://github.com/i-am-blake/19-degrees","https://19degrees.substack.com/","https://ko-fi.com/19degrees"]},
+ {"@type":"WebSite","@id":"https://YOUR-SITE/#site","name":"19 Degrees","url":"https://YOUR-SITE/","inLanguage":"en-US","publisher":{"@id":"https://YOUR-SITE/#org"}}]}
 </script>
 
 <!-- Analytics: none needed here. GoatCounter loads from the page itself once N19_CFG.GOATCOUNTER is set. -->
