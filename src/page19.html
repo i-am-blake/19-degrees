@@ -2349,7 +2349,11 @@ try{
 try{const SUPPORT="https://ko-fi.com/19degrees"; if(SUPPORT){const a={href:SUPPORT}; 
   const pop=document.getElementById("supportPop"); document.getElementById("supportGo").href=a.href;
   let shown=false; const show=()=>{ if(shown) return; let gone=false; try{gone=sessionStorage.getItem("n19-support")==="x";}catch(e){} if(gone) return; shown=true; pop.hidden=false; };
-  addEventListener("scroll",()=>{ const max=document.documentElement.scrollHeight-innerHeight; if(max>0&&scrollY/max>.2) show(); },{passive:true});
+  /* ask only after 45 seconds of the page being open and in view, so people can look around first */
+  { let seen=0, t0=document.visibilityState==="visible"?Date.now():0;
+    const tick=()=>{ if(shown) return; const now=Date.now(); if(t0){seen+=now-t0; t0=now;} if(seen>=45000) show(); else setTimeout(tick,1000); };
+    document.addEventListener("visibilitychange",()=>{ if(document.visibilityState==="visible") t0=Date.now(); else if(t0){seen+=Date.now()-t0; t0=0;} });
+    setTimeout(tick,1000); }
   
   const TXT="The ocean is warming. Here's what it means for your next swim.", HANDLE="";
   const link=src=>{const u=new URL(window.N19_URL);u.searchParams.set("ref",src);return u.toString();};
