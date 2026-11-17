@@ -1,0 +1,116 @@
+name: Explore candidate claims (look only)
+# First looks for five proposed claims, using data the project already has. Changes nothing in the repo or on the site.
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  look:
+    runs-on: ubuntu-26.04
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-python@v6
+        with: { python-version: "3.12" }
+      - name: Look
+        run: |
+          pip install -q -r src/requirements.txt numpy pandas openpyxl scipy
+          R="$PWD"; W="$RUNNER_TEMP/w"; mkdir -p "$W"; cp -r src/. "$W/"; cd "$W"
+          git -C "$R" fetch -q origin ocean-data sst-cache
+          mkdir -p ocean sstc && git -C "$R" archive origin/ocean-data | tar -x -C ocean && git -C "$R" archive origin/sst-cache | tar -x -C sstc && tar -xzf sstc/sst.tgz
+          python3 - <<'PY'
+          import json, urllib.request
+          h = json.load(urllib.request.urlopen("https://zenodo.org/api/records/18752301/versions?sort=version&size=1", timeout=60))["hits"]["hits"][0]
+          f = next(x for x in h["files"] if x["key"].endswith(".xlsx")); urllib.request.urlretrieve(f["links"]["self"], "asid.xlsx")
+          PY
+          python3 -I asid_to_csv.py asid.xlsx asid.csv
+          python3 - <<'PY' | tee "$R/report.md"
+          import csv, re, math, collections, json, glob, statistics as st
+          from scipy import stats
+          rows = [r for r in csv.DictReader(open("asid.csv", encoding="utf-8")) if r.get("Provoked/unprovoked", "").strip() == "unprovoked"]
+          def ym(r):
+              try: return int(float(r["Incident.year"])), int(float(r["Incident.month"]))
+              except (ValueError, KeyError): return None
+          print(f"Australian database: {len(rows)} unprovoked bites\n")
+
+          print("## 1. Lockdowns: fewer people in the water, fewer bites?\n")
+          win = {"Australia-wide, Apr-May 2020": ({"NSW","VIC","QLD","WA","SA","TAS","NT"}, [(2020,4),(2020,5)]),
+                 "Victoria, Jul-Oct 2020": ({"VIC"}, [(2020,m) for m in (7,8,9,10)]),
+                 "NSW, Jul-Oct 2021": ({"NSW"}, [(2021,m) for m in (7,8,9,10)])}
+          base_years = [y for y in range(2010, 2026) if y not in (2020, 2021)]
+          for k, (states, mos) in win.items():
+              obs = sum(1 for r in rows if ym(r) in mos and r["State"].strip().upper() in states)
+              exp = sum(1 for r in rows if ym(r) and ym(r)[0] in base_years and ym(r)[1] in {m for _, m in mos} and r["State"].strip().upper() in states) / len(base_years)
+              p = stats.poisson.cdf(obs, exp) if exp else float("nan")
+              print(f"- {k}: {obs} bites; usual for those months {exp:.1f} ({base_years[0]}-{base_years[-1]}, lockdown years left out); chance of {obs} or fewer: p = {p:.2f}")
+          print("- Note: counts are small, so this can only show a large drop.")
+
+          print("\n## 2. Have bites become less deadly?\n")
+          inj = collections.Counter(r.get("Victim.injury", "").strip().lower() for r in rows); print(f"- Injury values: {dict(inj.most_common(8))}")
+          hurt = [r for r in rows if r.get("Victim.injury", "").strip().lower() not in ("", "uninjured", "unknown")]
+          def dec(r): y = ym(r); return y and (y[0] // 10) * 10
+          tab = collections.defaultdict(lambda: [0, 0])
+          for r in hurt:
+              d = dec(r)
+              if d and d >= 1900: tab[d][0] += 1; tab[d][1] += r["Victim.injury"].strip().lower() == "fatal"
+          for d in sorted(tab): n, f = tab[d]; print(f"- {d}s: {f} deaths of {n} injured ({100*f/n:.0f}%)")
+          a = [r for r in hurt if ym(r) and 1960 <= ym(r)[0] < 1990]; b = [r for r in hurt if ym(r) and ym(r)[0] >= 2000]
+          fa = sum(r["Victim.injury"].strip().lower() == "fatal" for r in a); fb = sum(r["Victim.injury"].strip().lower() == "fatal" for r in b)
+          p = stats.fisher_exact([[fa, len(a)-fa], [fb, len(b)-fb]])[1]
+          print(f"- 1960-1989: {100*fa/len(a):.0f}% fatal (n={len(a)}); 2000 on: {100*fb/len(b):.0f}% (n={len(b)}); Fisher p = {p:.3g}")
+          for sp in ("white", "tiger", "bull"):
+              def frac(lo, hi):
+                  s = [r for r in hurt if ym(r) and lo <= ym(r)[0] < hi and sp in r.get("Shark.common.name", "").lower()]
+                  return len(s), sum(r["Victim.injury"].strip().lower() == "fatal" for r in s)
+              n1, f1 = frac(1960, 1990); n2, f2 = frac(2000, 2100)
+              if n1 and n2: print(f"  - {sp}: {100*f1/n1:.0f}% of {n1} then, {100*f2/n2:.0f}% of {n2} since 2000")
+
+          print("\n## 3. Hawaii tiger sharks: when in the year, and is the season changing?\n")
+          hrows = list(csv.DictReader(open("ocean/hawaii_incidents.csv", encoding="utf-8")))
+          def hy(r):
+              m = re.match(r"\s*(\d{4})/(\d{1,2})/", r.get("Date and Time", "")); return (int(m.group(1)), int(m.group(2))) if m else None
+          tig = [hy(r) for r in hrows if "tiger" in r.get("Shark", "").lower() and hy(r)]
+          bym = collections.Counter(m for _, m in tig); print(f"- {len(tig)} tiger shark incidents, {min(y for y,_ in tig)}-{max(y for y,_ in tig)}; by month: " + ", ".join(f"{m}: {bym[m]}" for m in range(1, 13)))
+          son = sum(bym[m] for m in (9, 10, 11)); print(f"- September-November: {son} of {len(tig)} ({100*son/len(tig):.0f}%; a quarter of the year would give 25%); binomial p = {stats.binomtest(son, len(tig), 0.25).pvalue:.3g}")
+          e1 = [m for y, m in tig if y <= 2010]; e2 = [m for y, m in tig if y > 2010]
+          sh = lambda xs: 100 * sum(m in (9, 10, 11) for m in xs) / len(xs) if xs else float("nan")
+          print(f"- Share in Sep-Nov: up to 2010 {sh(e1):.0f}% (n={len(e1)}), after 2010 {sh(e2):.0f}% (n={len(e2)})")
+
+          print("\n## 4. Shark-control gear: target sharks vs other animals (Queensland)\n")
+          import openpyxl
+          wb = openpyxl.load_workbook("ocean/scp-numbers-caught.xlsx", read_only=True, data_only=True)
+          for ws in wb.worksheets[:3]:
+              it = ws.iter_rows(values_only=True); head = next(it); rr = list(it)
+              print(f"- Sheet `{ws.title}`: {len(rr)} rows; columns: {head}")
+              for row in rr[:4]: print(f"    {row}")
+          # species/group totals if a species column exists
+          ws = wb.worksheets[0]; it = ws.iter_rows(values_only=True); head = [str(h or "") for h in next(it)]; rr = list(it)
+          sc = next((i for i, h in enumerate(head) if re.search(r"(species|group|common)", h, re.I)), None)
+          nc = next((i for i, h in enumerate(head) if re.search(r"(number|count|total)", h, re.I)), None)
+          if sc is not None:
+              tot = collections.Counter()
+              for row in rr:
+                  try: tot[str(row[sc]).strip()] += float(row[nc]) if nc is not None and row[nc] not in (None, "") else 1
+                  except (TypeError, ValueError): tot[str(row[sc]).strip()] += 1
+              print(f"- Totals by `{head[sc]}`: " + "; ".join(f"{k}: {v:.0f}" for k, v in tot.most_common(30)))
+
+          print("\n## 5. El Nino and La Nina: do they change how long the sea off Sydney stays at 19C or warmer?\n")
+          oni = {r["date"][:7]: float(r["oni"]) for r in csv.DictReader(open("sst/nino34.csv")) if r.get("oni") not in ("", None)}
+          f = next(p for p in glob.glob("sst/*.csv") if "Sydney" in p)
+          syd = {}
+          for row in list(csv.reader(open(f)))[1:]:
+              try: syd[row[0][:7]] = float(row[1])
+              except (ValueError, IndexError): pass
+          yrs = [y for y in range(1950, 2026) if all(f"{y}-{m:02d}" in syd for m in range(1, 13))]
+          warm = {y: sum(syd[f"{y}-{m:02d}"] >= 19 for m in range(1, 13)) for y in yrs}
+          enso = {y: st.mean(oni[f"{y}-{m:02d}"] for m in range(1, 13) if f"{y}-{m:02d}" in oni) for y in yrs if any(f"{y}-{m:02d}" in oni for m in range(1, 13))}
+          ys = [y for y in yrs if y in enso]
+          slope, icpt = st.linear_regression(ys, [warm[y] for y in ys])
+          resid = [warm[y] - (icpt + slope * y) for y in ys]
+          r, p = stats.pearsonr([enso[y] for y in ys], resid)
+          print(f"- {len(ys)} years ({ys[0]}-{ys[-1]}); file `{f}`. Months at 19C or warmer rise by {10*slope:.2f} a decade.")
+          print(f"- After taking out that trend: correlation with the year's mean El Nino index r = {r:.2f}, p = {p:.3g}")
+          ne = [resid[i] for i, y in enumerate(ys) if enso[y] >= 0.5]; ln = [resid[i] for i, y in enumerate(ys) if enso[y] <= -0.5]
+          if ne and ln: print(f"- El Nino years: {st.mean(ne):+.2f} months vs trend (n={len(ne)}); La Nina years: {st.mean(ln):+.2f} (n={len(ln)})")
+          PY
+          cat "$R/report.md" >> "$GITHUB_STEP_SUMMARY"
