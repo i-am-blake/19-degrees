@@ -1,0 +1,55 @@
+name: Explore shark-control catch (look only)
+# Splits Queensland shark-control catches into target and non-target animals, alive and dead, over time. Changes nothing.
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  look:
+    runs-on: ubuntu-26.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-python@v6
+        with: { python-version: "3.12" }
+      - name: Look
+        run: |
+          pip install -q openpyxl
+          git fetch -q origin ocean-data && mkdir -p ocean && git archive origin/ocean-data scp-numbers-caught.xlsx | tar -x -C ocean
+          python3 - <<'PY' | tee report.md
+          import openpyxl, collections
+          ws = openpyxl.load_workbook("ocean/scp-numbers-caught.xlsx", read_only=True, data_only=True).worksheets[0]
+          it = ws.iter_rows(values_only=True); H = list(next(it)); ix = {h: i for i, h in enumerate(H)}
+          rows = [r for r in it if r[ix["Year"]]]
+          n = lambda r: float(r[ix["NumberCaught"]] or 0)
+          yrs = sorted({int(r[ix["Year"]]) for r in rows}); print(f"{len(rows)} rows, {yrs[0]}-{yrs[-1]}\n")
+          print("FateReason values:", collections.Counter(str(r[ix["FateReason"]]) for r in rows).most_common(12))
+          print("Fate values:", collections.Counter(str(r[ix["Fate"]]) for r in rows).most_common(12))
+          print("Alive/Deceased:", collections.Counter(str(r[ix["Alive/Deceased"]]) for r in rows).most_common(6), "\n")
+          tgt = lambda r: str(r[ix["FateReason"]]).strip().lower() == "target species"
+          for lo, hi in [(yrs[0], 2026), (2016, 2026)]:
+              S = [r for r in rows if lo <= int(r[ix["Year"]]) <= hi]
+              t = sum(n(r) for r in S if tgt(r)); o = sum(n(r) for r in S if not tgt(r))
+              print(f"## {lo}-{hi}: target {t:.0f}, non-target {o:.0f} ({100*o/(t+o):.0f}% non-target)")
+              g = collections.defaultdict(lambda: [0, 0, 0])
+              for r in S:
+                  if tgt(r): continue
+                  k = str(r[ix["SpeciesGroup"]]); g[k][0] += n(r)
+                  if str(r[ix["Alive/Deceased"]]).lower().startswith("alive"): g[k][1] += n(r)
+                  if str(r[ix["Fate"]]).lower() in ("released", "released alive", "tagged and released"): g[k][2] += n(r)
+              for k, (a, alive, rel) in sorted(g.items(), key=lambda x: -x[1][0]): print(f"- non-target {k}: {a:.0f} caught, {alive:.0f} found alive ({100*alive/a:.0f}%), {rel:.0f} marked released")
+              tc = collections.Counter()
+              for r in S:
+                  if tgt(r): tc[str(r[ix["CommonName"]])] += n(r)
+              print("- target species caught: " + "; ".join(f"{k}: {v:.0f}" for k, v in tc.most_common(10)))
+              mam = collections.Counter(); tur = collections.Counter()
+              for r in S:
+                  if str(r[ix["SpeciesGroup"]]) == "MAMMAL": mam[str(r[ix["CommonName"]])] += n(r)
+                  if str(r[ix["SpeciesGroup"]]) == "TURTLE": tur[str(r[ix["CommonName"]])] += n(r)
+              print("- mammals: " + "; ".join(f"{k}: {v:.0f}" for k, v in mam.most_common(8)))
+              print("- turtles: " + "; ".join(f"{k}: {v:.0f}" for k, v in tur.most_common(6)))
+              gear = collections.defaultdict(lambda: [0, 0])
+              for r in S: gear[str(r[ix["Gear"]])][0 if tgt(r) else 1] += n(r)
+              print("- by gear (target, non-target): " + "; ".join(f"{k}: {a:.0f}, {b:.0f}" for k, (a, b) in gear.items()) + "\n")
+          PY
+          cat report.md >> "$GITHUB_STEP_SUMMARY"
