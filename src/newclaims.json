@@ -1,0 +1,274 @@
+{
+ "c44": {
+  "early": {
+   "n": 78,
+   "fatal": 21,
+   "pct": 27
+  },
+  "late": {
+   "n": 304,
+   "fatal": 49,
+   "pct": 16
+  },
+  "last_year": 2026,
+  "p": 0.03321278790776519,
+  "decades": [
+   {
+    "decade": 1900,
+    "injured": 18,
+    "fatal": 8,
+    "pct": 44
+   },
+   {
+    "decade": 1910,
+    "injured": 32,
+    "fatal": 14,
+    "pct": 44
+   },
+   {
+    "decade": 1920,
+    "injured": 49,
+    "fatal": 26,
+    "pct": 53
+   },
+   {
+    "decade": 1930,
+    "injured": 45,
+    "fatal": 21,
+    "pct": 47
+   },
+   {
+    "decade": 1940,
+    "injured": 34,
+    "fatal": 16,
+    "pct": 47
+   },
+   {
+    "decade": 1950,
+    "injured": 26,
+    "fatal": 13,
+    "pct": 50
+   },
+   {
+    "decade": 1960,
+    "injured": 20,
+    "fatal": 5,
+    "pct": 25
+   },
+   {
+    "decade": 1970,
+    "injured": 23,
+    "fatal": 6,
+    "pct": 26
+   },
+   {
+    "decade": 1980,
+    "injured": 35,
+    "fatal": 10,
+    "pct": 29
+   },
+   {
+    "decade": 1990,
+    "injured": 48,
+    "fatal": 7,
+    "pct": 15
+   },
+   {
+    "decade": 2000,
+    "injured": 83,
+    "fatal": 11,
+    "pct": 13
+   },
+   {
+    "decade": 2010,
+    "injured": 117,
+    "fatal": 16,
+    "pct": 14
+   },
+   {
+    "decade": 2020,
+    "injured": 104,
+    "fatal": 22,
+    "pct": 21
+   }
+  ],
+  "species": {
+   "white": {
+    "early": {
+     "n": 27,
+     "fatal": 7,
+     "pct": 26
+    },
+    "late": {
+     "n": 122,
+     "fatal": 35,
+     "pct": 29
+    }
+   },
+   "tiger": {
+    "early": {
+     "n": 22,
+     "fatal": 11,
+     "pct": 50
+    },
+    "late": {
+     "n": 16,
+     "fatal": 2,
+     "pct": 12
+    }
+   },
+   "bull": {
+    "early": {
+     "n": 12,
+     "fatal": 3,
+     "pct": 25
+    },
+    "late": {
+     "n": 37,
+     "fatal": 9,
+     "pct": 24
+    }
+   }
+  }
+ },
+ "c45": {
+  "n": 80,
+  "first": 1995,
+  "last": 2026,
+  "by_month": [
+   5,
+   5,
+   7,
+   6,
+   6,
+   4,
+   2,
+   8,
+   7,
+   20,
+   4,
+   6
+  ],
+  "son": 31,
+  "son_pct": 39,
+  "p_season": 0.006421280131589952,
+  "early": {
+   "n": 27,
+   "son": 7,
+   "pct": 26
+  },
+  "late": {
+   "n": 53,
+   "son": 24,
+   "pct": 45
+  },
+  "p": 0.14471449133722375
+ },
+ "c46": {
+  "first": 1996,
+  "last": 2026,
+  "all": {
+   "target": 12006,
+   "other": 18705,
+   "pct_other": 61,
+   "target_by": {
+    "tiger": 8002,
+    "bull": 3786,
+    "white": 218
+   },
+   "other_by": {
+    "other sharks": {
+     "n": 13041,
+     "alive": 2257,
+     "alive_pct": 17
+    },
+    "turtles": {
+     "n": 1475,
+     "alive": 1287,
+     "alive_pct": 87
+    },
+    "rays, fish and others": {
+     "n": 3588,
+     "alive": 1854,
+     "alive_pct": 52
+    },
+    "dolphins and whales": {
+     "n": 601,
+     "alive": 207,
+     "alive_pct": 34
+    }
+   },
+   "gear": {
+    "drum": {
+     "target": 10896,
+     "other": 11356
+    },
+    "net": {
+     "target": 1104,
+     "other": 7146
+    }
+   },
+   "p": 3.56e-322
+  },
+  "recent": {
+   "target": 4596,
+   "other": 8198,
+   "pct_other": 64,
+   "target_by": {
+    "tiger": 2871,
+    "bull": 1660,
+    "white": 65
+   },
+   "other_by": {
+    "other sharks": {
+     "n": 6699,
+     "alive": 1292,
+     "alive_pct": 19
+    },
+    "turtles": {
+     "n": 414,
+     "alive": 329,
+     "alive_pct": 79
+    },
+    "rays, fish and others": {
+     "n": 885,
+     "alive": 343,
+     "alive_pct": 39
+    },
+    "dolphins and whales": {
+     "n": 200,
+     "alive": 98,
+     "alive_pct": 49
+    }
+   },
+   "gear": {
+    "drum": {
+     "target": 4352,
+     "other": 6192
+    },
+    "net": {
+     "target": 244,
+     "other": 2006
+    }
+   },
+   "p": 2.039986994177718e-225
+  },
+  "recent_from": 2017
+ },
+ "c32": {
+  "first": 1951,
+  "last": 2025,
+  "years": 75,
+  "per_decade": 0.43,
+  "r": 0.08,
+  "p": 0.5002720172480014,
+  "nino": {
+   "n": 10,
+   "months": 0.2
+  },
+  "nina": {
+   "n": 19,
+   "months": -0.1
+  }
+ }
+}

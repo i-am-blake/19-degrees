@@ -101,6 +101,13 @@ def g_c25(D):
     if "daily" in D:  # the stricter daily test, with its rule set in advance: under 5% of US shark-days below 19°C
         v = down(v, D["daily"]["us"]["bull"]["below19_pct"] < D["daily"]["rule"]["supports_below_pct"])
     return v
+def g_c44(D):  # survival: main test on all bites; the drop must also show for white and bull shark bites
+    c = D["newclaims"]["c44"]; e, l = c["early"], c["late"]
+    same = all(c["species"][s]["late"]["pct"] < c["species"][s]["early"]["pct"] for s in ("white", "tiger", "bull"))
+    return down(V(l["pct"] < e["pct"], c["p"]), same)
+def g_c45(D): c = D["newclaims"]["c45"]; return V(c["late"]["pct"] > c["early"]["pct"], c["p"])
+def g_c46(D):  # the share must be over half in the full record (main test) and in the last 10 years (check)
+    c = D["newclaims"]["c46"]; return down(V(c["all"]["pct_other"] > 50, c["all"]["p"]), c["recent"]["pct_other"] > 50)
 def g_c43(D):
     m = D["size"]["main"]; sm, lg = m["by_shark"]["small"], m["by_shark"]["large"]
     v = V(sm["winter_sharks"] / sm["sharks"] > lg["winter_sharks"] / lg["sharks"], m["p"])
@@ -112,10 +119,11 @@ def g_c28(D):
 def g_c29(D):
     u = D["upwelling"]; return V(u["strongest_pct"] > 25, binom2(u["strongest_quarter"], u["n"], 0.25))
 
-FIXED = {"c2": "look", "c4": "look", "c7": "look", "c8": "nt", "c9": "look", "c20": "look", "c21": "look", "c22": "look", "c30": "look",
-         **{c: "open" for c in ("c10", "c11", "c12", "c13", "c14", "c15", "c17", "c27", "c31", "c32", "c33", "c34", "c35", "c36", "c37", "c38", "c39", "c40", "c41", "c42")}}
+FIXED = {"c4": "look", "c32": "look", "c7": "look", "c8": "nt", "c9": "look", "c20": "look", "c21": "look", "c22": "look", "c30": "look",
+         **{c: "open" for c in ("c10", "c11", "c12", "c13", "c14", "c15", "c17", "c27", "c31", "c33", "c34", "c35", "c36", "c38", "c39", "c40", "c41", "c42")}}
 TESTS = {"c1": g_c1, "c3": g_c3, "c5": g_c5, "c6": g_c6, "c16": g_c16, "c18": g_c18, "c19": g_c19,
-         "c23": g_c23, "c24": g_c24, "c25": g_c25, "c26": g_c26, "c28": g_c28, "c29": g_c29, "c43": g_c43}
+         "c23": g_c23, "c24": g_c24, "c25": g_c25, "c26": g_c26, "c28": g_c28, "c29": g_c29, "c43": g_c43,
+         "c44": g_c44, "c45": g_c45, "c46": g_c46}
 
 # Evidence tiers: what kind of data a result rests on, strongest first. The strongest tier a claim has sets how high its
 # grade can go: tiers 1 and 2 up to Strong, tier 3 up to Supported, tiers 4 to 6 no higher than "leans toward it".
@@ -137,6 +145,9 @@ EVID = {
  "c26": ((5,), lambda D: "Bite records per year, against the Indian Ocean Dipole."),
  "c28": ((3, 5), lambda D: BITES + ", against rainfall (main test). Queensland shark-control catches against river flow (check)."),
  "c29": ((5,), lambda D: "Incident records against upwelling strength."),
+ "c44": ((5,), lambda D: "Bite records with the outcome (injured or died). They don't record how severe each wound was, and more minor bites are recorded now than decades ago."),
+ "c45": ((5,), lambda D: "Hawaii's incident records by month, with no count of people in the water."),
+ "c46": ((3,), lambda D: f'Every animal caught in Queensland\'s nets and drumlines, {D["newclaims"]["c46"]["first"]} to {D["newclaims"]["c46"]["last"]}, recorded by the program.'),
  "c43": ((2,), lambda D: f'{D["size"]["sharks_with_length"]} tagged sharks with a length at tagging. Small sharks were tracked through winter in one river only.'),
 }
 # Claims that are about the bite or incident records themselves (where incidents are, when bites fall), not about what
