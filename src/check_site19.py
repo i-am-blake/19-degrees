@@ -56,6 +56,7 @@ for cid, grade, title in cards:
     check(f"{f}: title differs from the card", f"<h1>{html.escape(text(title))}</h1>" in s)
     check(f"{f}: grade differs from the card", re.search(r'<p class="meta">Grade <span class="cstat[^"]*">' + re.escape(html.escape(text(grade))) + "</span>", s) is not None)
 grade_of = {cid: text(g) for cid, g, _ in cards}
+check("research.html: title counts every claim", f"<title>{len(cards)} testable claims" in R)
 check("claims/index.html lists every claim", all(f'href="/claims/{c}"' in read("claims/index.html") for c in grade_of))
 # 5. claim grades quoted on question pages match the cards
 for p in [p for p in pages if p.startswith("questions/")]:
