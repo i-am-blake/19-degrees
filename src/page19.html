@@ -2445,9 +2445,9 @@ try{
       if(j!=null){e.preventDefault();show(key(vis[j]),true);setHash(key(vis[j]),true);}});
   });
   document.addEventListener("click",e=>{const a=e.target.closest('a[href^="#"]');if(!a||e.defaultPrevented||a.closest(".skip"))return;const h=(a.getAttribute("href")||"").slice(1);if(!h)return;
-    /* in-page links keep the address of the tab they land on (#research, #story...), not the section's own id */
-    let tab=a.dataset.tab;const el=document.getElementById(h);if(!tab){const pn=panelOf(el);if(!pn)return;tab=pn.id.slice(6);}
-    e.preventDefault();const sec=h!==tab?h:null;show(tab,false,sec);setHash(tab,true,PATH?sec:null);});
+    /* in-page links (footer included) show only the address of the tab they land on (/research, /story...), never the section's id */
+    let tab=a.dataset.tab;const el=document.getElementById(h);if(!tab){const pn=panelOf(el);if(!pn){if(!el)return;e.preventDefault();el.scrollIntoView({behavior:"smooth"});setHash(CUR,false);return;}tab=pn.id.slice(6);}
+    e.preventDefault();const sec=h!==tab?h:null;show(tab,false,sec);setHash(tab,true);});
   function fromHash(load){let h="";try{h=(location.hash||"").slice(1);}catch(e){}
     if(TAB_OF[h]&&h!=="home"){show(TAB_OF[h]);setHash(TAB_OF[h]);return;}
     if(h==="top"){show("story");setHash("story",false,PATH?"top":null);return;}
