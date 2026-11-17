@@ -16,10 +16,10 @@ permissions:
   contents: write
 jobs:
   climate:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     timeout-minutes: 240
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
       - name: Indian Ocean Dipole
         run: |
           mkdir -p out; : > out/climate_log.txt

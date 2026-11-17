@@ -11,7 +11,7 @@ permissions:
   contents: write
 jobs:
   imos:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     steps:
       - name: Download bull, tiger and white shark and green turtle files
         run: |

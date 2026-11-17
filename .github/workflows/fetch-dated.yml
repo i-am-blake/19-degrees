@@ -25,13 +25,13 @@ permissions:
   contents: write
 jobs:
   dated:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     timeout-minutes: 240
     env:
       PARTS: ${{ inputs.parts }}
       POINTS: ${{ inputs.points }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
       - name: Weather and waves (Open-Meteo)
         run: |
           mkdir -p out; : > out/dated_log.txt

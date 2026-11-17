@@ -20,7 +20,8 @@ NEWDB=0; cmp -s asid_version.txt "$R/src/asid_version.txt" 2>/dev/null || NEWDB=
 
 # 2. Sea temperature (stop if NOAA is unreachable: these scripts exit with an error)
 # NOAA sometimes stalls: each download gets 10 minutes and up to 3 tries before the run stops
-retry(){ local n; for n in 1 2 3; do timeout 600 "$@" && return 0; warn "try $n of 3 failed: $*"; [ "$n" -lt 3 ] && sleep 60; done; return 1; }
+# A good NOAA download takes under a minute, so each try gets 3 minutes; worst case about 10 minutes before the saved copy is used
+retry(){ local n; for n in 1 2 3; do timeout 180 "$@" && return 0; warn "try $n of 3 failed: $*"; [ "$n" -lt 3 ] && sleep 30; done; return 1; }
 # Every good download is saved to the sst-cache branch. If NOAA can't be reached after 3 tries, the build reuses that saved copy
 # (and says so), so an outage never blocks page changes; with no saved copy at all, the run stops as before.
 REPO_URL="https://x-access-token:${GH_TOKEN:-}@github.com/${GITHUB_REPOSITORY:-i-am-blake/19-degrees}.git"
