@@ -172,9 +172,12 @@ jobs:
                       after = r[-1]["id"]
                   return out
               bull = obis("Carcharhinus leucas"); allsh = obis("Selachimorpha")
-              yb = collections.Counter(int(r["date_year"]) for r in bull if r.get("date_year"))
-              ya = collections.Counter(int(r["date_year"]) for r in allsh if r.get("date_year"))
-              mb = collections.Counter(int(r["month"]) for r in bull if r.get("month"))
+              def num(x):
+                  try: return int(float(x))
+                  except (TypeError, ValueError): return None
+              yb = collections.Counter(y for y in (num(r.get("date_year")) for r in bull) if y)
+              ya = collections.Counter(y for y in (num(r.get("date_year")) for r in allsh) if y)
+              mb = collections.Counter(m for m in (num(r.get("month")) for r in bull) if m)
               ds = collections.Counter(r.get("datasetName", "?") for r in bull)
               print(f"- OBIS bull shark records, Gulf and Florida: {len(bull)}; all shark records: {len(allsh)}")
               print("- Bull records by year (1990+): " + ", ".join(f"{y}: {yb[y]}" for y in sorted(yb) if y >= 1990))
