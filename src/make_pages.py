@@ -151,9 +151,53 @@ PRIV = [
 ]
 pri_body = '  <p class="lead">19 Degrees collects as little as possible.</p>\n' + "".join(f"  <h2>{h}</h2>\n  <p>{p}</p>\n" for h, p in PRIV) + "  <p>Last updated 5 November 2026.</p>\n"
 
+
+# Funders and partners: a page for grant makers, partners and supporters. Counts come from the built index.html.
+def tile(label):
+    m = re.search(r'<span class="lab">' + label + r'</span><span class="big"[^>]*>(\d+)<', t)
+    return m.group(1) if m else "?"
+m_open = re.search(r"Pick one of the (?:<[^>]+>)?(\d+)", t)
+n_claims, n_sources, n_products = tile("Testable claims"), tile("Data sources joined"), tile("Products checked")
+n_open = m_open.group(1) if m_open else "?"
+FUND_CSS = """<style>.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin:24px 0 8px}
+.stats div{border:1px solid var(--rule);padding:14px 16px;display:flex;flex-direction:column;gap:4px}
+.stats b{font:800 34px/1 var(--f-display);color:var(--ink)}.stats span{font:500 12px/1.4 var(--f-data);letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.rules{list-style:none;padding:0;display:grid;gap:10px}.rules li{border-left:3px solid var(--warm);padding:4px 0 4px 14px}
+.ways{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px;margin-top:12px}
+.ways div{border:1px solid var(--rule);padding:16px}.ways h3{font:700 18px/1.3 var(--f-display);margin:0 0 6px;color:var(--ink)}.ways p{margin:0 0 10px;font-size:15px}</style>"""
+PAYS = [
+ ("Access to data", "Several claims can't be tested because the data they need isn't public or costs money to obtain. Funding pays for data requests, licenses and the time to clean and join new datasets."),
+ ("Testing the open claims", f"{n_open} of the {n_claims} claims are waiting for data or a test. Funding pays for the research time to run each test in the open, with the method set before the result is known."),
+ ("Independent review", "Paying qualified reviewers to check methods and results, so mistakes are found and published rather than hidden."),
+ ("Schools", "Testing and improving the free classroom sheets with teachers, for each age range."),
+ ("Keeping it running", "The weekly data update, hosting and the tools that keep every number on the site checked automatically."),
+]
+fund_body = FUND_CSS + f"""
+  <p class="lead">19 Degrees is an independent, open project testing how a warming ocean is changing where sharks and people meet. Every claim says in advance what would support it and what would rule it out, and every result is published, including the ones that go against it.</p>
+  <div class="stats"><div><b>{n_claims}</b><span>Testable claims</span></div><div><b>{n_sources}</b><span>Data sources joined</span></div><div><b>{n_products}</b><span>Safety products checked</span></div><div><b>Weekly</b><span>Data updates</span></div></div>
+  <h2>Why it matters</h2>
+  <p>Shark research and ocean-temperature research are spread across agencies, universities and countries, in datasets that rarely meet. 19 Degrees joins them in one open place, so anyone can see what the evidence says, what it doesn't say yet, and what data is missing. All code is open source (MIT) and all content can be reused with credit (CC BY 4.0).</p>
+  <h2>What funding pays for</h2>
+""" + "".join(f"  <p><b>{h}.</b> {d}</p>\n" for h, d in PAYS) + """  <h2>Independence</h2>
+  <ul class="rules">
+    <li>Funders get no say over methods, results, grades or wording. A result that goes against a funder's interest is published the same way as any other.</li>
+    <li>Funding is accepted from foundations, institutions, companies and individuals, including makers of shark-safety products. Their products are tested and graded exactly like everyone else's.</li>
+    <li>Every funder and partner above a set amount is listed publicly, with what the money was for.</li>
+    <li>19 Degrees stays neutral on contested measures such as nets and drumlines, and reports what the evidence shows.</li>
+  </ul>
+  <h2>Ways to help</h2>
+  <div class="ways">
+    <div><h3>Grants and partnerships</h3><p>Fund a claim, a region, a dataset or the schools program.</p><a href="/#contact">Get in touch →</a></div>
+    <div><h3>Share data</h3><p>Researchers and agencies can contribute data that lets an open claim be tested.</p><a href="/research#h-data">How sharing works →</a></div>
+    <div><h3>Support the research</h3><p>A contribution of any size.</p><a href="https://ko-fi.com/19degrees" target="_blank" rel="noopener">Support on Ko-fi →</a></div>
+  </div>
+  <p class="foot" style="border:0;margin-top:32px">Questions about funding? Use the <a href="/#contact">contact form</a> and choose "Funding or partnership". The author replies to every message.</p>
+"""
+
 os.makedirs(out, exist_ok=True)
 for slug, title, kicker, body in (("sources", "Sources and methods", "Data and credits", src_body),
                                   ("legal", "Legal and disclaimer", "Terms of use", leg_body),
-                                  ("privacy", "Privacy", "Your data", pri_body)):
+                                  ("privacy", "Privacy", "Your data", pri_body),
+                                  ("funders", "Fund the research", "Funders and partners", fund_body)):
     open(os.path.join(out, slug + ".html"), "w", encoding="utf-8").write(page(slug, title, kicker, body))
-print("pages: sources.html, legal.html, privacy.html")
+print("pages: sources.html, legal.html, privacy.html, funders.html")
