@@ -3,7 +3,7 @@ name: Explore new angles (look only)
 on:
   workflow_dispatch:
     inputs:
-      only: { description: "Run one section (wiki, usla, osm, prey, heat, eac, redtide); empty runs all", required: false, default: "" }
+      only: { description: "Run one section (wiki, usla, osm, prey, heat, eac, redtide, gulf); empty runs all", required: false, default: "" }
 permissions:
   contents: read
 jobs:
@@ -158,5 +158,57 @@ jobs:
               j = json.loads(get("https://geodata.myfwc.com/api/search/v1/collections/all/items?q=red%20tide&limit=10", 90))
               print("- FWC open data, 'red tide': " + "; ".join(f.get("properties", {}).get("title", "?") for f in j.get("features", [])[:10]))
           if ONLY in ('', 'redtide'): safe(redtide)
+          def gulf():
+              section("H. Gulf and Florida: bull sharks vs red tide and bait fish")
+              poly = "POLYGON((-98 24,-80 24,-80 31,-98 31,-98 24))"
+              def obis(name):
+                  out, after = [], None
+                  for _ in range(40):
+                      q = {"scientificname": name, "geometry": poly, "size": 5000, "fields": "eventDate,date_year,month,datasetName,id"}
+                      if after: q["after"] = after
+                      j = json.loads(get("https://api.obis.org/v3/occurrence?" + urllib.parse.urlencode(q), 180))
+                      r = j.get("results", []); out += r
+                      if len(r) < 5000: break
+                      after = r[-1]["id"]
+                  return out
+              bull = obis("Carcharhinus leucas"); allsh = obis("Selachimorpha")
+              yb = collections.Counter(int(r["date_year"]) for r in bull if r.get("date_year"))
+              ya = collections.Counter(int(r["date_year"]) for r in allsh if r.get("date_year"))
+              mb = collections.Counter(int(r["month"]) for r in bull if r.get("month"))
+              ds = collections.Counter(r.get("datasetName", "?") for r in bull)
+              print(f"- OBIS bull shark records, Gulf and Florida: {len(bull)}; all shark records: {len(allsh)}")
+              print("- Bull records by year (1990+): " + ", ".join(f"{y}: {yb[y]}" for y in sorted(yb) if y >= 1990))
+              print("- Bull records by month: " + ", ".join(f"{m}: {mb[m]}" for m in range(1, 13)))
+              print("- Top source datasets: " + "; ".join(f"{k} ({v})" for k, v in ds.most_common(8)))
+              # red tide blooms, Florida, by year (Karenia >= 100,000 cells/L)
+              base = "https://gis.ncdc.noaa.gov/arcgis/rest/services/ms/HABSOS_CellCounts/MapServer/0/query"
+              bloom = {}
+              for y in range(1990, 2026):
+                  w = f"GENUS='Karenia' AND STATE_ID='FL' AND CELLCOUNT>=100000 AND SAMPLE_DATE>=timestamp '{y}-01-01 00:00:00' AND SAMPLE_DATE<timestamp '{y+1}-01-01 00:00:00'"
+                  try: bloom[y] = json.loads(get(base + "?" + urllib.parse.urlencode({"where": w, "returnCountOnly": "true", "f": "json"}), 120)).get("count")
+                  except Exception as e: bloom[y] = None
+              print("- Florida red tide samples at bloom strength (>=100,000 cells/L) by year: " + ", ".join(f"{y}: {bloom[y]}" for y in sorted(bloom)))
+              # menhaden landings, Gulf states, by year
+              q = urllib.parse.quote(json.dumps({"ts_afs_name": {"$like": "%MENHADEN%"}, "region_name": "Gulf"}))
+              men = collections.Counter(); off = 0
+              while True:
+                  j = json.loads(get(f"https://apps-st.fisheries.noaa.gov/ods/foss/landings/?q={q}&limit=1000&offset={off}", 120))
+                  for i in j.get("items", []):
+                      if i.get("year") and i.get("pounds"): men[int(i["year"])] += i["pounds"]
+                  if not j.get("hasMore"): break
+                  off += 1000
+              print("- Gulf menhaden landings, million lb by year (1990+): " + ", ".join(f"{y}: {men[y]/1e6:.0f}" for y in sorted(men) if y >= 1990))
+              def corr(x, y):
+                  mx, my = st.mean(x), st.mean(y); sx = math.sqrt(sum((a-mx)**2 for a in x)); sy = math.sqrt(sum((b-my)**2 for b in y))
+                  return sum((a-mx)*(b-my) for a, b in zip(x, y)) / (sx*sy) if sx and sy else float("nan")
+              yrs = [y for y in range(1995, 2025) if ya[y] >= 20]
+              share = {y: yb[y] / ya[y] for y in yrs}
+              print(f"\nFirst look, years with at least 20 shark records ({len(yrs)} years):")
+              ry = [y for y in yrs if bloom.get(y) is not None]
+              if len(ry) > 5: print(f"- Bull share of shark records vs Florida red tide bloom samples: r = {corr([share[y] for y in ry], [bloom[y] for y in ry]):.2f} ({len(ry)} years)")
+              my_ = [y for y in yrs if men[y]]
+              if len(my_) > 5: print(f"- Bull share of shark records vs Gulf menhaden landings: r = {corr([share[y] for y in my_], [men[y] for y in my_]):.2f} ({len(my_)} years)")
+              print("- Caution: OBIS records reflect where and when people looked, not how many sharks there were. The share of bull sharks among all shark records only partly corrects for that.")
+          if ONLY in ('', 'gulf'): safe(gulf)
           PY
           cat ../report.md >> "$GITHUB_STEP_SUMMARY"
