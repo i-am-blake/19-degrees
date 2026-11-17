@@ -161,6 +161,9 @@ m_done = re.search(r'(\d+) / (\d+)</span> claims with a first look or a result',
 n_claims, n_sources, n_products = tile("Testable claims"), tile("Data sources joined"), tile("Products checked")
 n_open = m_open.group(1) if m_open else "?"
 n_done = m_done.group(1) if m_done else "?"
+m_wait = re.search(r'(\d+) / \d+</span> claims waiting for data', t)
+n_wait = m_wait.group(1) if m_wait else "?"
+pct = round(100 * int(n_done) / int(n_claims)) if n_done.isdigit() and n_claims.isdigit() else 0
 KOFI = "https://ko-fi.com/19degrees"
 CONTACT = "/#contact"
 FUND_CSS = """<style>.hero-cta{display:flex;flex-wrap:wrap;gap:12px;margin:24px 0 8px}
@@ -174,15 +177,16 @@ FUND_CSS = """<style>.hero-cta{display:flex;flex-wrap:wrap;gap:12px;margin:24px 
 .cards h3{font:700 18px/1.3 var(--f-display);margin:0;color:var(--ink)}.cards p{margin:0;font-size:15px;flex:1}.cards a{font-weight:600}
 .cards .tag{font:500 11px/1.4 var(--f-data);letter-spacing:.1em;text-transform:uppercase;color:var(--warm)}
 .rules{list-style:none;padding:0;display:grid;gap:10px}.rules li{border-left:3px solid var(--warm);padding:4px 0 4px 14px}
+.goal{margin:28px 0 0}.goal .track{height:14px;background:rgba(232,241,242,.12);margin:8px 0 6px}.goal .fill{height:100%;background:var(--warm)}.goal p{margin:0;font-size:15px}.goal b{color:var(--ink)}
 .status{border:1px solid var(--rule);padding:18px 20px;margin-top:12px}.status p{margin:0 0 8px}.status p:last-child{margin:0}</style>"""
 OPPS = [
- ("Fund a claim", f"{n_open} of the {n_claims} claims are still waiting for data or a test. Fund one, and it gets tested in the open, with the method set before the result is known."),
+ ("Fund a claim", f"{n_wait} of the {n_claims} claims are still waiting for data or a test. Fund one, and it gets tested in the open, with the method set before the result is known."),
  ("Open a dataset", "Some claims can't be tested because the data isn't public or costs money. Fund the request, license or cleaning that opens one up for everyone."),
  ("Sponsor the schools program", "Free classroom sheets for three age ranges. Fund testing with teachers and new lessons built on real data."),
  ("Underwrite independent review", "Pay qualified scientists to check methods and results, so mistakes are found and published, not hidden."),
 ]
 WAYS = [
- ("Give once", "A contribution of any size goes straight to the research.", KOFI, "Support on Ko-fi →", True),
+ ("Give once", "Like buying a coffee: quick, any size, and it adds up. Every contribution goes to the research.", KOFI, "Support on Ko-fi →", True),
  ("Give in someone's honor", "Add their name in the Ko-fi message, for an ocean lover, a surfer or a lifeguard.", KOFI, "Give in their honor →", True),
  ("Partner as an organization", "Foundations, councils, universities and companies can fund a named project above.", CONTACT, "Talk about a partnership →", False),
  ("Share data", "Agencies and researchers can contribute the data that lets an open claim be tested.", "/research", "How sharing works →", False),
@@ -192,7 +196,8 @@ def link(u, txt, ext):
 fund_body = FUND_CSS + f"""
   <p class="lead">As the ocean warms, the places and seasons where people and sharks meet are shifting. Councils are choosing safety measures, families are deciding where to swim, and scientists are racing to keep up, often without the data to know what actually works. 19 Degrees tests those questions in the open and publishes every answer, including the surprising ones. Your support turns open questions into answers anyone can use.</p>
   <div class="hero-cta"><a class="btn pri" href="{KOFI}" target="_blank" rel="noopener">Support the research</a><a class="btn sec" href="/19-degrees-summary.pdf">Download the summary (PDF)</a></div>
-  <div class="stats"><div><b>{n_done} / {n_claims}</b><span>Claims with a first look or result</span></div><div><b>{n_sources}</b><span>Data sources joined</span></div><div><b>{n_products}</b><span>Safety products checked</span></div><div><b>Weekly</b><span>Data updates</span></div></div>
+  <div class="goal"><p><b>The goal: an answer for every claim.</b> {n_done} of {n_claims} claims have a first look or a result. Help answer the next {n_wait}.</p><div class="track" role="img" aria-label="{n_done} of {n_claims} claims answered so far"><div class="fill" style="width:{pct}%"></div></div></div>
+  <div class="stats"><div><b>Open</b><span>Code, data and methods</span></div><div><b>{n_sources}</b><span>Data sources joined</span></div><div><b>{n_products}</b><span>Safety products checked</span></div><div><b>Weekly</b><span>Data updates</span></div></div>
   <h2>Why it matters now</h2>
   <p>Shark and ocean-temperature research is spread across agencies, universities and countries, in datasets that rarely meet. As the water warms, the places and seasons where people and sharks overlap are changing faster than any one study can follow. 19 Degrees joins the evidence in one open place: what it says, what it doesn't say yet, and what data is missing. All code is open source (MIT) and all content can be reused with credit (CC BY 4.0).</p>
   <h2>What you can fund</h2>
