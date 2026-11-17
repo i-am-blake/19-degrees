@@ -2,80 +2,26 @@
 (like make_404.py) so they always match. Usage: python3 -I make_pages.py <index.html> <out_dir> [folder=branch ...]
 Writes sources.html (from sources.json, plus any new data-branch README not yet in it), legal.html and privacy.html."""
 import html, json, os, re, sys
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
 src, out = sys.argv[1:3]
 DATA_DIRS = sys.argv[3:]  # "folder=branch-name" pairs, e.g. ocean=ocean-data imos=imos-data
 t = open(src, encoding="utf-8").read()
-logo = re.search(r'<svg class="mark"[^>]*>.*?</svg>', t, re.S).group(0)
-wave = re.search(r'<div class="barwave"[^>]*>.*?</svg></div>', t, re.S).group(0)
 
 def a(label, url):
     return f'<a href="{html.escape(url)}" target="_blank" rel="noopener">{label}</a>'
 
-CSS = """:root{--ink:#E8F1F2;--muted:#8DADBD;--warm:#F0A04B;--cold:#5AB4E5;--sea:#0B2C46;--rule:rgba(232,241,242,.16);--lpad:24px;--logo-h:clamp(36px,1.25vw + 30px,46px);
-  --f-display:"Bricolage Grotesque","Arial Narrow",system-ui,sans-serif;--f-body:"Figtree",system-ui,sans-serif;--f-data:"Martian Mono",ui-monospace,Menlo,monospace}
-*{box-sizing:border-box}
-html,body{margin:0;min-height:100%}
-body{min-height:100vh;background:linear-gradient(180deg,#0F5677 0,#0F5677 110px,#0B4566 380px,#072F4D 700px,#031628 100%);color:var(--ink);font:400 17px/1.6 var(--f-body);-webkit-font-smoothing:antialiased}
-a{color:var(--cold)}a:hover{color:var(--ink)}
-.bar{position:relative;background:#0F5677;padding:var(--lpad);display:flex;align-items:center;gap:12px;z-index:2}
-.lockup{display:block;line-height:0;color:#FFFFFF}
-.lockup .mark{height:var(--logo-h);width:auto;display:block}
-.bar nav{margin-left:auto;display:flex;gap:4px;flex-wrap:wrap}
-.bar nav a{font-size:15px;font-weight:600;color:#FFFFFF;text-decoration:none;border:1.5px solid transparent;padding:10px 14px;min-height:44px;display:inline-flex;align-items:center;border-radius:999px}
-.bar nav a:hover,.bar nav a[aria-current]{border-color:rgba(255,255,255,.85)}
-.barwave{position:absolute;left:0;right:0;top:100%;height:19.5px;overflow:hidden;pointer-events:none}
-.barwave svg{display:block;width:200%;height:19.5px;animation:ripple 6.3s linear infinite reverse}
-@keyframes ripple{to{transform:translateX(-50%)}}
-main{max-width:860px;margin:0 auto;padding:72px 24px 96px}
-.kicker{font:500 13px/1.4 var(--f-data);letter-spacing:.16em;text-transform:uppercase;color:var(--warm);margin-bottom:12px}
-h1{font:800 clamp(36px,6vw,60px)/1.05 var(--f-display);letter-spacing:-.02em;margin:0 0 16px}
-h2{font:700 24px/1.25 var(--f-display);margin:40px 0 12px}
-p,li{color:#C9DCE3;max-width:44em}
-.lead{font-size:19px;color:var(--ink)}
-.tbl{overflow-x:auto;margin:12px 0}
-table{border-collapse:collapse;width:100%;min-width:640px;font-size:15px}
-th,td{text-align:left;vertical-align:top;padding:10px 12px;border-bottom:1px solid var(--rule)}
-th{font:500 12px/1.4 var(--f-data);letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
-td:last-child{color:var(--muted)}
-.foot{margin-top:56px;padding-top:20px;border-top:1px solid var(--rule);font-size:14px;color:var(--muted)}
-a:focus-visible{outline:2px solid var(--ink);outline-offset:3px}
-@media (max-width:620px){.bar nav{display:none}}
-@media (prefers-reduced-motion:reduce){.barwave svg{animation:none}}"""
-
+import shell19
+shell19.load(t)
+CSS = shell19.CSS
+DESC = {
+ "sources": "Every data source and published study behind 19 Degrees, with its license, what it is used for, and the method notes behind each result.",
+ "legal": "Terms of use for 19 Degrees: general information only, not safety or medical advice; how the text, code and data may be reused; corrections and liability.",
+ "privacy": "What 19 Degrees collects: no cookies, no ads and no tracking across sites; aggregate visit counts; and how a message sent through the contact form is used.",
+ "funders": "Fund independent, open research on sharks and a warming ocean: what your support pays for, how funders are thanked, and the independence policy.",
+}
 def page(slug, title, kicker, body, h1=None):
-    cur = ' aria-current="page"'
-    nav = "".join('<a href="/' + s + '.html"' + (cur if s == slug else "") + ">" + n + "</a>"
-                  for s, n in (("sources", "Sources"), ("legal", "Legal"), ("privacy", "Privacy")))
-    return f"""<!doctype html>
-<html lang="en-US">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>{title} · 19 Degrees</title>
-<link rel="icon" href="/favicon.ico" sizes="any">
-<link rel="icon" href="/favicon.svg" type="image/svg+xml">
-<link rel="apple-touch-icon" href="/apple-touch-icon.png">
-<link rel="stylesheet" href="/fonts/fonts.css">
-<style>
-{CSS}
-</style>
-</head>
-<body>
-<div class="bar">
-  <a class="lockup" href="/" aria-label="19 Degrees, home">{logo}</a>
-  <nav aria-label="Pages"><a href="/">Home</a>{nav}</nav>
-  {wave}
-</div>
-<main>
-  <div class="kicker">{kicker}</div>
-  <h1>{h1 or title}</h1>
-{body}
-  <p class="foot">© 2026 19 Degrees · <a href="/">Home</a></p>
-</main>
-</body>
-</html>
-"""
+    return shell19.page(slug + ".html", title, kicker, body, h1, desc=DESC[slug])
 
 def table(rows):
     head = "<tr><th>Data</th><th>From</th><th>Used for</th><th>License</th></tr>"

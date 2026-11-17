@@ -40,7 +40,7 @@ jobs:
       - name: Keep a preview of the built pages (dry runs only)
         if: inputs.dry_run == '1'
         run: |
-          mkdir -p /tmp/pv && cp *.html /tmp/pv/ && cd /tmp/pv && git init -q && git checkout -q -b preview && git add -A
+          mkdir -p /tmp/pv && cp *.html changes.xml sitemap.xml /tmp/pv/ && for d in claims questions safety-check data; do [ -d $d ] && cp -r $d /tmp/pv/; done; cd /tmp/pv && git init -q && git checkout -q -b preview && git add -A
           git -c user.name="github-actions[bot]" -c user.email="41898900+github-actions[bot]@users.noreply.github.com" commit -qm "Preview of ${{ github.ref_name }}"
           git push -qf "https://x-access-token:${{ github.token }}@github.com/${{ github.repository }}.git" HEAD:preview
       - name: Publish

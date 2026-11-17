@@ -68,9 +68,16 @@ a{color:var(--cold)}a.card{color:var(--ink);text-decoration:none}a.card h3{color
 @media print{.btns{display:none}body{padding:0;background:#fff}.wrap{padding:0;border:0}.ans{margin-top:0;border-top:0}}
 @media (max-width:620px){.wrap{padding:18px 16px}.hero{grid-template-columns:1fr}.hero .map{max-width:320px}dl{grid-template-columns:1fr}}"""
 
+DESC = {
+ "Shark detectives: the warm-water line": "A free printable classroom sheet for ages 8 to 11: read a real sea temperature map, find the 19°C line, count warm months and make a beach safety poster. Teacher notes included.",
+ "Sharks, warm water and a moving line": "A free printable classroom sheet for ages 12 to 15: read real sea temperature and shark data, work out percentages and explain a pattern. Teacher notes included.",
+ "Testing a climate claim with real data": "A free printable classroom sheet for ages 16 and up: test a climate claim against real sea temperature and shark bite records, the way a scientist would. Teacher notes included.",
+ "Classroom sheets": "Three free printable classroom sheets on sharks and a warming ocean, for ages 8 to 11, 12 to 15 and 16 and up, each with teacher notes and curriculum links.",
+}
 def page(title, kicker, body):
+    d = DESC[title].replace('"', "&quot;")
     return f"""<!doctype html><html lang="en-US"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>{title}</title><link rel="stylesheet" href="fonts/fonts.css"><style>{CSS}</style></head><body><div class="wrap">
+<title>{title} · 19 Degrees</title><meta name="description" content="{d}"><meta property="og:title" content="{title}"><meta property="og:description" content="{d}"><meta property="og:image" content="https://19-degrees.org/share/link-card.png"><link rel="stylesheet" href="fonts/fonts.css"><style>{CSS}</style></head><body><div class="wrap">
 <div class="top"><div><div class="k">{kicker}</div><h1>{title}</h1></div><div class="logo" aria-hidden="true">{logo}</div></div>
 {body}
 <p class="src">Data: Australian Shark-Incident Database (Taronga Conservation Society Australia and Flinders University); HadISST sea temperature (UK Met Office); Pacoureau et al. 2021; Surf Life Saving Australia. From 19 Degrees, free and open source. © 2026 19 Degrees.</p>

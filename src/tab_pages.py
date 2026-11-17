@@ -71,6 +71,11 @@ def write(doc, out):
             if not t or t == keep or t == "home" and keep == "home": return m.group(0)
             return f'href="/{slug_of[t]}#{h}"' if t != "home" else f'href="/#{h}"'
         d = re.sub(r'href="#([^"]+)"', fix, d)
+        if keep == "research":  # each claim card links to the claim's own page (/claims/c16), built by gen19.py
+            d = re.sub(r'(<article class="claim" id="(c\d+)".*?)(<button type="button" class="ctabtn")',
+                       lambda m: (sys.exit("claim card without a button: " + m.group(2)) if "</article>" in m.group(1) else m.group(1)) + f'<p class="clink"><a href="/claims/{m.group(2)}">This claim on its own page →</a></p>' + m.group(3), d, flags=re.S)
+        if keep == "works":  # the product table links to the evidence ladder pages
+            d = d.replace('<div class="ptwrap">', '<p class="clink"><a href="/safety-check/">Each group on the evidence ladder, from lab test to real-world use →</a></p><div class="ptwrap">', 1)
         d, n = re.subn(r'<script[^>]*id="n19-data"', lambda m: '<script type="application/json" id="n19-ids">' + json.dumps(ids, separators=(",", ":")) + '</script>\n' + m.group(0), d, count=1)
         if n != 1: sys.exit("page data not found")
         if slug:
@@ -82,6 +87,7 @@ def write(doc, out):
                 d, k = re.subn(pat, lambda m: m.group(1) + html.escape(desc), d, count=1); n += k
             for pat in (r'(<meta property="og:title" content=")[^"]*', r'(<meta name="twitter:title" content=")[^"]*'):
                 d, k = re.subn(pat, lambda m: m.group(1) + html.escape(title), d, count=1); n += k
+            d = re.sub(r'<!-- Search engines:[^\n]*-->\n<script type="application/ld\+json">.*?</script>\n?', "", d, count=1, flags=re.S)  # the site's description stays on the home page
             if n != 6 or f'href="{SITE}{slug}"' not in d: sys.exit("could not set the address and description for " + slug)
         open(os.path.join(out, (slug or "index") + ".html"), "w", encoding="utf-8").write(d)
 
