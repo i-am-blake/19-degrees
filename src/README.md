@@ -60,7 +60,7 @@ It also builds the pages that come from the same data, so they can never disagre
 
 - `tab_pages.py` splits the page into one page per tab (`/`, `/story`, `/safety`, `/research`, `/schools`, `/media`), each with only its own content, title and description. Old links such as `/#c16` redirect to the page that now holds them.
 - `make_pages.py` builds Sources, Legal, Privacy and Funders, using the shared shell in `shell19.py`.
-- `gen19.py` builds `/data/` (downloads, data dictionary, notebook and the dataset's structured description), `/changes` and its Atom feed `changes.xml`, one page per claim (`/claims/c16`), the safety evidence ladder (`/safety-check/`, rungs set in `ladder19.py`) and the question pages (`/questions/`, written in `questions19.py`).
+- `gen19.py` builds `/open-data` (downloads, data dictionary, notebook and the dataset's structured description), `/changes` and its Atom feed `changes.xml`, one page per claim (`/claims/c16`), the safety evidence ladder (`/safety-check/`, rungs set in `ladder19.py`) and the question pages (`/questions/`, written in `questions19.py`).
 
 Then check the finished folder: every link, every claim page against its card, every number in the question pages against the data (the weekly rebuild stops here if anything disagrees):
 

@@ -95,12 +95,12 @@ except OSError:
     pass
 asid_to = ym(D["asid_last"]); sst_to = ym(D["sst_last"])
 cov_end = (f'{D["asid_last"]["year"]}-{D["asid_last"]["month"]:02d}' if isinstance(D["asid_last"], dict) else D["asid_last"][:7])
-dataset = {"@context": "https://schema.org", "@type": "Dataset", "@id": SITE + "data/#dataset",
+dataset = {"@context": "https://schema.org", "@type": "Dataset", "@id": SITE + "open-data#dataset",
   "name": "19 Degrees: sea temperature and shark bites in Australia, 1900 to today",
   "description": ("Every Australian bull, tiger and white shark bite since 1900 with a known month and place, matched to that month's "
                   "HadISST sea surface temperature, with derived tables on the 19°C season at reference beaches, bites in coastal waters "
                   "versus rivers and harbors, bite zones by era and El Niño phases. Rebuilt weekly from the public sources."),
-  "url": SITE + "data/", "license": "https://creativecommons.org/licenses/by/4.0/", "isAccessibleForFree": True,
+  "url": SITE + "open-data", "license": "https://creativecommons.org/licenses/by/4.0/", "isAccessibleForFree": True,
   "creator": {"@type": "Person", "name": "Blake Erickson"}, "publisher": ORG, "dateModified": BUILT,
   "temporalCoverage": f"1900-01/{cov_end}", "inLanguage": "en",
   "spatialCoverage": {"@type": "Place", "name": "Australia", "geo": {"@type": "GeoShape", "box": "-44 112 -10 154"}},
@@ -113,7 +113,7 @@ if doi: dataset["identifier"] = "https://doi.org/" + doi
 rows = "".join(f'<tr><td><a href="/data/{esc(f)}">{esc(f)}</a></td><td>{fmt_of(f)}</td><td>{size(f)}</td><td>{esc(FILE_NOTE[f])}</td></tr>' for f in files)
 dict_rows = "".join(f"<tr><td><code>{esc(r['file'])}</code></td><td><code>{esc(r['column'])}</code></td><td>{esc(r['meaning'])}</td></tr>" for r in DICT)
 cite = (f'Erickson, B. ({BUILT[:4]}). <i>19 Degrees: sea temperature and shark bites in Australia, 1900 to today</i> [Data set]. 19 Degrees. '
-        + (f'<a href="https://doi.org/{esc(doi)}">https://doi.org/{esc(doi)}</a>' if doi else f'{SITE}data/'))
+        + (f'<a href="https://doi.org/{esc(doi)}">https://doi.org/{esc(doi)}</a>' if doi else f'{SITE}open-data'))
 body = f"""  <p class="lead">Every number on 19 Degrees can be checked and reused. These files are rebuilt every week from the public sources, with the code that makes them on <a href="https://github.com/i-am-blake/19-degrees">GitHub</a>.</p>
   <dl class="kv"><dt>Updated</dt><dd>{long_date(BUILT)} (weekly)</dd><dt>Shark bites to</dt><dd>{asid_to}, from the <a href="https://zenodo.org/records/18752301">Australian Shark-Incident Database</a></dd>
   <dt>Sea temperature to</dt><dd>{sst_to}, monthly <a href="https://www.metoffice.gov.uk/hadobs/hadisst/">HadISST</a></dd><dt>License</dt><dd><a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>: reuse freely, credit "19 Degrees" and the original sources</dd>
@@ -133,7 +133,7 @@ body = f"""  <p class="lead">Every number on 19 Degrees can be checked and reuse
   <li>The original sources keep their own licenses, listed on the <a href="/sources.html">sources page</a>.</li></ul>
   <p>Using the data for research, teaching or a story? <a href="/#contact">Say hello</a>: results that test a claim are credited on the claim.</p>
 """
-WRITTEN.append(write("data/index", page("data/", "Open data and downloads", "Data", body, h1="Open data, free to reuse",
+WRITTEN.append(write("open-data", page("open-data", "Open data and downloads", "Data", body, h1="Open data, free to reuse",
     desc=f"Download the 19 Degrees data: Australian shark bites since 1900 matched to sea temperature, the 19°C season at reference beaches and more, as CSV and JSON with a data dictionary and a starter notebook. CC BY 4.0, updated weekly.",
     jsonld=dataset)))
 

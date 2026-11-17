@@ -120,7 +120,7 @@ def page(path, title, kicker, body, h1=None, desc=None, jsonld=None, crumbs=None
   {trail}<div class="kicker">{kicker}</div>
   <h1>{html.escape(h1 or title)}</h1>
 {body}
-  <p class="foot">© 2026 19 Degrees · <a href="/">Home</a> · <a href="/sources.html">Sources</a> · <a href="/data/">Data</a> · <a href="/changes">Changes</a> · <a href="/legal.html">Legal</a> · <a href="/privacy.html">Privacy</a></p>
+  <p class="foot">© 2026 19 Degrees · <a href="/">Home</a> · <a href="/sources.html">Sources</a> · <a href="/open-data">Open data</a> · <a href="/changes">Changes</a> · <a href="/legal.html">Legal</a> · <a href="/privacy.html">Privacy</a></p>
 </main>
 </body>
 </html>

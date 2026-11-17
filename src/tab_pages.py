@@ -71,9 +71,13 @@ def write(doc, out):
             if not t or t == keep or t == "home" and keep == "home": return m.group(0)
             return f'href="/{slug_of[t]}#{h}"' if t != "home" else f'href="/#{h}"'
         d = re.sub(r'href="#([^"]+)"', fix, d)
-        if keep == "research":  # each claim card links to the claim's own page (/claims/c16), built by gen19.py
-            d = re.sub(r'(<article class="claim" id="(c\d+)".*?)(<button type="button" class="ctabtn")',
-                       lambda m: (sys.exit("claim card without a button: " + m.group(2)) if "</article>" in m.group(1) else m.group(1)) + f'<p class="clink"><a href="/claims/{m.group(2)}">This claim on its own page →</a></p>' + m.group(3), d, flags=re.S)
+        if keep == "research":  # each claim card's buttons: test it (contact form), or open the claim's own page (/claims/c16, built by gen19.py)
+            def acts(m):
+                if "</article>" in m.group(1): sys.exit("claim card without a button: " + m.group(2))
+                return (m.group(1) + '<div class="cacts">' + m.group(3)
+                        + f'<a class="ghbtn cfull" href="/claims/{m.group(2)}">View full summary</a></div>')
+            d, k = re.subn(r'(<article class="claim" id="(c\d+)".*?)(<button type="button" class="ctabtn".*?</button>)', acts, d, flags=re.S)
+            if k != len(re.findall(r'<article class="claim" id="c\d+"', d)): sys.exit("not every claim card got its buttons")
         if keep == "works":  # the product table links to the evidence ladder pages
             d = d.replace('<div class="ptwrap">', '<p class="clink"><a href="/safety-check/">Each group on the evidence ladder, from lab test to real-world use →</a></p><div class="ptwrap">', 1)
         d, n = re.subn(r'<script[^>]*id="n19-data"', lambda m: '<script type="application/json" id="n19-ids">' + json.dumps(ids, separators=(",", ":")) + '</script>\n' + m.group(0), d, count=1)
