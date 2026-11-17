@@ -12,7 +12,7 @@ jobs:
       - uses: actions/checkout@v5
       - name: Look
         run: |
-          pip install -q openpyxl
+          pip install -q -r src/requirements.txt numpy pandas openpyxl
           cd src && python3 - <<'PY' | tee ../report.md
           import csv, io, json, re, math, time, urllib.request, urllib.parse, collections, statistics as st
           UA = {"User-Agent": "19-degrees-explore/1.0 (+https://19-degrees.org)"}
@@ -76,17 +76,17 @@ jobs:
           # ---------- C. Where people surf ----------
           def osm():
               section("C. OpenStreetMap surf breaks")
-              q = '[out:json][timeout:300];nwr["sport"="surfing"];out center tags;'
-              j = json.loads(get("https://overpass-api.de/api/interpreter", 400, data=urllib.parse.urlencode({"data": q}).encode()))
-              pts = []
-              for e in j["elements"]:
-                  c = e.get("center") or e; 
-                  if "lat" in c: pts.append((c["lat"], c["lon"], e.get("tags", {}).get("name", "")))
-              print(f"{len(pts)} places tagged as surf spots worldwide")
               boxes = {"Australia": (-45, 110, -9, 155), "California": (32, -125, 42, -114), "Hawaii": (18, -161, 23, -154), "South Africa": (-35.5, 16, -22, 33.5), "Reunion": (-21.5, 55.1, -20.8, 55.9), "Brazil": (-34, -54, 5, -34), "US Atlantic & Gulf": (24, -98, 45, -66), "New Caledonia": (-23, 163, -19, 168.5)}
+              eps = ["https://overpass-api.de/api/interpreter", "https://overpass.kumi.systems/api/interpreter", "https://overpass.private.coffee/api/interpreter"]
               for k, (a, b, c, d) in boxes.items():
-                  n = [p for p in pts if a <= p[0] <= c and b <= p[1] <= d]
-                  print(f"- {k}: {len(n)} (named: {sum(1 for p in n if p[2])})")
+                  q = f'[out:json][timeout:180];nwr["sport"="surfing"]({a},{b},{c},{d});out center tags;'
+                  for ep in eps:
+                      try:
+                          j = json.loads(get(ep, 240, data=urllib.parse.urlencode({"data": q}).encode()))
+                          el = j["elements"]; named = sum(1 for e in el if e.get("tags", {}).get("name"))
+                          print(f"- {k}: {len(el)} surf spots ({named} named)"); break
+                      except Exception as e: last = f"{type(e).__name__}"; time.sleep(10)
+                  else: print(f"- {k}: all servers failed ({last})")
           safe(osm)
 
           # ---------- D. Prey ----------
@@ -124,9 +124,9 @@ jobs:
               dirs = re.findall(r'title="([^"]+)"', b); print(f"- IMOS deep-water array folders: {dirs[:30]}")
               for dname in [x for x in dirs if "EAC" in x.upper()][:6]:
                   try:
-                      c = get(base.replace("catalog.xml", f"{dname}/catalog.xml"), 120).decode()
+                      c = get(base.replace("catalog.xml", f"{dname}/Temperature/catalog.xml"), 120).decode()
                       sub = re.findall(r'title="([^"]+)"', c)
-                      years = sorted(set(re.findall(r"_(\d{4})\d{4}T", c)))
+                      years = sorted(set(re.findall(r"_(\d{4})\d{4}T?", c)))
                       print(f"  - {dname}: {len(sub)} entries; years in file names: {years[:1]}–{years[-1:]}; e.g. {sub[:5]}")
                   except Exception as e: print(f"  - {dname}: {type(e).__name__}")
           safe(eac)
@@ -134,14 +134,23 @@ jobs:
           # ---------- G. Florida red tide ----------
           def redtide():
               section("G. Red tides and fish kills (Florida and the Gulf)")
-              for u in ["https://www.ncei.noaa.gov/erddap/tabledap/habsos.csv?time&time>=2020-01-01&orderByCount(%22%22)",
-                        "https://gis.ncdc.noaa.gov/arcgis/rest/services/ms/HABSOS_CellCounts/MapServer?f=json",
-                        "https://geodata.myfwc.com/api/search/v1/collections/all/items?q=red%20tide&limit=10",
-                        "https://www.ncei.noaa.gov/products/harmful-algal-blooms-observing-system"]:
+              base = "https://gis.ncdc.noaa.gov/arcgis/rest/services/ms/HABSOS_CellCounts/MapServer"
+              m = json.loads(get(base + "?f=json", 90)); print(f"- HABSOS layers: {[(l['id'], l['name']) for l in m.get('layers', [])]}")
+              for l in m.get("layers", [])[:4]:
                   try:
-                      b = get(u, 90).decode("utf-8", "ignore")
-                      print(f"- `{u[:80]}`: reachable ({len(b)//1000} kB): {re.sub(r'\\s+', ' ', b[:240])}")
-                  except Exception as e: print(f"- `{u[:80]}`: {type(e).__name__} {str(e)[:120]}")
+                      info = json.loads(get(f"{base}/{l['id']}?f=json", 90)); fields = [f["name"] for f in info.get("fields", [])]
+                      n = json.loads(get(f"{base}/{l['id']}/query?where=1%3D1&returnCountOnly=true&f=json", 120)).get("count")
+                      tf = next((f for f in fields if re.search(r"date|time", f, re.I)), None)
+                      rng = ""
+                      if tf:
+                          stats = json.dumps([{"statisticType": "min", "onStatisticField": tf, "outStatisticFieldName": "lo"}, {"statisticType": "max", "onStatisticField": tf, "outStatisticFieldName": "hi"}])
+                          r = json.loads(get(f"{base}/{l['id']}/query?where=1%3D1&outStatistics={urllib.parse.quote(stats)}&f=json", 120))
+                          a0 = r.get("features", [{}])[0].get("attributes", {}); fmt = lambda v: time.strftime("%Y-%m-%d", time.gmtime(v/1000)) if isinstance(v, (int, float)) else v
+                          rng = f"{fmt(a0.get('lo'))} to {fmt(a0.get('hi'))}"
+                      print(f"  - layer {l['id']} {l['name']}: {n} records; {rng}; fields: {fields[:14]}")
+                  except Exception as e: print(f"  - layer {l['id']}: {type(e).__name__} {str(e)[:120]}")
+              j = json.loads(get("https://geodata.myfwc.com/api/search/v1/collections/all/items?q=red%20tide&limit=10", 90))
+              print("- FWC open data, 'red tide': " + "; ".join(f.get("properties", {}).get("title", "?") for f in j.get("features", [])[:10]))
           safe(redtide)
           PY
           cat ../report.md >> "$GITHUB_STEP_SUMMARY"
