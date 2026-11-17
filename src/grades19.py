@@ -26,7 +26,7 @@ LABEL = {"supports": "Early result: supports it", "leans": "Early result: leans 
 STAGE = {"open": "Open", "nt": "Not testable yet", "look": "First look", "supported": "Supported", "strong": "Strong", "ruled": "Ruled out"}
 # Words shown on the site. The full labels above stay in grades_history.json, so renaming never looks like a new result.
 SHORT = {LABEL["supports"]: "Early yes", LABEL["leans"]: "Leans yes", LABEL["none"]: "Unclear", LABEL["other"]: "Early no",
-         LABEL["leansother"]: "Leans no", "Open": "Not yet tested", "Not testable yet": "Can't test yet"}
+         LABEL["leansother"]: "Leans no", "Open": "Not yet tested", "Not testable yet": "Not yet tested"}
 def show(label): return SHORT.get(label, label)
 def css(st, label):  # badge color follows the direction of the result
     s = show(label)
