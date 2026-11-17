@@ -20,6 +20,7 @@ OPPS = [("Fund a claim", f"{n_wait} claims are waiting for data or a test. Each 
         ("Open a dataset", "Fund the request, license or cleaning that makes a closed dataset usable for everyone."),
         ("Sponsor the schools program", "Free classroom sheets for three age ranges, tested with teachers."),
         ("Underwrite independent review", "Qualified scientists check methods and results, and mistakes are published.")]
+PRICE = {'Fund a claim': 'From $3,000', 'Open a dataset': 'From $2,500', 'Sponsor the schools program': '$3,500 per age range', 'Underwrite independent review': '$500 a review · $5,000 a year'}
 html = f"""<!doctype html><html lang="en-US"><head><meta charset="utf-8"><title>19 Degrees · Funder summary</title>
 <link rel="stylesheet" href="{FONTS}">
 <style>@page{{size:Letter;margin:0}}*{{box-sizing:border-box}}
@@ -44,7 +45,7 @@ ul{{margin:0;padding-left:14pt}}li{{margin:1pt 0}}
 <div class="stats"><div><b>Open</b><span>Code, data and methods</span></div><div><b>{n_sources}</b><span>Data sources joined</span></div><div><b>{n_products}</b><span>Safety products checked</span></div><div><b>Weekly</b><span>Data updates</span></div></div>
 <div><h2>Why it matters now</h2><p>Shark and ocean-temperature research sits in datasets that rarely meet. As the water warms, where and when people and sharks overlap is changing faster than any one study can follow. 19 Degrees joins the evidence in one open place. Code is open source (Apache 2.0); content is reusable with credit (CC BY 4.0).</p></div>
 <div><h2>Why this exists</h2><p>Blake Erickson is a freediver and surfer who has been obsessed with sharks since he was a little kid. He started 19 Degrees to give back to the ocean: an honest, open picture of how a warming sea is changing life for people and sharks.</p></div>
-<div><h2>What you can fund</h2><div class="opps">""" + "".join(f"<div><b>{h}</b>{d}</div>" for h, d in OPPS) + """</div></div>
+<div><h2>What you can fund</h2><div class="opps">""" + "".join(f"<div><b>{h} · {PRICE[h]}</b>{d}</div>" for h, d in OPPS) + """</div></div>
 <div><h2>Independence policy</h2><ul>
 <li>Funders get no say over methods, results, grades or wording.</li>
 <li>Any funder's product or position is tested and graded like everyone else's.</li>

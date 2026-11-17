@@ -193,6 +193,7 @@ OPPS = [
  ("Sponsor the schools program", "Free classroom sheets for three age ranges. Fund testing with teachers and new lessons built on real data."),
  ("Underwrite independent review", "Pay qualified scientists to check methods and results, so mistakes are found and published, not hidden."),
 ]
+PRICE = {'Fund a claim': 'From $3,000', 'Open a dataset': 'From $2,500', 'Sponsor the schools program': '$3,500 per age range', 'Underwrite independent review': '$500 a review · $5,000 a year'}
 WAYS = [
  ("Give once", "Like buying a coffee: quick, any size, and it adds up. Every contribution goes to the research.", KOFI, "Support on Ko-fi →", True),
  ("Give in someone's honor", "Add their name in the Ko-fi message, for an ocean lover, a surfer or a lifeguard.", KOFI, "Give in their honor →", True),
@@ -211,11 +212,12 @@ fund_body = FUND_CSS + f"""
   <h2>Why this exists</h2>
   <div class="story"><p>Blake Erickson is a freediver and surfer who has been obsessed with sharks since he was a little kid. Years in the water taught him how much the ocean gives, and how much it needs looking after. He started 19 Degrees to give something back: an honest, open picture of how a warming sea is changing life for the people who use it and the sharks that live in it.</p></div>
   <h2>What you can fund</h2>
-  <div class="cards">""" + "".join(f'<div><h3>{h}</h3><p>{d}</p>{link(CONTACT, "Fund this →", False)}</div>' for h, d in OPPS) + """</div>
+  <div class="cards">""" + "".join(f'<div><span class="tag">{PRICE[h]}</span><h3>{h}</h3><p>{d}</p>{link(CONTACT, "Fund this →", False)}</div>' for h, d in OPPS) + """</div>
+  <p>Prices cover research time, data and outside experts. Larger partnerships combining several projects start at $15,000. Any amount helps on <a href="https://ko-fi.com/19degrees" target="_blank" rel="noopener">Ko-fi</a>.</p>
   <h2>Ways to give</h2>
   <div class="cards">""" + "".join(f"<div><h3>{h}</h3><p>{d}</p>{link(u, l, e)}</div>" for h, d, u, l, e in WAYS) + """</div>
   <h2>How funders are thanked</h2>
-  <div class="tiers"><div><h3>Supporter</h3><p>Any gift. Thanked by name on this page, if you choose.</p></div><div><h3>Claim sponsor</h3><p>Fund a claim or a dataset. Credited on that claim and in its result.</p></div><div><h3>Project partner</h3><p>Fund one of the projects above. Listed here as a partner, with a report when the work is done.</p></div></div>
+  <div class="tiers"><div><h3>Supporter</h3><p>Any gift. Thanked by name on this page, if you choose.</p></div><div><h3>Claim sponsor</h3><p>Fund a claim or a dataset. Credited on that claim and in its result.</p></div><div><h3>Project partner</h3><p>Fund one or more of the projects above. Listed here as a partner, with a report when the work is done.</p></div></div>
   <p>Thanks never buys influence. Every level follows the independence policy below.</p>
 """ + SUPP + f"""  <h2>Independence policy</h2>
   <ul class="rules">
