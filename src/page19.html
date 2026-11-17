@@ -677,8 +677,8 @@ section[aria-labelledby="h-q"] .cards.qs{grid-template-columns:repeat(2,minmax(0
 .arrived>.alab a{color:var(--warm)}
 .arrived>h3{margin:0;font-size:20px}
 /* claims: grade key, results first, then next to test */
-.gkey{display:flex;flex-wrap:wrap;gap:10px 22px;margin:14px 0 4px;font-size:14px;color:var(--muted)}
-.gkey>span{display:inline-flex;flex-wrap:nowrap;align-items:center;gap:6px 10px}
+.gkey{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,420px),1fr));gap:10px 22px;margin:14px 0 4px;font-size:14px;color:var(--muted)}
+.gkey>span{display:flex;flex-wrap:nowrap;align-items:center;gap:6px 10px}
 .gkey .cstat{margin:0;flex-shrink:0}
 @media (max-width:600px){.gkey{flex-direction:column;gap:8px}.gkey>span{display:flex;gap:10px;white-space:nowrap}.gkey .cstat{font-size:10.5px}.gkey>span{font-size:14px}}
 h3.splith{font-size:clamp(24px,1.6vw + 14px,30px);margin:40px 0 4px}
