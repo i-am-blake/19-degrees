@@ -312,6 +312,13 @@
      "readme": [
       "ocean-data/README_humpback.txt"
      ]
+    },
+    {
+     "name": "Bottom Longline Survey (InPort 28636)",
+     "url": "https://www.fisheries.noaa.gov/inport/item/28636",
+     "from": "NOAA Fisheries Southeast Fisheries Science Center and SEAMAP; data provided by the survey team",
+     "used_for": "Claim C25",
+     "license": "US government data, no access restrictions; acknowledgment of NOAA NMFS and SEAMAP requested"
     }
    ]
   },
