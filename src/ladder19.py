@@ -50,7 +50,7 @@ STEPS = {
  "SharkBanz bracelet": ("deter", "onoo"), "SharkBanz surf leash": ("deter", "onoo"), "SharkBanz Zeppelin": ("deter", "yooo"), "Chillax Wax": ("deter", "onoo"),
  "SharkStop": ("fabric", "yyo"), "ActionTX-S": ("fabric", "yyo"), "Aqua Armour": ("fabric", "yyo"), "Brewster": ("fabric", "yyo"),
  "Kevlar-lined neoprene": ("fabric", "yyo"), "SAMS patterned wetsuits": ("deter", "yooo"), "Counter-illumination lights": ("deter", "yyyo"),
- "OMNA marine tourniquet and tourniquet leash": ("bleed", "yoo"), "Community Shark Bite Kits": ("bleed", "oyo"),
+ "OMNA marine tourniquet and tourniquet leash": ("bleed", "yoo"), "Community Shark Bite Kits": ("bleed", "ooo"),
  "Exclusion Barrier": ("deter", "yooo"), "Sharksafe Barrier": ("deter", "yooo"), "Eco-friendly surf barriers (NSW north coast)": ("deter", "oooo"),
 }
 MARK = {"y": ("✓", "Worked"), "m": ("~", "Mixed"), "n": ("✗", "No effect"), "o": ("·", "Not tested")}
@@ -158,7 +158,7 @@ def build(T, out, write, page, relink, esc, text, BUILT, long_date):
 {EXTRA.get(slug, "")}  <h2>{len(ps)} product{"s" if len(ps) != 1 else ""}</h2>
 {chr(10).join(blocks)}
   <h2>Limits</h2>
-  <ul><li>Only products with a published test are listed. Products sold without any test we could find are left out.</li>
+  <ul><li>Most products sold without any published test are left out; the few listed without one are in wide public use.</li>
   <li>Trials use baits, boards and decoys, not people, and test a few species in a few places. Results may not carry over to other sharks, water or behavior.</li>
   <li>This is a guide to the evidence, not a safety rating or an endorsement or criticism of any maker. Follow lifesavers, beach signs and local authorities.</li></ul>
   <p class="meta">Updated {long_date(BUILT)} · <a href="/safety#h-products">All products on the Safety page</a></p>
