@@ -42,20 +42,24 @@ def imos():
         return [float(x) for x in t.split("\n", 2)[-1].replace(",", " ").split() if re.match(r"^-?\d", x)]
     LAT = axis(files[ks[-1]], "lat"); LON = axis(files[ks[-1]], "lon")
     print(f"- Grid: {len(LAT)} x {len(LON)}, lat {LAT[0]:.2f} to {LAT[-1]:.2f}, step {LAT[1]-LAT[0]:.3f}°")
+    QMIN = 4  # GHRSST quality level 4 (acceptable) or 5 (best); lower levels include cloud edges and coastal mixing
     def idx(arr, v): return min(range(len(arr)), key=lambda k: abs(arr[k] - v))
     LI = {}; LJ = {}
     def point(path, la, lo):
         i = LI.setdefault(round(la, 3), idx(LAT, la)); j = LJ.setdefault(round(lo, 3), idx(LON, lo))
-        q = f"sea_surface_temperature[0][{max(i-4,0)}:{i+4}][{max(j-4,0)}:{j+8}]"
-        t = get(DO + path + ".ascii?" + q, 90).decode()
-        grid = []
+        sl = f"[0][{max(i-4,0)}:{i+4}][{max(j-4,0)}:{j+8}]"
+        t = get(DO + path + ".ascii?sea_surface_temperature" + sl + ",quality_level" + sl, 90).decode()
+        grids = {"sea_surface_temperature": [], "quality_level": []}; cur = None
         for line in t.split("\n"):
-            m = re.match(r"^sea_surface_temperature\.sea_surface_temperature\[0\]\[(\d+)\], (.*)$", line) or re.match(r"^\[0\]\[(\d+)\], (.*)$", line)
-            if m: grid.append([int(x) for x in m.group(2).split(",")])
+            if line.startswith("sea_surface_temperature"): cur = "sea_surface_temperature"
+            elif line.startswith("quality_level"): cur = "quality_level"
+            m = re.match(r"^(?:[a-z_.]+)?\[0\]\[(\d+)\], (.*)$", line)
+            if m and cur: grids[cur].append([int(x) for x in m.group(2).split(",")])
+        grid, ql = grids["sea_surface_temperature"], grids["quality_level"]
         best = None
         for a, row in enumerate(grid):
             for c, v in enumerate(row):
-                if v == fv: continue
+                if v == fv or not ql or ql[a][c] < QMIN: continue
                 d = (a - 4) ** 2 + (c - 4) ** 2
                 if best is None or d < best[0]: best = (d, v * sf + ao)
         if best is None: return None
@@ -70,13 +74,15 @@ def imos():
             k = f"{int(y)}{int(mo):02d}"
             if k not in files: continue
             t = point(files[k], la, lo)  # nearest sea cell with a value within about 10 km
-            out.append((k, la, lo, t)); time.sleep(0.15)
+            out.append((k, la, lo, t, (r.get("Site.category") or "").strip())); time.sleep(0.15)
         ok = [o for o in out if o[3] is not None and o[3] == o[3]]
         if not ok: print(f"- {sp}: no values"); continue
         ts = sorted(o[3] for o in ok)
         print(f"- **{sp}**: {len(out)} bites in the 2 km record, {len(ok)} with a value; below 19°C: {sum(1 for t in ts if t < 19)}; "
               f"coolest {ts[0]:.1f}, median {st.median(ts):.1f}, warmest {ts[-1]:.1f}")
-        for k, la, lo, t in sorted(ok, key=lambda o: o[3])[:6]: print(f"    - {k} {la:.2f},{lo:.2f}: {t:.1f}°C")
+        for k, la, lo, t, cat in sorted(ok, key=lambda o: o[3])[:8]: print(f"    - {k} {la:.2f},{lo:.2f} ({cat}): {t:.1f}°C")
+        oc = [o for o in ok if 'coast' in o[4].lower() or 'ocean' in o[4].lower() or 'beach' in o[4].lower()]
+        print(f"    - open coast only: {len(oc)}, below 19°C: {sum(1 for o in oc if o[3] < 19)}")
 
 # ---------- 2. ABS population by SA2 ----------
 def abs_pop():
@@ -121,4 +127,3 @@ def flow():
     kisters("https://water-monitoring.information.qld.gov.au/cgi/webservice.pl", "Queensland", ["145102B", "143001C", "130004A"])
 
 safe("1. IMOS 2 km monthly sea temperature at each bite", imos)
-safe("2. ABS population by small area", abs_pop)
