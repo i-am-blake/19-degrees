@@ -80,7 +80,7 @@ S = read("safety.html")
 prods = [text(re.sub(r"<span>.*?</span>", "", x)) for x in re.findall(r'<tr><th scope="row">(.*?)</th>', S[S.index('<table class="ptab">'):S.index("</table>", S.index('<table class="ptab">'))], re.S)]
 lad = "".join(read(p) for p in pages if p.startswith("safety-check/") and not p.endswith("index.html"))
 for pr in prods: check(f"safety ladder: '{pr}' appears {lad.count('<h3>' + html.escape(pr) + '</h3>')} times", lad.count("<h3>" + html.escape(pr) + "</h3>") == 1)
-check("safety ladder: a deterrent claims real-world protection", "Reached: </span>Shown to protect people" not in lad)
+check("safety ladder: a deterrent claims real-world protection", re.search(r'<li class="[ym]" title="Shown to protect people', lad) is None)
 # 8. the change log and its feed
 ch = read("changes.html"); n_log = len(re.findall(r"<li><time>", read("research.html").split('<ol class="chlog">')[1].split("</ol>")[0]))
 check("changes page: every change log entry", ch.count('<li id="d') == n_log)

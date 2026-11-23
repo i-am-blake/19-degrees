@@ -39,18 +39,30 @@ GROUPS = [  # (heading on the Safety page, address, ladder, page title, lead)
  ("Barriers", "barriers", "deter", "Shark barriers: what independent tests found",
   "Barriers try to keep sharks out of a swimming area without catching or killing them. They have been tried in calm water; ocean surf is harder."),
 ]
-# product -> (ladder, rung reached with an effect: 0 = no effect shown or not yet tested)
-RUNG = {
- "Ocean Guardian Freedom+ Surf": ("deter", 3), "Ocean Guardian Freedom+ Surf Shortboard": ("deter", 2),
- "Ocean Guardian Freedom7 (Shark Shield)": ("deter", 3), "Ocean Guardian Scuba7": ("deter", 2), "Ocean Guardian BOAT01": ("deter", 2),
- "Rpela (first version)": ("deter", 0), "Rpela V2": ("deter", 3), "E-Shark Force": ("deter", 0), "NoShark": ("deter", 0),
- "Electronic Shark Defense System": ("deter", 0),
- "SharkBanz bracelet": ("deter", 0), "SharkBanz surf leash": ("deter", 0), "SharkBanz Zeppelin": ("deter", 1), "Chillax Wax": ("deter", 0),
- "SharkStop": ("fabric", 2), "ActionTX-S": ("fabric", 2), "Aqua Armour": ("fabric", 2), "Brewster": ("fabric", 2),
- "Kevlar-lined neoprene": ("fabric", 2), "SAMS patterned wetsuits": ("deter", 1), "Counter-illumination lights": ("deter", 3),
- "OMNA marine tourniquet and tourniquet leash": ("bleed", 1), "Community Shark Bite Kits": ("bleed", 2),
- "Exclusion Barrier": ("deter", 1), "Sharksafe Barrier": ("deter", 1), "Eco-friendly surf barriers (NSW north coast)": ("deter", 0),
+# product -> (ladder, the result at each step). y = worked, m = mixed (worked for some sharks, not others),
+# n = tested, no effect, o = not tested. A lower step counts as worked when a harder step above it worked
+# (fewer bites on decoys means behavior changed). Set by hand from the tests linked on the Safety page.
+STEPS = {
+ "Ocean Guardian Freedom+ Surf": ("deter", "yyyo"), "Ocean Guardian Freedom+ Surf Shortboard": ("deter", "yyoo"),
+ "Ocean Guardian Freedom7 (Shark Shield)": ("deter", "yymo"), "Ocean Guardian Scuba7": ("deter", "yyoo"), "Ocean Guardian BOAT01": ("deter", "yyoo"),
+ "Rpela (first version)": ("deter", "onoo"), "Rpela V2": ("deter", "yyyo"), "E-Shark Force": ("deter", "onoo"), "NoShark": ("deter", "onoo"),
+ "Electronic Shark Defense System": ("deter", "onoo"),
+ "SharkBanz bracelet": ("deter", "onoo"), "SharkBanz surf leash": ("deter", "onoo"), "SharkBanz Zeppelin": ("deter", "yooo"), "Chillax Wax": ("deter", "onoo"),
+ "SharkStop": ("fabric", "yyo"), "ActionTX-S": ("fabric", "yyo"), "Aqua Armour": ("fabric", "yyo"), "Brewster": ("fabric", "yyo"),
+ "Kevlar-lined neoprene": ("fabric", "yyo"), "SAMS patterned wetsuits": ("deter", "yooo"), "Counter-illumination lights": ("deter", "yyyo"),
+ "OMNA marine tourniquet and tourniquet leash": ("bleed", "yoo"), "Community Shark Bite Kits": ("bleed", "oyo"),
+ "Exclusion Barrier": ("deter", "yooo"), "Sharksafe Barrier": ("deter", "yooo"), "Eco-friendly surf barriers (NSW north coast)": ("deter", "oooo"),
 }
+MARK = {"y": ("✓", "Worked"), "m": ("~", "Mixed"), "n": ("✗", "No effect"), "o": ("·", "Not tested")}
+# the grade, in the Safety page key's words
+GKEY = {"Supported": "tests found it works", "Leans yes": "small or single effect", "Unclear": "tests disagree",
+        "First look": "indirect or unreviewed tests", "Ruled out": "tests found no effect", "Not yet tested": "no completed trial"}
+def _rung(r): return max((i + 1 for i, c in enumerate(r) if c in "ym"), default=0)
+for _k, (_l, _r) in STEPS.items():
+    if len(_r) != len(LADDER[_l]) or set(_r) - set(MARK): sys.exit(f"ladder19.py: bad steps for {_k}")
+    if "n" in _r and _r.index("n") < _rung(_r): sys.exit(f"ladder19.py: {_k} has 'no effect' below a step that worked")
+# product -> (ladder, highest step reached with an effect)
+RUNG = {k: (l, _rung(r)) for k, (l, r) in STEPS.items()}
 # where a single trial reached a rung for only some species, say so
 NOTE = {
  "Ocean Guardian Freedom7 (Shark Shield)": "The bite reduction was for tiger sharks only; there was no effect on white sharks.",
@@ -74,10 +86,14 @@ def products(T):
         out.append(dict(group=grp, name=name.strip(), use=use.strip(), species=c[1].strip(), found=c[2].strip(), cls=st.group(1), grade=st.group(2), src=c[4]))
     return out
 
-def ladder_html(kind, rung):
-    steps = LADDER[kind]
-    lis = "".join(f'<li class="{"on" if i < rung else ""}"><span class="sr">{"Reached" if i < rung else "Not shown"}: </span>{s}</li>' for i, s in enumerate(steps))
-    return f'<ol class="ladder{" three" if len(steps) == 3 else ""}" aria-label="Evidence ladder">{lis}</ol>'
+SHORT = {"deter": ("Behavior", "Bait-taking", "Bites on decoys", "People, real use"),
+         "fabric": ("Material tests", "Live sharks", "Real bites"), "bleed": ("Controlled test", "Real rescues", "Survival")}
+def ladder_html(kind, steps):
+    lis = "".join(f'<li class="{c}" title="{LADDER[kind][i]}"><b aria-hidden="true">{MARK[c][0]}</b>{SHORT[kind][i]}<span class="sr">: {MARK[c][1]}</span></li>' for i, c in enumerate(steps))
+    return f'<ol class="rr{" three" if len(steps) == 3 else ""}" aria-label="Evidence ladder">{lis}</ol>'
+def key_html():
+    return ('<div class="rkey">' + "".join(f'<span><b>{m}</b>{t}</span>' for m, t in MARK.values()) + '</div>'
+            '<p class="note">A step counts as worked when a harder step above it worked: fewer bites on decoys means behavior changed.</p>')
 
 def summary(p, kind, rung, ruled):
     if rung == 0:
@@ -105,8 +121,9 @@ def build(T, out, write, page, relink, esc, text, BUILT, long_date):
             ruled = "ruled" in p["cls"]
             allmax[kind] = max(allmax.get(kind, 0), rung)
             blocks.append(f'''  <section class="prod" id="{re.sub(r"[^a-z0-9]+", "-", p["name"].lower()).strip("-")}">
-    <h3>{p["name"]}</h3><p class="use">{p["use"]} · tested with: {p["species"]} · grade <span class="{p["cls"]}">{p["grade"]}</span></p>
-    {ladder_html(kind, rung)}
+    <h3>{p["name"]}</h3><p class="use">{p["use"]} · tested with: {p["species"]}</p>
+    {ladder_html(kind, STEPS[p["name"]][1])}
+    <p class="gl"><b>Grade: {p["grade"]}</b> · {GKEY[p["grade"]]}</p>
     <p><b>{summary(p, kind, rung, ruled)}</b> {NOTE.get(p["name"], "")}</p>
     <p>What tests found: {relink(p["found"])}</p>
     <p class="note">Source: {p["src"]}</p>
@@ -123,9 +140,10 @@ def build(T, out, write, page, relink, esc, text, BUILT, long_date):
         body = f'''  <p class="lead">{lead}</p>
   <p class="answer">{" ".join(tops) if tops else "At least one product here has reached the top rung."}</p>
   <h2>The evidence ladder</h2>
-  <p>Each product is placed on the highest rung its published, independent tests have reached. Each rung is a harder test than the one before, and a summary here never claims a rung that hasn't been shown.</p>
+  <p>Each step is a harder test than the one before. Each product shows what its published, independent tests found at each step, and a summary here never claims a step that hasn't been shown.</p>
   <ul>{legend}</ul>
-  <p>The grade (Supported, Leans yes and so on) follows the <a href="/safety#h-products">Safety page's key</a> and also weighs how many tests agree and how good they were.</p>
+  {key_html()}
+  <p>The grade follows the <a href="/safety#h-products">Safety page's key</a>: it weighs how many tests agree and how good they were, not how far up the ladder they reached.</p>
   <h2>{len(ps)} product{"s" if len(ps) != 1 else ""}</h2>
 {chr(10).join(blocks)}
   <h2>Limits</h2>
@@ -138,28 +156,22 @@ def build(T, out, write, page, relink, esc, text, BUILT, long_date):
         written.append(write(f"safety-check/{slug}", page(f"safety-check/{slug}", title, "Safety · evidence ladder", body, h1=title.split(":")[0],
                        desc=desc[:300], crumbs=[("Safety", "/safety")])))
     # every product at once, highest rung first, one table per ladder (their steps differ)
-    SHORT = {"deter": ("Behavior", "Bait-taking", "Bites on decoys", "People, real use"),
-             "fabric": ("Material tests", "Live sharks", "Real bites"), "bleed": ("Controlled test", "Real rescues", "Survival")}
     NAME = {"deter": "Deterrents: do they keep sharks away?", "fabric": "Bite-resistant fabric: does it reduce the injury?", "bleed": "Bleeding control: does it save lives?"}
     slug_of = {h: sl for h, sl, *_ in GROUPS}
     pid = lambda n: re.sub(r"[^a-z0-9]+", "-", n.lower()).strip("-")
     tables = ""
     for k in ("deter", "fabric", "bleed"):
         ps = sorted((p for p in P if RUNG[p["name"]][0] == k), key=lambda p: (-RUNG[p["name"]][1], p["group"], p["name"]))
-        head = "".join(f'<th scope="col" title="{esc(full)}">{i + 1}. {sh}</th>' for i, (sh, full) in enumerate(zip(SHORT[k], LADDER[k])))
-        rows = ""
-        for p in ps:
-            r = RUNG[p["name"]][1]
-            cells = "".join(f'<td class="rg{" on" if i < r else ""}">{"<span class=sr>Reached</span>●" if i < r else "<span class=sr>Not shown</span>·"}</td>' for i in range(len(LADDER[k])))
-            rows += (f'<tr><th scope="row"><a href="/safety-check/{slug_of[p["group"]]}#{pid(p["name"])}">{p["name"]}</a><span>{p["group"]}</span></th>'
-                     f'<td><span class="{p["cls"]}">{p["grade"]}</span></td>{cells}</tr>')
+        rows = "".join(f'<li class="lrow"><div class="lname"><a href="/safety-check/{slug_of[p["group"]]}#{pid(p["name"])}">{p["name"]}</a>'
+                       f'<span>{p["group"]} · Grade: {p["grade"]}</span></div>{ladder_html(k, STEPS[p["name"]][1]).replace(chr(34) + "rr", chr(34) + "rr mini", 1)}</li>' for p in ps)
         tables += (f'  <h3>{NAME[k]}</h3>\n  <p class="note">Steps: ' + " → ".join(f"{i + 1}. {x}" for i, x in enumerate(LADDER[k])) + '</p>\n'
-                   f'  <div class="tbl"><table class="ltab"><thead><tr><th scope="col">Product</th><th scope="col">Grade</th>{head}</tr></thead><tbody>{rows}</tbody></table></div>\n')
+                   f'  <ul class="lrows">{rows}</ul>\n')
     cards = "".join(f'<a href="/safety-check/{slug}"><span class="meta">{sum(1 for p in P if p["group"] == h)} products</span><b>{h}</b>{lead.split(". ")[0].rstrip(".")}.</a>' for h, slug, _, _, lead in GROUPS)
     body = f'''  <p class="lead">Every shark-safety product we could find with a published, independent test, placed on an evidence ladder: from a change in behavior in a test, to fewer bites in a field trial, to protecting people in real-world use.</p>
   <p class="answer">{"No deterrent has yet been shown to protect people in real-world use. " if allmax.get("deter", 0) < 4 else ""}The best electric deterrents have cut bites on boards and decoys in field trials, for some species.</p>
   <h2>Every product, by how far its evidence has climbed</h2>
-  <p>A filled dot means independent tests have reached that rung. The grade also weighs how many tests agree and how good they were, so a product can be graded Supported on a low rung.</p>
+  {key_html()}
+  <p>The grade weighs how many tests agree and how good they were, not how far up the ladder they reached, so a product can be graded Supported on a low step.</p>
 {tables}  <h2>By group</h2>
   <div class="cards">{cards}</div>
   <p class="meta">Updated {long_date(BUILT)} · <a href="/safety">Back to Safety</a></p>
