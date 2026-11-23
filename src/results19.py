@@ -280,6 +280,15 @@ def survC44(D):
             f'but white shark bites went from {sp("white")} and bull shark bites from {sp("bull")}. Deaths per decade haven\'t fallen: {d[2010]["fatal"]} in the 2010s and '
             f'{d[max(d)]["fatal"]} so far in the 2020s, while recorded injuries rose from {d[1960]["injured"]} in the 1960s to {d[2010]["injured"]} in the 2010s. '
             f'More minor bites being recorded can lower the share on its own. ({ASIDL}, CC BY 4.0.)')
+def absC18(D):
+    a = D["abspop"]; e, l = a["early"], a["late"]
+    went = "rose" if l["rate"] > e["rate"] else "fell"
+    verdict = ("so this check points the same way" if l["rate"] > e["rate"] and a["p"] < 0.20 else
+               "so this check doesn't settle it" if l["rate"] > e["rate"] else "so this check points the other way")
+    return (f'Second check, official counts: on the southern NSW coast itself (the {a["areas"]} small areas whose center is within 15 km of the sea, Port Macquarie to the '
+            f'Victorian border), residents grew from {a["pop_2001"] / 1e6:.2f} million in 2001 to {a["pop_2024"] / 1e6:.2f} million in 2024 ({a["pop_growth"]:.2f} times). '
+            f'Bites per million residents a year {went} from {e["rate"]} in {e["years"].replace("-", "–")} to {l["rate"]} in {l["years"].replace("-", "–")} '
+            f'({e["bites"]} and {l["bites"]} bites; {pf(a["p"])}), {verdict}. (Population: {A("https://www.abs.gov.au/statistics/people/population/regional-population/latest-release", "Australian Bureau of Statistics, Regional population")}, CC BY 4.0.)')
 def tigerC45(D):
     c = D["newclaims"]["c45"]; e, l = c["early"], c["late"]
     return (f'Early result (exploratory): {c["son"]} of {c["n"]} tiger shark incidents in Hawaii ({c["first"]}–{c["last"]}) came in September to November '
@@ -307,7 +316,7 @@ PARAS = {"mhwC19": (mhwC19, ("mhw",)), "bwC6": (bwC6, ("beachwatch",)), "plumeC6
          "stationsC16": (stationsC16, ("imos",)), "juvC30": (juvC30, ("imos",)),
          "shareC1": (shareC1, ("catchshare",)), "projC3": (projC3, ("proj",)),
          "tagsC25": (tagsC25, ("tags_sa",)), "dailyC25": (dailyC25, ("daily",)), "tagtempC25": (tagtempC25, ("tagtemp",)), "sizeC43": (sizeC43, ("size",)),
-         "survC44": (survC44, ("newclaims",)), "tigerC45": (tigerC45, ("newclaims",)), "gearC46": (gearC46, ("newclaims",)), "ensoC32": (ensoC32, ("newclaims",))}
+         "survC44": (survC44, ("newclaims",)), "absC18": (absC18, ("abspop",)), "tigerC45": (tigerC45, ("newclaims",)), "gearC46": (gearC46, ("newclaims",)), "ensoC32": (ensoC32, ("newclaims",))}
 
 def hawaiiC6(D):
     h = D["hawaii"]

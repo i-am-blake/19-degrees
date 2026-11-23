@@ -152,7 +152,7 @@ The analysis scripts are in `src/`. See [`src/README.md`](src/README.md) to rebu
 - **Water clarity (claim C6):** NASA MODIS Aqua Kd490 monthly, 2003–2022 (NASA Ocean Biology Processing Group), NASA open data, via NOAA ERDDAP
 - **Climate-model projections (claim C3):** [CMIP6](https://wcrp-cmip.org/cmip-phase-6-cmip6/) monthly sea surface temperature from 27 models (SSP2-4.5), read from the Pangeo public archive by `.github/workflows/fetch-cmip.yml` (run by hand) to the `ocean-data` branch; analyzed by `src/proj19.py`. Each modeling center licenses its data, mostly CC BY 4.0
 - **Shark sighting counts (claim C2):** [GBIF.org](https://www.gbif.org) yearly counts, fetched by `.github/workflows/fetch-gbif.yml` (run by hand)
-- **Population:** Australian Bureau of Statistics
+- **Population:** Australian Bureau of Statistics; regional population by small area (SA2), 2001–2024, CC BY 4.0, for the second check of claim C18
 - **Safety evidence and other figures:** published studies, each linked on the site
 
 ## Contributing
