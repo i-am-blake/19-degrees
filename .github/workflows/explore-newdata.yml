@@ -1,0 +1,25 @@
+name: Explore new data sources (look only)
+# Checks satellite sea temperature at about 2 km, population by small area and river flow. Changes nothing in the repo or on the site.
+on: workflow_dispatch
+permissions:
+  contents: read
+jobs:
+  look:
+    runs-on: ubuntu-26.04
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-python@v6
+        with: { python-version: "3.12" }
+      - name: Look
+        run: |
+          pip install -q -r src/requirements.txt openpyxl
+          cd src
+          python3 - <<'PY'
+          import json, urllib.request
+          h = json.load(urllib.request.urlopen("https://zenodo.org/api/records/18752301/versions?sort=version&size=1", timeout=60))["hits"]["hits"][0]
+          f = next(x for x in h["files"] if x["key"].endswith(".xlsx")); urllib.request.urlretrieve(f["links"]["self"], "asid.xlsx")
+          PY
+          python3 -I asid_to_csv.py asid.xlsx asid.csv
+          python3 -I explore_newdata.py asid.csv | tee ../report.md
+          cat ../report.md >> "$GITHUB_STEP_SUMMARY"
