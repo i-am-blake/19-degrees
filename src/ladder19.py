@@ -76,6 +76,12 @@ NOTE = {
  "SharkBanz Zeppelin": "Tested with baited underwater cameras; the study suggests it for keeping sharks off hooked fish, and it has not been tested with swimmers.",
  "SAMS patterned wetsuits": "The trial was promoted by the maker and not peer reviewed.",
 }
+# extra sections for a group page
+EXTRA = {"wetsuits-and-visual": """  <h2>How the bite-resistant fabrics compare</h2>
+  <p>In the largest test so far, live white and tiger sharks bit panels of each fabric over foam (<a href="https://www.publish.csiro.au/wr/Fulltext/WR25019">Clarke et al. 2025</a>). With tiger sharks, serious damage (punctures and tears) fell from 6% of the bite area on standard neoprene to 1–2% on the fabrics, and critical damage (large tears with material missing) from 1% to none. Every fabric also cut serious damage from white sharks.</p>
+  <p><b>No fabric did significantly better than another.</b> The difference is comfort: SharkStop and ActionTX-S are woven and flexible, while Aqua Armour and Brewster are stiffer, so the researchers suggest stiffer fabrics may suit key areas such as the torso and inner thighs.</p>
+  <p class="note">Limits: damage was measured on foam, not skin; few bites were tested (4 on Aqua Armour from white sharks); the sharks were mostly 3 to 4.5 m long; and the fabrics may not prevent crushing injuries or broken bones.</p>
+"""}
 DROP_RE = re.compile(r"\b(protect|safe from|prevent(s|ed)? (bites|attacks)|stops? (every|all) (bite|attack))", re.I)
 
 def products(T):
@@ -148,7 +154,7 @@ def build(T, out, write, page, relink, esc, text, BUILT, long_date):
   <ul>{legend}</ul>
   {key_html()}
   <p>The grade follows the <a href="/safety#h-products">Safety page's key</a>: it weighs how many tests agree and how good they were, not how far up the ladder they reached.</p>
-  <h2>{len(ps)} product{"s" if len(ps) != 1 else ""}</h2>
+{EXTRA.get(slug, "")}  <h2>{len(ps)} product{"s" if len(ps) != 1 else ""}</h2>
 {chr(10).join(blocks)}
   <h2>Limits</h2>
   <ul><li>Only products with a published test are listed. Products sold without any test we could find are left out.</li>

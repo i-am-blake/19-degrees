@@ -31,7 +31,9 @@ MAP = f"""<svg viewBox="{vx:.1f} {vy:.1f} {vw:.1f} {vh:.1f}" style="width:100%;h
 <path d="{C['d']}" fill="#123E5E" stroke="#8DADBD" stroke-width="{sc*0.6:.2f}" stroke-linejoin="round"/>
 {ln(Z['line'][0], '#7CC7F0', '1950–79', 'stroke-dasharray="8 6"')}{ln(Z['line'][-1], '#F5B061', 'NOW')}{towns}</svg>"""
 
-CSS = """body{margin:0;width:1080px;height:1350px;color:#E8F1F2;font-family:Figtree,sans-serif;overflow:hidden;background:linear-gradient(180deg,#0F5677 0,#0F5677 258px,#0B4566 55%,#072F4D 78%,#041A2C 100%)}
+FONTS = os.path.abspath(os.path.join(here, "..", "fonts"))
+FACES = "".join(f"@font-face{{font-family:'{n}';src:url('file://{FONTS}/{f}') format('woff');font-weight:100 900}}" for n, f in (("Bricolage Grotesque", "bricolage.woff"), ("Figtree", "figtree.woff"), ("Martian Mono", "martian-mono.woff")))
+CSS = FACES + """body{margin:0;width:1080px;height:1350px;color:#E8F1F2;font-family:Figtree,sans-serif;overflow:hidden;background:linear-gradient(180deg,#0F5677 0,#0F5677 258px,#0B4566 55%,#072F4D 78%,#041A2C 100%)}
 .surf{position:absolute;inset:0 0 auto 0;height:258px;background:linear-gradient(180deg,#3395BE,#2A86AE)}
 .surf svg.w{position:absolute;left:0;bottom:-1px;width:100%;height:50px}
 .logo{position:absolute;left:72px;top:56px;width:270px;color:#fff}.logo svg{width:100%;height:auto;display:block}
@@ -106,7 +108,7 @@ slides = [
  slide(1, "One rule, 126 years", f"Bull sharks have never bitten in water below <em>19°C</em>.", f"Each dot is one of {bull['n']} bites in Australia since 1900, placed at that month's sea temperature. Here's what's happening to that water.", DOTPLOT),
  slide(2, "More time", f"Off Sydney, that water now lasts <em>{inc}%</em> longer each year.", f"The sea is 19°C or warmer about {syd['recent']:.1f} months a year, up from {syd['base']:.1f} months a century ago.", strip),
  slide(3, "More coastline", f"And it now reaches <em>{km}&nbsp;km</em> further down the coast.", "Where the sea stays 19°C or warmer for half the year: once near Jervis Bay, now near Eden.", f'<div style="width:330px;align-self:center">{MAP}</div>'),
- slide(4, "So the bites moved", "Out of the rivers, into <em>coastal waters</em>.", f"{pct(O[-1])}% of Australia's bull shark bites since 2015 were in coastal waters, up from {pct(O[0])}%. South of Port Macquarie, nearly half now come in autumn and winter.", f'<div style="display:grid;gap:18px">{bars}</div>'),
+ slide(4, "So the bites moved", "Out of the rivers, into <em>coastal waters</em>.", f"{pct(O[-1])}% of Australia's bull shark bites since {E[-1][0]} were in coastal waters, up from {pct(O[0])}% in {E[0][0]}–{str(E[0][1])[2:]}.", f'<div style="display:grid;gap:18px">{bars}</div>'),
  slide(5, "The twist", "There are <em>71%</em> fewer sharks than in 1970.", f"Oceanic sharks and rays, worldwide. Yet since 2020, Western Australia has had more bull shark bites ({W['post']}) than in the 120 years before that combined ({W['pre']}). It isn't more sharks. It's where and when we meet them.", dots),
  slide(6, "It's not just Australia", "Ocean life is moving toward the poles <em>72 km</em> every decade.", "12 times faster than life on land. Tiger sharks off the US travel about 400 km further north for every 1°C of warming. The ocean has set a heat record nine years running."),
  slide(7, "Keep it in perspective", f"For every shark death, <em>{round(R['drown']/R['shark'])}</em> people drown.", "The biggest danger at the beach is still the water itself.<br><br>" + safe),
