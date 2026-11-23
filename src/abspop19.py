@@ -38,18 +38,24 @@ years = list(range(2001, 2022))
 q = {"where": "sa2_code_2021 LIKE '1%'", "outFields": "sa2_code_2021,sa2_name_2021," + ",".join(f"erp_no_{y}" for y in years),
      "returnGeometry": "false", "returnCentroid": "true", "outSR": "4326", "f": "json", "resultRecordCount": 2000}
 A = get(base + "ABS_ERP_2001_2021_SA2/FeatureServer/0/query?" + urllib.parse.urlencode(q))["features"]
-B = get(base + "SA2_RP_2024/FeatureServer/0/query?" + urllib.parse.urlencode({"where": "1=1", "outFields": "sa2_code_2021,pop_yr1,pop_yr2", "returnGeometry": "false", "f": "json", "resultRecordCount": 3000}))["features"]
-late = {x["attributes"]["sa2_code_2021"]: x["attributes"] for x in B}
-if len(A) < 500 or len(late) < 500: sys.exit(f"ABS service returned too few areas ({len(A)}, {len(late)})")
+late, off = {}, 0
+while True:  # this layer pages at 2000 rows and stores the code as text or number, so page through all of it
+    B = get(base + "SA2_RP_2024/FeatureServer/0/query?" + urllib.parse.urlencode({"where": "1=1", "outFields": "sa2_code_2021,pop_yr1,pop_yr2", "returnGeometry": "false",
+              "f": "json", "resultOffset": off, "resultRecordCount": 2000, "orderByFields": "objectid"}))["features"]
+    for x in B: late[str(x["attributes"]["sa2_code_2021"]).strip()] = x["attributes"]
+    if len(B) < 2000: break
+    off += 2000
+if len(A) < 500 or len(late) < 2000: sys.exit(f"ABS service returned too few areas ({len(A)}, {len(late)})")
 areas = []
 for x in A:
     c = x.get("centroid"); a = x["attributes"]
     if not c or nsw_region(c["y"]) not in SOUTH or km_to_coast(c["y"], c["x"]) > 15: continue
     p = {y: a.get(f"erp_no_{y}") or 0 for y in years}
-    l = late.get(a["sa2_code_2021"], {}); p[2023] = l.get("pop_yr1") or 0; p[2024] = l.get("pop_yr2") or 0
+    l = late.get(str(a["sa2_code_2021"]).strip(), {}); p[2023] = l.get("pop_yr1") or 0; p[2024] = l.get("pop_yr2") or 0
     p[2022] = round((p[2021] + p[2023]) / 2)
     areas.append((a["sa2_name_2021"], p))
 pop = {y: sum(p[y] for _, p in areas) for y in range(2001, 2025)}
+if not pop[2024] or not pop[2023] or pop[2024] < 0.9 * pop[2021]: sys.exit(f"2023-24 population didn't join: {pop[2021]}, {pop[2023]}, {pop[2024]}")
 
 rows = [x for x in csv.DictReader(open(ASID, encoding="utf-8")) if x["State"].strip() == "NSW" and x["Provoked/unprovoked"].strip() == "unprovoked"
         and x["Incident.year"].isdigit() and x["Latitude"].strip() not in ("", "NA") and nsw_region(float(x["Latitude"])) in SOUTH]
