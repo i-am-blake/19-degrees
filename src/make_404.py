@@ -48,7 +48,7 @@ a:focus-visible{{outline:2px solid var(--ink);outline-offset:3px}}
 </style>
 </head>
 <body>
-<div class="bar">
+<div class="bar" role="banner">
   <a class="lockup" href="/" aria-label="19 Degrees, home">{logo}</a>
   <nav aria-label="Sections"><a href="/">Home</a><a href="/story">The story</a><a href="/research">Research</a></nav>
   {wave}

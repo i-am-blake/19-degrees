@@ -72,7 +72,7 @@ dl.kv{display:grid;grid-template-columns:minmax(120px,190px) 1fr;gap:8px 18px;ma
 .chlog{list-style:none;padding:0}.chlog li{padding:14px 0;border-bottom:1px solid var(--rule);max-width:none}.chlog time{font:500 13px/1.6 var(--f-data);color:var(--warm);letter-spacing:.06em}
 code{font:400 14px var(--f-data);color:var(--ink)}
 .sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
-.claimbody dl{display:grid;grid-template-columns:minmax(120px,190px) 1fr;gap:8px 18px;margin:12px 0}.claimbody dt{font:500 12px/1.6 var(--f-data);letter-spacing:.08em;text-transform:uppercase;color:var(--muted);padding-top:3px}.claimbody dd{margin:0;color:#C9DCE3}.claimbody h5{font:700 19px/1.3 var(--f-display);margin:24px 0 4px;color:var(--ink)}.claimbody ul.hist{margin:0;padding-left:18px}
+.claimbody dl{display:grid;grid-template-columns:minmax(120px,190px) 1fr;gap:8px 18px;margin:12px 0}.claimbody dt{font:500 12px/1.6 var(--f-data);letter-spacing:.08em;text-transform:uppercase;color:var(--muted);padding-top:3px}.claimbody dd{margin:0;color:#C9DCE3}.claimbody h2.h5,.claimbody h5{font:700 19px/1.3 var(--f-display);margin:24px 0 4px;color:var(--ink)}.claimbody ul.hist{margin:0;padding-left:18px}
 @media (max-width:620px){.claimbody dl{grid-template-columns:1fr}.claimbody dd{margin-bottom:8px}}
 @media (max-width:620px){.bar{flex-wrap:wrap;row-gap:4px}.bar nav{margin-left:-14px;width:calc(100% + 14px);flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none}.bar nav a{padding:8px 12px;min-height:44px;white-space:nowrap}}
 @media (prefers-reduced-motion:reduce){.barwave svg{animation:none}}"""
@@ -85,6 +85,17 @@ def load(index_text):
     _WAVE = re.search(r'<div class="barwave"[^>]*>.*?</svg></div>', index_text, re.S).group(0)
 
 NAV = (("/story", "Story"), ("/safety", "Safety"), ("/research", "Research"), ("/schools", "Schools"), ("/media", "Media"))
+
+def _tables(body):
+    """wide tables scroll sideways on phones: make each one reachable by keyboard and name it after its first column headings"""
+    def one(m):
+        hs = re.findall(r"<th[^>]*>(.*?)</th>", body[m.end():m.end() + 600])[:2]
+        name = html.escape(re.sub(r"<[^>]+>", "", ", ".join(hs)) or "Table", quote=True)
+        return f'<div class="tbl" tabindex="0" role="region" aria-label="Table: {name}">'
+    n = [0]
+    def num(m):
+        n[0] += 1; return one(m).replace('aria-label="Table: ', f'aria-label="Table {n[0]}: ')
+    return re.sub(r'<div class="tbl">', num, body)
 
 def page(path, title, kicker, body, h1=None, desc=None, jsonld=None, crumbs=None, head_extra=""):
     """path: the page's address without the leading slash ("sources.html", "claims/c16"). desc: the search and
@@ -125,15 +136,15 @@ def page(path, title, kicker, body, h1=None, desc=None, jsonld=None, crumbs=None
 </style>
 {head_extra}</head>
 <body>
-<div class="bar">
+<header class="bar">
   <a class="lockup" href="/" aria-label="19 Degrees, home">{_LOGO}</a>
   <nav aria-label="Site"><a href="/">Home</a>{nav}</nav>
   {_WAVE}
-</div>
+</header>
 <main>
   {trail}<div class="kicker">{kicker}</div>
   <h1>{html.escape(h1 or title)}</h1>
-{body}
+{_tables(body)}
   <p class="foot">© 2026 19 Degrees · <a href="/">Home</a> · <a href="/sources.html">Sources</a> · <a href="/open-data">Open data</a> · <a href="/changes">Changes</a> · <a href="/legal.html">Legal</a> · <a href="/privacy.html">Privacy</a></p>
 </main>
 </body>

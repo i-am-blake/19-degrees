@@ -74,7 +74,8 @@ NOTE = {
  "Sharksafe Barrier": "The study was led by a co-inventor of the Sharksafe Barrier, who also developed the Exclusion Barrier; the paper declares no conflict of interest.",
  "Electronic Shark Defense System": "Bites on the bait fell, but bumps rose to match, and it worked only within about 15 cm.",
  "SharkBanz Zeppelin": "Tested with baited underwater cameras; the study suggests it for keeping sharks off hooked fish, and it has not been tested with swimmers.",
- "SAMS patterned wetsuits": "The trial was promoted by the maker and not peer reviewed.",
+ "SAMS patterned wetsuits": "The only trial, with white sharks in 2016, was announced by the maker and we found no peer-reviewed paper.",
+ "Eco-friendly surf barriers (NSW north coast)": "Trials at Ballina's Lighthouse Beach and Lennox Head were stopped in 2016 after swell and moving sand damaged the barriers, so they were never tested with sharks.",
 }
 # extra sections for a group page
 EXTRA = {"wetsuits-and-visual": """  <h2>How the bite-resistant fabrics compare</h2>

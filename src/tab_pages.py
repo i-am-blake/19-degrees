@@ -90,6 +90,8 @@ def write(doc, out):
         if n != 1: sys.exit("page data not found")
         if slug:
             title, desc = T[slug]
+            # each tab page has one level-one heading (read by screen readers; the visible headings stay as they are)
+            d = d.replace(f'<div role="tabpanel" id="panel-{keep}"', f'<h1 class="sr">{html.escape(title)}</h1>\n  <div role="tabpanel" id="panel-{keep}"', 1)
             d = d.replace(f'<link rel="canonical" href="{SITE}">', f'<link rel="canonical" href="{SITE}{slug}">', 1)
             d = d.replace(f'<meta property="og:url" content="{SITE}">', f'<meta property="og:url" content="{SITE}{slug}">', 1)
             d, n = re.subn(r'<title>[^<]*</title>', f'<title>{html.escape(title)} · 19 Degrees</title>', d, count=1)

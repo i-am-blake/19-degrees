@@ -78,10 +78,10 @@ def page(title, kicker, body):
     d = DESC[title].replace('"', "&quot;")
     return f"""<!doctype html><html lang="en-US"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>{title} · 19 Degrees</title><meta name="description" content="{d}"><meta property="og:title" content="{title}"><meta property="og:description" content="{d}"><meta property="og:image" content="https://19-degrees.org/share/link-card.png"><link rel="stylesheet" href="fonts/fonts.css"><style>{CSS}</style></head><body><div class="wrap">
-<div class="top"><div><div class="k">{kicker}</div><h1>{title}</h1></div><div class="logo" aria-hidden="true">{logo}</div></div>
+<main><div class="top"><div><div class="k">{kicker}</div><h1>{title}</h1></div><div class="logo" aria-hidden="true">{logo}</div></div>
 {body}
 <p class="src">Data: Australian Shark-Incident Database (Taronga Conservation Society Australia and Flinders University); HadISST sea temperature (UK Met Office); Pacoureau et al. 2021; Surf Life Saving Australia. From 19 Degrees, free and open source. © 2026 19 Degrees.</p>
-</div></body></html>"""
+</main></div></body></html>"""
 
 BTN = '<div class="btns"><button class="btn" onclick="window.print()">Print this sheet</button><a class="btn" href="classroom.html">All versions</a></div>'
 rows = "".join(f'<tr><th>{r["decade"]}s</th><td class="half"><span class="b" style="width:{r["months"]/12*100:.0f}%"></span></td><td>{r["months"]:.1f}</td></tr>' for r in syd["rows"])
@@ -191,7 +191,7 @@ senior = page("Testing a climate claim with real data", "19 Degrees · classroom
 
 hub = page("Classroom sheets", "19 Degrees · for teachers", f"""<p>Three printable versions of the same lesson, each with a data map of the east coast. The last page of each sheet holds the teacher notes (learning intentions, success criteria, big ideas, curriculum links for Australia, the US, England, the IB and others, lesson sequence, differentiation, assessment and a wellbeing note) and the answer guide, and prints separately. All numbers update with the data. Free to use and adapt under CC BY 4.0.</p>
 <div class="hero"><div class="cards">
-<a class="card" href="classroom-primary.html"><span class="k">Ages 8 to 11 · 45–60 min</span><h3>Shark detectives</h3><span>Read a map, count months, draw a safety poster.</span><span class="k">Habitats · adaptation · map and data skills</span></a>
+<h2 style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)">Choose a sheet</h2><a class="card" href="classroom-primary.html"><span class="k">Ages 8 to 11 · 45–60 min</span><h3>Shark detectives</h3><span>Read a map, count months, draw a safety poster.</span><span class="k">Habitats · adaptation · map and data skills</span></a>
 <a class="card" href="classroom-middle.html"><span class="k">Ages 12 to 15 · 50–60 min</span><h3>A moving line</h3><span>Read a chart, work out a percentage, explain a pattern.</span><span class="k">Ecosystems · percentages · evaluating explanations</span></a>
 <a class="card" href="classroom-senior.html"><span class="k">Ages 16 and up · 1–2 lessons</span><h3>Testing a climate claim</h3><span>Rates, p-values, other explanations and designing a test with real data.</span><span class="k">Climate change · statistics · designing a test</span></a>
 </div>{MAP}</div>""")

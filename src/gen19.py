@@ -55,6 +55,9 @@ def relink(h):
     h = re.sub(r'href="#([^"]+)"', fix, h)
     return re.sub(r'\sdata-tab="[^"]*"', "", h)
 
+def h5_to_h2(h):
+    """claim cards use h5 under the card title; on a claim page they sit under the page title, so h2 keeps the heading order"""
+    return re.sub(r"<h5(\s|>)", r'<h2 class="h5"\1', h).replace("</h5>", "</h2>")
 def badge(c): return f'<span class="{c["cls"]}">{esc(c["grade"])}</span>'
 def write(path, doc):
     f = os.path.join(out, path + ("" if path.endswith((".html", ".xml")) else ".html"))
@@ -191,7 +194,7 @@ for c in ordered:
                                  (f'<a href="/claims/{nxt["id"]}">{nxt["label"]} →</a>' if nxt else "")) if x)
     body = (f'  <p class="meta">Grade {badge(c)} · updated {long_date(BUILT)}</p>\n'
             + (f'  <p class="note">{esc(c["merged"])}</p>\n' if c["merged"] else "")
-            + f'  <div class="claimbody">{relink(c["body"])}</div>\n'
+            + f'  <div class="claimbody">{h5_to_h2(relink(c["body"]))}</div>\n'
             + '  <h2>Help test it</h2>\n  <p>Every claim says in advance what would support it and what would rule it out. Have data, a method or a result? '
             + f'<a href="/#contact">Get in touch</a>; whoever tests a claim is credited here and on the <a href="/research#{c["id"]}">Research page</a>. How grades work: <a href="/research#h-agenda">the grade key</a>.</p>\n'
             + f'  <p class="foot" style="margin-top:28px">{nav}</p>\n')

@@ -79,15 +79,39 @@ if os.path.exists(_fp):
 _gp = os.path.join(os.path.dirname(os.path.abspath(__file__)), "gen19.py")
 subprocess.run([sys.executable, "-I", _gp, os.path.join(out, "index.html"), out], check=True)
 _gen = json.load(open(os.path.join(out, ".generated.json"))); os.remove(os.path.join(out, ".generated.json"))
-# sitemap and robots.txt, so search engines find every page (merged-claim pages that only send readers on are left out)
-import datetime as _dt
-_today = _dt.date.today().isoformat()
-_urls = [SITE] + [SITE + _s for _s, _ in tab_pages.TABS] + [SITE + f for f in ("classroom.html", "classroom-primary.html", "classroom-middle.html", "classroom-senior.html", "sources.html", "legal.html", "privacy.html", "funders.html")]
-_urls += [SITE + re.sub(r"(^|/)index$", r"\1", g) for g in _gen if not g.endswith(".xml") and g not in ("claims/c2", "claims/c37")]
-open(os.path.join(out, "sitemap.xml"), "w").write('<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' + "".join(f"  <url><loc>{u}</loc><lastmod>{_today}</lastmod></url>\n" for u in _urls) + "</urlset>\n")
-open(os.path.join(out, "robots.txt"), "w").write(f"User-agent: *\nAllow: /\nSitemap: {SITE}sitemap.xml\n")
 # each tab is its own page (/, /story, /safety, ...): split last, because the pages above read the full index.html
 tab_pages.write(doc, out)
+# sitemap and robots.txt, so search engines find every page (merged-claim pages that only send readers on are left out).
+# Each page's last-updated date is the day its content last changed: compared with the published copy, ignoring "updated" dates.
+import datetime as _dt
+_today = _dt.date.today().isoformat()
+_root = os.environ.get("PUBLISHED_SITE") or os.path.abspath(os.path.join(os.path.dirname(os.path.abspath(__file__)), ".."))
+_old = {}
+try:
+    for _u, _d in re.findall(r"<loc>([^<]+)</loc><lastmod>([^<]+)</lastmod>", open(os.path.join(_root, "sitemap.xml"), encoding="utf-8").read()): _old[_u] = _d
+except OSError:
+    pass
+_MON = "January|February|March|April|May|June|July|August|September|October|November|December"
+def _norm(t):
+    t = re.sub(r'"(built|dateModified)":\s*"[^"]*"', "", t)
+    t = re.sub(r"(?i)(updated|reviewed|numbers updated)\s+\d{1,2} (" + _MON + r") \d{4}", "", t)
+    return t
+def _file(u):
+    p = u[len(SITE):] or "index.html"
+    if p.endswith("/"): p += "index.html"
+    elif not p.endswith(".html"): p += ".html"
+    return p
+def _lastmod(u):
+    f = _file(u); new, old = os.path.join(out, f), os.path.join(_root, f)
+    try:
+        if u in _old and _norm(open(new, encoding="utf-8").read()) == _norm(open(old, encoding="utf-8").read()): return _old[u]
+    except OSError:
+        pass
+    return _today
+_urls = [SITE] + [SITE + _s for _s, _ in tab_pages.TABS] + [SITE + f for f in ("classroom.html", "classroom-primary.html", "classroom-middle.html", "classroom-senior.html", "sources.html", "legal.html", "privacy.html", "funders.html")]
+_urls += [SITE + re.sub(r"(^|/)index$", r"\1", g) for g in _gen if not g.endswith(".xml") and g not in ("claims/c2", "claims/c37")]
+open(os.path.join(out, "sitemap.xml"), "w").write('<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' + "".join(f"  <url><loc>{u}</loc><lastmod>{_lastmod(u)}</lastmod></url>\n" for u in _urls) + "</urlset>\n")
+open(os.path.join(out, "robots.txt"), "w").write(f"User-agent: *\nAllow: /\nSitemap: {SITE}sitemap.xml\n")
 bad = []
 for root, _, files in os.walk(out):
     for f in files:
