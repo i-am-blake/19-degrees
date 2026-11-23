@@ -285,9 +285,9 @@ def absC18(D):
     went = "rose" if l["rate"] > e["rate"] else "fell"
     verdict = ("so this check points the same way" if l["rate"] > e["rate"] and a["p"] < 0.20 else
                "so this check doesn't settle it" if l["rate"] > e["rate"] else "so this check points the other way")
-    return (f'Second check, official counts: on the southern NSW coast itself (the {a["areas"]} small areas whose center is within 15 km of the sea, Port Macquarie to the '
-            f'Victorian border), residents grew from {a["pop_2001"] / 1e6:.2f} million in 2001 to {a["pop_2024"] / 1e6:.2f} million in 2024 ({a["pop_growth"]:.2f} times). '
-            f'Bites per million residents a year {went} from {e["rate"]} in {e["years"].replace("-", "–")} to {l["rate"]} in {l["years"].replace("-", "–")} '
+    return (f'Second check, official counts: on the southern NSW coast itself (the {a["areas"]} small areas whose center is within 15 km of the sea, Port Macquarie to '
+            f'Eden), residents grew from {a["pop_2001"] / 1e6:.2f} million in 2001 to {a["pop_2024"] / 1e6:.2f} million in 2024 ({a["pop_growth"]:.2f} times). '
+            f'Bites per million residents a year {went} from {e["rate"]:.2f} in 2001–2010 to {l["rate"]:.2f} from {l["years"][:4]} to {MON[a["last_month"] - 1] + " " if a["last_month"] < 12 else ""}{a["last_year"]} '
             f'({e["bites"]} and {l["bites"]} bites; {pf(a["p"])}), {verdict}. (Population: {A("https://www.abs.gov.au/statistics/people/population/regional-population/latest-release", "Australian Bureau of Statistics, Regional population")}, CC BY 4.0.)')
 def tigerC45(D):
     c = D["newclaims"]["c45"]; e, l = c["early"], c["late"]
