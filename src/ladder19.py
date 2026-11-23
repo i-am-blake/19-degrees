@@ -69,7 +69,9 @@ NOTE = {
  "Rpela V2": "The bite reduction was for white sharks; for bull sharks only bait-taking was tested.",
  "Ocean Guardian Freedom+ Surf": "Bull sharks got used to it over three weeks of testing.",
  "Ocean Guardian Scuba7": "Tested with blacktip reef sharks, not the species that bite people most.",
- "Counter-illumination lights": "A research prototype, tested on seal-shaped decoys, not on surfers.",
+ "Counter-illumination lights": "A research prototype, tested on seal-shaped decoys, not on surfers. The researchers hold patents on a related device.",
+ "Electronic Shark Defense System": "Bites on the bait fell, but bumps rose to match, and it worked only within about 15 cm.",
+ "SharkBanz Zeppelin": "Tested with baited underwater cameras; the study suggests it for keeping sharks off hooked fish, and it has not been tested with swimmers.",
  "SAMS patterned wetsuits": "The trial was promoted by the maker and not peer reviewed.",
 }
 DROP_RE = re.compile(r"\b(protect|safe from|prevent(s|ed)? (bites|attacks)|stops? (every|all) (bite|attack))", re.I)
