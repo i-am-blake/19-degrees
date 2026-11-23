@@ -74,6 +74,8 @@ cp "$R/src/obis.json" obis.json 2>/dev/null || true
 python3 -I obis19.py ocean obis.json || warn "C25 step failed, page keeps last numbers"
 # Indian Ocean Dipole and WA bites (claim C26); coastal population and southern NSW bites (claim C18)
 [ -f ocean/iod_dmi_hadisst.txt ] && { python3 -I iod19.py asid.csv ocean/iod_dmi_hadisst.txt iod.json || warn "C26 step failed, page keeps last numbers"; }
+# C18 second check: official population by small area on the southern NSW coast (Australian Bureau of Statistics)
+timeout 600 python3 -I abspop19.py asid.csv abspop.json coast.geojson || { warn "C18 ABS check failed, page keeps last numbers"; cp "$R/src/abspop.json" . 2>/dev/null || true; }
 [ -f ocean/population_coastal_ghsl.csv ] && { python3 -I coastpop19.py asid.csv ocean/population_coastal_ghsl.csv coastpop.json || warn "C18 step failed, page keeps last numbers"; }
 # California white sharks (claim C23), from the incident file the monthly fetch saves to ocean-data
 { f=$(ls ocean/california_*.xlsx 2>/dev/null | head -n 1); [ -n "$f" ] && python3 -I california19.py "$f" california.json; } || warn "C23 step failed, page keeps last numbers"
@@ -120,7 +122,7 @@ python3 -I check_site19.py site
 
 # 7. Copy back
 cp -r site/. "$R/"
-cp heat.json asid_version.txt "$R/src/"; [ -f rain.json ] && cp rain.json "$R/src/"; [ -f imos.json ] && cp imos.json "$R/src/"; [ -f leeuwin.json ] && cp leeuwin.json "$R/src/"; [ -f california.json ] && cp california.json "$R/src/"; [ -f grades_history.json ] && cp grades_history.json "$R/src/"; for j in attention newclaims fieldnotes lunar obis iod coastpop mhw beachwatch hawaii exposure beachday tides whales chlorophyll rivers harbour tigerqld tigerrain whitecool upwelling catchshare tagtemp size; do [ -f $j.json ] && cp $j.json "$R/src/"; done
+cp heat.json asid_version.txt "$R/src/"; [ -f rain.json ] && cp rain.json "$R/src/"; [ -f imos.json ] && cp imos.json "$R/src/"; [ -f leeuwin.json ] && cp leeuwin.json "$R/src/"; [ -f california.json ] && cp california.json "$R/src/"; [ -f grades_history.json ] && cp grades_history.json "$R/src/"; for j in attention newclaims abspop fieldnotes lunar obis iod coastpop mhw beachwatch hawaii exposure beachday tides whales chlorophyll rivers harbour tigerqld tigerrain whitecool upwelling catchshare tagtemp size; do [ -f $j.json ] && cp $j.json "$R/src/"; done
 # a dated snapshot of the claims and headline numbers, kept in src/history/ for the evidence history
 python3 -I snapshot19.py 19-degrees.html "$R/src/history" || warn "snapshot skipped"
 echo "built OK (new database version: $NEWDB)"
