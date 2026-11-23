@@ -256,6 +256,11 @@
    "date": "2026-11-12",
    "label": "Open",
    "why": "First graded."
+  },
+  {
+   "date": "2026-11-23",
+   "label": "First look",
+   "why": "This checks one natural swing, El Niño and La Niña, against the extra warm months. Separating human emissions from all natural swings needs a climate attribution study."
   }
  ],
  "c33": [
@@ -332,6 +337,27 @@
   {
    "date": "2026-11-12",
    "label": "Early result: leans toward it",
+   "why": "First graded."
+  }
+ ],
+ "c44": [
+  {
+   "date": "2026-11-23",
+   "label": "Early result: leans toward it",
+   "why": "First graded."
+  }
+ ],
+ "c45": [
+  {
+   "date": "2026-11-23",
+   "label": "Early result: leans toward it",
+   "why": "First graded."
+  }
+ ],
+ "c46": [
+  {
+   "date": "2026-11-23",
+   "label": "Early result: supports it",
    "why": "First graded."
   }
  ]
