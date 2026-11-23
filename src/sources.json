@@ -339,6 +339,13 @@
      "license": "Cited"
     },
     {
+     "name": "Regional population by small area (SA2), 2001-2024",
+     "url": "https://www.abs.gov.au/statistics/people/population/regional-population/latest-release",
+     "from": "Australian Bureau of Statistics",
+     "used_for": "Residents on the southern NSW coast by year; second check of claim C18",
+     "license": "CC BY 4.0"
+    },
+    {
      "name": "GHS-POP R2023A population grid",
      "url": "https://human-settlement.emergency.copernicus.eu/",
      "from": "European Commission Joint Research Centre",

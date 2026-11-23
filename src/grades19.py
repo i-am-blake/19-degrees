@@ -77,7 +77,9 @@ def g_c18(D):
     d = {x["decade"]: x for x in D["coastpop"]["decades"]}; a, z = d[1990], d[max(d)]
     ea, ez = a["people"] * a["years"], z["people"] * z["years"]
     p = binom2(z["bites"], a["bites"] + z["bites"], ez / (ea + ez))
-    return cap(V(z["bites"] / ez > a["bites"] / ea, p))
+    v = cap(V(z["bites"] / ez > a["bites"] / ea, p))
+    b = D.get("abspop")  # second check with official counts for the coast itself: if it points the other way, the claim is unclear
+    return "none" if v == "leans" and b and b["late"]["rate"] <= b["early"]["rate"] else v
 def g_c19(D):
     h = D["heat"]; k = sum(h[s]["t"] for s in h); n = sum(h[s]["n"] for s in h)
     a = D["mhw"]["all"]

@@ -60,14 +60,15 @@ if not pop[2024] or not pop[2023] or pop[2024] < 0.9 * pop[2021]: sys.exit(f"202
 rows = [x for x in csv.DictReader(open(ASID, encoding="utf-8")) if x["State"].strip() == "NSW" and x["Provoked/unprovoked"].strip() == "unprovoked"
         and x["Incident.year"].isdigit() and x["Latitude"].strip() not in ("", "NA") and nsw_region(float(x["Latitude"])) in SOUTH]
 last = max(int(x["Incident.year"]) for x in rows)
+last_month = max(int(x["Incident.month"]) for x in rows if int(x["Incident.year"]) == last and x["Incident.month"].strip().isdigit())  # the database runs to here: count only that part of the year
 def window(y0, y1):
     sel = [x for x in rows if y0 <= int(x["Incident.year"]) <= y1]
-    py = sum(pop[min(max(y, 2001), 2024)] for y in range(y0, y1 + 1))  # resident-years; years after 2024 use 2024
+    py = sum(pop[min(max(y, 2001), 2024)] * (last_month / 12 if y == last else 1) for y in range(y0, y1 + 1))  # resident-years; years after 2024 use 2024
     return dict(years=f"{y0}-{y1}", bites=len(sel), bull=sum("bull" in x["Shark.common.name"].lower() for x in sel),
-                resident_years=py, rate=round(len(sel) / py * 1e6, 2))
+                resident_years=round(py), rate=round(len(sel) / py * 1e6, 2))
 a, z = window(2001, 2010), window(last - 9, last)
 p = float(binomtest(z["bites"], a["bites"] + z["bites"], z["resident_years"] / (a["resident_years"] + z["resident_years"])).pvalue)
 out = dict(areas=len(areas), pop_2001=pop[2001], pop_2024=pop[2024], pop_growth=round(pop[2024] / pop[2001], 2),
-           early=a, late=z, rate_growth=round(z["rate"] / a["rate"], 1) if a["rate"] else None, p=round(p, 4), last_year=last)
+           early=a, late=z, rate_growth=round(z["rate"] / a["rate"], 1) if a["rate"] else None, p=round(p, 4), last_year=last, last_month=last_month)
 json.dump(out, open(OUT, "w"), indent=1)
 print("abspop", json.dumps(out))
