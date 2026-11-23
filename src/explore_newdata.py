@@ -31,14 +31,35 @@ def imos():
             if m: files[m.group(1)] = p
         time.sleep(0.2)
     ks = sorted(files); print(f"- Monthly files: {len(ks)} ({ks[0]} to {ks[-1]}); example: `{files[ks[-1]]}`")
+    DO = f"{TH}/dodsC/"
+    das = get(DO + files[ks[-1]] + ".das").decode()
+    blk = das[das.index("sea_surface_temperature"):][:1500]
+    sf = float(re.search(r"scale_factor\s+([-\d.eE]+)", blk).group(1)); ao = float(re.search(r"add_offset\s+([-\d.eE]+)", blk).group(1))
+    fv = re.search(r"_FillValue\s+(-?\d+)", blk); fv = int(fv.group(1)) if fv else -32768
+    print(f"- Scale {sf}, offset {ao}, fill {fv}")
+    def axis(path, name):
+        t = get(DO + path + f".ascii?{name}", 180).decode()
+        return [float(x) for x in t.split("\n", 2)[-1].replace(",", " ").split() if re.match(r"^-?\d", x)]
+    LAT = axis(files[ks[-1]], "lat"); LON = axis(files[ks[-1]], "lon")
+    print(f"- Grid: {len(LAT)} x {len(LON)}, lat {LAT[0]:.2f} to {LAT[-1]:.2f}, step {LAT[1]-LAT[0]:.3f}°")
+    def idx(arr, v): return min(range(len(arr)), key=lambda k: abs(arr[k] - v))
+    LI = {}; LJ = {}
     def point(path, la, lo):
-        q = urllib.parse.urlencode({"var": "sea_surface_temperature", "latitude": la, "longitude": lo, "accept": "csv"})
-        t = get(f"{TH}/ncss/{path}?{q}", 90).decode().strip().splitlines()
-        if len(t) < 2: return None
-        v = t[1].split(",")[-1]
-        try:
-            k = float(v); return k - 273.15 if k > 200 else k
-        except ValueError: return None
+        i = LI.setdefault(round(la, 3), idx(LAT, la)); j = LJ.setdefault(round(lo, 3), idx(LON, lo))
+        q = f"sea_surface_temperature[0][{max(i-4,0)}:{i+4}][{max(j-4,0)}:{j+8}]"
+        t = get(DO + path + ".ascii?" + q, 90).decode()
+        grid = []
+        for line in t.split("\n"):
+            m = re.match(r"^sea_surface_temperature\.sea_surface_temperature\[0\]\[(\d+)\], (.*)$", line) or re.match(r"^\[0\]\[(\d+)\], (.*)$", line)
+            if m: grid.append([int(x) for x in m.group(2).split(",")])
+        best = None
+        for a, row in enumerate(grid):
+            for c, v in enumerate(row):
+                if v == fv: continue
+                d = (a - 4) ** 2 + (c - 4) ** 2
+                if best is None or d < best[0]: best = (d, v * sf + ao)
+        if best is None: return None
+        k = best[1]; return k - 273.15 if k > 200 else k
     v = point(files[ks[-1]], -33.89, 151.29); print(f"- Test point off Bondi, {ks[-1]}: {v}")
     for sp in ("bull", "tiger"):
         out = []
@@ -48,10 +69,7 @@ def imos():
             if None in (y, mo, la, lo): continue
             k = f"{int(y)}{int(mo):02d}"
             if k not in files: continue
-            t = None
-            for dlo in (0, 0.03, 0.06, 0.1, 0.15):  # step offshore until the cell is sea, not land or cloud gap
-                t = point(files[k], la, lo + dlo)
-                if t is not None and t == t: break
+            t = point(files[k], la, lo)  # nearest sea cell with a value within about 10 km
             out.append((k, la, lo, t)); time.sleep(0.15)
         ok = [o for o in out if o[3] is not None and o[3] == o[3]]
         if not ok: print(f"- {sp}: no values"); continue
@@ -72,7 +90,8 @@ def abs_pop():
     s = [x for x in f if x.get("centroid") and x["centroid"]["y"] < -31.43]
     print(f"- South of Port Macquarie (centroid): {len(s)} areas; examples: " + "; ".join(x["attributes"]["sa2_name_2021"] for x in s[:5]))
     u2 = "https://geo.abs.gov.au/arcgis/rest/services/Hosted/SA2_RP_2024/FeatureServer/0/query"
-    j2 = json.loads(get(u2 + "?" + urllib.parse.urlencode({"where": "sa2_code_2021 LIKE '1%'", "outFields": "*", "returnGeometry": "false", "f": "json", "resultRecordCount": 2000})))
+    j2 = json.loads(get(u2 + "?" + urllib.parse.urlencode({"where": "1=1", "outFields": "*", "returnGeometry": "false", "f": "json", "resultRecordCount": 5})))
+    print(f"- 2023–24 layer raw: {json.dumps(j2)[:400]}")
     f2 = j2.get("features", []); print(f"- 2023–24 layer: {len(f2)} NSW areas; fields: {sorted(f2[0]['attributes'])[:12] if f2 else []}")
     lic = get("https://geo.abs.gov.au/arcgis/rest/services/Hosted/ABS_ERP_2001_2021_SA2/FeatureServer/0?f=json").decode()
     m = re.search(r'"licenseInfo"\s*:\s*"([^"]{0,200})', lic); print(f"- License field: {m.group(1) if m else 'not given in the service'}")
@@ -103,4 +122,3 @@ def flow():
 
 safe("1. IMOS 2 km monthly sea temperature at each bite", imos)
 safe("2. ABS population by small area", abs_pop)
-safe("3. River flow", flow)
