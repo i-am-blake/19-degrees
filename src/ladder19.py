@@ -70,6 +70,8 @@ NOTE = {
  "Ocean Guardian Freedom+ Surf": "Bull sharks got used to it over three weeks of testing.",
  "Ocean Guardian Scuba7": "Tested with blacktip reef sharks, not the species that bite people most.",
  "Counter-illumination lights": "A research prototype, tested on seal-shaped decoys, not on surfers. The researchers hold patents on a related device.",
+ "Exclusion Barrier": "The study was led by a co-inventor of the Sharksafe Barrier, who also developed the Exclusion Barrier; the paper declares no conflict of interest.",
+ "Sharksafe Barrier": "The study was led by a co-inventor of the Sharksafe Barrier, who also developed the Exclusion Barrier; the paper declares no conflict of interest.",
  "Electronic Shark Defense System": "Bites on the bait fell, but bumps rose to match, and it worked only within about 15 cm.",
  "SharkBanz Zeppelin": "Tested with baited underwater cameras; the study suggests it for keeping sharks off hooked fish, and it has not been tested with swimmers.",
  "SAMS patterned wetsuits": "The trial was promoted by the maker and not peer reviewed.",
