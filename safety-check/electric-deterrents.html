@@ -71,6 +71,19 @@ dl.kv{display:grid;grid-template-columns:minmax(120px,190px) 1fr;gap:8px 18px;ma
 .ladder.three{grid-template-columns:repeat(3,1fr)}
 @media (max-width:620px){.ladder,.ladder.three{grid-template-columns:1fr}}
 .ltab{min-width:620px}.ltab th[scope=row] a{color:var(--ink);font-weight:600}.ltab th[scope=row] span{display:block;font:400 13px/1.4 var(--f-body);color:var(--muted);text-transform:none;letter-spacing:0}.ltab th[scope=row]{font:inherit;text-transform:none;letter-spacing:0;color:var(--ink)}.ltab td.rg{text-align:center;color:var(--rule);font-size:20px;color:#3C5A6B}.ltab td.rg.on{color:var(--cold)}.ltab td:last-child{color:inherit}.ltab .cstat{font-size:11px;padding:4px 7px}
+.rr{list-style:none;padding:0;margin:14px 0 6px;display:grid;grid-template-columns:repeat(4,1fr);gap:6px;max-width:none}.rr.three{grid-template-columns:repeat(3,1fr)}
+.rr li{border:1.5px solid var(--rule);padding:10px 6px 8px;text-align:center;max-width:none;font-size:13px;line-height:1.3;color:var(--muted)}
+.rr li b{display:block;font:700 22px/1 var(--f-display);margin-bottom:6px}
+.rr li.y{border-color:#5AB4E5;background:rgba(90,180,229,.18);color:var(--ink)}.rr li.y b{color:#7CC7F0}
+.rr li.m{border-color:#5AB4E5;border-style:dashed;color:var(--ink)}.rr li.m b{color:#7CC7F0}
+.rr li.n{border-color:#D97A66;color:var(--ink)}.rr li.n b{color:#F0A493}.rr li.o b{color:#4A6577}
+.gl{font-size:15px;color:var(--muted);margin:4px 0 0}.gl b{color:var(--ink);font-weight:600}
+.rkey{display:flex;flex-wrap:wrap;gap:6px 18px;font-size:15px;color:var(--muted);margin:12px 0 0}.rkey b{color:var(--ink);margin-right:5px;font-size:18px}
+.ltab td.rg{text-align:center;font-size:18px;font-weight:700}.ltab td.rg.y,.ltab td.rg.m{color:#7CC7F0}.ltab td.rg.n{color:#F0A493}.ltab td.rg.o{color:#4A6577}.ltab .gtx{font-size:14px;white-space:nowrap}
+.lrows{list-style:none;padding:0;margin:10px 0 24px;max-width:none}.lrow{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.3fr);gap:8px 18px;align-items:center;padding:12px 0;border-bottom:1px solid var(--rule);max-width:none}
+.lname a{color:var(--ink);font-weight:600}.lname span{display:block;font-size:14px;color:var(--muted);margin-top:2px}
+.rr.mini{margin:0;gap:4px}.rr.mini li{padding:6px 2px 5px;font-size:11px}.rr.mini li b{font-size:16px;margin-bottom:3px}
+@media (max-width:620px){.lrow{grid-template-columns:1fr}}
 .prod{border-top:1px solid var(--rule);padding:20px 0 8px}.prod h3{margin:0 0 4px}.prod .use{color:var(--muted);font-size:15px}
 .chlog{list-style:none;padding:0}.chlog li{padding:14px 0;border-bottom:1px solid var(--rule);max-width:none}.chlog time{font:500 13px/1.6 var(--f-data);color:var(--warm);letter-spacing:.06em}
 code{font:400 14px var(--f-data);color:var(--ink)}
@@ -94,76 +107,87 @@ code{font:400 14px var(--f-data);color:var(--ink)}
   <p class="lead">Electric deterrents make a field around a board, a diver or a boat that sharks can sense with the pores on their snouts. They are the most tested shark deterrents, and the results vary by product and by shark.</p>
   <p class="answer">No product in this group has been shown to protect people in real-world use.</p>
   <h2>The evidence ladder</h2>
-  <p>Each product is placed on the highest rung its published, independent tests have reached. Each rung is a harder test than the one before, and a summary here never claims a rung that hasn't been shown.</p>
+  <p>Each step is a harder test than the one before. Each product shows what its published, independent tests found at each step, and a summary here never claims a step that hasn't been shown.</p>
   <ul><li><b>Deterrents:</b> Changed shark behavior in a test → Cut bait-taking in a field trial → Cut bites on boards or decoys in a field trial → Shown to protect people in real-world use</li></ul>
-  <p>The grade (Supported, Leans yes and so on) follows the <a href="/safety#h-products">Safety page's key</a> and also weighs how many tests agree and how good they were.</p>
+  <div class="rkey"><span><b>✓</b>Worked</span><span><b>~</b>Mixed</span><span><b>✗</b>No effect</span><span><b>·</b>Not tested</span></div><p class="note">A step counts as worked when a harder step above it worked: fewer bites on decoys means behavior changed.</p>
+  <p>The grade follows the <a href="/safety#h-products">Safety page's key</a>: it weighs how many tests agree and how good they were, not how far up the ladder they reached.</p>
   <h2>10 products</h2>
   <section class="prod" id="ocean-guardian-freedom-surf">
-    <h3>Ocean Guardian Freedom+ Surf</h3><p class="use">Surfboard · tested with: White, tiger, bull · grade <span class="cstat sup">Supported</span></p>
-    <ol class="ladder" aria-label="Evidence ladder"><li class="on"><span class="sr">Reached: </span>Changed shark behavior in a test</li><li class="on"><span class="sr">Reached: </span>Cut bait-taking in a field trial</li><li class="on"><span class="sr">Reached: </span>Cut bites on boards or decoys in a field trial</li><li class=""><span class="sr">Not shown: </span>Shown to protect people in real-world use</li></ol>
+    <h3>Ocean Guardian Freedom+ Surf</h3><p class="use">Surfboard · tested with: White, tiger, bull</p>
+    <ol class="rr" aria-label="Evidence ladder"><li class="y" title="Changed shark behavior in a test"><b aria-hidden="true">✓</b>Behavior<span class="sr">: Worked</span></li><li class="y" title="Cut bait-taking in a field trial"><b aria-hidden="true">✓</b>Bait-taking<span class="sr">: Worked</span></li><li class="y" title="Cut bites on boards or decoys in a field trial"><b aria-hidden="true">✓</b>Bites on decoys<span class="sr">: Worked</span></li><li class="o" title="Shown to protect people in real-world use"><b aria-hidden="true">·</b>People, real use<span class="sr">: Not tested</span></li></ol>
+    <p class="gl"><b>Grade: Supported</b> · tests found it works</p>
     <p><b>It has cut bites on boards or decoys in a field trial, but hasn't been shown to protect people in real-world use.</b> Bull sharks got used to it over three weeks of testing.</p>
     <p>What tests found: Cut bites 54% across three species (2024); 60% for white sharks (2018); 42% for bull sharks, who got used to it over three weeks (2020).</p>
     <p class="note">Source: <a href="https://doaj.org/article/d0733a58e2e14b95bd2cbd4785626bcd" target="_blank" rel="noopener">Clarke 2024</a> · <a href="https://peerj.com/articles/5554" target="_blank" rel="noopener">Huveneers 2018</a> · <a href="https://archimer.ifremer.fr/doc/00816/92808" target="_blank" rel="noopener">Gauthier 2020</a></p>
   </section>
   <section class="prod" id="ocean-guardian-freedom-surf-shortboard">
-    <h3>Ocean Guardian Freedom+ Surf Shortboard</h3><p class="use">Surfboard · tested with: Bull · grade <span class="cstat early">Leans yes</span></p>
-    <ol class="ladder" aria-label="Evidence ladder"><li class="on"><span class="sr">Reached: </span>Changed shark behavior in a test</li><li class="on"><span class="sr">Reached: </span>Cut bait-taking in a field trial</li><li class=""><span class="sr">Not shown: </span>Cut bites on boards or decoys in a field trial</li><li class=""><span class="sr">Not shown: </span>Shown to protect people in real-world use</li></ol>
+    <h3>Ocean Guardian Freedom+ Surf Shortboard</h3><p class="use">Surfboard · tested with: Bull</p>
+    <ol class="rr" aria-label="Evidence ladder"><li class="y" title="Changed shark behavior in a test"><b aria-hidden="true">✓</b>Behavior<span class="sr">: Worked</span></li><li class="y" title="Cut bait-taking in a field trial"><b aria-hidden="true">✓</b>Bait-taking<span class="sr">: Worked</span></li><li class="o" title="Cut bites on boards or decoys in a field trial"><b aria-hidden="true">·</b>Bites on decoys<span class="sr">: Not tested</span></li><li class="o" title="Shown to protect people in real-world use"><b aria-hidden="true">·</b>People, real use<span class="sr">: Not tested</span></li></ol>
+    <p class="gl"><b>Grade: Leans yes</b> · small or single effect</p>
     <p><b>It has cut bait-taking in a field trial, but hasn't been shown to cut bites or to protect people in real-world use.</b> </p>
     <p>What tests found: Cut bait-taking 16%.</p>
     <p class="note">Source: <a href="https://archimer.ifremer.fr/doc/00816/92808" target="_blank" rel="noopener">Gauthier 2020</a></p>
   </section>
   <section class="prod" id="ocean-guardian-freedom7-shark-shield">
-    <h3>Ocean Guardian Freedom7 (Shark Shield)</h3><p class="use">Divers, worn or on a spear · tested with: White, tiger · grade <span class="cstat unc">Unclear</span></p>
-    <ol class="ladder" aria-label="Evidence ladder"><li class="on"><span class="sr">Reached: </span>Changed shark behavior in a test</li><li class="on"><span class="sr">Reached: </span>Cut bait-taking in a field trial</li><li class="on"><span class="sr">Reached: </span>Cut bites on boards or decoys in a field trial</li><li class=""><span class="sr">Not shown: </span>Shown to protect people in real-world use</li></ol>
+    <h3>Ocean Guardian Freedom7 (Shark Shield)</h3><p class="use">Divers, worn or on a spear · tested with: White, tiger</p>
+    <ol class="rr" aria-label="Evidence ladder"><li class="y" title="Changed shark behavior in a test"><b aria-hidden="true">✓</b>Behavior<span class="sr">: Worked</span></li><li class="y" title="Cut bait-taking in a field trial"><b aria-hidden="true">✓</b>Bait-taking<span class="sr">: Worked</span></li><li class="m" title="Cut bites on boards or decoys in a field trial"><b aria-hidden="true">~</b>Bites on decoys<span class="sr">: Mixed</span></li><li class="o" title="Shown to protect people in real-world use"><b aria-hidden="true">·</b>People, real use<span class="sr">: Not tested</span></li></ol>
+    <p class="gl"><b>Grade: Unclear</b> · tests disagree</p>
     <p><b>It has cut bites on boards or decoys in a field trial, but hasn't been shown to protect people in real-world use.</b> The bite reduction was for tiger sharks only; there was no effect on white sharks.</p>
     <p>What tests found: Cut tiger shark bites 69% but no effect on white sharks (2024); kept white sharks about 1.3 m away (2016).</p>
     <p class="note">Source: <a href="https://doaj.org/article/d0733a58e2e14b95bd2cbd4785626bcd" target="_blank" rel="noopener">Clarke 2024</a> · <a href="https://doaj.org/article/9964ae48c85a4abd8c493c6ad2bf4752" target="_blank" rel="noopener">Kempster 2016</a></p>
   </section>
   <section class="prod" id="ocean-guardian-scuba7">
-    <h3>Ocean Guardian Scuba7</h3><p class="use">Divers · tested with: Blacktip reef · grade <span class="cstat look">First look</span></p>
-    <ol class="ladder" aria-label="Evidence ladder"><li class="on"><span class="sr">Reached: </span>Changed shark behavior in a test</li><li class="on"><span class="sr">Reached: </span>Cut bait-taking in a field trial</li><li class=""><span class="sr">Not shown: </span>Cut bites on boards or decoys in a field trial</li><li class=""><span class="sr">Not shown: </span>Shown to protect people in real-world use</li></ol>
+    <h3>Ocean Guardian Scuba7</h3><p class="use">Divers · tested with: Blacktip reef</p>
+    <ol class="rr" aria-label="Evidence ladder"><li class="y" title="Changed shark behavior in a test"><b aria-hidden="true">✓</b>Behavior<span class="sr">: Worked</span></li><li class="y" title="Cut bait-taking in a field trial"><b aria-hidden="true">✓</b>Bait-taking<span class="sr">: Worked</span></li><li class="o" title="Cut bites on boards or decoys in a field trial"><b aria-hidden="true">·</b>Bites on decoys<span class="sr">: Not tested</span></li><li class="o" title="Shown to protect people in real-world use"><b aria-hidden="true">·</b>People, real use<span class="sr">: Not tested</span></li></ol>
+    <p class="gl"><b>Grade: First look</b> · indirect or unreviewed tests</p>
     <p><b>It has cut bait-taking in a field trial, but hasn't been shown to cut bites or to protect people in real-world use.</b> Tested with blacktip reef sharks, not the species that bite people most.</p>
     <p>What tests found: Cut bait-taking 67%, from 100% to 33% (2020). Not tested with the species that bite people most.</p>
     <p class="note">Source: <a href="https://archimer.ifremer.fr/doc/00611/72346" target="_blank" rel="noopener">Thiele 2020</a></p>
   </section>
   <section class="prod" id="ocean-guardian-boat01">
-    <h3>Ocean Guardian BOAT01</h3><p class="use">Boats · tested with: White · grade <span class="cstat early">Leans yes</span></p>
-    <ol class="ladder" aria-label="Evidence ladder"><li class="on"><span class="sr">Reached: </span>Changed shark behavior in a test</li><li class="on"><span class="sr">Reached: </span>Cut bait-taking in a field trial</li><li class=""><span class="sr">Not shown: </span>Cut bites on boards or decoys in a field trial</li><li class=""><span class="sr">Not shown: </span>Shown to protect people in real-world use</li></ol>
+    <h3>Ocean Guardian BOAT01</h3><p class="use">Boats · tested with: White</p>
+    <ol class="rr" aria-label="Evidence ladder"><li class="y" title="Changed shark behavior in a test"><b aria-hidden="true">✓</b>Behavior<span class="sr">: Worked</span></li><li class="y" title="Cut bait-taking in a field trial"><b aria-hidden="true">✓</b>Bait-taking<span class="sr">: Worked</span></li><li class="o" title="Cut bites on boards or decoys in a field trial"><b aria-hidden="true">·</b>Bites on decoys<span class="sr">: Not tested</span></li><li class="o" title="Shown to protect people in real-world use"><b aria-hidden="true">·</b>People, real use<span class="sr">: Not tested</span></li></ol>
+    <p class="gl"><b>Grade: Leans yes</b> · small or single effect</p>
     <p><b>It has cut bait-taking in a field trial, but hasn't been shown to cut bites or to protect people in real-world use.</b> </p>
     <p>What tests found: Cut bait-taking up to 48%, but only within about 3 m.</p>
     <p class="note">Source: <a href="https://www.scimex.org/newsfeed/personal-white-shark-e-deterrents-more-effective-than-long-range-device" target="_blank" rel="noopener">Riley 2022</a></p>
   </section>
   <section class="prod" id="rpela-first-version">
-    <h3>Rpela (first version)</h3><p class="use">Surfboard · tested with: White · grade <span class="cstat ruled">Ruled out</span></p>
-    <ol class="ladder" aria-label="Evidence ladder"><li class=""><span class="sr">Not shown: </span>Changed shark behavior in a test</li><li class=""><span class="sr">Not shown: </span>Cut bait-taking in a field trial</li><li class=""><span class="sr">Not shown: </span>Cut bites on boards or decoys in a field trial</li><li class=""><span class="sr">Not shown: </span>Shown to protect people in real-world use</li></ol>
+    <h3>Rpela (first version)</h3><p class="use">Surfboard · tested with: White</p>
+    <ol class="rr" aria-label="Evidence ladder"><li class="o" title="Changed shark behavior in a test"><b aria-hidden="true">·</b>Behavior<span class="sr">: Not tested</span></li><li class="n" title="Cut bait-taking in a field trial"><b aria-hidden="true">✗</b>Bait-taking<span class="sr">: No effect</span></li><li class="o" title="Cut bites on boards or decoys in a field trial"><b aria-hidden="true">·</b>Bites on decoys<span class="sr">: Not tested</span></li><li class="o" title="Shown to protect people in real-world use"><b aria-hidden="true">·</b>People, real use<span class="sr">: Not tested</span></li></ol>
+    <p class="gl"><b>Grade: Ruled out</b> · tests found no effect</p>
     <p><b>Independent tests found no measurable effect. It hasn't reached the first rung.</b> </p>
     <p>What tests found: No measurable effect.</p>
     <p class="note">Source: <a href="https://peerj.com/articles/5554" target="_blank" rel="noopener">Huveneers 2018</a></p>
   </section>
   <section class="prod" id="rpela-v2">
-    <h3>Rpela V2</h3><p class="use">Surfboard · tested with: White, bull · grade <span class="cstat unc">Unclear</span></p>
-    <ol class="ladder" aria-label="Evidence ladder"><li class="on"><span class="sr">Reached: </span>Changed shark behavior in a test</li><li class="on"><span class="sr">Reached: </span>Cut bait-taking in a field trial</li><li class="on"><span class="sr">Reached: </span>Cut bites on boards or decoys in a field trial</li><li class=""><span class="sr">Not shown: </span>Shown to protect people in real-world use</li></ol>
+    <h3>Rpela V2</h3><p class="use">Surfboard · tested with: White, bull</p>
+    <ol class="rr" aria-label="Evidence ladder"><li class="y" title="Changed shark behavior in a test"><b aria-hidden="true">✓</b>Behavior<span class="sr">: Worked</span></li><li class="y" title="Cut bait-taking in a field trial"><b aria-hidden="true">✓</b>Bait-taking<span class="sr">: Worked</span></li><li class="y" title="Cut bites on boards or decoys in a field trial"><b aria-hidden="true">✓</b>Bites on decoys<span class="sr">: Worked</span></li><li class="o" title="Shown to protect people in real-world use"><b aria-hidden="true">·</b>People, real use<span class="sr">: Not tested</span></li></ol>
+    <p class="gl"><b>Grade: Unclear</b> · tests disagree</p>
     <p><b>It has cut bites on boards or decoys in a field trial, but hasn't been shown to protect people in real-world use.</b> The bite reduction was for white sharks; for bull sharks only bait-taking was tested.</p>
     <p>What tests found: Cut white shark bites about 66% (2021); bull shark bait-taking 16% (2020).</p>
     <p class="note">Source: <a href="https://jmstt.ntou.edu.tw/journal/vol29/iss4/13" target="_blank" rel="noopener">Blount 2021</a> · <a href="https://archimer.ifremer.fr/doc/00816/92808" target="_blank" rel="noopener">Gauthier 2020</a></p>
   </section>
   <section class="prod" id="e-shark-force">
-    <h3>E-Shark Force</h3><p class="use">Surfboard · tested with: Bull · grade <span class="cstat ruled">Ruled out</span></p>
-    <ol class="ladder" aria-label="Evidence ladder"><li class=""><span class="sr">Not shown: </span>Changed shark behavior in a test</li><li class=""><span class="sr">Not shown: </span>Cut bait-taking in a field trial</li><li class=""><span class="sr">Not shown: </span>Cut bites on boards or decoys in a field trial</li><li class=""><span class="sr">Not shown: </span>Shown to protect people in real-world use</li></ol>
+    <h3>E-Shark Force</h3><p class="use">Surfboard · tested with: Bull</p>
+    <ol class="rr" aria-label="Evidence ladder"><li class="o" title="Changed shark behavior in a test"><b aria-hidden="true">·</b>Behavior<span class="sr">: Not tested</span></li><li class="n" title="Cut bait-taking in a field trial"><b aria-hidden="true">✗</b>Bait-taking<span class="sr">: No effect</span></li><li class="o" title="Cut bites on boards or decoys in a field trial"><b aria-hidden="true">·</b>Bites on decoys<span class="sr">: Not tested</span></li><li class="o" title="Shown to protect people in real-world use"><b aria-hidden="true">·</b>People, real use<span class="sr">: Not tested</span></li></ol>
+    <p class="gl"><b>Grade: Ruled out</b> · tests found no effect</p>
     <p><b>Independent tests found no measurable effect. It hasn't reached the first rung.</b> </p>
     <p>What tests found: No significant reduction.</p>
     <p class="note">Source: <a href="https://archimer.ifremer.fr/doc/00816/92808" target="_blank" rel="noopener">Gauthier 2020</a></p>
   </section>
   <section class="prod" id="noshark">
-    <h3>NoShark</h3><p class="use">Ankle band · tested with: Bull · grade <span class="cstat ruled">Ruled out</span></p>
-    <ol class="ladder" aria-label="Evidence ladder"><li class=""><span class="sr">Not shown: </span>Changed shark behavior in a test</li><li class=""><span class="sr">Not shown: </span>Cut bait-taking in a field trial</li><li class=""><span class="sr">Not shown: </span>Cut bites on boards or decoys in a field trial</li><li class=""><span class="sr">Not shown: </span>Shown to protect people in real-world use</li></ol>
+    <h3>NoShark</h3><p class="use">Ankle band · tested with: Bull</p>
+    <ol class="rr" aria-label="Evidence ladder"><li class="o" title="Changed shark behavior in a test"><b aria-hidden="true">·</b>Behavior<span class="sr">: Not tested</span></li><li class="n" title="Cut bait-taking in a field trial"><b aria-hidden="true">✗</b>Bait-taking<span class="sr">: No effect</span></li><li class="o" title="Cut bites on boards or decoys in a field trial"><b aria-hidden="true">·</b>Bites on decoys<span class="sr">: Not tested</span></li><li class="o" title="Shown to protect people in real-world use"><b aria-hidden="true">·</b>People, real use<span class="sr">: Not tested</span></li></ol>
+    <p class="gl"><b>Grade: Ruled out</b> · tests found no effect</p>
     <p><b>Independent tests found no measurable effect. It hasn't reached the first rung.</b> </p>
     <p>What tests found: No significant reduction.</p>
     <p class="note">Source: <a href="https://archimer.ifremer.fr/doc/00816/92808" target="_blank" rel="noopener">Gauthier 2020</a></p>
   </section>
   <section class="prod" id="electronic-shark-defense-system">
-    <h3>Electronic Shark Defense System</h3><p class="use">Ankle band · tested with: White · grade <span class="cstat ruled">Ruled out</span></p>
-    <ol class="ladder" aria-label="Evidence ladder"><li class=""><span class="sr">Not shown: </span>Changed shark behavior in a test</li><li class=""><span class="sr">Not shown: </span>Cut bait-taking in a field trial</li><li class=""><span class="sr">Not shown: </span>Cut bites on boards or decoys in a field trial</li><li class=""><span class="sr">Not shown: </span>Shown to protect people in real-world use</li></ol>
+    <h3>Electronic Shark Defense System</h3><p class="use">Ankle band · tested with: White</p>
+    <ol class="rr" aria-label="Evidence ladder"><li class="o" title="Changed shark behavior in a test"><b aria-hidden="true">·</b>Behavior<span class="sr">: Not tested</span></li><li class="n" title="Cut bait-taking in a field trial"><b aria-hidden="true">✗</b>Bait-taking<span class="sr">: No effect</span></li><li class="o" title="Cut bites on boards or decoys in a field trial"><b aria-hidden="true">·</b>Bites on decoys<span class="sr">: Not tested</span></li><li class="o" title="Shown to protect people in real-world use"><b aria-hidden="true">·</b>People, real use<span class="sr">: Not tested</span></li></ol>
+    <p class="gl"><b>Grade: Ruled out</b> · tests found no effect</p>
     <p><b>Independent tests found no measurable effect. It hasn't reached the first rung.</b> </p>
     <p>What tests found: No meaningful effect; worked only within about 15 cm.</p>
     <p class="note">Source: <a href="https://doaj.org/article/0a54d877618d4e19921d4fa0bb820204" target="_blank" rel="noopener">Egeberg 2019</a></p>
