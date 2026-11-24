@@ -1,7 +1,7 @@
 {
   "title": "19 Degrees: open evidence on a warming ocean, sharks and people",
   "upload_type": "software",
-  "description": "<p>19 Degrees is an independent, open project testing how a warming ocean is changing where sharks and people meet. Each claim states in advance what would support it and what would rule it out, and every result is published, including the ones that go against it. This archive holds the site, the data pipeline and the build scripts for one release.</p><p>Code: Apache License 2.0. Text, charts and derived data: CC BY 4.0. Third-party data keep their own licenses, listed on the Sources page.</p>",
+  "description": "<p>19 Degrees is an independent, open project testing how a warming ocean is changing where sharks and people meet. Each claim states in advance what would support it and what would rule it out, and every result is published, including the ones that go against it. This archive holds the site, the data pipeline and the build scripts for one release.</p><p>Code: Apache License 2.0. Text, charts and derived data: CC BY 4.0. Third-party data keep their own licenses, listed on the Sources page; from databases with mixed licenses (including some non-commercial records), only aggregate counts are included.</p><p>This archive is general information for research and education. It is not safety, medical or professional advice.</p>",
   "creators": [
     {
       "name": "Erickson, Blake"
