@@ -293,7 +293,7 @@ def tigerC45(D):
     c = D["newclaims"]["c45"]; e, l = c["early"], c["late"]
     return (f'Early result (exploratory): {c["son"]} of {c["n"]} tiger shark incidents in Hawaii ({c["first"]}–{c["last"]}) came in September to November '
             f'({c["son_pct"]}%, where a quarter of the year gives 25%; {pf(c["p_season"])}), {c["by_month"][9]} of them in October. That share was {e["pct"]}% up to 2010 '
-            f'({e["son"]} of {e["n"]}) and {l["pct"]}% since ({l["son"]} of {l["n"]}; {pf(c["p"])}). The test against autumn sea temperature hasn\'t been run yet. ({HDL}.)')
+            f'({e["son"]} of {e["n"]}) and {l["pct"]}% since ({l["son"]} of {l["n"]}; {pf(c["p"])}).' + ("" if D.get("freetests", {}).get("c45") else " The test against autumn sea temperature hasn\'t been run yet.") + f' ({HDL}.)')
 def gearC46(D):
     c = D["newclaims"]["c46"]; a, r = c["all"], c["recent"]; o = a["other_by"]
     part = lambda k: f'{o[k]["n"]:,} {k} ({o[k]["alive_pct"]}% found alive)'
@@ -309,6 +309,51 @@ def ensoC32(D):
             f'El Niño years ran {c["nino"]["months"]:+.1f} months against the trend ({c["nino"]["n"]} years) and La Niña years {c["nina"]["months"]:+.1f} ({c["nina"]["n"]} years). '
             'This rules out one natural swing, not all of them. (HadISST, Met Office; the El Niño index is built from the same record.)')
 
+OSM = A("https://www.openstreetmap.org/copyright", "OpenStreetMap")
+def F(D, k): return D["freetests"][k]
+def sstC45(D):
+    c = F(D, "c45"); w, k = c["warm"], c["cool"]
+    return (f'Sea temperature check: in years when Hawaii\'s autumn sea ran warmer than the median, {w["pct"]}% of tiger shark incidents ({w["son"]} of {w["n"]}) came in September to November, '
+            f'against {k["pct"]}% in cooler autumns ({k["son"]} of {k["n"]}; {pf(c["p"])}, {c["years"]} years). The difference points the claim\'s way but is not settled. '
+            f'({HDL}; {A("https://www.ncei.noaa.gov/products/optimum-interpolation-sst", "NOAA OISST")} around five islands.)')
+def natC32(D):
+    c = F(D, "c32"); m = c["models"]
+    return (f'First look with climate models: in the {len(m)} models in the public CMIP6 archive run both with and without human emissions, the sea off Sydney averaged '
+            f'{c["all"]} months a year at 19°C or warmer in 1991–2014 with all causes included, and {c["natural"]} with natural causes only, from {c["base"]} in the 1950–1979 average year. '
+            f'The difference points the claim\'s way, but the real sea had {c["observed"]} warm months a year in 1991–2014, so the models reproduce only a small part of the rise. '
+            'Coarse global models are known to under-represent the strengthening East Australian Current, and this few models can\'t settle it. '
+            f'({A("https://pangeo-data.github.io/pangeo-cmip6-cloud/", "CMIP6 via Pangeo")}, CC BY 4.0; HadISST, Met Office.)')
+def landC33(D):
+    c = F(D, "c33"); ok = [r for r in c["areas"] if r.get("cleared_pct") is not None]
+    top = sorted(ok, key=lambda r: -r["rise"])[:2]; bot = sorted(ok, key=lambda r: r["rise"])[:2]
+    f = lambda r: f'{r["area"]} ({r["river"]}: {r["rise"]:.1f} times, {r["cleared_pct"]}% cleared)'
+    lead = {"Early yes": "the high-river rise is larger where catchments are more cleared", "Leans yes": "the rise may be larger where catchments are more cleared",
+            "Unclear": "no clear link between the rise and how cleared the catchment is", "Early no": "the rise is smaller, not larger, where catchments are more cleared",
+            "Leans no": "the rise may be smaller where catchments are more cleared"}.get(G.show(G.grade("c33", D)[1]), "see the grade above")
+    return (f'Early result (exploratory): {lead}. In {c["n"]} Queensland shark-control areas, each compared with its main river, bull shark catches rose in the river\'s high-flow months in '
+            f'{c["rises"]} of {c["n"]}. The rise was largest at {f(top[0])} and {f(top[1])}, and smallest at {f(bot[0])} and {f(bot[1])} (rank correlation {c["rho"]:+.2f}, {pf(c["p"])}). '
+            'The most cleared catchments are also the largest and most dammed rivers, so cleared land and river size can\'t be told apart with this few areas. '
+            f'({QLD}; {WDO}; {A("https://www.hydrosheds.org/products/hydrobasins", "HydroBASINS")}; {A("https://esa-worldcover.org/", "ESA WorldCover 2021")}, CC BY 4.0.)')
+def rampC34(D):
+    c = F(D, "c34"); a, b, o = c["all"], c["bull"], c["open_coast"]
+    return (f'Early result (exploratory): bites are no closer to boat ramps than the beaches around them. Of {a["n"]} unprovoked bites, {a["pct"]}% were closer to a boat ramp or '
+            f'fish-cleaning table than the typical beach within 50 km ({pf(a["p"])}; a half would mean no link). For bull sharks it was {b["pct"]}% of {b["n"]} ({pf(b["p"])}), and on open coast '
+            f'{o["pct"]}% of {o["n"]}. Compared with random coastline instead of beaches, bites looked much closer to ramps, but that only showed that both are where people are. '
+            f'({OSM} ramps and {c["beaches"]:,} beaches, ODbL; {ASIDL}.)')
+def canalC35(D):
+    c = F(D, "c35"); b, n = c["built"], c["natural"]
+    return (f'Early result (exploratory): no sign that built-up estuaries hold bull sharks longer. Listening stations in built-up estuaries (Sydney Harbour, Georges River, Port Hacking, '
+            f'the Logan and the Sunshine Coast rivers) picked up a tagged bull shark in {b["pct"]}% of the {b["months"]} months they were in the water, and stations in natural estuaries on the same coast '
+            f'(the Clarence, Kalang-Bellinger, Shoalhaven and Wallis Lake) in {n["pct"]}% of {n["months"]} ({pf(c["p"])}). Which estuary counts as built-up was set by hand, and the months '
+            f'a station was in the water are known only from stations that heard a tagged animal. ({A("https://animaltracking.aodn.org.au/", "IMOS Animal Tracking")}, CC BY 4.0.)')
+def reefC42(D):
+    c = F(D, "c42"); p = c["periods"]
+    lim = lambda x: f'{abs(x["median_limit"]):.0f}°S'
+    return (f'First look: the southern limit of {c["species"]} tropical reef fish off eastern Australia moved from about {lim(p[0])} in {p[0]["years"]} to {lim(p[1])} in {p[1]["years"]} '
+            f'and {lim(p[2])} in {p[2]["years"]}, counting each species against all fish records in the same area to allow for where people look. That is much further than the '
+            'half-year 19°C line has moved. Early records are few, many of these fish are young strays carried south each summer rather than settled populations, and reporting grew after 2009. '
+            f'({A("https://www.ala.org.au/", "Atlas of Living Australia")}, CC BY 4.0.)')
+
 PARAS = {"mhwC19": (mhwC19, ("mhw",)), "bwC6": (bwC6, ("beachwatch",)), "plumeC6": (plumeC6, ("rivers", "harbour")),
          "qldC6": (qldC6, ("tigerqld",)), "wkC18": (wkC18, ("exposure", "beachday")), "whaleC5": (whaleC5, ("whales",)),
          "whitecoolC5": (whitecoolC5, ("whitecool",)), "chlC4": (chlC4, ("chlorophyll",)), "tideC24": (tideC24, ("tides",)),
@@ -316,7 +361,9 @@ PARAS = {"mhwC19": (mhwC19, ("mhw",)), "bwC6": (bwC6, ("beachwatch",)), "plumeC6
          "stationsC16": (stationsC16, ("imos",)), "juvC30": (juvC30, ("imos",)),
          "shareC1": (shareC1, ("catchshare",)), "projC3": (projC3, ("proj",)),
          "tagsC25": (tagsC25, ("tags_sa",)), "dailyC25": (dailyC25, ("daily",)), "tagtempC25": (tagtempC25, ("tagtemp",)), "sizeC43": (sizeC43, ("size",)),
-         "survC44": (survC44, ("newclaims",)), "absC18": (absC18, ("abspop",)), "tigerC45": (tigerC45, ("newclaims",)), "gearC46": (gearC46, ("newclaims",)), "ensoC32": (ensoC32, ("newclaims",))}
+         "survC44": (survC44, ("newclaims",)), "absC18": (absC18, ("abspop",)), "tigerC45": (tigerC45, ("newclaims",)), "gearC46": (gearC46, ("newclaims",)), "ensoC32": (ensoC32, ("newclaims",)),
+         "sstC45": (sstC45, ("freetests",)), "natC32": (natC32, ("freetests",)), "landC33": (landC33, ("freetests",)),
+         "rampC34": (rampC34, ("freetests",)), "canalC35": (canalC35, ("freetests",)), "reefC42": (reefC42, ("freetests",))}
 
 def hawaiiC6(D):
     h = D["hawaii"]
