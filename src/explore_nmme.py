@@ -1,27 +1,19 @@
-"""Look only: map the NOAA CPC NMME seasonal forecast folders (what files exist, how far back, which variables),
-so a hindcast skill test for the start and end of the 19 C season can be written. Prints a report; changes nothing."""
+"""Look only: what one NMME archive month holds, so a hindcast skill test can be written. Changes nothing."""
 import re, urllib.request
 UA = {"User-Agent": "19-degrees-explore/1.0 (+https://19-degrees.org)"}
 B = "https://ftp.cpc.ncep.noaa.gov/NMME/"
-def ls(u):
-    try:
-        t = urllib.request.urlopen(urllib.request.Request(u, headers=UA), timeout=90).read().decode("utf-8", "replace")
-    except Exception as e:
-        return None, f"{type(e).__name__}: {str(e)[:120]}"
+def get(u, n=None):
+    r = urllib.request.Request(u, headers=dict(UA, **({"Range": f"bytes=0-{n}"} if n else {})))
+    return urllib.request.urlopen(r, timeout=120).read()
+def ls(p):
+    try: t = get(B + p).decode("utf-8", "replace")
+    except Exception as e: print(f"\n### {p}: {type(e).__name__} {e}"); return []
     rows = re.findall(r'href="([^"?/][^"?]*)"[^>]*>[^<]*</a>\s*([\d-]+ [\d:]+)?\s*([\d.KMG-]+)?', t)
-    return [(h, d or "", s or "") for h, d, s in rows if not h.startswith("http")], None
-def show(path, n=40):
-    r, err = ls(B + path)
-    print(f"\n### /NMME/{path}\n")
-    if err: print(f"- failed: {err}"); return []
-    print(f"- {len(r)} entries")
-    for h, d, s in (r[:n] + ([("…", "", "")] if len(r) > 2 * n else []) + (r[-n:] if len(r) > 2 * n else r[n:2 * n])):
-        print(f"    - `{h}` {d} {s}")
-    return [h for h, _, _ in r]
-top = show("")
-for sub in [h for h in top if h.endswith("/")]:
-    kids = show(sub, 15)
-    dirs = [k for k in kids if k.endswith("/")]
-    if dirs:  # one level deeper: the newest and the oldest folder
-        show(sub + dirs[-1], 30)
-        if len(dirs) > 1: show(sub + dirs[0], 10)
+    rows = [r for r in rows if not r[0].startswith("http")]
+    print(f"\n### {p} ({len(rows)})\n"); [print(f"    - `{h}` {s}") for h, d, s in rows[:80]]
+    return [h for h, _, _ in rows]
+for p in ("archive/2015010800/", "archive/2026100800/", "realtime_anom/", "realtime_anom/ENSMEAN/", "verif/", "archive2025010800/"):
+    k = ls(p)
+    sub = [x for x in k if x.endswith("/")]
+    if sub and p.startswith(("archive/", "realtime_anom/ENSMEAN")): ls(p + sub[-1])
+print("\n### fish sample\n```\n" + get(B + "fish/CanCM4i.202001.tmpsfc.txt", 1500).decode("utf-8", "replace") + "\n```")
