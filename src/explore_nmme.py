@@ -28,12 +28,19 @@ C91 = {n: {m: clim(n, m, 1991, 2020) for m in range(1, 13)} for n in PTS}
 last_obs = max(max(d) for d in obs.values()); print(f"HadISST at the 7 points through {last_obs}")
 B = "https://ftp.cpc.ncep.noaa.gov/NMME/realtime_anom/ENSMEAN/"
 rows, shown = [], False
-for y in range(2011, 2027):
-    for m in range(1, 13):
-        if (y, m) < (2011, 8) or ym(y, m) > last_obs: continue
-        f = f"{y}{m:02d}0800/NMME.tmpsfc.{y}{m:02d}.ENSMEAN.anom.nc"
-        try: ds = netCDF4.Dataset("x", memory=get(B + f))
-        except Exception as e: print(f"- {y}-{m:02d}: {type(e).__name__}"); continue
+from concurrent.futures import ThreadPoolExecutor
+ISS = [(y, m) for y in range(2011, 2027) for m in range(1, 13) if (y, m) >= (2011, 8) and ym(y, m) <= last_obs]
+def fetch(ym_):
+    y, m = ym_
+    try: return ym_, get(B + f"{y}{m:02d}0800/NMME.tmpsfc.{y}{m:02d}.ENSMEAN.anom.nc", 300)
+    except Exception as e: return ym_, e
+t0 = time.time(); _, b0 = fetch(ISS[-1]); print(f"one file: {len(b0) if isinstance(b0, bytes) else b0} bytes in {time.time()-t0:.0f}s", flush=True)
+with ThreadPoolExecutor(8) as ex: FILES = dict(ex.map(fetch, ISS))
+print(f"downloaded {sum(isinstance(v, bytes) for v in FILES.values())}/{len(ISS)} in {time.time()-t0:.0f}s", flush=True)
+for (y, m) in ISS:
+        b = FILES[(y, m)]
+        if not isinstance(b, bytes): print(f"- {y}-{m:02d}: {type(b).__name__}"); continue
+        ds = netCDF4.Dataset("x", memory=b)
         if not shown:
             print("File layout:", {k: (v.dimensions, v.shape) for k, v in ds.variables.items()}); shown = True
         var = [v for v in ds.variables.values() if len(v.dimensions) >= 3][0]
@@ -59,7 +66,6 @@ for y in range(2011, 2027):
                 c = C91[name][mo]; rec = clim(name, mo, int(tg[:4]) - 10, int(tg[:4]) - 1)
                 rows.append(dict(p=name, issue=f"{y}-{m:02d}", target=tg, lead=L + 1, obs=o, nmme=c + a[L, i, j],
                                  persist=c + pa if pa is not None else None, recent=rec))
-        time.sleep(0.5)
 print(f"\n{len(rows)} forecast-target pairs\n")
 def score(sel, k):
     s = [r for r in sel if r[k] is not None]

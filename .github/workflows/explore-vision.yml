@@ -6,7 +6,7 @@ permissions:
 jobs:
   look:
     runs-on: ubuntu-26.04
-    timeout-minutes: 60
+    timeout-minutes: 120
     steps:
       - uses: actions/checkout@v5
       - uses: actions/setup-python@v6
@@ -14,5 +14,5 @@ jobs:
       - run: pip install -q numpy netCDF4
       - name: Look
         run: |
-          cd src && python3 -I explore_nmme.py | tee ../report.md
+          cd src && python3 -u -I explore_nmme.py | tee ../report.md
           cat ../report.md >> "$GITHUB_STEP_SUMMARY"
