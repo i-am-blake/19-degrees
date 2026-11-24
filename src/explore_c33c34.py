@@ -8,10 +8,11 @@ Usage: python3 explore_c33c34.py asid.csv scp-numbers-caught.xlsx shark-gear-loc
 import csv, gzip, io, json, math, random, statistics as st, sys, time, urllib.parse, urllib.request, zipfile, datetime as dt
 from collections import defaultdict
 ASID, SCP, GEAR, GAUGES, FLOW = sys.argv[1:6]
-UA = {"User-Agent": "Mozilla/5.0 (19-degrees.org open data)"}
-def get(u, data=None, t=600):
+UA = {"User-Agent": "19-degrees-explore/1.0 (+https://19-degrees.org)"}
+UAB = {"User-Agent": "Mozilla/5.0 (19-degrees.org open data)"}
+def get(u, data=None, t=600, h=None):
     for k in range(4):
-        try: return urllib.request.urlopen(urllib.request.Request(u, data=data, headers=UA), timeout=t).read()
+        try: return urllib.request.urlopen(urllib.request.Request(u, data=data, headers=h or UA), timeout=t).read()
         except Exception as e:
             err = e; time.sleep(20 * (k + 1))
     raise err
@@ -70,17 +71,16 @@ def c33():
     bull = defaultdict(lambda: defaultdict(int))
     for r in rows:
         if r[9] == "BULL WHALER": bull[r[4]][(r[0], r[1])] += 1
-    beachmonths = defaultdict(set)
-    for r in rows: beachmonths[r[4]].add((r[0], r[1]))  # months the beach caught anything: gear was set
-    G = gear_coords()
-    def where(b):
-        k = b.lower().replace("(", "").replace(")", "")
-        for g, ll in G.items():
-            if k.split()[0] in g or g.split()[0] in k: return ll
-    beaches = {b: where(b) for b, v in bull.items() if sum(v.values()) >= 15}
-    miss = [b for b, ll in beaches.items() if not ll]
-    beaches = {b: ll for b, ll in beaches.items() if ll}
-    print(f"- beaches with 15+ bull sharks caught: {len(beaches) + len(miss)}; located from the gear file: {len(beaches)}" + (f"; not located: {', '.join(miss)}" if miss else ""))
+    AREA = {"Gold Coast": (-28.02, 153.43), "Nth Stradbroke Is.": (-27.43, 153.53), "Bribie Island": (-27.07, 153.20),
+            "Sunshine Coast South": (-26.80, 153.13), "Sunshine Coast North": (-26.45, 153.08), "Rainbow Beach": (-25.90, 153.09),
+            "Bundaberg": (-24.84, 152.45), "Gladstone": (-23.95, 151.37), "Capricorn Coast": (-23.15, 150.77),
+            "Mackay": (-21.10, 149.20), "Townsville": (-19.25, 146.82), "Cairns": (-16.85, 145.75)}  # approximate centers of each program area
+    bull = defaultdict(lambda: defaultdict(int)); beachmonths = defaultdict(set)
+    for r in rows:
+        beachmonths[r[3]].add((r[0], r[1]))
+        if r[9] == "BULL WHALER": bull[r[3]][(r[0], r[1])] += 1
+    beaches = {a: ll for a, ll in AREA.items() if sum(bull[a].values()) >= 15}
+    print(f"- program areas with 15+ bull sharks caught: {len(beaches)} (by area; the gear file's beach coordinates don't match the catch file's beach names reliably)")
     gauges = {r["station_no"]: (float(r["lat"]), float(r["lon"])) for r in csv.DictReader(open(GAUGES))}
     flow = defaultdict(list)
     with gzip.open(FLOW, "rt") as f:
@@ -90,7 +90,7 @@ def c33():
                 except ValueError: pass
     # gauges north of K'gari, fetched here for the beaches the stored set doesn't reach
     B = "http://www.bom.gov.au/waterdata/services?"
-    def q(**p): return json.loads(get(B + urllib.parse.urlencode({"service": "kisters", "type": "queryServices", "format": "json", **p}), t=300))
+    def q(**p): return json.loads(get(B + urllib.parse.urlencode({"service": "kisters", "type": "queryServices", "format": "json", **p}), t=300, h=UAB))
     try:
         stl = q(request="getStationList", parametertype_name="Water Course Discharge", returnfields="station_no,station_name,station_latitude,station_longitude", bBox="145.0,-24.6,153.0,-16.4")
         cand = [dict(zip(stl[0], r)) for r in stl[1:]]
@@ -138,7 +138,7 @@ def c33():
         minx, miny, maxx, maxy = poly.bounds; counts = defaultdict(int)
         for ty in range(int(math.floor(miny / 3) * 3), int(maxy) + 1, 3):
             for tx in range(int(math.floor(minx / 3) * 3), int(maxx) + 1, 3):
-                tile = f"{'S' if ty < 0 else 'N'}{abs(ty + (3 if ty < 0 else 0)):02d}E{tx:03d}"
+                tile = f"{'S' if ty < 0 else 'N'}{abs(ty):02d}E{tx:03d}"  # tiles are named by their south-west corner
                 url = f"https://esa-worldcover.s3.eu-central-1.amazonaws.com/v200/2021/map/ESA_WorldCover_10m_2021_v200_{tile}_Map.tif"
                 try:
                     with rasterio.open(url, overview_level=4) as src:
@@ -146,11 +146,11 @@ def c33():
                         vals, cnt = np.unique(img[img > 0], return_counts=True)
                         for v, c in zip(vals, cnt): counts[int(v)] += int(c)
                 except Exception as e:
-                    pass
+                    print(f'    tile {tile}: {type(e).__name__}')
         tot = sum(counts.values())
         return None if not tot else sum(counts[c] for c in (30, 40, 50, 60)) / tot
     res = []
-    for b, (la, lo) in sorted(beaches.items(), key=lambda x: x[1][0]):
+    for b, (la, lo) in sorted(beaches.items(), key=lambda x: -x[1][0]):
         gs = sorted(((km(la, lo, *ll), s) for s, ll in gauges.items() if km(la, lo, *ll) <= 60), key=lambda x: x[0])
         gs = [(d, s) for d, s in gs if sum(1 for k in mflow if k[0] == s) >= 120]
         if not gs: print(f"  - {b}: no gauge with 10+ years within 60 km"); continue
@@ -176,7 +176,7 @@ def c33():
         rho = spearmanr([r[5] for r in ok], [r[4] for r in ok])
         med = st.median(r[5] for r in ok)
         hiC = [r[4] for r in ok if r[5] > med]; loC = [r[4] for r in ok if r[5] <= med]
-        print(f"- {len(ok)} beaches: Spearman (cleared share vs high-flow rise) rho={rho.statistic:.2f}, p={rho.pvalue:.3f}; "
+        print(f"- {len(ok)} areas: Spearman (cleared share vs high-flow rise) rho={rho.statistic:.2f}, p={rho.pvalue:.3f}; "
               f"median rise {st.median(hiC):.2f} where catchments are more cleared, {st.median(loC):.2f} where less")
 
 for name, f in (("C34", c34), ("C33", c33)):
