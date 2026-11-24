@@ -14,5 +14,5 @@ jobs:
       - run: pip install -q numpy netCDF4
       - name: Look
         run: |
-          cd src && python3 -u -I explore_nmme.py | tee ../report.md
+          cd src && python3 -u -I explore_context.py ASN00058137,ASN00058056,ASN00040717 2026-09-27
           cat ../report.md >> "$GITHUB_STEP_SUMMARY"
