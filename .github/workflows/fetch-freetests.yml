@@ -1,0 +1,40 @@
+name: Free-data claim tests (C32, C33, C34, C35, C42, C45)
+# Runs src/freetests19.py once a month (13th, a day no other ocean-data fetch uses) or by hand, and saves freetests.json
+# to the 'ocean-data' branch for the weekly update to read. Each part keeps its last result if a source is down.
+on:
+  schedule:
+    - cron: "17 9 13 * *"   # 13th of each month, 09:17 UTC
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  tests:
+    runs-on: ubuntu-26.04
+    timeout-minutes: 180
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-python@v6
+        with: { python-version: "3.12" }
+      - run: pip install -q numpy scipy openpyxl pandas geopandas shapely rasterio xarray zarr gcsfs
+      - name: Run the tests
+        run: |
+          cd src
+          python3 - <<'PY'
+          import json, urllib.request
+          UA = {"User-Agent": "19-degrees/1.0 (+https://19-degrees.org)"}
+          g = lambda u: urllib.request.urlopen(urllib.request.Request(u, headers=UA), timeout=120).read()
+          h = json.loads(g("https://zenodo.org/api/records/18752301/versions?sort=version&size=1"))["hits"]["hits"][0]
+          f = next(x for x in h["files"] if x["key"].endswith(".xlsx"))
+          open("asid.xlsx", "wb").write(g(f["links"]["self"]))
+          PY
+          python3 -I asid_to_csv.py asid.xlsx asid.csv
+          git fetch -q origin ocean-data imos-data
+          mkdir -p ocean imos && git archive origin/ocean-data | tar -x -C ocean && git archive origin/imos-data | tar -x -C imos
+          cp ocean/freetests.json freetests.json 2>/dev/null || cp freetests.json.seed freetests.json 2>/dev/null || true
+          python3 -u -I freetests19.py asid.csv ocean imos freetests.json
+      - name: Add to the ocean-data branch
+        run: |
+          git clone -q --depth 1 --branch ocean-data "https://x-access-token:${{ github.token }}@github.com/${{ github.repository }}.git" br
+          cp src/freetests.json br/; cd br; git add freetests.json
+          git -c user.name="github-actions[bot]" -c user.email="41898900+github-actions[bot]@users.noreply.github.com" commit -qm "Free-data claim tests, $(date -u +%Y-%m-%d)" || exit 0
+          git push -q "https://x-access-token:${{ github.token }}@github.com/${{ github.repository }}.git" HEAD:ocean-data
