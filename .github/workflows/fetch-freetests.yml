@@ -34,11 +34,8 @@ jobs:
           open("asid.xlsx", "wb").write(g(f["links"]["self"]))
           PY
           python3 -I asid_to_csv.py asid.xlsx asid.csv
-          git fetch --depth 1 origin ocean-data imos-data
-          mkdir -p ocean imos
-          for f in hawaii_incidents.csv scp-numbers-caught.xlsx freetests.json $(git ls-tree --name-only FETCH_HEAD 2>/dev/null | grep '^oisst_hawaii_'); do git show origin/ocean-data:$f > ocean/$f 2>/dev/null || rm -f ocean/$f; done
-          for f in $(git ls-tree --name-only origin/ocean-data | grep '^oisst_hawaii_'); do git show origin/ocean-data:$f > ocean/$f; done
-          for f in $(git ls-tree --name-only origin/imos-data | grep '\.csv\.gz$'); do git show origin/imos-data:$f > imos/$f; done
+          git fetch -q --depth 1 origin ocean-data:od && git fetch -q --depth 1 origin imos-data:id
+          mkdir -p ocean imos && git archive od | tar -x -C ocean && git archive id | tar -x -C imos
           echo "ocean-data files: $(ls ocean | wc -l), imos-data files: $(ls imos | wc -l)"
           cp ocean/freetests.json freetests.json 2>/dev/null || cp freetests.json.seed freetests.json 2>/dev/null || true
           python3 -u -I freetests19.py asid.csv ocean imos freetests.json
@@ -47,4 +44,4 @@ jobs:
           git clone -q --depth 1 --branch ocean-data "https://x-access-token:${{ github.token }}@github.com/${{ github.repository }}.git" br
           cp src/freetests.json br/; cd br; git add freetests.json
           git -c user.name="github-actions[bot]" -c user.email="41898900+github-actions[bot]@users.noreply.github.com" commit -qm "Free-data claim tests, $(date -u +%Y-%m-%d)" || exit 0
-          git push -q "https://x-access-token:${{ github.token }}@github.com/${{ github.repository }}.git" HEAD:ocean-data
+          for k in 1 2 3; do git push -q "https://x-access-token:${{ github.token }}@github.com/${{ github.repository }}.git" HEAD:ocean-data && exit 0; sleep 60; git pull -q --rebase origin ocean-data || true; done; exit 1
