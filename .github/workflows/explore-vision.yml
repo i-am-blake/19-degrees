@@ -1,5 +1,5 @@
 name: Explore new ideas (look only)
-# NMME seasonal forecast folders. Changes nothing in the repo or on the site.
+# First tests of open claims with free data. Changes nothing in the repo or on the site.
 on: workflow_dispatch
 permissions:
   contents: read
@@ -11,8 +11,16 @@ jobs:
       - uses: actions/checkout@v5
       - uses: actions/setup-python@v6
         with: { python-version: "3.12" }
-      - run: pip install -q numpy netCDF4
+      - run: pip install -q numpy netCDF4 scipy openpyxl pandas xarray zarr gcsfs
       - name: Look
         run: |
-          cd src && python3 -u -I explore_context.py ASN00058137,ASN00058056,ASN00040717 2026-09-27
+          cd src
+          python3 - <<'PY'
+          import json, urllib.request
+          h = json.load(urllib.request.urlopen("https://zenodo.org/api/records/18752301/versions?sort=version&size=1", timeout=60))["hits"]["hits"][0]
+          f = next(x for x in h["files"] if x["key"].endswith(".xlsx"))
+          urllib.request.urlretrieve(f["links"]["self"], "asid.xlsx")
+          PY
+          python3 -I asid_to_csv.py asid.xlsx asid.csv
+          python3 -u -I explore_six.py | tee ../report.md
           cat ../report.md >> "$GITHUB_STEP_SUMMARY"
