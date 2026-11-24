@@ -1,0 +1,66 @@
+{
+ "c34": {
+  "ramps": 2966,
+  "beaches": 7807,
+  "all": {
+   "n": 812,
+   "closer": 400,
+   "pct": 49,
+   "p": 0.6995,
+   "bite_km": 1.7,
+   "beach_km": 1.6
+  },
+  "bull": {
+   "n": 177,
+   "closer": 101,
+   "pct": 57,
+   "p": 0.0709,
+   "bite_km": 0.8,
+   "beach_km": 1.0
+  },
+  "open_coast": {
+   "n": 578,
+   "closer": 264,
+   "pct": 46,
+   "p": 0.0414,
+   "bite_km": 2.0,
+   "beach_km": 1.7
+  },
+  "bull_open_coast": {
+   "n": 33,
+   "closer": 9,
+   "pct": 27,
+   "p": 0.0135,
+   "bite_km": 2.2,
+   "beach_km": 1.5
+  },
+  "updated": "2026-11-24"
+ },
+ "c42": {
+  "periods": [
+   {
+    "years": "1995\u20132004",
+    "species": 10,
+    "records": 93,
+    "effort": 93311,
+    "median_limit": -29.0
+   },
+   {
+    "years": "2005\u20132014",
+    "species": 10,
+    "records": 1225,
+    "effort": 372521,
+    "median_limit": -34.0
+   },
+   {
+    "years": "2015\u20132025",
+    "species": 10,
+    "records": 4568,
+    "effort": 201144,
+    "median_limit": -36.0
+   }
+  ],
+  "species": 10,
+  "updated": "2026-11-24"
+ }
+}
