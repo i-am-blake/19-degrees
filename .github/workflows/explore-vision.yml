@@ -1,5 +1,5 @@
 name: Explore new ideas (look only)
-# Frontier coasts and seasonal forecast sources. Changes nothing in the repo or on the site.
+# NMME seasonal forecast folders. Changes nothing in the repo or on the site.
 on: workflow_dispatch
 permissions:
   contents: read
@@ -13,5 +13,5 @@ jobs:
         with: { python-version: "3.12" }
       - name: Look
         run: |
-          cd src && python3 -I explore_vision.py | tee ../report.md
+          cd src && python3 -I explore_nmme.py | tee ../report.md
           cat ../report.md >> "$GITHUB_STEP_SUMMARY"
