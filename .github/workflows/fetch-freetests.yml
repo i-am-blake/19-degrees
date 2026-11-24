@@ -15,7 +15,7 @@ jobs:
       - uses: actions/checkout@v5
       - uses: actions/setup-python@v6
         with: { python-version: "3.12" }
-      - run: pip install -q numpy scipy openpyxl pandas geopandas shapely rasterio xarray zarr gcsfs
+      - run: pip install -q numpy scipy openpyxl pandas geopandas shapely rasterio xarray zarr gcsfs cftime
       - name: Run the tests
         run: |
           cd src
@@ -28,8 +28,9 @@ jobs:
           open("asid.xlsx", "wb").write(g(f["links"]["self"]))
           PY
           python3 -I asid_to_csv.py asid.xlsx asid.csv
-          git fetch -q origin ocean-data imos-data
+          git fetch -q --depth 1 origin ocean-data:refs/remotes/origin/ocean-data imos-data:refs/remotes/origin/imos-data
           mkdir -p ocean imos && git archive origin/ocean-data | tar -x -C ocean && git archive origin/imos-data | tar -x -C imos
+          echo "ocean-data files: $(ls ocean | wc -l), imos-data files: $(ls imos | wc -l)"
           cp ocean/freetests.json freetests.json 2>/dev/null || cp freetests.json.seed freetests.json 2>/dev/null || true
           python3 -u -I freetests19.py asid.csv ocean imos freetests.json
       - name: Add to the ocean-data branch
