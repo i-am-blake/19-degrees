@@ -181,6 +181,46 @@ for d, h in ENTRIES[:30]:
 feed.append("</feed>")
 WRITTEN.append(write("changes.xml", "\n".join(feed) + "\n"))
 
+# ---- trails: every claim page links to the data it draws on, the claims that share it, and where it appears --------------
+REG = json.load(open(os.path.join(HERE, "sources.json"), encoding="utf-8"))
+SRC_BY = {}  # claim id -> [(name, url, group)]
+for g in REG["groups"]:
+    for e in g["sources"]:
+        for n in re.findall(r"\bC(\d+)\b", e.get("used_for", "")):
+            cid = MERGED.get(f"c{n}", f"c{n}")
+            if cid in CLAIMS and e["name"] not in [x[0] for x in SRC_BY.get(cid, [])]: SRC_BY.setdefault(cid, []).append((e["name"], e.get("url", ""), g["group"]))
+ALIAS = {"Australian Shark-Incident Database": "Shark-Incident Database", "HadISST monthly sea surface temperature": "HadISST",
+         "NOAA OISST v2.1 daily sea surface temperature": "OISST", "ERSSTv5": "ERSST", "GHS-POP R2023A population grid": "GHS",
+         "CMIP6 sea surface temperature, 27 models": "CMIP6", "IMOS Animal Tracking": "IMOS"}
+for g in REG["groups"]:  # a claim also draws on any source its own text names
+    for e in g["sources"]:
+        key = ALIAS.get(e["name"])
+        if not key: continue
+        for cid, c in CLAIMS.items():
+            if key.lower() in text(c["body"]).lower() and e["name"] not in [x[0] for x in SRC_BY.get(cid, [])]:
+                SRC_BY.setdefault(cid, []).append((e["name"], e.get("url", ""), g["group"]))
+TABNAME = {"": "Home", "story": "Story", "safety": "Safety", "research": "Research", "schools": "Schools", "media": "Media"}
+SHOWN = {}  # claim id -> tab pages (other than Research) that link to it
+for k, (a, b, c_, d) in SPANS.items():
+    if k == "research": continue
+    for cid in set(re.findall(r'href="#(c\d+)"', T[b:c_])):
+        cid = MERGED.get(cid, cid)
+        if cid in CLAIMS: SHOWN.setdefault(cid, []).append(k)
+def trail(c):
+    cid = c["id"]; src = SRC_BY.get(cid, [])
+    names = {x[0] for x in src}
+    rel = [o for o in CLAIMS.values() if o["id"] != cid and (names & {x[0] for x in SRC_BY.get(o["id"], [])} or o["topic"] == c["topic"])]
+    rel.sort(key=lambda o: (-len(names & {x[0] for x in SRC_BY.get(o["id"], [])}), o["n"]))
+    rows = []
+    if src: rows.append(("Data it draws on", " · ".join(f'<a href="{esc(u)}">{esc(n)}</a>' if u else esc(n) for n, u, g in src)
+                         + ' · <a href="/sources.html">all sources</a>'))
+    if rel: rows.append(("Related claims", "".join(f'<a class="trc" href="/claims/{o["id"]}"><b>{o["label"]}</b><span>{esc(o["title"])}</span></a>' for o in rel[:5])))
+    tabs = [k for k in ("", "story", "safety", "schools", "media") if k in SHOWN.get(cid, [])]
+    rows.append(("Where it appears", " · ".join([f'<a href="/{SLUG[k]}">{TABNAME[k]}</a>' for k in tabs]
+                 + [f'<a href="/research#{cid}">Research</a>', '<a href="/open-data">Open data</a>'])))
+    return ('  <h2 id="trail">Trail</h2>\n  <p class="note">Follow this claim to the evidence under it and the pages built on it.</p>\n  <dl class="trail">'
+            + "".join(f"<dt>{t}</dt><dd>{v}</dd>" for t, v in rows) + "</dl>\n")
+
 # ---- /claims/ and /claims/cNN --------------------------------------------------------------------------------------------
 ordered = sorted(CLAIMS.values(), key=lambda c: c["n"])
 for c in ordered:
@@ -195,6 +235,7 @@ for c in ordered:
     body = (f'  <p class="meta">Grade {badge(c)} · updated {long_date(BUILT)}</p>\n'
             + (f'  <p class="note">{esc(c["merged"])}</p>\n' if c["merged"] else "")
             + f'  <div class="claimbody">{h5_to_h2(relink(c["body"]))}</div>\n'
+            + trail(c)
             + '  <h2>Help test it</h2>\n  <p>Every claim says in advance what would support it and what would rule it out. Have data, a method or a result? '
             + f'<a href="/#contact">Get in touch</a>; whoever tests a claim is credited here and on the <a href="/research#{c["id"]}">Research page</a>. How grades work: <a href="/research#h-agenda">the grade key</a>.</p>\n'
             + f'  <p class="foot" style="margin-top:28px">{nav}</p>\n')

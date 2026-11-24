@@ -27,6 +27,10 @@ def table(rows):
     head = "<tr><th>Data</th><th>From</th><th>Used for</th><th>License</th></tr>"
     return '<div class="tbl"><table>' + head + "".join(f"<tr><td>{d}</td><td>{f}</td><td>{u}</td><td>{l}</td></tr>" for d, f, u, l in rows) + "</table></div>"
 
+MERGED = {"c2": "c16", "c37": "c6"}
+def claim_links(h):
+    """Claim numbers in the Used for column link to the claim's own page."""
+    return re.sub(r"\bC(\d+)\b", lambda m: f'<a href="/claims/{MERGED.get("c" + m.group(1), "c" + m.group(1))}">C{m.group(1)}</a>', h)
 REG = json.load(open(os.path.join(os.path.dirname(os.path.abspath(__file__)), "sources.json"), encoding="utf-8"))
 
 def cell(e):
@@ -61,7 +65,7 @@ _ym = lambda v: (_M[int(v[5:7]) - 1] + " " + v[:4]) if isinstance(v, str) else (
 CURRENT = f'Updated {_D["built"]}. Monthly sea temperature to {_ym(_D["sst_last"])}; shark database to {_ym(_D["asid_last"])}. Today\'s beach readings refresh daily. Temperatures are in °C; 19°C is 66°F.'
 src_body = '  <p class="lead">Everything on 19 Degrees is built from public data and published research. Each source keeps its own license. All code is on ' + a("GitHub", "https://github.com/i-am-blake/19-degrees") + ", so every result can be rerun.</p>\n  <p>" + CURRENT + "</p>\n"
 for g in REG["groups"]:
-    rows = [(cell(e), html.escape(e.get("from", "")), html.escape(e.get("used_for", "")), html.escape(e.get("license", ""))) for e in g["sources"]]
+    rows = [(cell(e), html.escape(e.get("from", "")), claim_links(html.escape(e.get("used_for", ""))), html.escape(e.get("license", ""))) for e in g["sources"]]
     src_body += f"  <h2>{html.escape(g['group'])}</h2>\n  {table(rows)}\n"
 _auto = auto_rows()
 if _auto:
