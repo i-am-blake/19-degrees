@@ -62,5 +62,34 @@
   ],
   "species": 10,
   "updated": "2026-11-24"
+ },
+ "c32": {
+  "models": [
+   {
+    "model": "BCC-CSM2-MR",
+    "all": 7.0,
+    "natural": 6.8
+   },
+   {
+    "model": "CNRM-CM6-1",
+    "all": 7.4,
+    "natural": 6.7
+   },
+   {
+    "model": "GFDL-ESM4",
+    "all": 7.2,
+    "natural": 7.3
+   },
+   {
+    "model": "IPSL-CM6A-LR",
+    "all": 8.1,
+    "natural": 6.7
+   }
+  ],
+  "base": 7,
+  "observed": 8.5,
+  "all": 7.3,
+  "natural": 6.8,
+  "updated": "2026-11-24"
  }
 }
