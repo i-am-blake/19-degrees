@@ -199,27 +199,34 @@ for g in REG["groups"]:  # a claim also draws on any source its own text names
         for cid, c in CLAIMS.items():
             if key.lower() in text(c["body"]).lower() and e["name"] not in [x[0] for x in SRC_BY.get(cid, [])]:
                 SRC_BY.setdefault(cid, []).append((e["name"], e.get("url", ""), g["group"]))
-TABNAME = {"": "Home", "story": "Story", "safety": "Safety", "research": "Research", "schools": "Schools", "media": "Media"}
+TABNAME = {"home": "Home", "story": "Story", "works": "Safety", "research": "Research", "students": "Schools", "media": "Media"}  # by panel id
 SHOWN = {}  # claim id -> tab pages (other than Research) that link to it
 for k, (a, b, c_, d) in SPANS.items():
     if k == "research": continue
-    for cid in set(re.findall(r'href="#(c\d+)"', T[b:c_])):
-        cid = MERGED.get(cid, cid)
-        if cid in CLAIMS: SHOWN.setdefault(cid, []).append(k)
+    seg = T[b:c_]
+    for m in re.finditer(r'href="#(c\d+)"', seg):
+        cid = MERGED.get(m.group(1), m.group(1))
+        ids = re.findall(r'\bid="([^"]+)"', seg[:m.start()])  # the nearest section above the link, so the trail lands on the spot
+        if cid in CLAIMS and k not in [x[0] for x in SHOWN.get(cid, [])]: SHOWN.setdefault(cid, []).append((k, ids[-1] if ids else ""))
 def trail(c):
-    cid = c["id"]; src = SRC_BY.get(cid, [])
-    names = {x[0] for x in src}
-    rel = [o for o in CLAIMS.values() if o["id"] != cid and (names & {x[0] for x in SRC_BY.get(o["id"], [])} or o["topic"] == c["topic"])]
+    """Only what the page doesn't already show: sources and claims linked in the claim's own text, and links the shared
+    header and footer carry (Research, Sources, Open data), are left out. Rows with nothing new are dropped."""
+    cid = c["id"]; body = relink(c["body"])
+    linked_urls = set(re.findall(r'href="([^"]+)"', body))
+    linked_claims = {MERGED.get(x, x) for x in re.findall(r'href="/claims/(c\d+)"', body)}
+    n0 = ordered.index(c); linked_claims |= {o["id"] for o in ordered[max(n0 - 1, 0):n0 + 2]}  # the previous/next links at the foot
+    src = [x for x in SRC_BY.get(cid, []) if not (x[1] and x[1] in linked_urls)]
+    names = {x[0] for x in SRC_BY.get(cid, [])}
+    rel = [o for o in CLAIMS.values() if o["id"] != cid and o["id"] not in linked_claims
+           and (names & {x[0] for x in SRC_BY.get(o["id"], [])} or o["topic"] == c["topic"])]
     rel.sort(key=lambda o: (-len(names & {x[0] for x in SRC_BY.get(o["id"], [])}), o["n"]))
     rows = []
-    if src: rows.append(("Data it draws on", " · ".join(f'<a href="{esc(u)}">{esc(n)}</a>' if u else esc(n) for n, u, g in src)
-                         + ' · <a href="/sources.html">all sources</a>'))
+    if src: rows.append(("Data used so far", " · ".join(f'<a href="{esc(u)}">{esc(n)}</a>' if u else esc(n) for n, u, g in src)))
     if rel: rows.append(("Related claims", "".join(f'<a class="trc" href="/claims/{o["id"]}"><b>{o["label"]}</b><span>{esc(o["title"])}</span></a>' for o in rel[:5])))
-    tabs = [k for k in ("", "story", "safety", "schools", "media") if k in SHOWN.get(cid, [])]
-    rows.append(("Where it appears", " · ".join([f'<a href="/{SLUG[k]}">{TABNAME[k]}</a>' for k in tabs]
-                 + [f'<a href="/research#{cid}">Research</a>', '<a href="/open-data">Open data</a>'])))
-    return ('  <h2 id="trail">Trail</h2>\n  <p class="note">Follow this claim to the evidence under it and the pages built on it.</p>\n  <dl class="trail">'
-            + "".join(f"<dt>{t}</dt><dd>{v}</dd>" for t, v in rows) + "</dl>\n")
+    tabs = [(k, a) for k, a in SHOWN.get(cid, []) if f'/{SLUG[k]}{"#" + a if a else ""}' not in linked_urls]
+    if tabs: rows.append(("Also shown on", " · ".join(f'<a href="/{SLUG[k]}{"#" + a if a else ""}">{TABNAME[k]}</a>' for k, a in tabs)))
+    if not rows: return ""
+    return ('  <h2 id="trail">Trail</h2>\n  <dl class="trail">' + "".join(f"<dt>{t}</dt><dd>{v}</dd>" for t, v in rows) + "</dl>\n")
 
 # ---- /claims/ and /claims/cNN --------------------------------------------------------------------------------------------
 ordered = sorted(CLAIMS.values(), key=lambda c: c["n"])
