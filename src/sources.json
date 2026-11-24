@@ -35,7 +35,7 @@
      "name": "Hawaii shark incidents, 1995 on",
      "url": "https://dlnr.hawaii.gov/sharks/shark-incidents/incidents/",
      "from": "Hawaii Department of Land and Natural Resources",
-     "used_for": "Claims C6, C24 (facts only: date, place, activity, water clarity, shark)",
+     "used_for": "Claims C6, C24, C45 (facts only: date, place, activity, water clarity, shark)",
      "license": "© State of Hawaii; facts used, see the source",
      "readme": [
       "ocean-data/README_hawaii.txt"
@@ -77,7 +77,7 @@
      "name": "CMIP6 sea surface temperature, 27 models",
      "url": "https://wcrp-cmip.org/cmip-phase-6-cmip6/",
      "from": "World Climate Research Programme modeling centers, via the Pangeo public archive",
-     "used_for": "Claim C3, 2050",
+     "used_for": "Claim C3, 2050; claim C32, runs with natural causes only",
      "license": "Licensed by each center, mostly CC BY 4.0",
      "readme": [
       "ocean-data/README_cmip.txt"
@@ -115,7 +115,7 @@
      "name": "NOAA OISST v2.1 daily sea surface temperature",
      "url": "https://www.ncei.noaa.gov/products/optimum-interpolation-sst",
      "from": "NOAA NCEI, via NOAA CoastWatch ERDDAP",
-     "used_for": "Marine heatwaves on the coasts that record the day of each bite; claim C19",
+     "used_for": "Marine heatwaves on the coasts that record the day of each bite; claims C19, C45",
      "license": "Public domain",
      "readme": [
       "ocean-data/README_oisst.txt"
@@ -210,11 +210,25 @@
      "name": "Water Data Online river flow",
      "url": "https://www.bom.gov.au/waterdata/",
      "from": "Bureau of Meteorology, with data from the NSW and Queensland water agencies",
-     "used_for": "Daily river flow at coastal gauges; claim C6",
+     "used_for": "Daily river flow at coastal gauges; claims C6, C33",
      "license": "CC BY 3.0 AU",
      "readme": [
       "ocean-data/README_rivers_flow.txt"
      ]
+    },
+    {
+     "name": "HydroBASINS river catchments",
+     "url": "https://www.hydrosheds.org/products/hydrobasins",
+     "from": "WWF HydroSHEDS (Lehner and Grill 2013, Hydrological Processes)",
+     "used_for": "The catchment above each river gauge; claim C33",
+     "license": "Free for any use with citation"
+    },
+    {
+     "name": "ESA WorldCover 2021",
+     "url": "https://esa-worldcover.org/",
+     "from": "European Space Agency",
+     "used_for": "How much of each catchment is cleared, farmed or built up; claim C33",
+     "license": "CC BY 4.0"
     }
    ]
   },
@@ -225,7 +239,7 @@
      "name": "IMOS Animal Tracking",
      "url": "https://researchdata.edu.au/imos-animal-tracking-2007-ongoing/3961802",
      "from": "Integrated Marine Observing System, enabled by NCRIS",
-     "used_for": "Tagged bull sharks off NSW; claims C2, C16",
+     "used_for": "Tagged bull sharks off NSW; claims C2, C16, C35",
      "license": "CC BY 4.0",
      "readme": [
       "imos-data/README.txt",
@@ -274,7 +288,7 @@
      "name": "Shark Control Program",
      "url": "https://www.data.qld.gov.au/dataset/fisheries-queensland-s-shark-control-program-information-and-data",
      "from": "Queensland Government",
-     "used_for": "Claims C1, C20",
+     "used_for": "Claims C1, C20, C33, C46",
      "license": "CC BY 4.0",
      "readme": [
       "ocean-data/README_qld_scp.txt"
@@ -319,6 +333,13 @@
      "from": "NOAA Fisheries Southeast Fisheries Science Center and SEAMAP; data provided by the survey team",
      "used_for": "Claim C25",
      "license": "US government data, no access restrictions; acknowledgment of NOAA NMFS and SEAMAP requested"
+    },
+    {
+     "name": "Atlas of Living Australia fish records",
+     "url": "https://www.ala.org.au/",
+     "from": "Atlas of Living Australia and its data providers",
+     "used_for": "Ten tropical reef fish off eastern Australia; claim C42 (counts only)",
+     "license": "Each record's own license; used only as counts"
     }
    ]
   },
@@ -354,6 +375,13 @@
      "readme": [
       "ocean-data/README_population.txt"
      ]
+    },
+    {
+     "name": "Boat ramps, fish-cleaning tables and beaches",
+     "url": "https://www.openstreetmap.org/copyright",
+     "from": "© OpenStreetMap contributors",
+     "used_for": "Claim C34",
+     "license": "ODbL 1.0"
     }
    ]
   },
