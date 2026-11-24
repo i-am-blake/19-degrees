@@ -9,8 +9,8 @@ UA = {"User-Agent": "19-degrees-explore/1.0 (+https://19-degrees.org)"}
 def get(u, t=180):
     for k in range(5):
         try: return urllib.request.urlopen(urllib.request.Request(u, headers=UA), timeout=t).read()
-        except Exception:
-            if k == 4: raise
+        except Exception as e:
+            if k == 4 or getattr(e, "code", None) == 404: raise
             time.sleep(15 * (k + 1))
 PTS = {"Byron Bay": (-28.5, 154.0), "Coffs Harbour": (-30.5, 153.5), "Port Macquarie": (-31.5, 153.2), "Newcastle": (-32.5, 152.8),
        "Sydney": (-33.5, 151.8), "Jervis Bay": (-35.5, 150.8), "Eden": (-37.5, 150.5)}
@@ -29,7 +29,7 @@ last_obs = max(max(d) for d in obs.values()); print(f"HadISST at the 7 points th
 B = "https://ftp.cpc.ncep.noaa.gov/NMME/realtime_anom/ENSMEAN/"
 rows, shown = [], False
 from concurrent.futures import ThreadPoolExecutor
-ISS = [(y, m) for y in range(2011, 2027) for m in range(1, 13) if (y, m) >= (2011, 8) and ym(y, m) <= last_obs]
+ISS = [(y, m) for y in range(2011, 2027) for m in range(1, 13) if (y, m) >= (2018, 4) and ym(y, m) <= last_obs]
 def fetch(ym_):
     y, m = ym_
     try: return ym_, get(B + f"{y}{m:02d}0800/NMME.tmpsfc.{y}{m:02d}.ENSMEAN.anom.nc", 300)
@@ -45,7 +45,7 @@ for (y, m) in ISS:
             print("File layout:", {k: (v.dimensions, v.shape) for k, v in ds.variables.items()}); shown = True
         var = [v for v in ds.variables.values() if len(v.dimensions) >= 3][0]
         dims = var.dimensions; lat = ds.variables[[d for d in dims if "lat" in d.lower()][0]][:]; lon = ds.variables[[d for d in dims if "lon" in d.lower()][0]][:]
-        a = np.ma.filled(var[:].astype(float), np.nan)
+        a = np.ma.filled(var[:].astype(float), np.nan); a[np.abs(a) > 50] = np.nan  # fill values over land
         while a.ndim > 3: a = a[0]          # drop a single initial-time axis if present
         nlead = a.shape[0]
         for name, (la, lo) in PTS.items():
@@ -85,7 +85,7 @@ for n in PTS:
     if s: print(f"| {n} | {score(s, 'nmme')} | {score(s, 'persist')} | {score(s, 'recent')} |")
 # Season length: forecasts issued in October, months at or above 19 C from October to March
 print("\n## Warm months Oct–Mar, forecast issued in October (observed / NMME / persistence / recent normal)\n")
-for n in ("Port Macquarie", "Sydney", "Jervis Bay", "Eden"):
+for n in ("Sydney", "Jervis Bay", "Eden"):
     out = []
     for y in range(2011, 2026):
         s = [r for r in rows if r["p"] == n and r["issue"] == f"{y}-10"]
