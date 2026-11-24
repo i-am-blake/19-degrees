@@ -456,3 +456,14 @@ def fill(html, D, history=None):
         if all(k in D for k in need) and (need != ("lunar",) or "hawaii_all" in D["lunar"]):
             html = pat.sub(lambda m: fn(D), html, count=1)
     return html
+
+def decisions(html):
+    """Each claim's "Decision it informs" line moves to the card face, shown before the card is opened; the same row inside
+    the card is hidden so it isn't said twice. The row stays in the markup for check19 and the claim's own page."""
+    def one(m):
+        a = m.group(0); d = re.search(r"<dt>Decision it informs</dt><dd>(.*?)</dd>", a, re.S)
+        if not d: return a
+        t = d.group(1).strip(); t = t[0].lower() + t[1:]
+        a = a.replace(d.group(0), d.group(0).replace("<dt>", '<dt class="dec">').replace("<dd>", '<dd class="dec">'), 1)
+        return a.replace("</h4>", f'</h4><span class="cfor"><b>Helps decide:</b> {t}</span>', 1)
+    return re.sub(r'<article class="claim" id="c\d+"[\s\S]*?</article>', one, html)
