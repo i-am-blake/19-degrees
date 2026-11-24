@@ -35,7 +35,7 @@ jobs:
           PY
           python3 -I asid_to_csv.py asid.xlsx asid.csv
           git fetch -q --depth 1 origin ocean-data:od && git fetch -q --depth 1 origin imos-data:id
-          mkdir -p ocean imos && git archive od | tar -x -C ocean && git archive id | tar -x -C imos
+          mkdir -p ocean imos && git -C .. archive od | tar -x -C ocean && git -C .. archive id | tar -x -C imos  # git archive inside src/ would only take src/
           echo "ocean-data files: $(ls ocean | wc -l), imos-data files: $(ls imos | wc -l)"
           cp ocean/freetests.json freetests.json 2>/dev/null || cp freetests.json.seed freetests.json 2>/dev/null || true
           python3 -u -I freetests19.py asid.csv ocean imos freetests.json
