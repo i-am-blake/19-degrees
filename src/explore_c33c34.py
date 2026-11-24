@@ -75,6 +75,9 @@ def c33():
             "Sunshine Coast South": (-26.80, 153.13), "Sunshine Coast North": (-26.45, 153.08), "Rainbow Beach": (-25.90, 153.09),
             "Bundaberg": (-24.84, 152.45), "Gladstone": (-23.95, 151.37), "Capricorn Coast": (-23.15, 150.77),
             "Mackay": (-21.10, 149.20), "Townsville": (-19.25, 146.82), "Cairns": (-16.85, 145.75)}  # approximate centers of each program area
+    RIVER = {"Gold Coast": "Nerang", "Nth Stradbroke Is.": "Brisbane River", "Bribie Island": "Caboolture", "Sunshine Coast South": "Mooloolah",
+             "Sunshine Coast North": "Maroochy", "Rainbow Beach": "Mary River", "Bundaberg": "Burnett", "Gladstone": "Boyne",
+             "Capricorn Coast": "Fitzroy", "Mackay": "Pioneer", "Townsville": "Ross River", "Cairns": "Barron"}  # the main river at each area's coast
     bull = defaultdict(lambda: defaultdict(int)); beachmonths = defaultdict(set)
     for r in rows:
         beachmonths[r[3]].add((r[0], r[1]))
@@ -88,33 +91,26 @@ def c33():
             if r["date"] >= "1996":
                 try: flow[(r["station_no"], int(r["date"][:4]), int(r["date"][5:7]))].append(float(r["flow_m3s"]))
                 except ValueError: pass
-    # gauges north of K'gari, fetched here for the beaches the stored set doesn't reach
     B = "http://www.bom.gov.au/waterdata/services?"
     def q(**p): return json.loads(get(B + urllib.parse.urlencode({"service": "kisters", "type": "queryServices", "format": "json", **p}), t=300, h=UAB))
-    try:
-        stl = q(request="getStationList", parametertype_name="Water Course Discharge", returnfields="station_no,station_name,station_latitude,station_longitude", bBox="145.0,-24.6,153.0,-16.4")
-        cand = [dict(zip(stl[0], r)) for r in stl[1:]]
-        want = set()
-        for b, (la, lo) in beaches.items():
-            if la > -24.6:
-                near = sorted(cand, key=lambda s: km(la, lo, float(s["station_latitude"]), float(s["station_longitude"])))[:4]
-                want |= {s["station_no"] for s in near if km(la, lo, float(s["station_latitude"]), float(s["station_longitude"])) < 60}
-        for s in cand:
-            if s["station_no"] not in want: continue
+    stl = q(request="getStationList", parametertype_name="Water Course Discharge", returnfields="station_no,station_name,station_latitude,station_longitude", bBox="145.0,-28.6,153.7,-16.4")
+    cand = [dict(zip(stl[0], r)) for r in stl[1:]]
+    named = {a: [s_ for s_ in cand if RIVER[a].lower() in s_["station_name"].lower()] for a in beaches}
+    have = {k[0] for k in flow}
+    for a, ss in named.items():
+        print(f"  - {a}: {len(ss)} gauges named {RIVER[a]}")
+        for s_ in ss:
+            gauges[s_["station_no"]] = (float(s_["station_latitude"]), float(s_["station_longitude"]))
+            if s_["station_no"] in have: continue
             try:
-                ts = q(request="getTimeseriesList", station_no=s["station_no"], parametertype_name="Water Course Discharge", ts_name="DMQaQc.Merged.DailyMean.24HR", returnfields="ts_id")
+                ts = q(request="getTimeseriesList", station_no=s_["station_no"], parametertype_name="Water Course Discharge", ts_name="DMQaQc.Merged.DailyMean.24HR", returnfields="ts_id")
                 if len(ts) < 2: continue
                 v = q(request="getTimeseriesValues", ts_id=ts[1][0], **{"from": "1996-01-01", "to": dt.date.today().isoformat()}, returnfields="Timestamp,Value")
                 data = v[0]["data"] if isinstance(v, list) else v["data"]
-                good = [(t[:10], x) for t, x in data if x is not None]
-                if len(good) < 3650: continue
-                gauges[s["station_no"]] = (float(s["station_latitude"]), float(s["station_longitude"]))
-                for t, x in good: flow[(s["station_no"], int(t[:4]), int(t[5:7]))].append(float(x))
+                for t, x in data:
+                    if x is not None: flow[(s_["station_no"], int(t[:4]), int(t[5:7]))].append(float(x))
                 time.sleep(1)
-            except Exception as e: print(f"  - gauge {s['station_no']}: {type(e).__name__}")
-        print(f"- extra gauges fetched north of K'gari: {len(want)} wanted")
-    except Exception as e:
-        print(f"- northern gauge list failed: {type(e).__name__} {str(e)[:150]}")
+            except Exception as e: print(f"    gauge {s_['station_no']}: {type(e).__name__}")
     mflow = {k: sum(v) / len(v) for k, v in flow.items() if len(v) >= 20}
     # catchments
     z = zipfile.ZipFile(io.BytesIO(get("https://data.hydrosheds.org/file/HydroBASINS/standard/hybas_au_lev08_v1c.zip")))
@@ -151,10 +147,10 @@ def c33():
         return None if not tot else sum(counts[c] for c in (30, 40, 50, 60)) / tot
     res = []
     for b, (la, lo) in sorted(beaches.items(), key=lambda x: -x[1][0]):
-        gs = sorted(((km(la, lo, *ll), s) for s, ll in gauges.items() if km(la, lo, *ll) <= 60), key=lambda x: x[0])
-        gs = [(d, s) for d, s in gs if sum(1 for k in mflow if k[0] == s) >= 120]
-        if not gs: print(f"  - {b}: no gauge with 10+ years within 60 km"); continue
-        d, s = gs[0]
+        opts = [s_["station_no"] for s_ in named.get(b, []) if sum(1 for k in mflow if k[0] == s_["station_no"]) >= 120]
+        if not opts: print(f"  - {b}: no {RIVER[b]} gauge with 10+ years since 1996"); continue
+        polys = {o: catchment(*gauges[o]) for o in opts}
+        s = max(opts, key=lambda o: polys[o].area if polys[o] is not None else 0); d = km(la, lo, *gauges[s])
         months = sorted(m for m in beachmonths[b] if (s, *m) in mflow)
         if len(months) < 60: print(f"  - {b}: only {len(months)} months overlap"); continue
         hi = set()
@@ -167,9 +163,9 @@ def c33():
         nh, no = len(hi), len(months) - len(hi)
         if co == 0 or nh == 0: continue
         rr = (ch / nh) / (co / no)
-        poly = catchment(*gauges[s]); cl = cover(poly) if poly is not None else None
+        poly = polys[s]; cl = cover(poly) if poly is not None else None
         res.append((b, sum(bull[b].values()), s, round(d), rr, cl, poly.area * 111 * 111 if poly is not None else None))
-        print(f"  - {b} ({la:.2f}): {sum(bull[b].values())} bull sharks; gauge {s} {d:.0f} km; high-flow rate ratio {rr:.2f}; catchment {'' if poly is None else f'{poly.area*111*111*math.cos(math.radians(la)):.0f} km², '}cleared/farmed/built {'?' if cl is None else f'{cl:.0%}'}")
+        print(f"  - {b} ({la:.2f}): {sum(bull[b].values())} bull sharks; {RIVER[b]} gauge {s} ({d:.0f} km from the area); high-flow rate ratio {rr:.2f}; catchment {'' if poly is None else f'{poly.area*111*111*math.cos(math.radians(la)):.0f} km², '}cleared/farmed/built {'?' if cl is None else f'{cl:.0%}'}")
     ok = [r for r in res if r[5] is not None]
     if len(ok) >= 5:
         from scipy.stats import spearmanr
@@ -179,7 +175,7 @@ def c33():
         print(f"- {len(ok)} areas: Spearman (cleared share vs high-flow rise) rho={rho.statistic:.2f}, p={rho.pvalue:.3f}; "
               f"median rise {st.median(hiC):.2f} where catchments are more cleared, {st.median(loC):.2f} where less")
 
-for name, f in (("C34", c34), ("C33", c33)):
+for name, f in (("C33", c33),):
     try: f()
     except Exception as e:
         import traceback; traceback.print_exc(); print(f"\n{name} failed: {type(e).__name__}: {str(e)[:300]}")
