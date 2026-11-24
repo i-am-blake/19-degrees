@@ -91,5 +91,170 @@
   "all": 7.3,
   "natural": 6.8,
   "updated": "2026-11-24"
+ },
+ "c45": {
+  "n": 74,
+  "warm": {
+   "n": 34,
+   "son": 16,
+   "pct": 47
+  },
+  "cool": {
+   "n": 40,
+   "son": 13,
+   "pct": 32
+  },
+  "p": 0.2375,
+  "years": 23,
+  "updated": "2026-11-24"
+ },
+ "c35": {
+  "built": {
+   "sites": [
+    "Sydney Harbour",
+    "Chowder Bay",
+    "Quarantine",
+    "Georges River",
+    "Port Hacking",
+    "Port Hacking Gate",
+    "Logan",
+    "Upper Logan River",
+    "Sunshine Coast Rivers"
+   ],
+   "months": 417,
+   "with_bull": 165,
+   "pct": 40
+  },
+  "natural": {
+   "sites": [
+    "Clarence River",
+    "Clarence River Array",
+    "Clarence Array",
+    "Kalang-Bellinger Array",
+    "Shoalhaven River",
+    "Wallis Lake"
+   ],
+   "months": 145,
+   "with_bull": 62,
+   "pct": 43
+  },
+  "p": 0.5557,
+  "updated": "2026-11-24"
+ },
+ "c33": {
+  "areas": [
+   {
+    "area": "Gold Coast",
+    "river": "Nerang",
+    "gauge": "146002B",
+    "km": 12,
+    "bull": 156,
+    "rise": 1.68,
+    "cleared_pct": 22,
+    "catchment_km2": 486
+   },
+   {
+    "area": "Nth Stradbroke Is.",
+    "river": "Brisbane River",
+    "skipped": "no gauge with 10+ years since 1996"
+   },
+   {
+    "area": "Bribie Island",
+    "river": "Caboolture",
+    "gauge": "142001A",
+    "km": 31,
+    "bull": 30,
+    "rise": 1.05,
+    "cleared_pct": 36,
+    "catchment_km2": 446
+   },
+   {
+    "area": "Sunshine Coast South",
+    "river": "Mooloolah",
+    "gauge": "141006A",
+    "km": 15,
+    "bull": 70,
+    "rise": 2.77,
+    "cleared_pct": 20,
+    "catchment_km2": 1050
+   },
+   {
+    "area": "Sunshine Coast North",
+    "river": "Maroochy",
+    "gauge": "141009A",
+    "km": 13,
+    "bull": 202,
+    "rise": 1.83,
+    "cleared_pct": 26,
+    "catchment_km2": 557
+   },
+   {
+    "area": "Rainbow Beach",
+    "river": "Mary River",
+    "skipped": "no gauge with 10+ years since 1996"
+   },
+   {
+    "area": "Bundaberg",
+    "river": "Burnett",
+    "gauge": "136007A",
+    "km": 68,
+    "bull": 146,
+    "rise": 0.98,
+    "cleared_pct": 51,
+    "catchment_km2": 30713
+   },
+   {
+    "area": "Gladstone",
+    "river": "Boyne",
+    "gauge": "136318A",
+    "km": 192,
+    "bull": 178,
+    "rise": 0.94,
+    "cleared_pct": 53,
+    "catchment_km2": 5725
+   },
+   {
+    "area": "Capricorn Coast",
+    "river": "Fitzroy",
+    "gauge": "130005A",
+    "km": 68,
+    "bull": 884,
+    "rise": 1.23,
+    "cleared_pct": 57,
+    "catchment_km2": 137308
+   },
+   {
+    "area": "Mackay",
+    "river": "Pioneer",
+    "gauge": "125002C",
+    "km": 44,
+    "bull": 516,
+    "rise": 1.29,
+    "cleared_pct": 20,
+    "catchment_km2": 1541
+   },
+   {
+    "area": "Townsville",
+    "river": "Ross River",
+    "skipped": "no gauge with 10+ years since 1996"
+   },
+   {
+    "area": "Cairns",
+    "river": "Barron",
+    "gauge": "110001D",
+    "km": 16,
+    "bull": 246,
+    "rise": 1.22,
+    "cleared_pct": 28,
+    "catchment_km2": 2206
+   }
+  ],
+  "n": 9,
+  "rho": -0.74,
+  "p": 0.0213,
+  "rise_more_cleared": 1.0150000000000001,
+  "rise_less_cleared": 1.68,
+  "rises": 7,
+  "updated": "2026-11-24"
  }
 }
