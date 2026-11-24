@@ -321,7 +321,7 @@ def natC32(D):
     return (f'First look with climate models: in the {len(m)} models in the public CMIP6 archive run both with and without human emissions, the sea off Sydney averaged '
             f'{c["all"]} months a year at 19°C or warmer in 1991–2014 with all causes included, and {c["natural"]} with natural causes only, from {c["base"]} in the 1950–1979 average year. '
             f'The difference points the claim\'s way, but the real sea had {c["observed"]} warm months a year in 1991–2014, so the models reproduce only a small part of the rise. '
-            'Coarse global models are known to under-represent the strengthening East Australian Current, and this few models can\'t settle it. '
+            'Coarse global models are known to under-represent the strengthening East Australian Current, and so few models can\'t settle it. '
             f'({A("https://pangeo-data.github.io/pangeo-cmip6-cloud/", "CMIP6 via Pangeo")}, CC BY 4.0; HadISST, Met Office.)')
 def landC33(D):
     c = F(D, "c33"); ok = [r for r in c["areas"] if r.get("cleared_pct") is not None]
@@ -331,8 +331,8 @@ def landC33(D):
             "Unclear": "no clear link between the rise and how cleared the catchment is", "Early no": "the rise is smaller, not larger, where catchments are more cleared",
             "Leans no": "the rise may be smaller where catchments are more cleared"}.get(G.show(G.grade("c33", D)[1]), "see the grade above")
     return (f'Early result (exploratory): {lead}. In {c["n"]} Queensland shark-control areas, each compared with its main river, bull shark catches rose in the river\'s high-flow months in '
-            f'{c["rises"]} of {c["n"]}. The rise was largest at {f(top[0])} and {f(top[1])}, and smallest at {f(bot[0])} and {f(bot[1])} (rank correlation {c["rho"]:+.2f}, {pf(c["p"])}). '
-            'The most cleared catchments are also the largest and most dammed rivers, so cleared land and river size can\'t be told apart with this few areas. '
+            f'{c["rises"]} of {c["n"]}. The rise was largest at {f(top[0])} and {f(top[1])}, and smallest at {f(bot[0])} and {f(bot[1])} (rank correlation {f"{c['rho']:+.2f}".replace("-", "−")}, {pf(c["p"])}). '
+            'The most cleared catchments are also the largest and most dammed rivers, so cleared land and river size can\'t be told apart with so few areas. '
             f'({QLD}; {WDO}; {A("https://www.hydrosheds.org/products/hydrobasins", "HydroBASINS")}; {A("https://esa-worldcover.org/", "ESA WorldCover 2021")}, CC BY 4.0.)')
 def rampC34(D):
     c = F(D, "c34"); a, b, o = c["all"], c["bull"], c["open_coast"]
@@ -352,7 +352,7 @@ def reefC42(D):
     return (f'First look: the southern limit of {c["species"]} tropical reef fish off eastern Australia moved from about {lim(p[0])} in {p[0]["years"]} to {lim(p[1])} in {p[1]["years"]} '
             f'and {lim(p[2])} in {p[2]["years"]}, counting each species against all fish records in the same area to allow for where people look. That is much further than the '
             'half-year 19°C line has moved. Early records are few, many of these fish are young strays carried south each summer rather than settled populations, and reporting grew after 2009. '
-            f'({A("https://www.ala.org.au/", "Atlas of Living Australia")}, CC BY 4.0.)')
+            f'({A("https://www.ala.org.au/", "Atlas of Living Australia")}, counts of records only.)')
 
 PARAS = {"mhwC19": (mhwC19, ("mhw",)), "bwC6": (bwC6, ("beachwatch",)), "plumeC6": (plumeC6, ("rivers", "harbour")),
          "qldC6": (qldC6, ("tigerqld",)), "wkC18": (wkC18, ("exposure", "beachday")), "whaleC5": (whaleC5, ("whales",)),
