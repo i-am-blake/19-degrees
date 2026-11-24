@@ -22,7 +22,13 @@ jobs:
           python3 - <<'PY'
           import json, urllib.request
           UA = {"User-Agent": "19-degrees/1.0 (+https://19-degrees.org)"}
-          g = lambda u: urllib.request.urlopen(urllib.request.Request(u, headers=UA), timeout=120).read()
+          import time
+          def g(u):
+              for k in range(6):
+                  try: return urllib.request.urlopen(urllib.request.Request(u, headers=UA), timeout=120).read()
+                  except Exception as e:
+                      if k == 5: raise
+                      time.sleep(60 * (k + 1))  # Zenodo sometimes refuses bursts
           h = json.loads(g("https://zenodo.org/api/records/18752301/versions?sort=version&size=1"))["hits"]["hits"][0]
           f = next(x for x in h["files"] if x["key"].endswith(".xlsx"))
           open("asid.xlsx", "wb").write(g(f["links"]["self"]))
