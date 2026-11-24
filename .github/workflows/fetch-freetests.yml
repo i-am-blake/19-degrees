@@ -34,8 +34,11 @@ jobs:
           open("asid.xlsx", "wb").write(g(f["links"]["self"]))
           PY
           python3 -I asid_to_csv.py asid.xlsx asid.csv
-          git fetch -q --depth 1 origin ocean-data:refs/remotes/origin/ocean-data imos-data:refs/remotes/origin/imos-data
-          mkdir -p ocean imos && git archive origin/ocean-data | tar -x -C ocean && git archive origin/imos-data | tar -x -C imos
+          git fetch --depth 1 origin ocean-data imos-data
+          mkdir -p ocean imos
+          for f in hawaii_incidents.csv scp-numbers-caught.xlsx freetests.json $(git ls-tree --name-only FETCH_HEAD 2>/dev/null | grep '^oisst_hawaii_'); do git show origin/ocean-data:$f > ocean/$f 2>/dev/null || rm -f ocean/$f; done
+          for f in $(git ls-tree --name-only origin/ocean-data | grep '^oisst_hawaii_'); do git show origin/ocean-data:$f > ocean/$f; done
+          for f in $(git ls-tree --name-only origin/imos-data | grep '\.csv\.gz$'); do git show origin/imos-data:$f > imos/$f; done
           echo "ocean-data files: $(ls ocean | wc -l), imos-data files: $(ls imos | wc -l)"
           cp ocean/freetests.json freetests.json 2>/dev/null || cp freetests.json.seed freetests.json 2>/dev/null || true
           python3 -u -I freetests19.py asid.csv ocean imos freetests.json
