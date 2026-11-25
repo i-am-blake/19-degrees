@@ -457,13 +457,38 @@ def fill(html, D, history=None):
             html = pat.sub(lambda m: fn(D), html, count=1)
     return html
 
+# One short question per claim for the card face (approved 24 Nov 2026). The full "Decision it informs" wording stays inside
+# the card on the claim's own page; on the card face it is hidden so the card says one thing.
+QUESTION = {
+ "c1": "How far south should shark safety reach?", "c3": "Will Victoria need to plan for bull sharks?",
+ "c4": "Does shark season now run into autumn?", "c5": "When do white sharks pass the north coast?",
+ "c29": "Can an ocean forecast flag white shark days?", "c30": "When do young white sharks arrive at Stockton Beach?",
+ "c31": "Do seal colonies need extra shark watch?", "c16": "When does bull shark season end?",
+ "c22": "Does the 19°C rule work in other countries?", "c25": "Do tagged sharks follow the 19°C rule too?",
+ "c23": "When and where do white sharks gather in California?", "c38": "More bull sharks, or the same sharks moving south?",
+ "c42": "Is the whole ocean moving south, not just sharks?", "c43": "Do bull sharks stay in rivers through winter?",
+ "c6": "How long after rain should you stay out?", "c28": "After rain, is it bull sharks or tiger sharks?",
+ "c7": "Do strong-current years bring more bites?", "c26": "Can a climate outlook warn a season ahead?",
+ "c32": "Is the longer season here to stay?", "c33": "Does what's upstream change what's at the river mouth?",
+ "c8": "When are tiger sharks near turtle beaches?", "c17": "Should we watch where the baitfish go?",
+ "c18": "Are bites rising, or just crowds?", "c19": "Do heatwaves bring sharks and people together?",
+ "c27": "Does cage-diving bait change shark behavior?", "c24": "Should the moon be on the warning sign?",
+ "c45": "When is Hawaii's tiger shark season?", "c40": "Do people actually follow beach closures?",
+ "c34": "Do fish scraps draw sharks to shore?", "c35": "Do canal estates need their own signs?",
+ "c36": "Does baitfish fishing change where sharks feed?", "c41": "Which estuaries raise the next generation of sharks?",
+ "c9": "Where should bleeding kits go?", "c10": "Which drones actually spot sharks?",
+ "c11": "Does a surf leash make a good tourniquet?", "c12": "Kits or patrol hours: which does more?",
+ "c44": "Is the biggest gain in rescue and first aid?", "c13": "Which beaches need kits and patrols first?",
+ "c14": "Do bite-resistant wetsuits work?", "c15": "Do board lights keep sharks away?",
+ "c20": "Keep, change or replace each beach's nets?", "c21": "When should SMART drumlines be in the water?",
+ "c46": "What does each type of gear catch?", "c39": "What does a shark alert really tell you?"}
 def decisions(html):
-    """Each claim's "Decision it informs" line moves to the card face, shown before the card is opened; the same row inside
-    the card is hidden so it isn't said twice. The row stays in the markup for check19 and the claim's own page."""
+    """Each claim card shows its question under the title; the 'Decision it informs' row inside the card is hidden there
+    so the card doesn't say it twice. Both stay in the markup: check19 reads them, and the claim's own page shows the row."""
     def one(m):
-        a = m.group(0); d = re.search(r"<dt>Decision it informs</dt><dd>(.*?)</dd>", a, re.S)
-        if not d: return a
-        t = d.group(1).strip(); t = t[0].lower() + t[1:]
+        a = m.group(0); cid = m.group(1); d = re.search(r"<dt>Decision it informs</dt><dd>.*?</dd>", a, re.S)
+        if not d or cid not in QUESTION: return a
         a = a.replace(d.group(0), d.group(0).replace("<dt>", '<dt class="dec">').replace("<dd>", '<dd class="dec">'), 1)
-        return a.replace("</h4>", f'</h4><span class="cfor"><b>Helps decide:</b> {t}</span>', 1)
-    return re.sub(r'<article class="claim" id="c\d+"[\s\S]*?</article>', one, html)
+        return a.replace("</h4>", f'</h4><span class="cfor"><b>Helps answer:</b> {html_escape(QUESTION[cid])}</span>', 1)
+    return re.sub(r'<article class="claim" id="(c\d+)"[\s\S]*?</article>', one, html)
+from html import escape as html_escape
