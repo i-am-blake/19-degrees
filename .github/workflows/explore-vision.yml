@@ -6,13 +6,13 @@ permissions:
 jobs:
   look:
     runs-on: ubuntu-26.04
-    timeout-minutes: 15
+    timeout-minutes: 45
     steps:
       - uses: actions/checkout@v5
       - uses: actions/setup-python@v6
         with: { python-version: "3.12" }
       - run: pip install -q numpy scipy pandas geopandas shapely xarray netCDF4 h5netcdf
       - name: Look
-        run: cd src && python3 -u -I explore_tools.py probe | tee ../report.md
+        run: cd src && python3 -u -I explore_tools.py rain2 | tee ../report.md
       - uses: actions/upload-artifact@v4
         with: { name: tools, path: tools.json }

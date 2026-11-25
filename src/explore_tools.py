@@ -14,7 +14,7 @@ def get(u, t=300):
             time.sleep(5 * (k + 1))
     raise RuntimeError("could not fetch " + u)
 B = {  # name: (sea point, river point, river)
-    "Gold Coast": ((-28.0, 153.55), (-27.99, 153.39), "Nerang"),
+    "Gold Coast": ((-28.0, 153.55), (-28.0, 153.33), "Nerang"),
     "Ballina": ((-28.87, 153.7), (-28.86, 153.55), "Richmond"),
     "Coffs Harbour": ((-30.3, 153.3), (-30.29, 153.12), "Coffs Creek"),
     "Port Macquarie": ((-31.45, 153.05), (-31.43, 152.88), "Hastings"),
@@ -181,9 +181,54 @@ def probe():  # which rain sources are current to yesterday? short timeouts, no 
                 except Exception as e: print("wdo", no, nm, "error", repr(e)[:120], flush=True)
         except Exception as e: print("wdo", no, "error", repr(e)[:150], flush=True)
     return {}
+def rain2():  # current daily rain from Water Data Online gauges inside each catchment
+    import urllib.parse, geopandas as gpd
+    from shapely.geometry import Point
+    from shapely.ops import unary_union
+    g = lambda u: urllib.request.urlopen(urllib.request.Request(u, headers=UA), timeout=60).read()
+    W = "http://www.bom.gov.au/waterdata/services?"
+    q = lambda **p: json.loads(g(W + urllib.parse.urlencode({"service": "kisters", "type": "queryServices", "format": "json", **p})))
+    z = zipfile.ZipFile(io.BytesIO(get("https://data.hydrosheds.org/file/HydroBASINS/standard/hybas_au_lev08_v1c.zip"))); z.extractall("hb")
+    hb = gpd.read_file([f"hb/{n}" for n in z.namelist() if n.endswith(".shp")][0])
+    up = defaultdict(list)
+    for x, y in zip(hb.HYBAS_ID, hb.NEXT_DOWN): up[y].append(x)
+    geom = dict(zip(hb.HYBAS_ID, hb.geometry)); six = hb.sindex
+    def catchment(la, lo):
+        for dx in (0, -0.02, -0.04, -0.06, -0.08, -0.1):
+            p = Point(lo + dx, la); ids = [hb.HYBAS_ID.iloc[i] for i in six.query(p) if hb.geometry.iloc[i].contains(p)]
+            if ids: break
+        else: return None
+        todo, seen = [ids[0]], set()
+        while todo: x = todo.pop(); seen.add(x); todo += [u for u in up[x] if u not in seen]
+        return unary_union([geom[i] for i in seen])
+    stl = q(request="getStationList", parametertype_name="Rainfall", returnfields="station_no,station_name,station_latitude,station_longitude", bBox="149.5,-37.5,153.7,-27.8")
+    cand = [dict(zip(stl[0], r)) for r in stl[1:]]
+    a0, b0 = (dt.date.today() - dt.timedelta(12)).isoformat(), (dt.date.today() + dt.timedelta(1)).isoformat(); res = {}
+    for n, (_, rp, river) in B_.items():
+        poly = catchment(*rp); area = round(gpd.GeoSeries([poly], crs=4326).to_crs(3577).area.iloc[0] / 1e6)
+        inside = [s for s in cand if poly.buffer(0.02).contains(Point(float(s["station_longitude"]), float(s["station_latitude"])))]
+        daily, used = defaultdict(list), []
+        for s in inside[:40]:
+            try:
+                ts = q(request="getTimeseriesList", station_no=s["station_no"], parametertype_name="Rainfall", returnfields="ts_id,ts_name")
+                t = next((r for r in ts[1:] if r[1] == "DMQaQc.Merged.DailyTotal.09HR"), None)
+                if not t: continue
+                v = q(request="getTimeseriesValues", ts_id=t[0], **{"from": a0, "to": b0}, returnfields="Timestamp,Value")
+                d = {tt[:10]: float(x) for tt, x in (v[0]["data"] if isinstance(v, list) else v["data"]) if x is not None}
+                if d and max(d) >= (dt.date.today() - dt.timedelta(3)).isoformat():
+                    used.append(s["station_name"])
+                    for k, x in d.items(): daily[k].append(x)
+            except Exception as e: print(n, s["station_name"], "error", repr(e)[:80], flush=True)
+        ks = sorted(k for k, v in daily.items() if len(v) >= max(1, len(used) // 2))
+        if not ks: res[n] = {"river": river, "area_km2": area, "in_catchment": len(inside), "current": 0}; print(n, json.dumps(res[n]), flush=True); continue
+        L = dt.date.fromisoformat(ks[-1]); m = lambda k: round(sum(daily[k]) / len(daily[k]), 1) if k in daily else 0.0
+        last8 = [m((L - dt.timedelta(k)).isoformat()) for k in range(7, -1, -1)]
+        res[n] = {"river": river, "area_km2": area, "in_catchment": len(inside), "current": len(used), "latest": ks[-1], "last8": last8, "week_total": round(sum(last8[1:]), 1)}
+        print(n, json.dumps(res[n]), flush=True)
+    return res
 B_ = B
 PARTS = sys.argv[1].split(",") if len(sys.argv) > 1 else ["rain", "calendar"]
-for k, f in (("probe", probe), ("wdo", wdo), ("rain", rain), ("calendar", calendar)):
+for k, f in (("rain2", rain2), ("probe", probe), ("wdo", wdo), ("rain", rain), ("calendar", calendar)):
     if k not in PARTS: continue
     try: OUT[k] = f()
     except Exception as e: print(k, "failed:", repr(e)[:300])
