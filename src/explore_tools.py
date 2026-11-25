@@ -30,14 +30,20 @@ OUT = {"made": dt.date.today().isoformat()}
 def calendar():
     import xarray as xr
     days = {n: {} for n in B}; cell = {}
-    for y in range(1981, dt.date.today().year + 1):
-        u = f"https://psl.noaa.gov/thredds/dodsC/Datasets/noaa.oisst.v2.highres/sst.day.mean.{y}.nc"
-        for k in range(4):
+    E = ("https://coastwatch.pfeg.noaa.gov/erddap/griddap/ncdcOisst21Agg_LonPM180.nc?sst[({a}):1:({b})][(0.0)][(-37.375):1:(-27.625)][(149.875):1:(153.875)]")
+    for y in range(1982, dt.date.today().year + 1):
+        box = None
+        for k in range(6):
             try:
-                ds = xr.open_dataset(u); box = ds.sst.sel(lat=slice(-37.4, -27.6), lon=slice(149.8, 154.0)).load(); break
-            except Exception as e:
-                print(y, "retry", e); time.sleep(10)
-        else: raise RuntimeError(f"OISST {y}")
+                ds = xr.open_dataset(f"https://psl.noaa.gov/thredds/dodsC/Datasets/noaa.oisst.v2.highres/sst.day.mean.{y}.nc")
+                box = ds.sst.sel(lat=slice(-37.4, -27.6), lon=slice(149.8, 154.0)).load(); break
+            except Exception as e: print(y, "PSL retry", repr(e)[:120], flush=True); time.sleep(5)
+            try:
+                b = min(dt.date(y, 12, 31), dt.date.today() - dt.timedelta(9))
+                open("oi.nc", "wb").write(get(E.format(a=f"{y}-01-01", b=b.isoformat()), 900))
+                box = xr.open_dataset("oi.nc").sst.isel(zlev=0).rename(latitude="lat", longitude="lon").load(); break
+            except Exception as e: print(y, "ERDDAP retry", repr(e)[:120], flush=True); time.sleep(20)
+        if box is None: raise RuntimeError(f"OISST {y}")
         for n, (sea, _, _) in B.items():
             if n not in cell:  # nearest ocean cell
                 la, lo = box.lat.values, box.lon.values; v = box.isel(time=0).values
@@ -126,7 +132,33 @@ def rain():
         print(n, json.dumps(res[n]), flush=True)
     return res
 
-for k, f in (("rain", rain), ("calendar", calendar)):
+def wdo():  # is there current daily rain from Water Data Online (BoM)?
+    import urllib.parse
+    B = "http://www.bom.gov.au/waterdata/services?"
+    q = lambda **p: json.loads(get(B + urllib.parse.urlencode({"service": "kisters", "type": "queryServices", "format": "json", **p}), 300))
+    res = {}
+    for par in ("Rainfall", "Water Course Discharge"):
+        stl = q(request="getStationList", parametertype_name=par, returnfields="station_no,station_name,station_latitude,station_longitude", bBox="149.5,-37.5,153.7,-27.8")
+        cand = [dict(zip(stl[0], r)) for r in stl[1:]]; print(par, len(cand), "stations", flush=True); out = {}
+        for n, (_, rp, river) in B_.items():
+            near = sorted(cand, key=lambda s: math.hypot(float(s["station_latitude"]) - rp[0], float(s["station_longitude"]) - rp[1]))[:2]
+            for s in near:
+                try:
+                    ts = q(request="getTimeseriesList", station_no=s["station_no"], parametertype_name=par, returnfields="ts_id,ts_name")
+                    names = [r[1] for r in ts[1:]]; pick = next((r for r in ts[1:] if "Daily" in r[1] and ("Total" in r[1] or "Mean" in r[1])), None)
+                    last = None
+                    if pick:
+                        v = q(request="getTimeseriesValues", ts_id=pick[0], **{"from": (dt.date.today() - dt.timedelta(20)).isoformat(), "to": dt.date.today().isoformat()}, returnfields="Timestamp,Value")
+                        d = v[0]["data"] if isinstance(v, list) else v["data"]; last = [(t[:10], x) for t, x in d if x is not None][-3:]
+                    out.setdefault(n, []).append({"station": s["station_name"], "no": s["station_no"], "ts": names[:8], "used": pick[1] if pick else None, "last": last})
+                    print(par, n, json.dumps(out[n][-1])[:400], flush=True); time.sleep(1)
+                except Exception as e: print(par, n, s["station_name"], "error", repr(e)[:150], flush=True)
+        res[par] = out
+    return res
+B_ = B
+PARTS = sys.argv[1].split(",") if len(sys.argv) > 1 else ["rain", "calendar"]
+for k, f in (("wdo", wdo), ("rain", rain), ("calendar", calendar)):
+    if k not in PARTS: continue
     try: OUT[k] = f()
     except Exception as e: print(k, "failed:", repr(e)[:300])
 json.dump(OUT, open("../tools.json", "w"), indent=1)
