@@ -230,7 +230,7 @@ for m in re.finditer(r"\b([A-Za-z]+(?:-[a-z]+)?) (?:specific |testable )?claims\
 # Every claim card names the decision it informs
 for c in re.finditer(r'<article class="claim" id="(c\d+)"([\s\S]*?)</article>', page):
     check(f"{c[1].upper()} has a 'Decision it informs' line", bool(re.search(r"<dt( class=\"dec\")?>Decision it informs</dt>", c[2])), True)
-    check(f"{c[1].upper()} shows its decision on the card face", ('class="cfor"' in c[2]) == ('<dt class="dec">' in c[2]), True)
+    check(f"{c[1].upper()} shows its question on the card face", ('class="cfor"' in c[2]) == ('<dt class="dec">' in c[2]), True)
     check(f"{c[1].upper()} has a 'Measured per' line", "<dt>Measured per</dt>" in c[2], True)
 i = page.find('id="h-products"'); seg = page[i:page.find("</section>", i)]
 prods = seg.count('<td class="psrc">')
