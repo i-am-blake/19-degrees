@@ -1,5 +1,7 @@
 """First tests of seven claims with free data (C32 natural-only runs, C33, C34, C35, C42, and the sea temperature part of C45).
-Usage: python3 -I freetests19.py <asid.csv> <ocean-data dir> <imos-data dir> <out freetests.json>
+Usage: python3 -I freetests19.py <asid.csv> <ocean-data dir> <imos-data dir> <out freetests.json> [--only c34]
+C34 is the only part that reads the shark-incident database. It records the database version it used (asid_version.txt beside
+asid.csv), and the weekly update re-runs it with --only c34 when a newer version has come out since.
 Run monthly by fetch-freetests.yml; the weekly update reads the saved result. Each part keeps its last result if a source
 is down. All tests are exploratory: the tests were set out on each claim card before these data were looked at, but the
 details below (distances, periods, thresholds) were chosen by this script's author.
@@ -22,6 +24,8 @@ C45  Hawaii DLNR incidents and NOAA OISST around five islands: share of tiger sh
 import csv, glob, gzip, io, json, math, os, random, statistics as st, sys, time, urllib.parse, urllib.request, zipfile, datetime as dt
 from collections import defaultdict
 ASID, OCEAN, IMOS, OUT = sys.argv[1:5]
+ONLY = sys.argv[sys.argv.index("--only") + 1].split(",") if "--only" in sys.argv else None
+VER = os.path.join(os.path.dirname(os.path.abspath(ASID)), "asid_version.txt")
 from scipy.stats import binomtest, fisher_exact, spearmanr
 UA = {"User-Agent": "19-degrees/1.0 (+https://19-degrees.org)"}
 UAB = {"User-Agent": "Mozilla/5.0 (19-degrees.org open data)"}
@@ -60,6 +64,7 @@ def c34():
             if d > 100 or rnd > 100: continue
             n += 1; closer += d < rnd; db.append(d); dr.append(rnd)
         out[key] = dict(n=n, closer=closer, pct=round(100 * closer / n), p=pr(binomtest(closer, n, 0.5).pvalue), bite_km=round(st.median(db), 1), beach_km=round(st.median(dr), 1))
+    if os.path.exists(VER): out["asid_record"] = open(VER).read().strip()
     return out
 
 def c35():
@@ -238,6 +243,8 @@ def c33():
                 rise_less_cleared=st.median(r["rise"] for r in ok if r["cleared_pct"] <= med), rises=sum(r["rise"] > 1 for r in ok))
 
 for k, f in (("c45", c45), ("c35", c35), ("c34", c34), ("c42", c42), ("c33", c33), ("c32", c32)):
+    if ONLY and k not in ONLY: continue
     try: OUTD[k] = f(); OUTD[k]["updated"] = dt.date.today().isoformat(); print(k, "ok", json.dumps(OUTD[k])[:400])
     except Exception as e: print(f"{k} failed, keeping the last result: {type(e).__name__}: {str(e)[:300]}")
 json.dump(OUTD, open(OUT, "w"), indent=1)
+if ONLY and any(OUTD.get(k, {}).get("updated") != dt.date.today().isoformat() for k in ONLY): sys.exit(f"{ONLY} could not be re-run today")

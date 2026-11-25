@@ -32,6 +32,7 @@ jobs:
           h = json.loads(g("https://zenodo.org/api/records/18752301/versions?sort=version&size=1"))["hits"]["hits"][0]
           f = next(x for x in h["files"] if x["key"].endswith(".xlsx"))
           open("asid.xlsx", "wb").write(g(f["links"]["self"]))
+          open("asid_version.txt", "w").write(str(h["id"]) + "\n")  # C34 records which database version it used
           PY
           python3 -I asid_to_csv.py asid.xlsx asid.csv
           git fetch -q --depth 1 origin ocean-data:od && git fetch -q --depth 1 origin imos-data:id
