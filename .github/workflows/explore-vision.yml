@@ -1,5 +1,5 @@
 name: Explore new ideas (look only)
-# Data for tool previews (season calendar, rain watch). Changes nothing in the repo or on the site.
+# What people publicly ask about sharks (search autocomplete, AI conversations). Changes nothing in the repo or on the site.
 on: workflow_dispatch
 permissions:
   contents: read
@@ -11,8 +11,8 @@ jobs:
       - uses: actions/checkout@v5
       - uses: actions/setup-python@v6
         with: { python-version: "3.12" }
-      - run: pip install -q numpy scipy pandas geopandas shapely xarray netCDF4 h5netcdf
+      - run: pip install -q pytrends
       - name: Look
-        run: cd src && python3 -u -I explore_tools.py rain | tee ../report.md
+        run: cd src && python3 -u -I explore_questions.py
       - uses: actions/upload-artifact@v4
-        with: { name: tools, path: tools.json }
+        with: { name: questions, path: questions.json }
