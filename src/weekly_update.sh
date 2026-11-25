@@ -56,6 +56,13 @@ python3 -I attention19.py asid.csv hawaii.json attention.json || warn "Attention
 { [ -n "$HI" ] && [ -s ocean/scp-numbers-caught.xlsx ] && python3 -I newclaims19.py asid.csv "$HI" ocean/scp-numbers-caught.xlsx sst newclaims.json; } || warn "C44-C46 step failed, page keeps last numbers"
 # Claims C32, C33, C34, C35, C42 and C45 (sea temperature): tested monthly by fetch-freetests.yml, saved on ocean-data
 [ -s ocean/freetests.json ] && cp ocean/freetests.json . || warn "free-data tests not on ocean-data yet, page keeps last numbers"
+# C34 counts bites, so it must use this week's database version, like the rest of the page. If a newer version came out after
+# the monthly run, re-run C34 now; if that fails, stop, so last week's site stays up rather than a page whose counts disagree.
+[ -s freetests.json ] || cp "$R/src/freetests.json" . 2>/dev/null || true
+if [ -s freetests.json ] && [ "$(python3 -c 'import json;print(json.load(open("freetests.json")).get("c34",{}).get("asid_record",""))')" != "$(cat asid_version.txt)" ]; then
+  echo "C34 used another database version; re-running it on record $(cat asid_version.txt)"
+  python3 -I freetests19.py asid.csv ocean ocean freetests.json --only c34 || { echo "::error::C34 could not be re-run on this week's database; nothing published"; exit 1; }
+fi
 { f=$(ls ocean/california_*.xlsx 2>/dev/null | head -n 1); [ -n "$f" ] && python3 -I exposure19.py islands_nc_run.csv "$f" $HI exposure.json; } || warn "C18 weekend step failed, page keeps last numbers"
 { f=$(ls ocean/california_*.xlsx 2>/dev/null | head -n 1); [ -n "$f" ] && ls ocean/weather_*.csv >/dev/null 2>&1 && python3 -I beachday19.py ocean islands_nc_run.csv "$f" $HI beachday.json; } || warn "Beach weather step failed, page keeps last numbers"
 { f=$(ls ocean/california_*.xlsx 2>/dev/null | head -n 1); [ -n "$f" ] && [ -s ocean/tides_hilo.csv ] && python3 -I tides19.py ocean/tides_hilo.csv "$f" $HI tides.json; } || warn "Tides step failed, page keeps last numbers"
