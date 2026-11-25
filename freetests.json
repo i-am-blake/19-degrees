@@ -1,6 +1,6 @@
 {
  "c34": {
-  "ramps": 2966,
+  "ramps": 2967,
   "beaches": 7807,
   "all": {
    "n": 812,
@@ -34,7 +34,8 @@
    "bite_km": 2.2,
    "beach_km": 1.5
   },
-  "updated": "2026-11-24"
+  "asid_record": "22262542",
+  "updated": "2026-11-25"
  },
  "c42": {
   "periods": [
@@ -61,7 +62,7 @@
    }
   ],
   "species": 10,
-  "updated": "2026-11-24"
+  "updated": "2026-11-25"
  },
  "c32": {
   "models": [
@@ -106,7 +107,7 @@
   },
   "p": 0.2375,
   "years": 23,
-  "updated": "2026-11-24"
+  "updated": "2026-11-25"
  },
  "c35": {
   "built": {
@@ -139,7 +140,7 @@
    "pct": 43
   },
   "p": 0.5557,
-  "updated": "2026-11-24"
+  "updated": "2026-11-25"
  },
  "c33": {
   "areas": [
@@ -229,7 +230,7 @@
     "gauge": "125002C",
     "km": 44,
     "bull": 516,
-    "rise": 1.29,
+    "rise": 1.3,
     "cleared_pct": 20,
     "catchment_km2": 1541
    },
@@ -255,6 +256,6 @@
   "rise_more_cleared": 1.0150000000000001,
   "rise_less_cleared": 1.68,
   "rises": 7,
-  "updated": "2026-11-24"
+  "updated": "2026-11-25"
  }
 }
