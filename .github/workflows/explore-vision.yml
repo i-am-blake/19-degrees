@@ -1,5 +1,5 @@
 name: Explore new ideas (look only)
-# First tests of open claims with free data (C33, C34). Changes nothing in the repo or on the site.
+# Data for tool previews (season calendar, rain watch). Changes nothing in the repo or on the site.
 on: workflow_dispatch
 permissions:
   contents: read
@@ -11,20 +11,8 @@ jobs:
       - uses: actions/checkout@v5
       - uses: actions/setup-python@v6
         with: { python-version: "3.12" }
-      - run: pip install -q numpy scipy openpyxl pandas geopandas shapely rasterio
+      - run: pip install -q numpy scipy pandas geopandas shapely xarray netCDF4
       - name: Look
-        run: |
-          cd src
-          python3 - <<'PY'
-          import json, urllib.request
-          UA = {"User-Agent": "19-degrees/1.0 (+https://19-degrees.org)"}
-          g = lambda u: urllib.request.urlopen(urllib.request.Request(u, headers=UA), timeout=120).read()
-          h = json.loads(g("https://zenodo.org/api/records/18752301/versions?sort=version&size=1"))["hits"]["hits"][0]
-          f = next(x for x in h["files"] if x["key"].endswith(".xlsx"))
-          open("asid.xlsx", "wb").write(g(f["links"]["self"]))
-          PY
-          python3 -I asid_to_csv.py asid.xlsx asid.csv
-          git fetch -q --depth 1 origin ocean-data
-          for f in scp-numbers-caught.xlsx shark-gear-locations.xlsx river_gauges.csv river_flow_daily.csv.gz; do git show origin/ocean-data:$f > $f; done
-          python3 -u -I explore_c33c34.py asid.csv scp-numbers-caught.xlsx shark-gear-locations.xlsx river_gauges.csv river_flow_daily.csv.gz | tee ../report.md
-          cat ../report.md >> "$GITHUB_STEP_SUMMARY"
+        run: cd src && python3 -u -I explore_tools.py | tee ../report.md
+      - uses: actions/upload-artifact@v4
+        with: { name: tools, path: tools.json }
