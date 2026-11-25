@@ -155,9 +155,33 @@ def wdo():  # is there current daily rain from Water Data Online (BoM)?
                 except Exception as e: print(par, n, s["station_name"], "error", repr(e)[:150], flush=True)
         res[par] = out
     return res
+def probe():  # which rain sources are current to yesterday?
+    import urllib.parse
+    W = "http://www.bom.gov.au/waterdata/services?"
+    q = lambda **p: json.loads(get(W + urllib.parse.urlencode({"service": "kisters", "type": "queryServices", "format": "json", **p}), 300))
+    a, b = (dt.date.today() - dt.timedelta(10)).isoformat(), dt.date.today().isoformat(); out = {}
+    for no in ("146002B", "566064", "215016", "203063"):
+        try:
+            ts = q(request="getTimeseriesList", station_no=no, parametertype_name="Rainfall", returnfields="ts_id,ts_name")
+            for tid, nm in ts[1:]:
+                if not any(x in nm for x in ("Provisional", "PR00", "Received", "Harmonised.Combined", "CombinedProv")): continue
+                v = q(request="getTimeseriesValues", ts_id=tid, **{"from": a, "to": b}, returnfields="Timestamp,Value")
+                d = [(t, x) for t, x in (v[0]["data"] if isinstance(v, list) else v["data"]) if x is not None]
+                out[f"wdo {no} {nm}"] = (len(d), d[-1] if d else None, round(sum(float(x) for _, x in d), 1) if d else None)
+                print(f"wdo {no} {nm}", out[f"wdo {no} {nm}"], flush=True); time.sleep(1)
+        except Exception as e: print("wdo", no, "error", repr(e)[:150], flush=True)
+    for u in ("http://www.bom.gov.au/fwo/IDQ60901/IDQ60901.94592.json", "http://www.bom.gov.au/fwo/IDN60901/IDN60901.94768.json"):
+        try:
+            o = json.loads(get(u, 60))["observations"]["data"]; print("bom obs", u[-12:], len(o), o[0]["local_date_time_full"], o[-1]["local_date_time_full"], o[0].get("rain_trace"), flush=True)
+        except Exception as e: print("bom obs", u[-12:], "error", repr(e)[:150], flush=True)
+    try:
+        o = json.loads(get("https://api.open-meteo.com/v1/forecast?latitude=-28.0&longitude=153.3&daily=precipitation_sum&past_days=10&forecast_days=1&timezone=Australia%2FBrisbane", 60))
+        print("open-meteo", list(zip(o["daily"]["time"], o["daily"]["precipitation_sum"]))[-6:], flush=True)
+    except Exception as e: print("open-meteo error", repr(e)[:150], flush=True)
+    return out
 B_ = B
 PARTS = sys.argv[1].split(",") if len(sys.argv) > 1 else ["rain", "calendar"]
-for k, f in (("wdo", wdo), ("rain", rain), ("calendar", calendar)):
+for k, f in (("probe", probe), ("wdo", wdo), ("rain", rain), ("calendar", calendar)):
     if k not in PARTS: continue
     try: OUT[k] = f()
     except Exception as e: print(k, "failed:", repr(e)[:300])
