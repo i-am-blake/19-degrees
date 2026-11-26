@@ -2,7 +2,7 @@ name: Explore new ideas (look only)
 # What people publicly ask about sharks (search autocomplete, AI conversations). Changes nothing in the repo or on the site.
 on: workflow_dispatch
 permissions:
-  contents: read
+  contents: write
 jobs:
   look:
     runs-on: ubuntu-26.04
@@ -14,5 +14,9 @@ jobs:
       - run: pip install -q pytrends
       - name: Look
         run: cd src && python3 -u -I explore_questions.py
-      - uses: actions/upload-artifact@v4
-        with: { name: questions, path: questions.json }
+      - name: Save to a data branch (look only)
+        run: |
+          mkdir /tmp/q && cp questions.json /tmp/q/ && cd /tmp/q && git init -q -b questions-data
+          git -c user.name="Blake Erickson" -c user.email="323228245+i-am-blake@users.noreply.github.com" add . 
+          git -c user.name="Blake Erickson" -c user.email="323228245+i-am-blake@users.noreply.github.com" commit -qm "Public shark questions (look only)"
+          git push -q -f "https://x-access-token:${{ github.token }}@github.com/${{ github.repository }}.git" questions-data
