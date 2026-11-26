@@ -19,7 +19,7 @@ jobs:
           curl -sSfL -o dl/cdfw.zip "https://data.cnra.ca.gov/dataset/022f670f-eb4e-4314-9fad-74f7f9560400/resource/fa77215c-a06c-4fa2-b8bc-ffbcaaa65286/download/sharkincidents_1950_2022_220302.zip" || echo "cdfw download failed" >> out/california_log.txt
           if [ -s dl/cdfw.zip ]; then unzip -o -q dl/cdfw.zip -d dl/x && for f in dl/x/*; do cp "$f" "out/california_$(basename "$f" | tr ' ' '_')"; done; fi
           for f in out/california_*; do echo "$f: $(wc -c < "$f") bytes" >> out/california_log.txt; done
-          printf "California shark incidents, California Department of Fish and Wildlife (CDFW), CC BY. https://lab.data.ca.gov/dataset/shark-incident-database-california, retrieved %s.\n" "$(date -u +%Y-%m-%d)" > out/README_california.txt
+          printf "California shark incidents, California Department of Fish and Wildlife (CDFW), CC BY. https://catalog.data.gov/dataset/shark-incident-database-california, retrieved %s.\n" "$(date -u +%Y-%m-%d)" > out/README_california.txt
           cat out/california_log.txt
       - name: Add to the ocean-data branch
         if: always()

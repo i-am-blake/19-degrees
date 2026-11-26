@@ -23,7 +23,7 @@
     },
     {
      "name": "Shark Incident Database, California",
-     "url": "https://lab.data.ca.gov/dataset/shark-incident-database-california",
+     "url": "https://catalog.data.gov/dataset/shark-incident-database-california",
      "from": "California Department of Fish and Wildlife",
      "used_for": "Claims C23, C24",
      "license": "CC BY",

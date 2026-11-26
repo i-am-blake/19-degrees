@@ -162,7 +162,7 @@ python3 -I islands19.py islands_nc_run.csv islands.json
 
 ## California white sharks (claim C23)
 
-`california19.py` reads the California Department of Fish and Wildlife shark incident database ([CC BY](https://lab.data.ca.gov/dataset/shark-incident-database-california), fetched monthly to the `ocean-data` branch by `fetch-california.yml`). It counts white shark incidents by era, their median latitude and how many were south of Point Conception, and tests 2014 on against 1990–2013 with a permutation test on the median latitude. It writes `california.json`, which `build19.py` reads; the weekly rebuild reruns it.
+`california19.py` reads the California Department of Fish and Wildlife shark incident database ([CC BY](https://catalog.data.gov/dataset/shark-incident-database-california), fetched monthly to the `ocean-data` branch by `fetch-california.yml`). It counts white shark incidents by era, their median latitude and how many were south of Point Conception, and tests 2014 on against 1990–2013 with a permutation test on the median latitude. It writes `california.json`, which `build19.py` reads; the weekly rebuild reruns it.
 
 ```
 python3 -I california19.py california_SharkIncidents_1950_2022_220302.xlsx california.json

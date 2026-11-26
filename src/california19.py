@@ -1,7 +1,7 @@
 """Claim C23: have California's white shark incidents moved north as the coast warmed?
 Usage: python3 -I california19.py <CDFW SharkIncidents xlsx> <out california.json>
 Data: California Department of Fish and Wildlife shark incident database (sheet "Attacks_1950_2021"), CC BY,
-https://lab.data.ca.gov/dataset/shark-incident-database-california (fetched monthly to the ocean-data branch).
+https://catalog.data.gov/dataset/shark-incident-database-california (fetched monthly to the ocean-data branch).
 Counts white shark incidents with a recorded place by era, the median latitude of each era, and how many were south of
 Point Conception (34.45°N), where the coast turns east and the water is warmer. Compares 2014 on (the 2014-16 marine
 heatwave and after) with 1990-2013 by a permutation test on the median latitude."""
