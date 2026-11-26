@@ -53,10 +53,10 @@ for m in find("drown ratio", r"about (\d+) people drown", True):
     check("people drown per shark death", int(m[1]), round(r["drown"] / r["shark"]))
 
 # Tagged sharks (IMOS)
-for m in find("IMOS days", r"Of ([\d,]+) days that (\d+) tagged bull sharks were detected off NSW from (\d+) to (\d+), ([\d.]+)% fell in months when the sea was 19°C or warmer, and none in a month below ([\d.]+)°C"):
-    check("IMOS headline", (int(num(m[1])), int(m[2]), int(m[3]), int(m[4]), float(m[5]), float(m[6])),
-          (im["days"], im["sharks"], im["y0"], im["y1"], im["pct_warm"], im["min_sst"]))
-for m in find("IMOS south", r"south of Sydney, (\d+)% of months in that time were below 19°C"):
+for m in find("IMOS days", r"(\d+) tagged bull sharks off NSW, (\d+)–(\d+): ([\d.]+)% of ([\d,]+) detection days were in months at 19°C or warmer"):
+    check("IMOS headline", (int(num(m[5])), int(m[1]), int(m[2]), int(m[3]), float(m[4])),
+          (im["days"], im["sharks"], im["y0"], im["y1"], im["pct_warm"]))
+for m in find("IMOS south", r"though (\d+)% of months south of Sydney were cooler"):
     check("months below 19°C south of Sydney", int(m[1]), im["south_months_below"])
 c2 = im["c2"]
 for m in find("C2", r"from (\d+)–(\d+) a season in \d+–\d+ to (\d+)–(\d+) a season since \d+"):
@@ -118,9 +118,9 @@ if "obis" in D:
 # Water on the day, time of day and the moon, when present
 if "fieldnotes" in D:
     w, t = D["fieldnotes"]["water"], D["fieldnotes"]["time"]
-    for m in find("water on the day", r"all (\d+) bull shark bites were in water of ([\d.]+)°C or warmer\. For comparison, (\d+) of (\d+) tiger shark bites and (\d+) of (\d+) white shark bites were below 19°C, the coldest at ([\d.]+)°C"):
-        check("water on the day", (int(m[1]), float(m[2]), int(m[3]), int(m[4]), int(m[5]), int(m[6]), float(m[7])),
-              (w["bull"]["n"], w["bull"]["min"], w["tiger"]["below19"], w["tiger"]["n"], w["white"]["below19"], w["white"]["n"], w["white"]["min"]))
+    for m in find("water on the day", r"All (\d+) bull shark bites with a temperature taken at the scene were at ([\d.]+)°C or warmer; (\d+) of (\d+) tiger and (\d+) of (\d+) white shark bites were below 19°C"):
+        check("water on the day", (int(m[1]), float(m[2]), int(m[3]), int(m[4]), int(m[5]), int(m[6])),
+              (w["bull"]["n"], w["bull"]["min"], w["tiger"]["below19"], w["tiger"]["n"], w["white"]["below19"], w["white"]["n"]))
     if w["bull"]["below19"]: bad.append("water on the day: a bull shark bite below 19°C was recorded at the scene")
     for m in find("C21 time of day", r"(\d+)% of (\d+) bull shark bites with a recorded time happened at night \(8 pm to 5 am\), against (\d+)% of (\d+) white and tiger shark bites \(p = ([\d.]+)\)\. Across dawn, dusk and night together the shares are close \((\d+)% and (\d+)%, p = ([\d.]+)\)"):
         b, o = t["bull"], t["others"]
