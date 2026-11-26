@@ -13,10 +13,10 @@ jobs:
         with: { python-version: "3.12" }
       - run: pip install -q pytrends
       - name: Look
-        run: cd src && python3 -u -I explore_questions.py
+        run: cd src && python3 -u -I explore_macro.py
       - name: Save to a data branch (look only)
         run: |
-          mkdir /tmp/q && cp questions.json /tmp/q/ && cd /tmp/q && git init -q -b questions-data
+          mkdir /tmp/q && cp macro.json /tmp/q/ && cd /tmp/q && git init -q -b macro-data
           git -c user.name="Blake Erickson" -c user.email="323228245+i-am-blake@users.noreply.github.com" add . 
-          git -c user.name="Blake Erickson" -c user.email="323228245+i-am-blake@users.noreply.github.com" commit -qm "Public shark questions (look only)"
-          git push -q -f "https://x-access-token:${{ github.token }}@github.com/${{ github.repository }}.git" questions-data
+          git -c user.name="Blake Erickson" -c user.email="323228245+i-am-blake@users.noreply.github.com" commit -qm "Macro search data (look only)"
+          git push -q -f "https://x-access-token:${{ github.token }}@github.com/${{ github.repository }}.git" macro-data
