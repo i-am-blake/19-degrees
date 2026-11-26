@@ -83,6 +83,10 @@ python3 -I imos19.py imos sst imos.json      # writes the tagging numbers; build
 
 `update_today.py index.html index.html` refreshes only today's sea temperatures inside an already-built page.
 
+## Monthly search tracker
+
+`tracker19.py` records, on the 2nd of each month, what people type into Google, Bing and DuckDuckGo about sharks in 11 countries and 5 languages, and last month's Wikipedia reads of the main shark articles. It adds the month to `search_tracker.json` and changes nothing else. If too few suggestions come back, it saves nothing. It runs from `.github/workflows/search-tracker.yml`.
+
 ## Fixed inputs to update by hand
 
 - Drowning figures in `build.py` (`DROWN_YEARS` by state and year, `DROWN_NATIONAL`, window `W0`–`W1`) are the yearly counts in Surf Life Saving Australia's National Coastal Safety Report. When a new report is out, drop the oldest year, add the newest and move the window forward.

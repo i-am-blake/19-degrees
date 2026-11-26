@@ -1,0 +1,26 @@
+name: Monthly search tracker
+# Records what people type into Google, Bing and DuckDuckGo about sharks, in 11 countries and 5 languages, plus Wikipedia
+# reads of the main shark articles. Adds the month just ended to src/search_tracker.json and changes nothing else on the site.
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "23 14 2 * *"   # the 2nd of each month, about 6:23 am Seattle
+permissions:
+  contents: write
+concurrency: { group: site-update, cancel-in-progress: false }
+jobs:
+  track:
+    runs-on: ubuntu-26.04
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-python@v6
+        with: { python-version: "3.12" }
+      - name: Record this month's searches
+        run: python3 -u -I src/tracker19.py
+      - name: Publish
+        run: |
+          git add src/search_tracker.json
+          git diff --cached --quiet && { echo "No change"; exit 0; }
+          git -c user.name="Blake Erickson" -c user.email="323228245+i-am-blake@users.noreply.github.com" commit -qm "Monthly search tracker, $(date -u +%Y-%m)"
+          git -c user.name="Blake Erickson" -c user.email="323228245+i-am-blake@users.noreply.github.com" pull -q --rebase origin main && git push -q origin main
