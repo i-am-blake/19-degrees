@@ -52,9 +52,11 @@ for c, (hl, gl, kl, mkt, stems) in COUNTRIES.items():
                 if s != q.lower(): seen[s] = "".join(sorted(set(seen.get(s, "") + e)))
     rec["countries"][c] = dict(sorted(seen.items()))
     print(c, len(seen), "suggestions", flush=True)
-y, m = month.split("-")
+last = today.replace(day=1) - datetime.timedelta(days=1)  # the month's last day: Wikimedia counts a month only if the range covers all of it
+WUA = {"User-Agent": "19-degrees/1.0 (+https://19-degrees.org) monthly search tracker"}
 for a in WIKI:
-    t = get(f"https://wikimedia.org/api/rest_v1/metrics/pageviews/per-article/en.wikipedia.org/all-access/user/{a}/monthly/{y}{m}0100/{y}{m}2800")
+    try: t = urllib.request.urlopen(urllib.request.Request(f"https://wikimedia.org/api/rest_v1/metrics/pageviews/per-article/en.wikipedia.org/all-access/user/{a}/monthly/{last:%Y%m}01/{last:%Y%m%d}", headers=WUA), timeout=25).read().decode()
+    except Exception: t = None
     try: rec["wikipedia"][a] = json.loads(t)["items"][0]["views"]
     except Exception: rec["wikipedia"][a] = None
 
