@@ -15,6 +15,7 @@ jobs:
       - name: Look
         run: cd src && python3 -u -I explore_free.py
       - name: Save to a data branch (look only)
+        if: always()
         run: |
           mkdir /tmp/q && cp free.json /tmp/q/ && cd /tmp/q && git init -q -b free-data
           git -c user.name="Blake Erickson" -c user.email="323228245+i-am-blake@users.noreply.github.com" add . 

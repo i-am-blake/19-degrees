@@ -33,7 +33,7 @@ try:
             if re.search(r"bite|incident|attack|unprovoked", ln, re.I): lines.append(ln.strip())
     out["kzn"] = lines[:300]; print("kzn lines", len(lines), flush=True)
 except Exception as e: out["errors"]["kzn"] = repr(e)[:150]
-def save(): save()
+def save(): json.dump(out, open("../free.json", "w"))
 save()
 # 4) GBIF: bull shark records with coordinates; keep those on land (rivers, lakes), with distance to the sea
 import geopandas as gpd
