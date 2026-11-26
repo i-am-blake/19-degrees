@@ -1,9 +1,11 @@
 """Refresh only today's sea temperature readings inside an already-built 19 Degrees page.
-Usage: python3 -I update_today.py <page19.html> <out.html>
+Usage: python3 -I update_today.py <page19.html> <out.html> [other built pages...]
+Each other page given (story.html, safety.html, ...) gets the same readings in its own data block, in place, so the
+tab pages are never re-split from a page that holds only the Home tab.
 Reads each beach's coordinates from the page's own data block and asks Open-Meteo marine for the
 current sea surface temperature; everything else in the page is left as it was."""
 import sys, re, json, urllib.request
-src, out = sys.argv[1:3]
+src, out, others = sys.argv[1], sys.argv[2], sys.argv[3:]
 html = open(src).read()
 pat = re.compile(r'(<script type="application/json" id="n19-data">)(.*?)(</script>)', re.S)
 d = json.loads(pat.search(html).group(2))
@@ -26,3 +28,11 @@ for b in d["beaches"]:
 blob = json.dumps(d, separators=(",", ":")).replace("</", "<\\/")
 open(out, "w").write(pat.sub(lambda m: m.group(1) + blob + m.group(3), html, count=1))
 print("wrote", out)
+for f in others:  # the same readings in each tab page's copy of the data
+    h = open(f).read(); m = pat.search(h)
+    if not m: sys.exit(f"no page data in {f}")
+    od = json.loads(m.group(2))
+    if [b["name"] for b in od.get("beaches", [])] != [b["name"] for b in d["beaches"]]: sys.exit(f"{f} lists different beaches")
+    od["beaches"] = d["beaches"]
+    open(f, "w").write(pat.sub(lambda m: m.group(1) + json.dumps(od, separators=(",", ":")).replace("</", "<\\/") + m.group(3), h, count=1))
+    print("updated", f)
