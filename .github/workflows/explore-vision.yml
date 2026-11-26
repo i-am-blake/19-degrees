@@ -6,18 +6,18 @@ permissions:
 jobs:
   look:
     runs-on: ubuntu-26.04
-    timeout-minutes: 15
+    timeout-minutes: 30
     steps:
       - uses: actions/checkout@v5
       - uses: actions/setup-python@v6
         with: { python-version: "3.12" }
       - run: pip install -q pytrends pypdf geopandas shapely
       - name: Look
-        run: cd src && python3 -u -I explore_counts.py
+        run: python3 -u -I src/tracker19.py tracker.json
       - name: Save to a data branch (look only)
         if: always()
         run: |
-          mkdir /tmp/q && cp counts.json /tmp/q/ && cd /tmp/q && git init -q -b counts-data
+          mkdir /tmp/q && cp tracker.json /tmp/q/ && cd /tmp/q && git init -q -b tracker-data
           git -c user.name="Blake Erickson" -c user.email="323228245+i-am-blake@users.noreply.github.com" add . 
           git -c user.name="Blake Erickson" -c user.email="323228245+i-am-blake@users.noreply.github.com" commit -qm "Free data for more answers (look only)"
-          git push -q -f "https://x-access-token:${{ github.token }}@github.com/${{ github.repository }}.git" counts-data
+          git push -q -f "https://x-access-token:${{ github.token }}@github.com/${{ github.repository }}.git" tracker-data
