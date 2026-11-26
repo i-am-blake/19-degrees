@@ -38,13 +38,14 @@
    "cls": "fact",
    "a": "About 60 confirmed unprovoked bites a year. In 2025 there were 65, and 9 were fatal.",
    "detail": [
+    "Recent years: 69 in 2023, 47 in 2024 and 65 in 2025.",
     "2025: United States 25, Australia 21, the Bahamas 5, New Zealand 3, and one each in 11 other places, including South Africa, Canada and New Caledonia.",
     "The 2020–2024 average was 61 bites and 8 deaths a year.",
     "Counts differ a little by source: this one has 21 for Australia in 2025, the Australian database 22, because they classify some cases differently.",
     "Each year's worldwide count comes out early the next year, so 2026 isn't counted yet."
    ],
    "claims": [],
-   "src": "International Shark Attack File, Florida Museum (2025 summary)",
+   "src": "International Shark Attack File, 2023, 2024 and 2025 summaries, Florida Museum",
    "slug": "how-many-shark-attacks-a-year",
    "fresh": {
     "text": "2025 figures; the 2026 count comes out early in 2027",
@@ -191,12 +192,14 @@
    "status": "Some evidence",
    "cls": "lean",
    "a": "Not worldwide in recent years: 2025's 65 confirmed bites were in line with the 2020–2024 average of 61. Some places are rising, though. In southern NSW, bites have grown faster than the coastal population.",
-   "detail": [],
+   "detail": [
+    "Worldwide, confirmed unprovoked bites were 69 in 2023, 47 in 2024 and 65 in 2025: no steady climb."
+   ],
    "claims": [
     "c18",
     "c1"
    ],
-   "src": "International Shark Attack File",
+   "src": "International Shark Attack File, 2023, 2024 and 2025 summaries",
    "slug": "are-shark-attacks-increasing",
    "grade_from": "c18",
    "written_grade": "Leans yes",
@@ -293,7 +296,7 @@
     "About a third of shark and ray species are threatened with extinction."
    ],
    "claims": [],
-   "src": "IUCN Red List; IUCN Mediterranean Red List (2016); Pacoureau et al. 2021",
+   "src": "IUCN Red List; IUCN Mediterranean Red List (2016); Pacoureau et al. 2021; Dulvy et al. 2021",
    "slug": "are-sharks-endangered",
    "fresh": {
     "text": "IUCN listings checked November 2026",
@@ -378,10 +381,10 @@
      "How many shark attacks in New Zealand?",
      "",
      "yes",
-     "3 confirmed unprovoked bites in New Zealand in 2025, none of them fatal",
+     "1 confirmed unprovoked bite in New Zealand in 2023 and 3 in 2025, none of them fatal",
      "",
      "",
-     "International Shark Attack File, 2025 summary"
+     "International Shark Attack File, 2023, 2024 and 2025 summaries"
     ]
    ]
   },
@@ -393,27 +396,40 @@
      "When is shark season in Florida, Hawaii, California, Maui, San Diego or Myrtle Beach?",
      "",
      "part",
-     "Hawaii: incidents come all year, but October has the most, about twice an average month (32 of 176 on the state's list since 1995; see C45). Florida and California still need local data",
+     "Hawaii: incidents come all year, but {hi_peak} has the most, {hi_ratio} an average month ({hi_peak_n} of {hi_n} on the state's list since {hi_first}). California: {ca_share} of incidents recorded from 1950 to early 2022 came from July to October, almost all involving white sharks. Florida still needs local data",
      "",
      "seasons",
-     "Hawaii DLNR shark incident list"
+     "Hawaii DLNR shark incident list; California Department of Fish and Wildlife shark incident database"
     ],
     [
-     "Why are there so many sharks in Cape Cod or New Smyrna Beach?",
+     "Why are there so many sharks in Cape Cod?",
      "",
-     "no",
-     "Needs Cape Cod data from the Atlantic White Shark Conservancy",
+     "part",
+     "Gray seals came back, and white sharks returned with them. Hunted almost to nothing until bounties ended in the 1960s, gray seals now breed at 9 sites in US waters, up from 1 in 1988, with about 6,700 pups born in 2021. Researchers identified 393 different white sharks off Cape Cod in 2015–2018 and estimate that about 800 visited. Whether more seals mean more bites is an open question",
      "",
-     "capecod"
+     "capecod",
+     "NOAA gray seal stock assessment (2024); Winton, Fay and Skomal 2023, Marine Ecology Progress Series",
+     [
+      "c31"
+     ]
+    ],
+    [
+     "Why are there so many sharks in New Smyrna Beach?",
+     "",
+     "part",
+     "It has the most bites in Florida, not necessarily the most sharks: Volusia County, which includes New Smyrna Beach, had 8 of Florida's 16 confirmed unprovoked bites in 2023 and 6 of 11 in 2025. Why it leads isn't something public data can answer yet",
+     "",
+     "incidents",
+     "International Shark Attack File, 2023, 2024 and 2025 summaries"
     ],
     [
      "How common are shark attacks in Florida and Hawaii?",
      "are shark attacks common in hawaii · are shark attacks common in florida · how many shark attacks in florida per year · how many shark attacks per year in the us",
      "yes",
-     "Rare. In 2025 the US had 25 confirmed unprovoked bites, 1 of them fatal. Florida had 11, below its five-year average of 19, and Hawaii had 4. Hawaii's own list averages about 7 incidents a year since 2016, counting provoked ones too",
+     "Rare. Florida had 16 confirmed unprovoked bites in 2023, 14 in 2024 and 11 in 2025, none of them fatal. Hawaii had 8 in 2023 and 4 in 2025; its own list averages about 7 incidents a year since 2016, counting provoked ones. The US as a whole had 25 in 2025",
      "",
      "",
-     "International Shark Attack File, 2025 summary; Hawaii DLNR shark incident list"
+     "International Shark Attack File, 2023, 2024 and 2025 summaries; Hawaii DLNR shark incident list"
     ],
     [
      "Bull sharks in the Mississippi River, the Great Lakes, Lake Michigan",
@@ -434,10 +450,10 @@
      "How many shark attacks in Canada?",
      "",
      "yes",
-     "1 confirmed unprovoked bite in Canada in 2025, and it wasn't fatal",
+     "1 confirmed unprovoked bite in Canada in 2025, and it wasn't fatal; the 2023 summary lists none",
      "",
      "",
-     "International Shark Attack File, 2025 summary"
+     "International Shark Attack File, 2023, 2024 and 2025 summaries"
     ]
    ]
   },
@@ -454,10 +470,10 @@
      "How many shark attacks a year in South Africa (2026)?",
      "",
      "yes",
-     "1 confirmed unprovoked bite in South Africa in 2025, and it was fatal. The KwaZulu-Natal Sharks Board, which counts every reported incident, recorded 10 in its 2024–25 financial year, none fatal; four were anglers releasing a hooked shark. 2026 isn't counted yet",
+     "2 confirmed unprovoked bites in South Africa in 2023, neither fatal, and 1 in 2025, which was fatal. The KwaZulu-Natal Sharks Board, which counts every reported incident, recorded 10 in its 2024–25 financial year, none fatal; four were anglers releasing a hooked shark. 2026 isn't counted yet",
      "",
      "",
-     "International Shark Attack File, 2025 summary; KwaZulu-Natal Sharks Board annual report 2024–25"
+     "International Shark Attack File, 2023, 2024 and 2025 summaries; KwaZulu-Natal Sharks Board annual report 2024–25"
     ]
    ]
   },
@@ -554,10 +570,11 @@
     [
      "Shark attacks in Mexico or Cancún",
      "ataque de tiburón en México · en Cancún",
-     "no",
-     "Needs Mexican records",
+     "part",
+     "The International Shark Attack File confirmed 1 unprovoked bite in Mexico in 2023, and it was fatal; its 2025 summary lists none. Cancún's own records aren't public",
      "",
-     "incidents"
+     "incidents",
+     "International Shark Attack File, 2023, 2024 and 2025 summaries"
     ]
    ]
   },
@@ -568,10 +585,11 @@
     [
      "Shark attacks in Hurghada, Sharm el-Sheikh, the Red Sea",
      "هجوم سمكة قرش في الغردقة · في شرم الشيخ · القرش في البحر الأحمر",
-     "no",
-     "Needs Red Sea records",
+     "part",
+     "The International Shark Attack File confirmed 2 unprovoked bites in Egypt in 2023 (1 fatal), a fatal one in the Red Sea in 2024, and none in 2025. Local records by resort aren't public",
      "",
-     "incidents"
+     "incidents",
+     "International Shark Attack File, 2023, 2024 and 2025 summaries"
     ]
    ]
   }
@@ -602,8 +620,8 @@
    "url": ""
   },
   "capecod": {
-   "name": "Cape Cod white shark detections",
-   "who": "Atlantic White Shark Conservancy (2010–2024 logbook)",
+   "name": "Cape Cod white shark detections by year",
+   "who": "Atlantic White Shark Conservancy (logbook); Massachusetts Division of Marine Fisheries",
    "access": "Ask",
    "url": "https://shiny.atlanticwhiteshark.org/logbook/"
   },
@@ -645,6 +663,15 @@
   "CEMIT": "2027-01-31",
   "GBIF": "2027-02-28",
   "OBIS": "2027-02-28",
-  "IUCN": "2027-06-30"
+  "IUCN": "2027-06-30",
+  "NOAA gray seal stock assessment": "2027-06-30"
+ },
+ "values_fallback": {
+  "hi_peak": "October",
+  "hi_peak_n": 32,
+  "hi_n": 174,
+  "hi_first": 1995,
+  "hi_ratio": "about twice",
+  "ca_share": "61%"
  }
 }

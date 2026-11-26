@@ -25,7 +25,7 @@
      "name": "Shark Incident Database, California",
      "url": "https://catalog.data.gov/dataset/shark-incident-database-california",
      "from": "California Department of Fish and Wildlife",
-     "used_for": "Claims C23, C24",
+     "used_for": "Claims C23, C24; questions: California's season",
      "license": "CC BY",
      "readme": [
       "ocean-data/README_california.txt"
@@ -35,7 +35,7 @@
      "name": "Hawaii shark incidents, 1995 on",
      "url": "https://dlnr.hawaii.gov/sharks/shark-incidents/incidents/",
      "from": "Hawaii Department of Land and Natural Resources",
-     "used_for": "Claims C6, C24, C45 (facts only: date, place, activity, water clarity, shark)",
+     "used_for": "Claims C6, C24, C45 (facts only: date, place, activity, water clarity, shark); questions: Hawaii's season",
      "license": "© State of Hawaii; facts used, see the source",
      "readme": [
       "ocean-data/README_hawaii.txt"
@@ -46,6 +46,27 @@
      "from": "Linked from each entry",
      "used_for": "Bites newer than the database, marked unconfirmed",
      "license": "Linked only"
+    },
+    {
+     "name": "Yearly worldwide shark attack summaries, 2023–2025",
+     "url": "https://www.floridamuseum.ufl.edu/shark-attacks/yearly-worldwide-summary/",
+     "from": "International Shark Attack File, Florida Museum of Natural History",
+     "used_for": "Questions: shark bites a year, worldwide and by country",
+     "license": "Figures cited with credit"
+    },
+    {
+     "name": "Annual report 2024–25",
+     "url": "https://shark.co.za/wp-content/uploads/simple-file-list/KZNSB-AR2025-web4.pdf",
+     "from": "KwaZulu-Natal Sharks Board",
+     "used_for": "Questions: South Africa",
+     "license": "Figures cited with credit"
+    },
+    {
+     "name": "Pernambuco shark incidents, as reported",
+     "url": "https://www.diariodepernambuco.com.br/vida-urbana/2026/01/11706445-pernambuco-teve-81-ataques-de-tubarao-e-27-mortes-em-34-anos.html",
+     "from": "Pernambuco's shark-incident committee (CEMIT), via Diario de Pernambuco",
+     "used_for": "Questions: Recife",
+     "license": "Figures cited with credit"
     }
    ]
   },
@@ -278,7 +299,7 @@
      "name": "Shark occurrence records",
      "url": "https://obis.org",
      "from": "Ocean Biodiversity Information System (OBIS)",
-     "used_for": "Bull and tiger shark records off the US Gulf and Atlantic coasts; claim C25",
+     "used_for": "Bull and tiger shark records off the US Gulf and Atlantic coasts; claim C25; questions: white sharks in the Mediterranean",
      "license": "Each dataset's own; mostly CC0 or CC BY",
      "readme": [
       "ocean-data/README_obis.txt"
@@ -298,7 +319,7 @@
      "name": "Shark sighting and specimen counts",
      "url": "https://www.gbif.org",
      "from": "GBIF.org",
-     "used_for": "Claim C2",
+     "used_for": "Claim C2; questions: bull sharks in rivers and lakes",
      "license": "CC0, CC BY or CC BY-NC by dataset",
      "readme": [
       "ocean-data/README_gbif.txt"
@@ -340,6 +361,27 @@
      "from": "Atlas of Living Australia and its data providers",
      "used_for": "Ten tropical reef fish off eastern Australia; claim C42 (counts only)",
      "license": "Each record's own license; used only as counts"
+    },
+    {
+     "name": "IUCN Red List",
+     "url": "https://www.iucnredlist.org/",
+     "from": "International Union for Conservation of Nature (global and 2016 Mediterranean assessments)",
+     "used_for": "Questions: are sharks endangered",
+     "license": "Assessments cited with credit"
+    },
+    {
+     "name": "White sharks off Cape Cod, 2015–2018",
+     "url": "https://doi.org/10.3354/meps14371",
+     "from": "Winton, Fay and Skomal 2023, Marine Ecology Progress Series 715",
+     "used_for": "Questions: Cape Cod",
+     "license": "Figures cited with credit"
+    },
+    {
+     "name": "Gray seal stock assessment, western North Atlantic",
+     "url": "https://www.fisheries.noaa.gov/s3/2026-04/gray-seal_2024-template_jb-edit-gw508.pdf",
+     "from": "NOAA Fisheries",
+     "used_for": "Questions: Cape Cod",
+     "license": "Public domain (US Government work)"
     }
    ]
   },

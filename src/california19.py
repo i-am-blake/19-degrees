@@ -27,5 +27,7 @@ for _ in range(N):
     hits += abs(statistics.median(pool[len(pre):]) - statistics.median(pool[:len(pre)])) >= abs(d)
 out["test"] = dict(pre=[1990, 2013], pre_n=len(pre), pre_lat=round(statistics.median(pre), 1), post_n=len(post),
                    post_lat=round(statistics.median(post), 1), shift_km=round(d * 111), p=round((hits + 1) / (N + 1), 3))
+dated = [r[ix["Date"]] for r in rows[1:] if hasattr(r[ix["Date"]], "month")]  # every incident with a date, any species: the season people ask about
+out["by_month"] = [sum(1 for t in dated if t.month == m) for m in range(1, 13)]; out["last"] = max(dated).strftime("%Y-%m")
 json.dump(out, open(OUT, "w"), indent=1)
 print("california", json.dumps(out))

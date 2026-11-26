@@ -29,6 +29,9 @@ Credit: "19 Degrees", with a link to the page.
 - GBIF occurrence counts: GBIF.org; each source dataset keeps its own license (CC0, CC BY or CC BY-NC).
 - NASA MODIS Aqua Kd490 water clarity: NASA open data, no restrictions on use. Acknowledge NASA Ocean Biology Processing Group.
 - Wikipedia page views: Wikimedia Foundation Pageviews API, public domain (CC0). Monthly views of the English Wikipedia "Shark attack" article, and of the main shark articles in src/search_tracker.json.
+- Shark bite counts outside Australia, cited with credit in the answers to common questions: International Shark Attack File yearly summaries (Florida Museum of Natural History), KwaZulu-Natal Sharks Board annual report 2024-25, and Pernambuco's shark-incident committee (CEMIT) as reported by Diario de Pernambuco.
+- Conservation status: IUCN Red List assessments, cited with credit.
+- Cape Cod: Winton, M.V., Fay, G. and Skomal, G.B. (2023), Marine Ecology Progress Series 715, 1-25, doi:10.3354/meps14371; NOAA Fisheries gray seal stock assessment (public domain, US Government work).
 - Search suggestions: Google, Bing and DuckDuckGo autocomplete, recorded monthly in src/search_tracker.json to see which questions people ask. No license is published for them, so they are kept for research and not shown on the site as lists.
 - IMOS Animal Tracking acoustic detections: CC BY 4.0. Cite: IMOS Animal Tracking Facility, Integrated Marine Observing System (IMOS). IMOS is enabled by the National Collaborative Research Infrastructure Strategy (NCRIS).
 - Queensland Shark Control Program data (catches, gear locations): Queensland Government open data, CC BY 4.0. Credit: Queensland Department of Primary Industries, Shark Control Program.

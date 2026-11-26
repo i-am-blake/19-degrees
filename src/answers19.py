@@ -65,6 +65,25 @@ def resolve(claims, D, quiet=False):
     tier = lambda c: 0 if c in ("fact", "yes") else 2 if c in ("none", "no") else 1
     return sorted(out, key=lambda a: tier(a["cls"]))  # stable: answered, then partly, then not yet, in search order
 
+def _summary(name):
+    """This week's summary from the build folder if it was just made, else the copy kept in src/."""
+    for p in (name, os.path.join(HERE, name)):
+        try: return json.load(open(p, encoding="utf-8"))
+        except (OSError, ValueError): pass
+    return {}
+
+def values():
+    """Numbers that regional answers quote from data the weekly build refreshes (Hawaii's incident list, California's database)."""
+    v = dict(DATA.get("values_fallback", {}))
+    h = _summary("hawaii.json"); bm = h.get("by_month")
+    if bm and sum(bm):
+        i = max(range(12), key=lambda k: bm[k]); r = bm[i] / (sum(bm) / 12)
+        v.update(hi_peak=MON[i], hi_peak_n=bm[i], hi_n=sum(bm), hi_first=h.get("first", ""),
+                 hi_ratio="about twice" if 1.75 <= r < 2.5 else f"about {r:.1f} times")
+    c = _summary("california.json").get("by_month")
+    if c and sum(c): v["ca_share"] = f"{round(100 * sum(c[6:10]) / sum(c))}%"
+    return v
+
 def _chip(status, cls): return f'<span class="ast {cls}">{esc(status)}</span>'
 
 def block(doc, D, ids, kicker, heading, sub, more):
@@ -77,6 +96,7 @@ def block(doc, D, ids, kicker, heading, sub, more):
             f'<ol class="askl{" three" if len(items) == 3 else ""}">{li}</ol>{more}</div>')
 
 def build(T, D, CLAIMS, write, page, long_date, written_long=()):
+    VALUES = values()
     A = resolve(CLAIMS, D); by = {a["id"]: a for a in A}
     for a in A:
         if a.get("long") and f"questions/{a['long']}" in written_long: a["long_page"] = a["long"]
@@ -104,8 +124,11 @@ def build(T, D, CLAIMS, write, page, long_date, written_long=()):
         ptr = f' <a href="#a-{q[4]}" data-to="a-{q[4]}">See “{esc(by[q[4]]["q"])}” above</a>' if q[4] and q[4] in by and not by[q[4]].get("region") else ""
         orig = (f'<p class="qsrc">Searched as: <span lang="{esc(lang)}">“' + "”, “".join(esc(x) for x in q[1].split(" · ")) + "”</span></p>") if q[1] else ""
         src = f'<p class="qsrc">{esc(q[6])}</p>' if len(q) > 6 and q[6] else ""
-        body = orig + src + (need(q[5]) if q[2] != "yes" else "")
-        return (f'<details class="qa"><summary><span class="qn">{n:02d}</span><span class="qq">{esc(q[0])}</span>{_chip(*lab)}<span class="qans">{esc(q[3].rstrip("."))}.{ptr}</span></summary>'
+        ev = "".join(f'<li><a href="/claims/{c}">{CLAIMS[c]["label"]}</a></li>' for c in (q[7] if len(q) > 7 else []) if c in CLAIMS)
+        ev = f'<p class="qev">The evidence, on Research:</p><ul class="qevl">{ev}</ul>' if ev else ""
+        body = orig + ev + src + (need(q[5]) if q[2] != "yes" else "")
+        say = q[3].format_map(VALUES).rstrip(".")
+        return (f'<details class="qa"><summary><span class="qn">{n:02d}</span><span class="qq">{esc(q[0])}</span>{_chip(*lab)}<span class="qans">{esc(say)}.{ptr}</span></summary>'
                 + (f'<div class="qbody">{body}</div>' if body else "") + "</details>")
     tier = lambda c: 0 if c in ("fact", "yes") else 2 if c in ("none", "no") else 1
     G = [a for a in A if not a.get("region")]
