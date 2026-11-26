@@ -78,6 +78,12 @@ def write(doc, out):
                         + f'<a class="ghbtn cfull" href="/claims/{m.group(2)}">View full summary</a></div>')
             d, k = re.subn(r'(<article class="claim" id="(c\d+)".*?)(<button type="button" class="ctabtn".*?</button>)', acts, d, flags=re.S)
             if k != len(re.findall(r'<article class="claim" id="c\d+"', d)): sys.exit("not every claim card got its buttons")
+        if keep == "home":  # the most common questions people search, answered (answers19.py)
+            import answers19
+            blk = answers19.block(doc, json.loads(re.search(r'id="n19-data">(.*?)</script>', doc, re.S).group(1)), ["world", "rare", "endangered"], "Most common questions",
+                                  '<h2 id="h-asked">What are people asking about sharks online?</h2>', "Answered with the evidence on this site. Each label shows how strong it is.",
+                                  '<p class="hcta"><a class="ctabtn" href="/questions/">See all the questions →</a></p>')
+            if blk: d = d.replace('<section id="evidence"', f'<section aria-labelledby="h-asked">{blk}</section>\n\n  <section id="evidence"', 1)
         if keep == "works":  # the product table links to the evidence ladder pages
             import ladder19
             d = d.replace('<div class="wsum" id="wsum" aria-label="Evidence for the products below"></div>',
@@ -86,6 +92,10 @@ def write(doc, out):
                 d = d.replace(f'<tr class="pg"><th colspan="5" scope="colgroup">{h}</th></tr>',
                               f'<tr class="pg"><th colspan="5" scope="colgroup">{h} <a class="pgl" href="/safety-check/{gslug}">See the evidence →</a></th></tr>', 1)
             if d.count('href="/safety-check/') != 1 + len(ladder19.GROUPS): sys.exit("could not add the evidence ladder links to the Safety page")
+            import answers19
+            blk = answers19.block(doc, json.loads(re.search(r'id="n19-data">(.*?)</script>', doc, re.S).group(1)), ["rain", "nets", "rare"], "",
+                                  '<h3 class="blockh">Questions people ask</h3>', "Answered with the evidence on this site.", '<p class="more"><a href="/questions/">All the questions →</a></p>')
+            if blk: d = d.replace('Compare the evidence for each product →</a></p>', 'Compare the evidence for each product →</a></p>\n    ' + blk.replace('class="asked"', 'class="asked asked2"'), 1)
         d, n = re.subn(r'<script[^>]*id="n19-data"', lambda m: '<script type="application/json" id="n19-ids">' + json.dumps(ids, separators=(",", ":")) + '</script>\n' + m.group(0), d, count=1)
         if n != 1: sys.exit("page data not found")
         if slug:

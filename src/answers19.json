@@ -1,0 +1,650 @@
+{
+ "about": "Answers to the questions people search about sharks (src/tracker19.py tracks them monthly). Shown on /questions/, Home and Safety by answers19.py. Labels follow the claim grades (grade_from); an answer whose claim was regraded, or whose bite counts are older than the database, is held back for review. Each 'fresh.next' date is when to check an outside source for a newer release.",
+ "answers": [
+  {
+   "id": "count",
+   "q": "How many shark attacks in Australia in 2026?",
+   "also": [
+    "How many shark attacks in Australia per year?",
+    "How many shark attacks in Australia this year?",
+    "How many shark attacks in Sydney 2026?"
+   ],
+   "status": "Counted",
+   "cls": "fact",
+   "a": "8 unprovoked bites from January to June 2026, 7 of them in NSW and 1 in South Australia; one was fatal. The record runs to June, so bites since then aren't counted yet.",
+   "detail": [
+    "2025: 22 unprovoked bites (10 NSW, 6 WA, 3 SA, 2 Queensland, 1 Victoria), 5 of them fatal.",
+    "2016–2025: about 20 a year on average.",
+    "The database is updated a few times a year; later 2026 bites will be added when it is."
+   ],
+   "claims": [],
+   "src": "Australian Shark-Incident Database (Zenodo, latest version)",
+   "slug": "how-many-shark-attacks-in-australia",
+   "region": "Australia",
+   "asid_month": "2026-06",
+   "fresh": {
+    "auto": "asid"
+   }
+  },
+  {
+   "id": "world",
+   "q": "How many shark attacks are there a year worldwide?",
+   "also": [
+    "How many shark attacks per year?",
+    "How many shark attacks per year worldwide?",
+    "How many shark attacks in 2026?"
+   ],
+   "status": "Counted",
+   "cls": "fact",
+   "a": "About 60 confirmed unprovoked bites a year. In 2025 there were 65, and 9 were fatal.",
+   "detail": [
+    "2025: United States 25, Australia 21, the Bahamas 5, New Zealand 3, and one each in 11 other places, including South Africa, Canada and New Caledonia.",
+    "The 2020–2024 average was 61 bites and 8 deaths a year.",
+    "Counts differ a little by source: this one has 21 for Australia in 2025, the Australian database 22, because they classify some cases differently.",
+    "Each year's worldwide count comes out early the next year, so 2026 isn't counted yet."
+   ],
+   "claims": [],
+   "src": "International Shark Attack File, Florida Museum (2025 summary)",
+   "slug": "how-many-shark-attacks-a-year",
+   "fresh": {
+    "text": "2025 figures; the 2026 count comes out early in 2027",
+    "next": "2027-02-28"
+   }
+  },
+  {
+   "id": "why",
+   "q": "Why are there so many sharks in Sydney?",
+   "also": [
+    "Why are there so many sharks at the moment?",
+    "Why are there so many sharks in Australia?",
+    "Why are there so many sharks in Sydney Harbour?"
+   ],
+   "status": "Some evidence",
+   "cls": "lean",
+   "a": "The sea off Sydney now stays warm enough for bull sharks for longer each year, and heavy rain draws them toward the coast.",
+   "detail": [],
+   "claims": [
+    "c16",
+    "c6"
+   ],
+   "src": "",
+   "slug": "why-are-there-so-many-sharks-in-sydney",
+   "region": "Australia",
+   "grade_from": "c16",
+   "written_grade": "Leans yes",
+   "fresh": {
+    "auto": "claims"
+   }
+  },
+  {
+   "id": "wa",
+   "q": "Why are there so many sharks in WA?",
+   "also": [
+    "Why are there so many sharks in Perth at the moment?",
+    "Are shark attacks common in Perth?",
+    "How many shark attacks in WA this year?"
+   ],
+   "status": "Some evidence",
+   "cls": "lean",
+   "a": "Recorded bites in WA have risen every decade, and almost half are white sharks. Why is only partly known.",
+   "detail": [
+    "Unprovoked bites in WA: 7 in the 1990s, 23 in the 2000s, 41 in the 2010s and 44 from 2020 to 2025. WA's share of Australia's bites rose from 19% in the 2000s to 33% since 2020.",
+    "Of 108 WA bites since 2000, 50 were by white sharks, 17 by wobbegongs and 8 by bull sharks; 19 were fatal.",
+    "What's missing: how many more people are in the water, and WA's tagged-shark detections, which we've asked the state for."
+   ],
+   "claims": [
+    "c19",
+    "c7",
+    "c26"
+   ],
+   "src": "Australian Shark-Incident Database (records to June 2026)",
+   "slug": "why-are-there-so-many-sharks-in-wa",
+   "region": "Australia",
+   "need": "wa",
+   "asid_month": "2026-06",
+   "fresh": {
+    "auto": "asid"
+   }
+  },
+  {
+   "id": "where",
+   "q": "Where do bull sharks live?",
+   "also": [],
+   "status": "Some evidence",
+   "cls": "lean",
+   "a": "In warm coastal water and up rivers. In Australia, every one of 170 bull shark bites since 1900 happened where the sea was 19°C or warmer.",
+   "detail": [
+    "They swim far up rivers: public sightings reach about 35 km up the Brisbane River and at least 120 km inland in Northern Territory rivers (straight-line distances). Elsewhere they've been found about 4,000 km up the Amazon, at Iquitos in Peru, and they live in Lake Nicaragua."
+   ],
+   "claims": [
+    "c3",
+    "c1"
+   ],
+   "src": "GBIF; Wikipedia",
+   "slug": "where-do-bull-sharks-live",
+   "grade_from": "c3",
+   "written_grade": "Leans yes",
+   "fresh": {
+    "auto": "claims"
+   }
+  },
+  {
+   "id": "season",
+   "q": "When is shark season in Sydney?",
+   "also": [
+    "When is shark season?",
+    "When is shark season in Australia?"
+   ],
+   "status": "Some evidence",
+   "cls": "lean",
+   "a": "For bull sharks, the water off Sydney is warm enough from about late September to early July. That's about seven weeks longer than in the 1980s.",
+   "detail": [
+    "Daily sea temperatures, 0.25° cell off Sydney: 19°C or warmer from about 25 September to 3 July in a typical recent year (2016–2025), against 30 October to 15 June in 1982–1992.",
+    "White and tiger sharks keep different seasons. This answer is for bull sharks."
+   ],
+   "claims": [
+    "c16",
+    "c4"
+   ],
+   "src": "NOAA OISST v2.1",
+   "slug": "when-is-shark-season-in-sydney",
+   "region": "Australia",
+   "grade_from": "c16",
+   "written_grade": "Leans yes",
+   "fresh": {
+    "text": "sea temperatures 2016–2025",
+    "next": "2027-01-31"
+   }
+  },
+  {
+   "id": "waseason",
+   "q": "When is shark season in WA?",
+   "also": [
+    "When is shark season in Perth?",
+    "When is shark season in Western Australia?"
+   ],
+   "status": "Early evidence",
+   "cls": "open",
+   "a": "There isn't a clear one. WA's bites come all year; around Perth, white shark bites cluster in spring.",
+   "detail": [
+    "Perth area since 2000: 35 unprovoked bites, 15 of them by white sharks, and 7 of those 15 in October or November.",
+    "Across WA, white shark bites peak in March and October (7 each since 2000), but the numbers are small.",
+    "The 19°C bull shark season doesn't fit WA well: its main species is the white shark."
+   ],
+   "claims": [],
+   "src": "Australian Shark-Incident Database (records to June 2026)",
+   "slug": "when-is-shark-season-in-wa",
+   "region": "Australia",
+   "need": "wa",
+   "asid_month": "2026-06",
+   "fresh": {
+    "auto": "asid"
+   }
+  },
+  {
+   "id": "rising",
+   "q": "Are shark attacks increasing?",
+   "also": [
+    "Why are shark attacks on the rise?",
+    "Are shark attacks increasing in Australia?"
+   ],
+   "status": "Some evidence",
+   "cls": "lean",
+   "a": "Not worldwide in recent years: 2025's 65 confirmed bites were in line with the 2020–2024 average of 61. Some places are rising, though. In southern NSW, bites have grown faster than the coastal population.",
+   "detail": [],
+   "claims": [
+    "c18",
+    "c1"
+   ],
+   "src": "International Shark Attack File",
+   "slug": "are-shark-attacks-increasing",
+   "grade_from": "c18",
+   "written_grade": "Leans yes",
+   "long": "are-shark-bites-increasing",
+   "fresh": {
+    "auto": "claims",
+    "text": "worldwide figures for 2025",
+    "next": "2027-02-28"
+   }
+  },
+  {
+   "id": "rain",
+   "q": "Is it safe to swim after heavy rain?",
+   "also": [
+    "What attracts sharks?"
+   ],
+   "status": "Some evidence",
+   "cls": "lean",
+   "a": "Better to wait. Official advice is to stay out of murky water after heavy rain, and most of the data points the same way.",
+   "detail": [],
+   "claims": [
+    "c6"
+   ],
+   "src": "",
+   "slug": "is-it-safe-to-swim-after-heavy-rain",
+   "grade_from": "c6",
+   "written_grade": "Leans yes",
+   "fresh": {
+    "auto": "claims"
+   }
+  },
+  {
+   "id": "rare",
+   "q": "Are shark attacks rare?",
+   "also": [
+    "Are bull sharks dangerous?"
+   ],
+   "status": "Counted",
+   "cls": "fact",
+   "a": "Yes. Worldwide, about 8 people a year die from unprovoked shark bites. On Australia's coast, about 50 people drown for every shark death.",
+   "detail": [],
+   "claims": [],
+   "src": "International Shark Attack File; Surf Life Saving Australia; Australian Shark-Incident Database",
+   "slug": "are-shark-attacks-rare",
+   "see": [
+    "Story: one shark death for every 50 drownings",
+    "https://19-degrees.org/story#h-ratio"
+   ],
+   "fresh": {
+    "text": "drownings July 2015 to June 2025",
+    "next": "2026-10-31"
+   }
+  },
+  {
+   "id": "nets",
+   "q": "Do shark nets work?",
+   "also": [
+    "Do shark nets stop shark attacks?",
+    "Do shark nets trap other animals?"
+   ],
+   "status": "Early evidence",
+   "cls": "open",
+   "a": "Not clear yet. The evidence is thin either way, but most of what the gear catches isn't one of the three sharks it targets.",
+   "detail": [],
+   "claims": [
+    "c20",
+    "c46",
+    "c21"
+   ],
+   "src": "",
+   "slug": "do-shark-nets-work",
+   "grade_from": "c20",
+   "written_grade": "First look",
+   "long": "do-shark-nets-work",
+   "fresh": {
+    "auto": "claims"
+   }
+  },
+  {
+   "id": "endangered",
+   "q": "Are sharks endangered?",
+   "also": [
+    "Why are sharks endangered?",
+    "How many sharks are left?",
+    "Are bull sharks endangered?"
+   ],
+   "status": "Counted",
+   "cls": "fact",
+   "a": "Many are. Bull sharks and great white sharks are listed as Vulnerable, and tiger sharks as Near Threatened.",
+   "detail": [
+    "IUCN Red List: bull shark Vulnerable (assessed 2021, population decreasing), great white shark Vulnerable, tiger shark Near Threatened.",
+    "In the Mediterranean, white sharks are listed as Critically Endangered (IUCN regional assessment, 2016).",
+    "Oceanic sharks and rays have declined by 71% since 1970, mainly because fishing pressure rose about 18-fold (Pacoureau and colleagues, Nature, 2021).",
+    "About a third of shark and ray species are threatened with extinction."
+   ],
+   "claims": [],
+   "src": "IUCN Red List; IUCN Mediterranean Red List (2016); Pacoureau et al. 2021",
+   "slug": "are-sharks-endangered",
+   "fresh": {
+    "text": "IUCN listings checked November 2026",
+    "next": "2027-06-30"
+   }
+  },
+  {
+   "id": "time",
+   "q": "What time of day do sharks attack?",
+   "also": [
+    "When are sharks most active?",
+    "Are shark attacks more common at night?"
+   ],
+   "status": "Not answered yet",
+   "cls": "none",
+   "a": "We can say when bites happen, not when the water is riskiest. That needs a count of people in the water by hour, which no one publishes.",
+   "detail": [],
+   "claims": [
+    "c21",
+    "c24"
+   ],
+   "src": "",
+   "slug": "what-time-of-day-do-sharks-attack",
+   "need": "people",
+   "fresh": {
+    "auto": "claims"
+   }
+  },
+  {
+   "id": "today",
+   "q": "Was there a shark attack today?",
+   "also": [
+    "Shark attack today"
+   ],
+   "status": "Official sources",
+   "cls": "fact",
+   "a": "This site doesn't report incidents as they happen. For today's sightings, bites and beach closures, check the official source where you are, or ask the lifeguards on the beach.",
+   "detail": [
+    "Australia: <a href=\"https://www.sharksmart.nsw.gov.au/\" target=\"_blank\" rel=\"noopener\">SharkSmart NSW</a> and <a href=\"https://www.sharksmart.com.au/staying-safe/shark-sightings-detections-responses\" target=\"_blank\" rel=\"noopener\">SharkSmart WA</a>, each with an app.",
+    "Hawaii: the state's <a href=\"https://dlnr.hawaii.gov/sharks/shark-incidents/incidents-list/\" target=\"_blank\" rel=\"noopener\">shark incident list</a>.",
+    "Cape Town: <a href=\"https://sharkspotters.org.za/\" target=\"_blank\" rel=\"noopener\">Shark Spotters</a>.",
+    "Worldwide: confirmed counts come later, once a year, from the <a href=\"https://www.floridamuseum.ufl.edu/shark-attacks/yearly-worldwide-summary/\" target=\"_blank\" rel=\"noopener\">International Shark Attack File</a>."
+   ],
+   "claims": [],
+   "src": "",
+   "slug": "was-there-a-shark-attack-today",
+   "fresh": {
+    "text": "links checked November 2026",
+    "next": "2026-12-31"
+   }
+  }
+ ],
+ "local": {
+  "Australia": {
+   "lang": "en",
+   "note": "Most of Australia's questions are answered below. Still to come:",
+   "qs": [
+    [
+     "Bull sharks in Sydney Harbour: tracking, map, today",
+     "",
+     "part",
+     "The site has Sydney Harbour tag data (C16); a page for it is next",
+     "",
+     "harbour"
+    ],
+    [
+     "Bull sharks in the Brisbane River or the Murray River",
+     "",
+     "part",
+     "Brisbane River: yes. Public sightings reach about 35 km inland, to the city's western edge, most of them since 2020. Murray River: no records found, but the public data also misses some known river records, so that isn't proof",
+     "",
+     "rivers",
+     "GBIF occurrence records, mostly iNaturalist sightings (checked November 2026)"
+    ]
+   ]
+  },
+  "New Zealand": {
+   "lang": "en",
+   "note": "New Zealanders ask the same English questions as everyone else, plus:",
+   "qs": [
+    [
+     "How many shark attacks in New Zealand?",
+     "",
+     "yes",
+     "3 confirmed unprovoked bites in New Zealand in 2025, none of them fatal",
+     "",
+     "",
+     "International Shark Attack File, 2025 summary"
+    ]
+   ]
+  },
+  "United States": {
+   "lang": "en",
+   "note": "Americans ask about holiday spots, and whether bull sharks reach rivers and lakes:",
+   "qs": [
+    [
+     "When is shark season in Florida, Hawaii, California, Maui, San Diego or Myrtle Beach?",
+     "",
+     "part",
+     "Hawaii: incidents come all year, but October has the most, about twice an average month (32 of 176 on the state's list since 1995; see C45). Florida and California still need local data",
+     "",
+     "seasons",
+     "Hawaii DLNR shark incident list"
+    ],
+    [
+     "Why are there so many sharks in Cape Cod or New Smyrna Beach?",
+     "",
+     "no",
+     "Needs Cape Cod data from the Atlantic White Shark Conservancy",
+     "",
+     "capecod"
+    ],
+    [
+     "How common are shark attacks in Florida and Hawaii?",
+     "are shark attacks common in hawaii · are shark attacks common in florida · how many shark attacks in florida per year · how many shark attacks per year in the us",
+     "yes",
+     "Rare. In 2025 the US had 25 confirmed unprovoked bites, 1 of them fatal. Florida had 11, below its five-year average of 19, and Hawaii had 4. Hawaii's own list averages about 7 incidents a year since 2016, counting provoked ones too",
+     "",
+     "",
+     "International Shark Attack File, 2025 summary; Hawaii DLNR shark incident list"
+    ],
+    [
+     "Bull sharks in the Mississippi River, the Great Lakes, Lake Michigan",
+     "",
+     "part",
+     "Mississippi: rarely. A 2021 study confirmed two near St. Louis, in 1937 at Alton, Illinois, and in 1995 at Rush Island, Missouri; other reports were incomplete. Great Lakes and Lake Michigan: no records found, but the public data also misses the two Mississippi ones, so that isn't proof",
+     "",
+     "rivers",
+     "Shell and Gardner, Marine and Fishery Sciences (2021); GBIF occurrence records, mostly iNaturalist sightings (checked November 2026)"
+    ]
+   ]
+  },
+  "Canada": {
+   "lang": "en",
+   "note": "Canadians ask the same English questions as everyone else, plus:",
+   "qs": [
+    [
+     "How many shark attacks in Canada?",
+     "",
+     "yes",
+     "1 confirmed unprovoked bite in Canada in 2025, and it wasn't fatal",
+     "",
+     "",
+     "International Shark Attack File, 2025 summary"
+    ]
+   ]
+  },
+  "United Kingdom": {
+   "lang": "en",
+   "note": "UK searches match the shared English questions below.",
+   "qs": []
+  },
+  "South Africa": {
+   "lang": "en",
+   "note": "South Africans ask the same English questions as everyone else, plus:",
+   "qs": [
+    [
+     "How many shark attacks a year in South Africa (2026)?",
+     "",
+     "yes",
+     "1 confirmed unprovoked bite in South Africa in 2025, and it was fatal. The KwaZulu-Natal Sharks Board, which counts every reported incident, recorded 10 in its 2024–25 financial year, none fatal; four were anglers releasing a hooked shark. 2026 isn't counted yet",
+     "",
+     "",
+     "International Shark Attack File, 2025 summary; KwaZulu-Natal Sharks Board annual report 2024–25"
+    ]
+   ]
+  },
+  "France and Réunion": {
+   "lang": "fr",
+   "note": "Asked in French (translated; the original underneath):",
+   "qs": [
+    [
+     "Shark attacks in Réunion; why are there so many sharks there?",
+     "attaque de requin à la Réunion · pourquoi y a-t-il autant de requins à la Réunion",
+     "part",
+     "The site uses Réunion data for rain and the moon (C6, C24), but has no full answer yet",
+     "",
+     "incidents"
+    ],
+    [
+     "Is the bull shark dangerous? Can it live in fresh water?",
+     "requin bouledogue dangereux · eau douce",
+     "part",
+     "Covered by the bull shark answer, in English",
+     "where",
+     ""
+    ],
+    [
+     "Recent shark attacks, today, in 2026, in Australia",
+     "attaque de requin récente · aujourd'hui · 2026 · Australie",
+     "part",
+     "Covered by the worldwide count, in English. Australia's 2026 count is in the Australia list",
+     "world",
+     ""
+    ],
+    [
+     "Great white sharks in the Mediterranean, off Marseille",
+     "requin blanc Méditerranée · Marseille",
+     "part",
+     "Yes, but they're rarely seen, and they're listed as Critically Endangered there. Public records hold 58 white shark records across the Mediterranean, 24 of them since 2010, about half from the Aegean and Adriatic seas. The nearest to Marseille was a sighting about 16 km away in 2023; others were off the Var coast in 2012, 2015 and 2024. Most are public sightings that scientists haven't checked",
+     "",
+     "med",
+     "OBIS and GBIF occurrence records (checked November 2026); IUCN Mediterranean Red List (2016)"
+    ],
+    [
+     "Why are sharks endangered? How many are left?",
+     "pourquoi les requins sont menacés · combien reste-t-il de requins",
+     "yes",
+     "Answered in English",
+     "endangered",
+     ""
+    ]
+   ]
+  },
+  "Brazil": {
+   "lang": "pt",
+   "note": "Asked in Portuguese (translated; the original underneath):",
+   "qs": [
+    [
+     "Why are there so many sharks in Recife, at Boa Viagem beach?",
+     "por que tem tantos tubarões em Recife · por que a praia de Boa Viagem tem tantos tubarões",
+     "no",
+     "Needs Pernambuco's incident records",
+     "",
+     "incidents"
+    ],
+    [
+     "Shark attacks in Recife, Pernambuco, Brazil: how many a year?",
+     "quantos ataques de tubarão por ano no Brasil · em Recife · em Pernambuco",
+     "part",
+     "About 80 since 1992, so 2 to 3 a year, and about a third were fatal (27 deaths by January 2026). Piedade and Boa Viagem beaches account for more than half. The full list, with dates and places, isn't public",
+     "",
+     "incidents",
+     "Pernambuco's shark-incident committee (CEMIT), as reported by Diario de Pernambuco, January and June 2026"
+    ],
+    [
+     "Is the bull shark dangerous? Bull sharks in the Amazon River",
+     "tubarão cabeça-chata é perigoso · no rio Amazonas",
+     "part",
+     "Covered by the bull shark answer, in English",
+     "where",
+     "rivers"
+    ]
+   ]
+  },
+  "Mexico": {
+   "lang": "es",
+   "note": "Asked in Spanish (translated; the original underneath):",
+   "qs": [
+    [
+     "What do sharks eat? Why don't they have bones? How long do they live?",
+     "qué comen los tiburones · por qué no tienen huesos · cuánto tiempo viven",
+     "part",
+     "Fits the Schools tab, in English",
+     "",
+     ""
+    ],
+    [
+     "Shark attacks in Mexico or Cancún",
+     "ataque de tiburón en México · en Cancún",
+     "no",
+     "Needs Mexican records",
+     "",
+     "incidents"
+    ]
+   ]
+  },
+  "Egypt": {
+   "lang": "ar",
+   "note": "Asked in Arabic (translated; the original underneath):",
+   "qs": [
+    [
+     "Shark attacks in Hurghada, Sharm el-Sheikh, the Red Sea",
+     "هجوم سمكة قرش في الغردقة · في شرم الشيخ · القرش في البحر الأحمر",
+     "no",
+     "Needs Red Sea records",
+     "",
+     "incidents"
+    ]
+   ]
+  }
+ },
+ "needs": {
+  "incidents": {
+   "name": "Full local bite lists outside Australia, with dates and places",
+   "who": "Pernambuco's shark-incident committee (CEMIT); local agencies in Réunion, Mexico and the Red Sea; the International Shark Attack File's full records (requested in October)",
+   "access": "Ask",
+   "url": "https://www.floridamuseum.ufl.edu/shark-attacks/yearly-worldwide-summary/"
+  },
+  "wa": {
+   "name": "WA sea temperatures and tag detections",
+   "who": "NOAA OISST (already used for Sydney); WA DPIRD Shark Monitoring Network",
+   "access": "Sea data: have it. Tag data: requested in October",
+   "url": ""
+  },
+  "harbour": {
+   "name": "Sydney Harbour tag detections, 2026",
+   "who": "NSW DPI's new harbour tagging and listening stations; IMOS (already used)",
+   "access": "Ask NSW DPI",
+   "url": ""
+  },
+  "rivers": {
+   "name": "Confirmed bull shark records in rivers and lakes",
+   "who": "State fisheries surveys and university tagging programs",
+   "access": "Ask",
+   "url": ""
+  },
+  "capecod": {
+   "name": "Cape Cod white shark detections",
+   "who": "Atlantic White Shark Conservancy (2010–2024 logbook)",
+   "access": "Ask",
+   "url": "https://shiny.atlanticwhiteshark.org/logbook/"
+  },
+  "med": {
+   "name": "Checked white shark records in the Mediterranean",
+   "who": "Mediterranean shark researchers",
+   "access": "Ask",
+   "url": ""
+  },
+  "status": {
+   "name": "Conservation status",
+   "who": "IUCN Red List assessments",
+   "access": "Free to read",
+   "url": "https://www.iucnredlist.org/"
+  },
+  "people": {
+   "name": "People in the water, by hour",
+   "who": "Griffith University's Gold Coast drone counts",
+   "access": "Ask",
+   "url": ""
+  },
+  "notices": {
+   "name": "Same-day official incident notices",
+   "who": "SharkSmart (NSW), SharkSmart WA, state agencies",
+   "access": "Free to read",
+   "url": "https://www.sharksmart.nsw.gov.au/"
+  },
+  "seasons": {
+   "name": "Sea temperatures for US beaches, with each species' range",
+   "who": "NOAA OISST and HadISST (already used)",
+   "access": "Have it",
+   "url": ""
+  }
+ },
+ "sources_due": {
+  "International Shark Attack File": "2027-02-28",
+  "Hawaii DLNR": "2026-12-31",
+  "KwaZulu-Natal Sharks Board": "2026-10-31",
+  "CEMIT": "2027-01-31",
+  "GBIF": "2027-02-28",
+  "OBIS": "2027-02-28",
+  "IUCN": "2027-06-30"
+ }
+}

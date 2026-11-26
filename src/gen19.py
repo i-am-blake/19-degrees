@@ -3,7 +3,7 @@
   /changes, changes.xml every change to the claims, newest first, and the same as an Atom feed
   /claims/, /claims/cNN one page per claim, copied from its card on the Research page
   /safety-check/<group> the products in each group, each placed on the evidence ladder
-  /questions/<slug>     plain answers to common questions (see questions19.py)
+  /questions/<slug>     plain answers to common questions (questions19.py) and to the questions people search (answers19.py)
 Usage: python3 -I gen19.py <full index.html (before the tabs are split)> <out_dir>"""
 import csv, datetime, html, json, os, re, sys
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
@@ -278,6 +278,9 @@ QUESTIONS = False
 if QUESTIONS:
     import questions19
     WRITTEN += questions19.build(T, D, CLAIMS, out, write, page, relink, esc, text, BUILT, long_date, ym)
+# /questions/ itself, and the answers to the questions people search (answers19.json), linking to the pages above when they're on
+import answers19
+WRITTEN += answers19.build(T, D, CLAIMS, write, page, long_date, written_long=[w for w in WRITTEN if w.startswith("questions/")])
 
 json.dump(sorted(WRITTEN), open(os.path.join(out, ".generated.json"), "w"))
-print(f"generated pages: {len(WRITTEN)} (data, changes, {len(CLAIMS)} claims, safety-check" + (", questions" if QUESTIONS else "") + ")")
+print(f"generated pages: {len(WRITTEN)} (data, changes, {len(CLAIMS)} claims, safety-check, answers" + (", questions" if QUESTIONS else "") + ")")

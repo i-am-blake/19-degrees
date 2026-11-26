@@ -198,7 +198,5 @@ def build(T, D, CLAIMS, out, write, page, relink, esc, text, BUILT, long_date, y
               "author": {"@type": "Organization", "@id": "https://19-degrees.org/#org", "name": "19 Degrees"}, "publisher": {"@id": "https://19-degrees.org/#org"},
               "mainEntityOfPage": f"https://19-degrees.org/questions/{slug}"}
         written.append(write(f"questions/{slug}", page(f"questions/{slug}", q, "Questions", body, desc=desc[:300], jsonld=ld, crumbs=[("Questions", "/questions/")])))
-    lst = "".join(f'<a href="/questions/{s}"><b>{esc(q)}</b>{esc(text(a).split(". ")[0])}.</a>' for s, q, a, *_ in P)
-    written.append(write("questions/index", page("questions/", "Questions about sharks and a warming ocean", "Questions", f'  <p class="lead">Short, direct answers to common questions, each with what it covers, the evidence, its limits and its sources.</p>\n  <div class="cards">{lst}</div>\n',
-                   desc="Direct answers to common questions about sharks and a warming ocean: the 19°C line, bull shark temperature, sharks moving south, shark bite trends, nets and deterrents.")))
+    # /questions/ itself is written by answers19.py, which links to these pages
     return written
