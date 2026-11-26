@@ -85,13 +85,13 @@ def build(T, D, CLAIMS, write, page, long_date, written_long=()):
         n = N.get(nid)
         return f'<p class="need"><b>To answer this:</b> {esc(n["name"])}. {esc(n["who"])}. <span>{esc(n["access"])}.</span></p>' if n else ""
     def claims_ul(a):
-        li = "".join(f'<li><a href="/claims/{c}"><b>{CLAIMS[c]["label"]}: {esc(CLAIMS[c]["title"])}</b></a> <span class="{CLAIMS[c]["cls"]}">{esc(CLAIMS[c]["grade"])}</span></li>'
+        li = "".join(f'<li><a href="/claims/{c}"><b>{CLAIMS[c]["label"]}:</b> {esc(CLAIMS[c]["title"])}</a></li>'
                      for c in a["claims"] if c in CLAIMS)
         return f'<ul class="qclaims">{li}</ul>' if li else ""
     def card(a, n, where_extra=""):
         url = f'/questions/{a.get("long_page") or a["slug"]}'
         ul = "".join(f"<li>{x}</li>" for x in a["detail"])
-        ev = "".join(f'<li><a href="/claims/{c}">{CLAIMS[c]["label"]}</a> <span class="{CLAIMS[c]["cls"]}">{esc(CLAIMS[c]["grade"])}</span></li>' for c in a["claims"] if c in CLAIMS)
+        ev = "".join(f'<li><a href="/claims/{c}">{CLAIMS[c]["label"]}</a></li>' for c in a["claims"] if c in CLAIMS)
         see = f'<p class="qsrc"><a href="{a["see"][1]}">{esc(a["see"][0])}</a></p>' if a.get("see") else ""
         asof = f'<span class="qasof">{esc(a["asof"][:1].upper() + a["asof"][1:])}</span>' if a.get("asof") else ""
         evb = f'<p class="qev">The evidence, on Research:</p><ul class="qevl">{ev}</ul>' if ev else ""
