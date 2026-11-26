@@ -33,44 +33,42 @@ try:
             if re.search(r"bite|incident|attack|unprovoked", ln, re.I): lines.append(ln.strip())
     out["kzn"] = lines[:300]; print("kzn lines", len(lines), flush=True)
 except Exception as e: out["errors"]["kzn"] = repr(e)[:150]
-# land polygons for "how far from the sea"
+def save(): save()
+save()
+# 4) GBIF: bull shark records with coordinates; keep those on land (rivers, lakes), with distance to the sea
 import geopandas as gpd
 from shapely.geometry import Point
-land = None
-try:
-    z = zipfile.ZipFile(io.BytesIO(get("https://naciscdn.org/naturalearth/10m/physical/ne_10m_land.zip", 180, True))); z.extractall("ne")
-    land = gpd.read_file("ne/ne_10m_land.shp").to_crs(3857); coast = land.boundary.union_all() if hasattr(land.boundary, "union_all") else land.boundary.unary_union
-    landu = land.union_all() if hasattr(land, "union_all") else land.unary_union
-except Exception as e: out["errors"]["land"] = repr(e)[:150]
-def km_inland(lat, lon):
-    p = gpd.GeoSeries([Point(lon, lat)], crs=4326).to_crs(3857).iloc[0]
-    if not landu.contains(p): return 0.0
-    return round(p.distance(coast) / 1000 * math.cos(math.radians(lat)), 1)  # web mercator scale correction
-# 4) GBIF: bull shark records with coordinates, keep those well inland
 def gbif(params, cap):
     recs, off = [], 0
     while off < cap:
         j = get("https://api.gbif.org/v1/occurrence/search?" + urllib.parse.urlencode({**params, "limit": 300, "offset": off}))
-        if j.startswith("ERR"): out["errors"]["gbif_" + params.get("taxonKey", "")] = j; break
+        if j.startswith("ERR"): out["errors"]["gbif"] = j; break
         d = json.loads(j); res = d.get("results", [])
         for x in res:
             if x.get("decimalLatitude") is None: continue
-            recs.append({k: x.get(k) for k in ("decimalLatitude", "decimalLongitude", "year", "country", "stateProvince", "locality", "waterBody", "basisOfRecord", "datasetName", "institutionCode", "occurrenceStatus")})
+            recs.append({k: x.get(k) for k in ("decimalLatitude", "decimalLongitude", "year", "country", "stateProvince", "locality", "waterBody", "basisOfRecord", "datasetName", "institutionCode")})
         off += 300
         if d.get("endOfRecords"): break
-        time.sleep(0.3)
+        time.sleep(0.2)
     return recs
 k = json.loads(get("https://api.gbif.org/v1/species/match?name=Carcharhinus%20leucas")).get("usageKey")
 bull = gbif({"taxonKey": k, "hasCoordinate": "true", "hasGeospatialIssue": "false", "occurrenceStatus": "PRESENT"}, 30000)
-print("gbif bull records", len(bull), flush=True)
-inland = []
-if land is not None:
-    for r_ in bull:
-        try: d_ = km_inland(r_["decimalLatitude"], r_["decimalLongitude"])
-        except Exception: continue
-        if d_ >= 20: inland.append({**r_, "km_inland": d_})
-out["bull_total"] = len(bull); out["bull_inland"] = sorted(inland, key=lambda x: -x["km_inland"])[:400]
-print("bull inland >=20 km", len(inland), flush=True)
+out["bull_total"] = len(bull); print("gbif bull records", len(bull), flush=True)
+try:
+    z = zipfile.ZipFile(io.BytesIO(get("https://naciscdn.org/naturalearth/10m/physical/ne_10m_land.zip", 180, True))); z.extractall("ne")
+    land = gpd.read_file("ne/ne_10m_land.shp")[["geometry"]]
+    pts = gpd.GeoDataFrame(bull, geometry=[Point(r["decimalLongitude"], r["decimalLatitude"]) for r in bull], crs=4326)
+    on = gpd.sjoin(pts, land, predicate="within", how="inner").drop(columns=["index_right"])
+    coast = land.boundary.explode(index_parts=False).to_frame("geometry").set_geometry("geometry").to_crs(3857)
+    onp = on.to_crs(3857)
+    nn = gpd.sjoin_nearest(onp, coast, distance_col="d")
+    nn = nn[~nn.index.duplicated()]
+    on["km_inland"] = [round(d / 1000 * math.cos(math.radians(lat)), 1) for d, lat in zip(nn["d"], on["decimalLatitude"])]
+    keep = on[on["km_inland"] >= 20].sort_values("km_inland", ascending=False)
+    out["bull_inland"] = json.loads(keep.drop(columns="geometry").to_json(orient="records"))[:500]
+    print("bull on land", len(on), ">=20 km", len(keep), flush=True)
+except Exception as e: out["errors"]["inland"] = repr(e)[:200]; print("inland failed", repr(e)[:200], flush=True)
+save()
 # 5) White sharks in the Mediterranean: OBIS and GBIF
 MED = "POLYGON((-5.6 30,36.5 30,36.5 46,-5.6 46,-5.6 30))"
 o = get("https://api.obis.org/v3/occurrence?" + urllib.parse.urlencode({"scientificname": "Carcharodon carcharias", "geometry": MED, "size": 10000}), 180)
@@ -81,4 +79,4 @@ try:
 except Exception as e: out["errors"]["obis"] = (o if isinstance(o, str) else "")[:150]
 kw = json.loads(get("https://api.gbif.org/v1/species/match?name=Carcharodon%20carcharias")).get("usageKey")
 out["med_gbif"] = gbif({"taxonKey": kw, "hasCoordinate": "true", "geometry": MED, "occurrenceStatus": "PRESENT"}, 6000); print("gbif med white", len(out["med_gbif"]), flush=True)
-json.dump(out, open("../free.json", "w"))
+save()
